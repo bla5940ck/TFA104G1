@@ -387,9 +387,26 @@ public class ProdServlet extends HttpServlet {
 			
 			}
 			
-			if("refresh".equals(req.getParameter("action"))) {
-				System.out.println("123");
-				res.getWriter().print(req.getParameter("index"));
+			
+			
+			
+			
+	///////////////商品篩選///////////////////////
+			if("select".equals(req.getParameter("action"))) {
+				System.out.println(req.getParameter("prodSelect"));
+				if(req.getParameter("prodSelect").equals("2")) {
+					//依價格排序
+					ProdService prodSvc = new ProdService();
+					List<ProdVO> list = prodSvc.getSortDec();
+					req.setAttribute("flag", "dec");
+					req.setAttribute("prodList", list);
+					
+					req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
+					return;
+				}else {
+					req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
+					return;
+				}
 				
 			}
 			

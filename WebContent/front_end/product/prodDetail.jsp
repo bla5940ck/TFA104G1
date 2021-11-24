@@ -15,7 +15,7 @@
   width: 45px;
   height: 55px;
 }
-img.simpleLens-big-image {
+img.simpleLens-big-image{
  object-fit: contain;
   width: 350px;
   height: 300px;
@@ -398,7 +398,8 @@ img.simpleLens-big-image {
                    	   租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
                                               商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice() %></span>
                     </div>
-                 	   備註: <span><%=product.getComt() %></span><br>
+                    <% String comt = (product.getComt()==null) ? "" :product.getComt(); %>
+                 	   備註: <span><%=comt %></span><br>
                     <td class="start">預計租借日期: <input id="startDate" type="text"><br>
 								預計歸還日期: <input id="endDate" type="text"><br>
 							</td>
@@ -411,7 +412,7 @@ img.simpleLens-big-image {
                       </form>
                       <p class="aa-prod-category">
 <%--                         分類: <a href="#"><%=product.getCategoryID() %></a> --%>
-                      </p>
+                      </p> 
                     </div>
                     <div class="aa-prod-view-bottom">
                       <a class="aa-add-to-cart-btn" href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>

@@ -14,25 +14,25 @@
     <title>JoyLease |Product</title>
     
     <!-- Font awesome -->
-    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/front_end/product/css/font-awesome.css" rel="stylesheet">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">   
+    <link href="<%=request.getContextPath()%>/front_end/product/css/bootstrap.css" rel="stylesheet">   
     <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-    <link href="css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/front_end/product/css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
     <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="css/jquery.simpleLens.css">    
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front_end/product/css/jquery.simpleLens.css">    
     <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="css/slick.css">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front_end/product/css/slick.css">
     <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="css/nouislider.css">
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front_end/product/css/nouislider.css">
     <!-- Theme color -->
-    <link id="switcher" href="css/theme-color/dark-navy-theme.css" rel="stylesheet">
+    <link id="switcher" href="<%=request.getContextPath()%>/front_end/product/css/theme-color/dark-navy-theme.css" rel="stylesheet">
     <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
     <!-- Top Slider CSS -->
-    <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/front_end/product/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
 
     <!-- Main style sheet -->
-    <link href="css/style copy.css" rel="stylesheet">    
+    <link href="<%=request.getContextPath()%>/front_end/product/css/style copy.css" rel="stylesheet">    
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -329,13 +329,19 @@
           <div class="aa-product-catg-content">
             <div class="aa-product-catg-head">
               <div class="aa-product-catg-head-left">
-                <form action="" class="aa-sort-form">
+                <form action="<%=path%>/prod/ProdServlet" class="aa-sort-form">
                   <label for="">篩選</label>
-                  <select name="">
+                  <select name="prodSelect" class="aa-select">
                     <option value="1" selected="Default">最相關</option>
-                    <option value="2">價格</option>
-                    <option value="3">最新款</option>
+                    <option value="2">價格-低到高</option>
+                    <option value="3">價格-高到低</option>
+                    <option value="4">最新款</option>
                     <!-- <option value="4"></option> -->
+                    <input type="hidden" name = "action" value="select">
+<!--                     <input type="submit"> -->
+
+
+
                   </select>
                 </form>
                 <form action="" class="aa-show-form">
@@ -355,7 +361,34 @@
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
                 <!-- start single product item -->
-                 <% 
+               
+<!--                 /遞減排列 -->
+                <c:if test="${'dec'==flag}">
+                	<c:forEach var="prodEL" items="${prodList}">
+					    <c:if test="${prodEL.prodStatus==1}">
+					    <li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span>
+                       <p class="aa-product-descrip">${prodEL.prodCot}</p>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                    <span class="aa-badge aa-hot" href="#">很搶手</span>
+                </li>	
+					 </c:if>	
+			</c:forEach>
+                 </c:if>	
+                 	
+                 	
+<!--                  一般排列 -->
+                 <% if(request.getAttribute("flag")==null){
                ProdService prodDao = new ProdService(); 
                List<ProdVO> list1 = new ArrayList<ProdVO>();
       		    list1 = prodDao.getAll();
@@ -371,24 +404,22 @@
            %>   
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picno=<%=product1.getProdID()%>">
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picNo=<%=product1.getProdID()%>">
                     <img src="<%=request.getContextPath()%>/prod/ProdServlet?picNo=<%=product1.getProdID()%>&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>加入購物車</a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=<%=product1.getProdID()%>"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#"><%=product1.getProdName() %></a></h4>
-                      <span class="aa-product-price">$<%=product1.getProdRent() %></span><span class="aa-product-price"><del>$65.50</del></span>
+                      <span class="aa-product-price">$<%=product1.getProdRent() %></span>
                        <p class="aa-product-descrip"><%=product1.getProdCot() %></p>
                     </figcaption>
                   </figure>                         
                   <div class="aa-product-hvr-content">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
                     <span class="aa-badge aa-hot" href="#">很搶手</span>
                 </li>
                 
-                <%
+                <%}
                    }
               } 
                }
@@ -403,76 +434,11 @@
                     <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       <div class="row">
-                        <!-- Modal view slider -->
-                        <div class="col-md-6 col-sm-6 col-xs-12">                              
-                          <div class="aa-product-view-slider">                                
-                            <div class="simpleLens-gallery-container" id="demo-1">
-                              <div class="simpleLens-container">
-                                  <div class="simpleLens-big-image-container">
-                                      <a class="simpleLens-lens-image" data-lens-image="img/view-slider/large/polo-shirt-1.png">
-                                          <img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="simpleLens-thumbnails-container">
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-1.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-1.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-1.png">
-                                  </a>                                    
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-3.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-3.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-3.png">
-                                  </a>
-
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-4.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-4.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-4.png">
-                                  </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Modal view content -->
+                       
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div class="aa-product-view-content">
-                            <h3>SwitchOLED</h3>
-                            <div class="aa-price-block">
-                              <span class="aa-product-view-price">$34.99</span>
-                              <p class="aa-product-avilability">庫存狀況: <span>有現貨</span></p>
-                            </div>
-                            <p>最新OLED新機 紅藍色主機款<br>
-                              Switch熱門遊戲任選一款<br>
-                              送任天堂原廠飲料提袋+耀西捲線器<br>
-                              推薦(可選配)瑪利歐派對超級巨星 寶可夢鑽石珍珠<br>
-                            </p>
-                            <h4>數量</h4>
-                            <!-- <div class="aa-prod-view-size">
-                              <a href="#">S</a>
-                              <a href="#">M</a>
-                              <a href="#">L</a>
-                              <a href="#">XL</a>
-                            </div> -->
-                            <div class="aa-prod-quantity">
-                              <form action="">
-                                <select name="" id="">
-                                  <option value="0" selected="1">1</option>
-                                  <option value="1">2</option>
-                                  <option value="2">3</option>
-                                  <option value="3">4</option>
-                                  <option value="4">5</option>
-                                  <option value="5">6</option>
-                                </select>
-                              </form>
-                              <p class="aa-prod-category">
-                                分類: <a href="#">Nintendo</a>
-                              </p>
-                            </div>
+  
                             <div class="aa-prod-view-bottom">
-                              <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>加入購物車</a>
-                              <a href="#" class="aa-add-to-cart-btn">點我看商品</a>
                             </div>
                           </div>
                         </div>
@@ -573,21 +539,21 @@
               <div class="aa-recently-views">
                 <ul>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">PS5</a></h4>
                       <p>1 x $250</p>
                     </div>                    
                   </li>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-1.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-1.jpg"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">動物森友會</a></h4>
                       <p>1 x $250</p>
                     </div>                    
                   </li>
                    <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">寶可夢</a></h4>
                       <p>1 x $250</p>
@@ -602,21 +568,21 @@
               <div class="aa-recently-views">
                 <ul>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">PS5</a></h4>
                       <p>1 x $250</p>
                     </div>                    
                   </li>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-1.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-1.jpg"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">動物森友會</a></h4>
                       <p>1 x $250</p>
                     </div>                    
                   </li>
                    <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">健身環大冒險</a></h4>
                       <p>1 x $250</p>
@@ -777,23 +743,25 @@
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.js"></script>  
+  <script src="<%=path%>/front_end/product/js/bootstrap.js"></script>  
   <!-- SmartMenus jQuery plugin -->
-  <script type="text/javascript" src="js/jquery.smartmenus.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.smartmenus.js"></script>
   <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>  
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.smartmenus.bootstrap.js"></script>  
   <!-- To Slider JS -->
-  <script src="js/sequence.js"></script>
+  <script src="<%=path%>/front_end/product/js/sequence.js"></script>
 <!--   <script src="js/sequence-theme.modern-slide-in.js"></script>   -->
   <!-- Product view slider -->
-  <script type="text/javascript" src="js/jquery.simpleGallery.js"></script>
-  <script type="text/javascript" src="js/jquery.simpleLens.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.simpleGallery.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.simpleLens.js"></script>
   <!-- slick slider -->
-  <script type="text/javascript" src="js/slick.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/slick.js"></script>
   <!-- Price picker slider -->
-  <script type="text/javascript" src="js/nouislider.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/nouislider.js"></script>
   <!-- Custom js -->
-  <script src="js/custom.js"></script> 
-
+  <script src="<%=path%>/front_end/product/js/custom.js"></script> 
+<script> $("select.aa-select").change(function(){
+	$("form.aa-sort-form").submit();
+}) ;  </script>
   </body>
 </html>

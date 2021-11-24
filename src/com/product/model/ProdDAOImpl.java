@@ -9,7 +9,7 @@ public interface ProdDAOImpl {
 	public ProdVO findProductByPK(Integer prodId);
 	public List<ProdVO> getAll();
 	public Integer getLastKey();
-		
+	public List<ProdVO> priceSortDec();	
 	
 	
 }

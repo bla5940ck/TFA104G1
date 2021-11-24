@@ -251,10 +251,104 @@ public class ProdDAO implements ProdDAOImpl {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 		
 		return lastKey;
 	}
 	
+	
+	
+	public List<ProdVO> priceSortDec(){
+		List<ProdVO> list = new ArrayList();
+		String sql = "select * from product group by prod_id order by prod_rent;";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProdVO prod = new ProdVO();
+				prod.setProdID(rs.getInt("prod_id"));
+				prod.setCategoryID(rs.getInt("category_id"));
+				prod.setMemberID(rs.getInt("member_id"));
+				prod.setProdStatus(rs.getInt("prod_status"));
+				prod.setProdName(rs.getString("prod_name"));
+				prod.setProdCot(rs.getString("prod_cot"));
+				prod.setShelfDate(rs.getTimestamp("shelf_date"));
+				prod.setCreationDate(rs.getTimestamp("creation_date"));
+				prod.setProdRent(rs.getInt("prod_rent"));
+				prod.setProdPrice(rs.getInt("prod_price"));
+				prod.setPic1(rs.getBytes("pic_1"));
+				prod.setPic2(rs.getBytes("pic_2"));
+				prod.setPic3(rs.getBytes("pic_3"));
+				prod.setComt(rs.getString("comt"));
+
+				list.add(prod);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	
+	public static void main(String[] args) {
+		ProdDAO dao = new ProdDAO();
+		List<ProdVO> list = dao.priceSortDec();
+		for(ProdVO p :list) {
+			System.out.println(p.getProdRent());
+		}
+	}
 
 }

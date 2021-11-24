@@ -21,7 +21,7 @@ public class ProdService {
 		prod.setProdPrice(price);
 		prod.setComt(comt);
 		prod.setProdCot(cot);
-		prod.setProdStatus(0);// «Ý¤W¬[¥N½X
+		prod.setProdStatus(0);// ï¿½Ý¤Wï¿½[ï¿½Nï¿½X
 		prod.setPic1(pic1);
 		prod.setPic2(pic2);
 		prod.setPic3(pic3);
@@ -55,6 +55,9 @@ public class ProdService {
 	}
 	public ProdVO findProductByPK(Integer prodId) {
 		return dao.findProductByPK(prodId);
+	}
+	public List<ProdVO> getSortDec(){
+		return dao.priceSortDec();
 	}
 
 	

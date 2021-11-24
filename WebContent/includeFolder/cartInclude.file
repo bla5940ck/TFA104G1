@@ -42,8 +42,8 @@
 
 	
 	
-	if (request.getParameter("picno") != null) {
-		prodID = Integer.parseInt(request.getParameter("picno"));
+	if (request.getParameter("picNo") != null) {
+		prodID = Integer.parseInt(request.getParameter("picNo"));
 		product = prodSvc.findProductByPK(prodID);
 
 	}
