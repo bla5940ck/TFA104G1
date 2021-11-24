@@ -596,7 +596,7 @@ $("a.remove").click(function(){
 		 
   		
 	    $.ajax({
-	      url: "<%=request.getContextPath()%>prod/ProdServlet",           // 資料請求的網址
+	      url: "<%=request.getContextPath()%>/prod/ProdServlet",           // 資料請求的網址
 	      type: "POST",                
 	      data: {
 	    	  prodID: prodid,
