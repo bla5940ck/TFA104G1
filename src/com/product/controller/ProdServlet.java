@@ -45,7 +45,7 @@ public class ProdServlet extends HttpServlet {
 				
 				BookingDAO bkDao = new BookingDAO();
 				List<BookingVO> list = bkDao.getAll();
-				//??��?�歸??�日比現?��??��?? 
+				//歸還時間比現在時間小 
 				for (BookingVO bk : list) {
 					if ((bk.getEstEnd().getTime() + 24*60*60*1000) < new Date().getTime()) {
 						bk.setStatus(2);
@@ -94,7 +94,7 @@ public class ProdServlet extends HttpServlet {
 			}
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(req.getContextPath() + "/product_view/ModifyProdPage.jsp");
+						.getRequestDispatcher(req.getContextPath() + "/front_end/product/ModifyProdPage.jsp");
 				failureView.forward(req, res);
 				return;
 
@@ -159,8 +159,8 @@ public class ProdServlet extends HttpServlet {
 
 			req.getSession().setAttribute("prodID", dao.getLastKey());
 
-			res.sendRedirect(req.getContextPath() + "/product_view/showUpdload.jsp");
-//			req.getRequestDispatcher("/product_view/showUpdload.jsp").forward(req, res);
+			res.sendRedirect(req.getContextPath() + "/front_end/product/showUpdload.jsp");
+//			req.getRequestDispatcher("/front_end/product/showUpdload.jsp").forward(req, res);
 			return;
 
 		}
@@ -241,7 +241,7 @@ public class ProdServlet extends HttpServlet {
 			String cot = req.getParameter("product_cot");
 
 			if (cot == null || (cot.trim().length() == 0)) {
-				errorMsgs.add("??��?�內容�?�能?��空白");
+				errorMsgs.add("商品內容不能為空白");
 
 			}
 
@@ -262,7 +262,7 @@ public class ProdServlet extends HttpServlet {
 			int status = 0;
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("proVO", prodVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/product_view/ModifyProdPage.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/ModifyProdPage.jsp");
 				failureView.forward(req, res);
 				return;
 
@@ -371,7 +371,7 @@ public class ProdServlet extends HttpServlet {
 				
 				
 				
-				//?��??��?�傳??��?��?�編??? 來刪?��??��??
+				
 				if(memberID!=null) {
 				List<String> cart = jedis.lrange("member"+memberID, 0, jedis.llen("member"+memberID));
 				for(String item : cart) {
@@ -429,7 +429,7 @@ public class ProdServlet extends HttpServlet {
 					edate = new java.sql.Date(df.parse(endDate).getTime());
 				} catch (Exception e) {
 					
-					errorMsgs.add("����榡��yyyy-MM-DD");
+					errorMsgs.add("日期格式為 yyyy-MM-DD");
 				}
 				
 			
@@ -446,7 +446,7 @@ public class ProdServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("bk",bk);
-					RequestDispatcher failureView = req.getRequestDispatcher("/product_view/productDetail.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/productDetail.jsp");
 					failureView.forward(req, res);
 					return;
 
