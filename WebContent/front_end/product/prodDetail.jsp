@@ -15,7 +15,11 @@
   width: 45px;
   height: 55px;
 }
-
+img.simpleLens-big-image {
+ object-fit: contain;
+  width: 350px;
+  height: 300px;
+}
 
 </style> 
   <head>
@@ -391,12 +395,12 @@
                   <div class="aa-product-view-content">
                     <h3>SwitchOLED</h3>
                     <div class="aa-price-block">
-                      <span class="aa-product-view-price">$<%=product.getProdRent()%></span>
-                      <p class="aa-product-avilability">庫存狀態: <span>有庫存</span></p>
+                   	   租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
+                                              商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice() %></span>
                     </div>
-                    <p><%=product.getProdCot() %></p>
-                    <td class="start">預計租借日期:<input id="startDate" type="text"><br>
-								預計歸還日期:<input id="endDate" type="text"><br>
+                 	   備註: <span><%=product.getComt() %></span><br>
+                    <td class="start">預計租借日期: <input id="startDate" type="text"><br>
+								預計歸還日期: <input id="endDate" type="text"><br>
 							</td>
 								<td>金額試算: <label id="subtotal" style="color: red"></label>元<input
 								type="button" value="試算" id="subtotal_btn">
@@ -426,16 +430,31 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div class="tab-pane fade in active" id="description">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                  <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor qui eius esse!</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, modi!</li>
-                  </ul>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
+                
+               
+         		
+                 
+                 
+                 <%
+                		 char c[] = product.getProdCot().toCharArray();
+                 		for(int i =0 ;i<c.length;i++){
+                 			if(i%59==0){
+                 				out.print("<p>");
+                 			}
+                 			%>
+                 			<%=c[i]%>
+                 			
+                 		<%
+                 		if(i%60==0 &&i!=0){
+                 			out.print("</p>");
+                 		}}%>
+                 	
+                 	
+            
+                
+               
+                 
+                
                 </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">
