@@ -90,8 +90,8 @@ input.submit_btn:hover{
 			id="product_name"><br> 商品租金<input type="text"
 			name="product_rent" id="product_rent"><br> 商品損壞賠償金<input
 			type="text" name="product_price" id="product_price"><br>
-		商品內容<input type="text" style="padding: 90px" name="product_cot"
-			id="product_cot"><br> 備註<input type=text name="comt"
+			商品內容<br><textarea name="product_cot" cols="20" rows="3"></textarea><br>
+		 備註<input type=text name="comt"
 			id="comt"><br> <input type=hidden id="fileCount"
 			name="fileCount"><br> 
 			
