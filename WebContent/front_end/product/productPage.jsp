@@ -363,7 +363,7 @@
                 <!-- start single product item -->
                
 <!--                 /遞減排列 -->
-                <c:if test="${'dec'==flag}">
+                <c:if test="${'asc'==flag}">
                 	<c:forEach var="prodEL" items="${prodList}">
 					    <c:if test="${prodEL.prodStatus==1}">
 					    <li>
@@ -385,6 +385,34 @@
 					 </c:if>	
 			</c:forEach>
                  </c:if>	
+<!--                  	遞增排列 -->
+
+
+                 	<c:if test="${'desc'==flag}">
+                	<c:forEach var="prodEL" items="${prodList}">
+					    <c:if test="${prodEL.prodStatus==1}">
+					    <li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span>
+                       <p class="aa-product-descrip">${prodEL.prodCot}</p>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                    <span class="aa-badge aa-hot" href="#">很搶手</span>
+                </li>	
+					 </c:if>	
+			</c:forEach>
+                 </c:if>
+                 
+                 
+                 	
                  	
                  	
 <!--                  一般排列 -->

@@ -393,17 +393,29 @@ public class ProdServlet extends HttpServlet {
 			
 	///////////////商品篩選///////////////////////
 			if("select".equals(req.getParameter("action"))) {
+				ProdService prodSvc = new ProdService();
 				System.out.println(req.getParameter("prodSelect"));
 				if(req.getParameter("prodSelect").equals("2")) {
 					//依價格排序
-					ProdService prodSvc = new ProdService();
-					List<ProdVO> list = prodSvc.getSortDec();
-					req.setAttribute("flag", "dec");
+					
+					List<ProdVO> list = prodSvc.getSortAsc();
+					req.setAttribute("flag", "asc");
 					req.setAttribute("prodList", list);
 					
 					req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
 					return;
-				}else {
+				}else if(req.getParameter("prodSelect").equals("3")) {
+					List<ProdVO> list = prodSvc.getSortDesc();
+					req.setAttribute("flag", "desc");
+					req.setAttribute("prodList", list);
+					
+					req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
+					return;
+				}
+				
+				
+				
+				else {
 					req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
 					return;
 				}

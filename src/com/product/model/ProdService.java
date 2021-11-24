@@ -56,8 +56,11 @@ public class ProdService {
 	public ProdVO findProductByPK(Integer prodId) {
 		return dao.findProductByPK(prodId);
 	}
-	public List<ProdVO> getSortDec(){
-		return dao.priceSortDec();
+	public List<ProdVO> getSortAsc(){
+		return dao.priceSortAsc();
+	}
+	public List<ProdVO> getSortDesc(){
+		return dao.priceSortDesc();
 	}
 
 	
