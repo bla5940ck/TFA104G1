@@ -157,9 +157,9 @@ img.simpleLens-big-image{
               <!-- logo  -->
               <div class="aa-logo">
                 <!-- Text based logo -->
-                <a href="index copy.html">
+                <a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp">
                   
-                  <img src="img\logo_org_noframe_191561.png" alt="">
+                  <img src="<%=request.getContextPath()%>\front_end\product\img\logo_org_noframe_191561.png" alt="">
                   <!-- <p>JoyLease</p> -->
                   <!-- <span class="fa fa-shopping-cart"></span> --> 
                   
@@ -1086,6 +1086,44 @@ var disableddates = new Array();
 	});
 
 </script> 
+
+<% 
+//瀏覽圖片儲存
+Integer cookieID=0;
+Boolean flag = false;
+ProdVO prodCookie =null;
+if("y".equals(request.getParameter("cookie"))){
+	cookieID=Integer.valueOf(request.getParameter("picNo"));
+	System.out.println("cookie");
+	prodCookie = prodSvc.findProductByPK(cookieID);
+}
+
+	List<ProdVO> listCookie = (List<ProdVO>) session.getAttribute("listCookie");
+	if(listCookie!=null && cookieID!=0) {
+		if(listCookie.size()>=3){ //大於三張圖片 刪除第一張 
+			listCookie.remove(0);
+		}
+		for(ProdVO p:listCookie ){ 
+				flag = flag|| (p.getProdID()==cookieID);
+		}	//假如編號有重複 就不加入瀏覽清單
+		if(!flag){
+			listCookie.add(prodCookie);
+		}
+		session.setAttribute("listCookie", listCookie);
+	}
+	//還沒瀏覽時，new 一個list
+	if (listCookie == null) {
+		listCookie = new ArrayList();
+		listCookie.add(prodCookie);
+		session.setAttribute("listCookie", listCookie);
+		
+	}
+
+
+
+
+%>
+
 
 
   </body>

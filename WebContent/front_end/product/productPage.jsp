@@ -55,7 +55,11 @@
   height: 300px;
 }</style> 
   <body> 
-   <%session.setAttribute("id", 1); %>
+   <%session.setAttribute("id", 1);
+
+   
+   %>
+   
    <!-- wpf loader Two -->
     <div id="wpf-loader-two">          
       <div class="wpf-loader-two-inner">
@@ -144,7 +148,7 @@
                 <!-- Text based logo -->
                 <a href="index copy.html">
                   
-                  <img src="img\logo_org_noframe_191561.png" alt="">
+                  <img src="<%=request.getContextPath()%>\front_end\product\img\logo_org_noframe_191561.png" alt="">
                   <!-- <p>JoyLease</p> -->
                   <!-- <span class="fa fa-shopping-cart"></span> --> 
                   
@@ -386,7 +390,7 @@
 					    <c:if test="${prodEL.prodStatus==1}">
 					    <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}">
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=${prodEL.prodID}">
                     <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
                     <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
@@ -411,7 +415,7 @@
 					    <c:if test="${prodEL.prodStatus==1}">
 					    <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}">
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=${prodEL.prodID}">
                     <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
                     <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
@@ -448,7 +452,7 @@
            %>   
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picNo=<%=product1.getProdID()%>">
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=<%=product1.getProdID()%>">
                     <img src="<%=request.getContextPath()%>/prod/ProdServlet?picNo=<%=product1.getProdID()%>&no=1&action=detail"></a>
                     <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=<%=product1.getProdID()%>"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
@@ -578,31 +582,27 @@
               </div>                            
             </div> -->
             <!-- single sidebar -->
+            
             <div class="aa-sidebar-widget">
               <h3>最近瀏覽</h3>
               <div class="aa-recently-views">
                 <ul>
+                
+                <c:if test="${not empty listCookie}">
+                <c:forEach var="prodCookie" items="${listCookie}">
+                
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
+                    <a href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodCookie.prodID}" class="aa-cartbox-img"><img alt="img" src="<%=path%>/prod/ProdServlet?action=detail&picNo=${prodCookie.prodID}&no=1"></a>
+                    
                     <div class="aa-cartbox-info">
-                      <h4><a href="#">PS5</a></h4>
-                      <p>1 x $250</p>
+                      <p>${prodCookie.prodName}</p>
+                      <h4><a href="#"></a></h4>
+                      <p>$${prodCookie.prodRent}</p>
                     </div>                    
                   </li>
-                  <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-1.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">動物森友會</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>
-                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">寶可夢</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>                                      
+              
+                   </c:forEach>   
+                   </c:if>                           
                 </ul>
               </div>                            
             </div>
@@ -806,6 +806,10 @@
   <script src="<%=path%>/front_end/product/js/custom.js"></script> 
 <script> $("select.aa-select").change(function(){
 	$("form.aa-sort-form").submit();
-}) ;  </script>
+}) ; 
+
+
+
+</script>
   </body>
 </html>

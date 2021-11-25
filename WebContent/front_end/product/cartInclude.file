@@ -17,14 +17,13 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="web.product.jedis.JedisPoolUtil"%>
 <%@page import="redis.clients.jedis.Jedis"%>
 <%@page import="redis.clients.jedis.JedisPool"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.*"%>
-<%@page import="com.product.jedis.JedisPoolUtil"%>
-<%@page import="com.product.model.*"%>
-<%@page import="com.booking.model.*"%>
-<%@page import="com.category.model.*"%>
+<%@page import="web.product.model.*"%>
+
 
  <%
   Integer memberID = (Integer)session.getAttribute("id");
@@ -42,8 +41,8 @@
 
 	
 	
-	if (request.getParameter("picNo") != null) {
-		prodID = Integer.parseInt(request.getParameter("picNo"));
+	if (request.getParameter("picno") != null) {
+		prodID = Integer.parseInt(request.getParameter("picno"));
 		product = prodSvc.findProductByPK(prodID);
 
 	}
@@ -75,7 +74,7 @@
               
                <!-- cart box -->
               <div class="aa-cartbox">
-                <a class="aa-cart-link" href="<%=path%>/front_end/product/cart.jsp">
+                <a class="aa-cart-link" href="<%=path%>/product_view/cart.jsp">
                   <span class="fa fa-shopping-basket"></span>
                   <span class="aa-cart-title">我的購物車</span>
                   <span class="aa-cart-notify"></span>
@@ -93,7 +92,7 @@
                     tatol1 +=cartVO2.getTatolPrice();
                     %>
                     <li>
-                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?picNo=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
+                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/product_view/prodDetail.jsp?picno=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#"><%=cartVO2.getProdName() %></a></h4>
                         <p><%=day%>天*$<%=cartVO2.getRent()%></p>
