@@ -1,4 +1,4 @@
-package web.chat_room.model;
+package com.chat_room.model;
 
 import java.sql.Timestamp;
 

@@ -1,4 +1,4 @@
-package web.pb_reply.model;
+package com.pb_reply.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 public class pb_replyJNDIDAO implements pb_replyDAO_interface {
 	
-	// ¤@­ÓÀ³¥Îµ{¦¡¤¤,°w¹ï¤@­Ó¸ê®Æ®w ,¦@¥Î¤@­ÓDataSource§Y¥i
+	// ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Îµ{ï¿½ï¿½ï¿½ï¿½,ï¿½wï¿½ï¿½@ï¿½Ó¸ï¿½Æ®w ,ï¿½@ï¿½Î¤@ï¿½ï¿½DataSourceï¿½Yï¿½i
 		private static DataSource ds = null;
 		static {
 			try {
@@ -176,7 +176,7 @@ public class pb_replyJNDIDAO implements pb_replyDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				pb_replyVO = new pb_replyVO();
 				pb_replyVO.setReply_id(rs.getInt("reply_id"));
 				pb_replyVO.setPost_id(rs.getInt("post_id"));
@@ -232,7 +232,7 @@ public class pb_replyJNDIDAO implements pb_replyDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				pb_replyVO = new pb_replyVO();
 				pb_replyVO.setReply_id(rs.getInt("reply_id"));
 				pb_replyVO.setPost_id(rs.getInt("post_id"));

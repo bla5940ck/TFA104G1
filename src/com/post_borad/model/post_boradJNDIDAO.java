@@ -1,4 +1,4 @@
-package web.post_borad.model;
+package com.post_borad.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -181,7 +181,7 @@ public class post_boradJNDIDAO implements post_boradDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				post_boradVO = new post_boradVO();
 				post_boradVO.setPost_id(rs.getInt("post_id"));
 				post_boradVO.setCategory_id(rs.getInt("category_id"));
@@ -239,7 +239,7 @@ public class post_boradJNDIDAO implements post_boradDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				post_boradVO = new post_boradVO();
 				post_boradVO.setPost_id(rs.getInt("post_id"));
 				post_boradVO.setCategory_id(rs.getInt("category_id"));

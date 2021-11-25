@@ -1,4 +1,4 @@
-package web.post_borad.model;
+package com.post_borad.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 public class post_boradDAO implements post_boradDAO_interface {
 	
-	// ¤@­ÓÀ³¥Îµ{¦¡¤¤,°w¹ï¤@­Ó¸ê®Æ®w ,¦@¥Î¤@­ÓDataSource§Y¥i
+	// ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Îµ{ï¿½ï¿½ï¿½ï¿½,ï¿½wï¿½ï¿½@ï¿½Ó¸ï¿½Æ®w ,ï¿½@ï¿½Î¤@ï¿½ï¿½DataSourceï¿½Yï¿½i
 		private static DataSource ds = null;
 		static {
 			try {
@@ -184,7 +184,7 @@ public class post_boradDAO implements post_boradDAO_interface {
 					rs = pstmt.executeQuery();
 
 					while (rs.next()) {
-						// empVo ¤]ºÙ¬° Domain objects
+						// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 						post_boradVO = new post_boradVO();
 						post_boradVO.setPost_id(rs.getInt("post_id"));
 						post_boradVO.setCategory_id(rs.getInt("category_id"));
@@ -243,7 +243,7 @@ public class post_boradDAO implements post_boradDAO_interface {
 					rs = pstmt.executeQuery();
 
 					while (rs.next()) {
-						// empVO ¤]ºÙ¬° Domain objects
+						// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 						post_boradVO = new post_boradVO();
 						post_boradVO.setPost_id(rs.getInt("post_id"));
 						post_boradVO.setCategory_id(rs.getInt("category_id"));

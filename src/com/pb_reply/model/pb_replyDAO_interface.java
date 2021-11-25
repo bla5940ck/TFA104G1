@@ -1,4 +1,4 @@
-package web.pb_reply.model;
+package com.pb_reply.model;
 
 import java.util.*;
 
@@ -10,7 +10,7 @@ public interface pb_replyDAO_interface {
     public void delete(Integer reply_id);
     public pb_replyVO findByPrimaryKey(Integer pb_replyVO);
     public List<pb_replyVO> getAll();
-    //¸U¥Î½Æ¦X¬d¸ß(¶Ç¤J°Ñ¼Æ«¬ºAMap)(¦^¶Ç List)
+    //ï¿½Uï¿½Î½Æ¦Xï¿½dï¿½ï¿½(ï¿½Ç¤Jï¿½Ñ¼Æ«ï¿½ï¿½AMap)(ï¿½^ï¿½ï¿½ List)
 //  public List<EmpVO> getAll(Map<String, String[]> map); 
 
 }

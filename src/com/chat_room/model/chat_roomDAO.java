@@ -1,4 +1,4 @@
-package web.chat_room.model;
+package com.chat_room.model;
 
 import java.util.*;
 import java.sql.*;
@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 public class chat_roomDAO implements chat_roomDAO_interface {
 	
-	// ¤@­ÓÀ³¥Îµ{¦¡¤¤,°w¹ï¤@­Ó¸ê®Æ®w ,¦@¥Î¤@­ÓDataSource§Y¥i
+	// ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Îµ{ï¿½ï¿½ï¿½ï¿½,ï¿½wï¿½ï¿½@ï¿½Ó¸ï¿½Æ®w ,ï¿½@ï¿½Î¤@ï¿½ï¿½DataSourceï¿½Yï¿½i
 		private static DataSource ds = null;
 		static {
 			try {

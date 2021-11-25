@@ -1,4 +1,4 @@
-package web.chat_room.model;
+package com.chat_room.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -135,7 +135,7 @@ public class chat_roomJDBCDAO implements chat_roomDAO_interface {
 			pstmt.setInt(1, chat_room_No);
 
 			pstmt.executeUpdate();
-			//°õ¦æ
+			//ï¿½ï¿½ï¿½ï¿½
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
@@ -243,7 +243,7 @@ public class chat_roomJDBCDAO implements chat_roomDAO_interface {
 				rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				chat_roomVO = new chat_roomVO();
 				chat_roomVO.setChat_room_No(rs.getInt("chat_room_No"));
 				chat_roomVO.setRent_id(rs.getInt("rent_id"));
@@ -295,7 +295,7 @@ public class chat_roomJDBCDAO implements chat_roomDAO_interface {
 			long time = System.currentTimeMillis();
 			Timestamp timestamp = new Timestamp(time);
 			
-			// ·s¼W--ok
+			// ï¿½sï¿½W--ok
 //			chat_roomVO chatVO1 = new chat_roomVO();
 //			chatVO1.setChat_room_No(4);
 //			chatVO1.setRent_id(1);
@@ -305,7 +305,7 @@ public class chat_roomJDBCDAO implements chat_roomDAO_interface {
 //			chatVO1.setChat_time(timestamp);
 //			dao.insert(chatVO1);
 
-//			// ­×§ï--ok
+//			// ï¿½×§ï¿½--ok
 //			chat_roomVO chatVO2 = new chat_roomVO();
 //			chatVO2.setChat_room_No(5);
 //			chatVO2.setRent_id(1);
@@ -315,10 +315,10 @@ public class chat_roomJDBCDAO implements chat_roomDAO_interface {
 //			chatVO2.setChat_time(timestamp);
 //			dao.insert(chatVO2);
 //
-//			// §R°£--ok
+//			// ï¿½Rï¿½ï¿½--ok
 //			dao.delete(5);
 //
-////		// ¬d¸ß--ok
+////		// ï¿½dï¿½ï¿½--ok
 //			chat_roomVO chatVO4 = new chat_roomVO();
 //			chatVO4.setChat_room_No(2);
 //			chatVO4.setRent_id(1);
@@ -329,7 +329,7 @@ public class chat_roomJDBCDAO implements chat_roomDAO_interface {
 //			dao.findByPrimaryKey(2);
 //			System.out.println(chatVO4.getChat_room_No());
 //
-//			// ¬d¸ß--ok
+//			// ï¿½dï¿½ï¿½--ok
 //			List<chat_roomVO> list = dao.getAll();
 //			for (chat_roomVO cChat : list) {
 //			System.out.print(cChat.getChat_room_No() + ",");

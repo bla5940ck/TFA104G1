@@ -1,4 +1,4 @@
-package web.post_borad.model;
+package com.post_borad.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -240,7 +240,7 @@ public class post_boradJDBCDAO implements post_boradDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				post_boradVO = new post_boradVO();
 				post_boradVO.setPost_id(rs.getInt("post_id"));
 				post_boradVO.setCategory_id(rs.getInt("category_id"));
@@ -292,7 +292,7 @@ public class post_boradJDBCDAO implements post_boradDAO_interface {
 		long time = System.currentTimeMillis();
 		Timestamp timestamp = new Timestamp(time);
 
-		// ·s¼W--ok
+		// ï¿½sï¿½W--ok
 //		post_boradVO post_boradVO1 = new post_boradVO();
 //		post_boradVO1.setPost_id(5);
 //		post_boradVO1.setCategory_id(1);
@@ -303,7 +303,7 @@ public class post_boradJDBCDAO implements post_boradDAO_interface {
 //		post_boradVO1.setReply_count(0);
 //		dao.insert(post_boradVO1);
 
-//		// ­×§ï--ok
+//		// ï¿½×§ï¿½--ok
 //		post_boradVO post_boradVO2 = new post_boradVO();
 //		post_boradVO2.setPost_id(6);
 //		post_boradVO2.setCategory_id(1);
@@ -314,10 +314,10 @@ public class post_boradJDBCDAO implements post_boradDAO_interface {
 //		post_boradVO2.setReply_count(0);
 //		dao.insert(post_boradVO2);
 //
-//		// §R°£--ok
+//		// ï¿½Rï¿½ï¿½--ok
 //		dao.delete(6);
 //
-//		// ¬d¸ß--ok
+//		// ï¿½dï¿½ï¿½--ok
 //		post_boradVO pbVO3 = new post_boradVO();
 //		pbVO3.setPost_id(1);
 //		pbVO3.setCategory_id(1);
@@ -334,7 +334,7 @@ public class post_boradJDBCDAO implements post_boradDAO_interface {
 //		System.out.print(pbVO3.getPost_time()+ ",");
 //		System.out.print(pbVO3.getReply_count()+ ",");
 
-//		// ¬d¸ß--ok
+//		// ï¿½dï¿½ï¿½--ok
 		List<post_boradVO> list = dao.getAll();
 		for (post_boradVO pPost : list) {
 			System.out.print(pPost.getPost_id() + ",");

@@ -1,4 +1,4 @@
-package web.pb_reply.model;
+package com.pb_reply.model;
 
 import java.sql.Timestamp;
 

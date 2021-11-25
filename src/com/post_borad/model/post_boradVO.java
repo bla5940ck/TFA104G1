@@ -1,4 +1,4 @@
-package web.post_borad.model;
+package com.post_borad.model;
 
 import java.sql.Timestamp;
 

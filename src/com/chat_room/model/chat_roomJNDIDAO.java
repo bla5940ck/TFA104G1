@@ -1,4 +1,4 @@
-package web.chat_room.model;
+package com.chat_room.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -235,7 +235,7 @@ public class chat_roomJNDIDAO implements chat_roomDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				chat_roomVO = new chat_roomVO();
 				chat_roomVO.setChat_room_No(rs.getInt("chat_room_No"));
 				chat_roomVO.setRent_id(rs.getInt("rent_id"));

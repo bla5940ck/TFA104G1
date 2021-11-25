@@ -1,4 +1,4 @@
-package web.pb_reply.model;
+package com.pb_reply.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -137,7 +137,7 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 			pstmt.setInt(1, reply_id);
 
 			pstmt.executeUpdate();
-			//°õ¦æ
+			//ï¿½ï¿½ï¿½ï¿½
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
@@ -184,7 +184,7 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				pb_replyVO = new pb_replyVO();
 				pb_replyVO.setReply_id(rs.getInt("reply_id"));
 				pb_replyVO.setPost_id(rs.getInt("post_id"));
@@ -245,7 +245,7 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				pb_replyVO = new pb_replyVO();
 				pb_replyVO.setReply_id(rs.getInt("reply_id"));
 				pb_replyVO.setPost_id(rs.getInt("post_id"));
@@ -296,7 +296,7 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 		long time = System.currentTimeMillis();
 		Timestamp timestamp = new Timestamp(time);
 
-		// ·s¼W--ok
+		// ï¿½sï¿½W--ok
 //		pb_replyVO pb_replyVO1 = new pb_replyVO();
 //		pb_replyVO1.setReply_id(5);
 //		pb_replyVO1.setPost_id(1);
@@ -305,7 +305,7 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 //		pb_replyVO1.setReply_time(timestamp);
 //		dao.insert(pb_replyVO1);
 
-//		// ­×§ï--ok
+//		// ï¿½×§ï¿½--ok
 //		pb_replyVO pb_replyVO2 = new pb_replyVO();
 //		pb_replyVO2.setReply_id(4);
 //		pb_replyVO2.setPost_id(1);
@@ -315,10 +315,10 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 //		dao.insert(pb_replyVO2);
 	
 //
-//		// §R°£--ok
+//		// ï¿½Rï¿½ï¿½--ok
 //		dao.delete(4);
 //
-//		// ¬d¸ß--ok
+//		// ï¿½dï¿½ï¿½--ok
 //		pb_replyVO pb_replyVO3 = new pb_replyVO();
 //		pb_replyVO3.setReply_id(1);
 //		pb_replyVO3.setPost_id(1);
@@ -333,7 +333,7 @@ public class pb_replyJDBCDAO implements pb_replyDAO_interface {
 //		System.out.print(pb_replyVO3.getReply_time() + ",");
 
 //
-//		// ¬d¸ß --ok
+//		// ï¿½dï¿½ï¿½ --ok
 		List<pb_replyVO> list = dao.getAll();
 		for (pb_replyVO pbReply : list) {
 			System.out.print(pbReply.getReply_id() + ",");
