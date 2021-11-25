@@ -7,17 +7,17 @@ public class OrderListVO implements Serializable {
 	private Integer listID;
 	private Integer prodID;
 	private Integer ordID;
-	private Integer price;	//�ӫ~���B
+	private Integer prodPrice;	//�ӫ~���B
 	private Integer status;
 	private Date estStart;
 	private Date estEnd;
 
-	public OrderListVO(Integer listID, Integer prodID, Integer ordID, Integer price, Integer status, Date estStart, Date estEnd) {
+	public OrderListVO(Integer listID, Integer prodID, Integer ordID, Integer prodPrice, Integer status, Date estStart, Date estEnd) {
 		super();
 		this.listID = listID;
 		this.prodID = prodID;
 		this.ordID = ordID;
-		this.price = price;
+		this.prodPrice = prodPrice;
 		this.status = status;
 		this.estStart = estStart;
 		this.estEnd = estEnd;
@@ -44,11 +44,11 @@ public class OrderListVO implements Serializable {
 	public void setOrdID(Integer ordID) {
 		this.ordID = ordID;
 	}
-	public Integer getPrice() {
-		return price;
+	public Integer getProdPrice() {
+		return prodPrice;
 	}
-	public void setPrice(Integer price) {
-		this.price = price;
+	public void setProdPrice(Integer prodPrice) {
+		this.prodPrice = prodPrice;
 	}
 	
 	public Integer getStatus() {
@@ -71,7 +71,7 @@ public class OrderListVO implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "OrderListVO [listID=" + listID + ", prodID=" + prodID + ", ordID=" + ordID + ", price=" + price
+		return "OrderListVO [listID=" + listID + ", prodID=" + prodID + ", ordID=" + ordID + ", prodPrice=" + prodPrice
 				+ ", status=" + status + ", estStart=" + estStart + ", estEnd=" + estEnd + "]";
 	}
 }
