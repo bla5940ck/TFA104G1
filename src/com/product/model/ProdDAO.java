@@ -168,7 +168,7 @@ public class ProdDAO implements ProdDAOImpl {
 	@Override
 	public List<ProdVO> getAll() {
 		List<ProdVO> prodList = new ArrayList<ProdVO>();
-		String sql = "select * from product";
+		String sql = "select * from product group by prod_id order by shelf_date desc";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

@@ -175,7 +175,13 @@ public class ProdServlet extends HttpServlet {
 				prodID = Integer.parseInt(req.getParameter("prodID"));
 			}
 			ProdVO prod = prodDao.findProductByPK(prodID);
-
+			Cookie cookie = null;
+			cookie = new Cookie("cookis_id", String.valueOf(prodID));
+			cookie.setMaxAge(60);
+			cookie.setPath(req.getContextPath()+"/prod/ProdServlet");
+			res.addCookie(cookie);
+			Cookie[] cookies = req.getCookies();
+			
 			OutputStream os = res.getOutputStream();
 			byte[] pic1 = prod.getPic1();
 			byte[] pic2 = prod.getPic2();
@@ -387,9 +393,7 @@ public class ProdServlet extends HttpServlet {
 			
 			}
 			
-			
-			
-			
+		
 			
 	///////////////商品篩選///////////////////////
 			if("select".equals(req.getParameter("action"))) {
@@ -416,6 +420,7 @@ public class ProdServlet extends HttpServlet {
 				
 				
 				else {
+					req.setAttribute("flag", "time");
 					req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
 					return;
 				}

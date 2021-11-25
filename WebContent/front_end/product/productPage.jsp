@@ -331,27 +331,45 @@
               <div class="aa-product-catg-head-left">
                 <form action="<%=path%>/prod/ProdServlet" class="aa-sort-form">
                   <label for="">篩選</label>
+                  
+                  
+                  
+                  
                   <select name="prodSelect" class="aa-select">
-                    <option value="1" selected="Default">最相關</option>
-                    <option value="2">價格-低到高</option>
+                       <c:if test="${'asc'==flag}">             
+                    <option value="1"  >上架時間</option>
+                    <option value="2" selected="Default">價格-低到高</option>
                     <option value="3">價格-高到低</option>
-                    <option value="4">最新款</option>
                     <!-- <option value="4"></option> -->
+                   </c:if>
+                  
+                   <c:if test="${'desc'==flag}">             
+                    <option value="1"  >上架時間</option>
+                    <option value="2" >價格-低到高</option>
+                    <option value="3" selected="Default">價格-高到低</option>
+                    <!-- <option value="4"></option> -->
+                  
+                   </c:if >
+                    <c:if test="${empty flag or 'time'==flag}">
+                    <option value="1" selected="Default" >上架時間</option>
+                    <option value="2" >價格-低到高</option>
+                    <option value="3" >價格-高到低</option>
+                     </c:if>
                     <input type="hidden" name = "action" value="select">
 <!--                     <input type="submit"> -->
 
-
-
                   </select>
-                </form>
-                <form action="" class="aa-show-form">
-                  <label for="">顯示筆數</label>
-                  <select name="">
-                    <option value="1" selected="12">12</option>
-                    <option value="2">24</option>
-                    <option value="3">36</option>
-                  </select>
-                </form>
+<!--                 </form> -->
+<!--                 <form action="" class="aa-show-form"> -->
+<!--                   <label for="">顯示筆數</label> -->
+<!--                   <select name=""> -->
+                   
+<!--                     <option value="1" selected="12">12</option> -->
+<!--                     <option value="2">24</option> -->
+<!--                     <option value="3">36</option> -->
+                
+<!--                   </select> -->
+<!--                 </form> -->
               </div>
               <div class="aa-product-catg-head-right">
                 <a id="grid-catg" href="#"><span class="fa fa-th"></span></a>
@@ -385,9 +403,9 @@
 					 </c:if>	
 			</c:forEach>
                  </c:if>	
-<!--                  	遞增排列 -->
-
-
+                 
+                 
+<!--                  	/遞增排列 -->
                  	<c:if test="${'desc'==flag}">
                 	<c:forEach var="prodEL" items="${prodList}">
 					    <c:if test="${prodEL.prodStatus==1}">
@@ -411,12 +429,10 @@
 			</c:forEach>
                  </c:if>
                  
-                 
-                 	
                  	
                  	
 <!--                  一般排列 -->
-                 <% if(request.getAttribute("flag")==null){
+                 <% if(request.getAttribute("flag")==null ||request.getAttribute("flag")=="time"){
                ProdService prodDao = new ProdService(); 
                List<ProdVO> list1 = new ArrayList<ProdVO>();
       		    list1 = prodDao.getAll();
