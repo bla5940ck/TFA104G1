@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.emp.model.EmpService;
-import com.emp.model.EmpVO;
+import com.promo.model.PromoService;
+import com.promo.model.PromoVO;
 
 public class PromoServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -26,7 +26,7 @@ public class PromoServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		
 		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOne_For_Display".equals(action)) { // 來自select_Promo.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -35,49 +35,49 @@ public class PromoServlet extends HttpServlet {
 
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String str = req.getParameter("empno");
+				String str = req.getParameter("promo_id");
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入員工編號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/promo/select_promo.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
-				Integer empno = null;
+				Integer promo_id = null;
 				try {
-					empno = new Integer(str);
+					promo_id = new Integer(str);
 				} catch (Exception e) {
-					errorMsgs.add("員工編號格式不正確");
+					errorMsgs.add("專案編號格式不正確");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/promo/select_promo.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************2.開始查詢資料*****************************************/
-				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(empno);
-				if (empVO == null) {
+				PromoService promoSvc = new PromoService();
+				PromoVO promoVO = promoSvc.findByPrimaryKey(promo_id);
+				if (promoVO == null) {
 					errorMsgs.add("查無資料");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/promo/select_promo.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
-				String url = "/emp/listOneEmp.jsp";
+				req.setAttribute("promoVO", promoVO); // 資料庫取出的empVO物件,存入req
+				String url = "/promo/listOne_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -85,7 +85,7 @@ public class PromoServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/select_page.jsp");
+						.getRequestDispatcher("/promo/select_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -100,15 +100,15 @@ public class PromoServlet extends HttpServlet {
 			
 			try {
 				/***************************1.接收請求參數****************************************/
-				Integer empno = new Integer(req.getParameter("empno"));
+				Integer promo_id = new Integer(req.getParameter("promo_id"));
 				
 				/***************************2.開始查詢資料****************************************/
-				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(empno);
+				PromoService promoSvc = new PromoService();
+				PromoVO promoVO = promoSvc.findByPrimaryKey(promo_id);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("empVO", empVO);         // 資料庫取出的empVO物件,存入req
-				String url = "/emp/update_emp_input.jsp";
+				req.setAttribute("promoVO", promoVO);         // 資料庫取出的empVO物件,存入req
+				String url = "/promo/update_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 				successView.forward(req, res);
 
@@ -116,7 +116,7 @@ public class PromoServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
+						.getRequestDispatcher("/promo/listAll_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -131,72 +131,82 @@ public class PromoServlet extends HttpServlet {
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-Integer empno = new Integer(req.getParameter("empno").trim());
+Integer promo_id = new Integer(req.getParameter("promo_id").trim());
 				
-String ename = req.getParameter("ename");
-				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (ename == null || ename.trim().length() == 0) {
+String promo_name = req.getParameter("promo_name");
+				String promo_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				if (promo_name == null || promo_name.trim().length() == 0) {
 					errorMsgs.add("員工姓名: 請勿空白");
-				} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+				} else if(!promo_name.trim().matches(promo_name)) { //以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 	            }
 				
-String job = req.getParameter("job").trim();
-				if (job == null || job.trim().length() == 0) {
+				java.sql.Date promo_start = null;
+				try {
+promo_start = java.sql.Date.valueOf(req.getParameter("promo_start").trim());
+				} catch (IllegalArgumentException e) {
+					promo_start=new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+				}
+				
+				java.sql.Date promo_end = null;
+				try {
+promo_end = java.sql.Date.valueOf(req.getParameter("promo_end").trim());
+				} catch (IllegalArgumentException e) {
+					promo_end=new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入日期!");
+				}
+				
+String promo_text = req.getParameter("promo_text").trim();
+				if (promo_text == null || promo_text.trim().length() == 0) {
 					errorMsgs.add("職位請勿空白");
 				}	
 				
-				java.sql.Date hiredate = null;
-				try {
-hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-				} catch (IllegalArgumentException e) {
-					hiredate=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
+				Integer status = new Integer(req.getParameter("status").trim());
+				
+//
+//				Double sal = null;
+//				try {
+//sal = new Double(req.getParameter("sal").trim());
+//				} catch (NumberFormatException e) {
+//					sal = 0.0;
+//					errorMsgs.add("薪水請填數字.");
+//				}
+//
+//				Double comm = null;
+//				try {
+//comm = new Double(req.getParameter("comm").trim());
+//				} catch (NumberFormatException e) {
+//					comm = 0.0;
+//					errorMsgs.add("獎金請填數字.");
+//				}
 
-				Double sal = null;
-				try {
-sal = new Double(req.getParameter("sal").trim());
-				} catch (NumberFormatException e) {
-					sal = 0.0;
-					errorMsgs.add("薪水請填數字.");
-				}
+//Integer deptno = new Integer(req.getParameter("deptno").trim());
 
-				Double comm = null;
-				try {
-comm = new Double(req.getParameter("comm").trim());
-				} catch (NumberFormatException e) {
-					comm = 0.0;
-					errorMsgs.add("獎金請填數字.");
-				}
-
-Integer deptno = new Integer(req.getParameter("deptno").trim());
-
-				EmpVO empVO = new EmpVO();
-				empVO.setEmpno(empno);
-				empVO.setEname(ename);
-				empVO.setJob(job);
-				empVO.setHiredate(hiredate);
-				empVO.setSal(sal);
-				empVO.setComm(comm);
-				empVO.setDeptno(deptno);
+				PromoVO promoVO = new PromoVO();
+				promoVO.setPromo_id(promo_id);
+				promoVO.setPromo_name(promo_name);
+				promoVO.setPromo_start(promo_start);
+				promoVO.setPromo_end(promo_end);
+				promoVO.setPromo_text(promo_text);
+				promoVO.setStatus(status);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("promoVO", promoVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/promo/update_promo.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.updateEmp(empno, ename, job, hiredate, sal,comm, deptno);
+				PromoService promoSvc = new PromoService();
+				promoVO = promoSvc.update(promo_id, promo_name, promo_start, promo_end, promo_text, status);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/emp/listOneEmp.jsp";
+				req.setAttribute("promo", promoVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/promo/listOne_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -204,7 +214,7 @@ Integer deptno = new Integer(req.getParameter("deptno").trim());
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/update_emp_input.jsp");
+						.getRequestDispatcher("/promo/update_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -218,56 +228,69 @@ Integer deptno = new Integer(req.getParameter("deptno").trim());
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-String ename = req.getParameter("ename");
-				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (ename == null || ename.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
-				} else if(!ename.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-	            }
+				Integer promo_id = new Integer(req.getParameter("promo_id").trim());
 				
-String job = req.getParameter("job").trim();
-				if (job == null || job.trim().length() == 0) {
-					errorMsgs.add("職位請勿空白");
-				}
+				String promo_name = req.getParameter("promo_name");
+								String promo_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+								if (promo_name == null || promo_name.trim().length() == 0) {
+									errorMsgs.add("員工姓名: 請勿空白");
+								} else if(!promo_name.trim().matches(promo_name)) { //以下練習正則(規)表示式(regular-expression)
+									errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+					            }
+								
+								java.sql.Date promo_start = null;
+								try {
+				promo_start = java.sql.Date.valueOf(req.getParameter("promo_start").trim());
+								} catch (IllegalArgumentException e) {
+									promo_start=new java.sql.Date(System.currentTimeMillis());
+									errorMsgs.add("請輸入日期!");
+								}
+								
+								java.sql.Date promo_end = null;
+								try {
+				promo_end = java.sql.Date.valueOf(req.getParameter("promo_end").trim());
+								} catch (IllegalArgumentException e) {
+									promo_end=new java.sql.Date(System.currentTimeMillis());
+									errorMsgs.add("請輸入日期!");
+								}
+								
+				String promo_text = req.getParameter("promo_text").trim();
+								if (promo_text == null || promo_text.trim().length() == 0) {
+									errorMsgs.add("職位請勿空白");
+								}	
+								
+								Integer status = new Integer(req.getParameter("status").trim());
+								
 				
-				java.sql.Date hiredate = null;
-				try {
-hiredate = java.sql.Date.valueOf(req.getParameter("hiredate").trim());
-				} catch (IllegalArgumentException e) {
-					hiredate=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-				
-				Double sal = null;
-				try {
-sal = new Double(req.getParameter("sal").trim());
-				} catch (NumberFormatException e) {
-					sal = 0.0;
-					errorMsgs.add("薪水請填數字.");
-				}
-				
-				Double comm = null;
-				try {
-comm = new Double(req.getParameter("comm").trim());
-				} catch (NumberFormatException e) {
-					comm = 0.0;
-					errorMsgs.add("獎金請填數字.");
-				}
-				
-				Integer deptno = new Integer(req.getParameter("deptno").trim());
+//				Double sal = null;
+//				try {
+//sal = new Double(req.getParameter("sal").trim());
+//				} catch (NumberFormatException e) {
+//					sal = 0.0;
+//					errorMsgs.add("薪水請填數字.");
+//				}
+//				
+//				Double comm = null;
+//				try {
+//comm = new Double(req.getParameter("comm").trim());
+//				} catch (NumberFormatException e) {
+//					comm = 0.0;
+//					errorMsgs.add("獎金請填數字.");
+//				}
+//				
+//				Integer deptno = new Integer(req.getParameter("deptno").trim());
 
-				EmpVO empVO = new EmpVO();
-				empVO.setEname(ename);
-				empVO.setJob(job);
-				empVO.setHiredate(hiredate);
-				empVO.setSal(sal);
-				empVO.setComm(comm);
-				empVO.setDeptno(deptno);
+								PromoVO promoVO = new PromoVO();
+								promoVO.setPromo_id(promo_id);
+								promoVO.setPromo_name(promo_name);
+								promoVO.setPromo_start(promo_start);
+								promoVO.setPromo_end(promo_end);
+								promoVO.setPromo_text(promo_text);
+								promoVO.setStatus(status);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+req.setAttribute("promoVO", promoVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/emp/addEmp.jsp");
 					failureView.forward(req, res);
@@ -275,11 +298,11 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 				}
 				
 				/***************************2.開始新增資料***************************************/
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.addEmp(ename, job, hiredate, sal, comm, deptno);
+				PromoService promoSvc = new PromoService();
+				promoVO = promoSvc.insert(promo_name, promo_start, promo_end, promo_text, status);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/emp/listAllEmp.jsp";
+				String url = "/promo/listAll_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -302,14 +325,14 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 	
 			try {
 				/***************************1.接收請求參數***************************************/
-				Integer empno = new Integer(req.getParameter("empno"));
+				Integer promo_id = new Integer(req.getParameter("promo_id"));
 				
 				/***************************2.開始刪除資料***************************************/
-				EmpService empSvc = new EmpService();
-				empSvc.deleteEmp(empno);
+				PromoService promoSvc = new PromoService();
+				promoSvc.delete(promo_id);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/emp/listAllEmp.jsp";
+				String url = "/promo/listAll_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -317,7 +340,7 @@ req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也�
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/listAllEmp.jsp");
+						.getRequestDispatcher("/promo/listAll_pormo.jsp");
 				failureView.forward(req, res);
 			}
 		}
