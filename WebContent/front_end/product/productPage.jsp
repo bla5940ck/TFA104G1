@@ -436,29 +436,20 @@
                  	
                  	
 <!--                  一般排列 -->
-                 <% if(request.getAttribute("flag")==null ||request.getAttribute("flag")=="time"){
-               ProdService prodDao = new ProdService(); 
-               List<ProdVO> list1 = new ArrayList<ProdVO>();
-      		    list1 = prodDao.getAll();
-
-               if(list1!=null&&list1.size()>0){
-              for(int i=0;i<list1.size();i++){
-                 ProdVO product1 = list1.get(i);
-                 
-                
-                 //狀態 為1時才可以顯示在上架頁面
-                 if(product1.getProdStatus()==1){
-        
-           %>   
-                <li>
+	<c:if test="${flag==null or flag=='time'}">
+	<jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
+                	<c:if test="${not empty prodSvc1.all}">
+                	<c:forEach var="prodEL" items="${prodSvc1.all}">
+                	<c:if test="${prodEL.prodStatus==1}">
+                	<li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=<%=product1.getProdID()%>">
-                    <img src="<%=request.getContextPath()%>/prod/ProdServlet?picNo=<%=product1.getProdID()%>&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=<%=product1.getProdID()%>"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
-                      <h4 class="aa-product-title"><a href="#"><%=product1.getProdName() %></a></h4>
-                      <span class="aa-product-price">$<%=product1.getProdRent() %></span>
-                       <p class="aa-product-descrip"><%=product1.getProdCot() %></p>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span>
+                       <p class="aa-product-descrip">$${prodEL.prodCot}</p>
                     </figcaption>
                   </figure>                         
                   <div class="aa-product-hvr-content">
@@ -466,12 +457,12 @@
                   </div>
                     <span class="aa-badge aa-hot" href="#">很搶手</span>
                 </li>
-                
-                <%}
-                   }
-              } 
-               }
-          %>
+  	
+                	</c:if>
+		</c:forEach>
+		</c:if>
+		</c:if>
+        
                  
                     
               </ul>
@@ -596,7 +587,7 @@
                     
                     <div class="aa-cartbox-info">
                       <p>${prodCookie.prodName}</p>
-                      <h4><a href="#"></a></h4>
+                      
                       <p>$${prodCookie.prodRent}</p>
                     </div>                    
                   </li>
@@ -607,34 +598,7 @@
               </div>                            
             </div>
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
-              <h3>熱門瀏覽</h3>
-              <div class="aa-recently-views">
-                <ul>
-                  <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">PS5</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>
-                  <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-1.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">動物森友會</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>
-                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="<%=path%>/front_end/product/img/woman-small-2.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">健身環大冒險</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>                                      
-                </ul>
-              </div>                            
-            </div>
+     
           </aside>
         </div>
        

@@ -291,7 +291,13 @@ public class ProdServlet extends HttpServlet {
 			String estEnd = req.getParameter("endDate");
 			String prodName = req.getParameter("prodName");
 			Integer rent = Integer.valueOf(req.getParameter("rent"));
-			Integer tatolPrice = Integer.valueOf(req.getParameter("tatolPrice"));
+			Integer tatolPrice =null;
+			if(req.getParameter("tatolPrice")!=null &&req.getParameter("tatolPrice").isEmpty()) {
+				tatolPrice= Integer.valueOf(req.getParameter("tatolPrice"));
+			}else {
+				res.getWriter().print(404);
+				return;
+			}
 			Integer index = Integer.valueOf(req.getParameter("index"));
 //				Integer status = 0;
 			java.sql.Date sdate = null;
@@ -330,16 +336,13 @@ public class ProdServlet extends HttpServlet {
 						flag = false;
 					}
 				}
-
+				
 				if (flag) {
 					jedis.rpush("member" + memberID, jsonString);
 					System.out.println("加入購物車: " + jsonString);
-//					res.getWriter().print("<script language='javascript'>alert('??��?��?�入購物�?');</script>");
 					res.getWriter().print(index + 1);
 				} else {
 					res.getWriter().print(index);
-//					res.getWriter().print("<script language='javascript'>alert('此�?��?�已??��?��?��?�確認購?���?');</script>");
-
 				}
 
 			}
