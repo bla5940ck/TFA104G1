@@ -4,7 +4,7 @@ import java.util.*;
 import java.sql.*;
 import util.Util;
 
-public class MemcouponDAO implements Memcoupon_impl{
+public class MemcouponDAO implements Memcoupon_interface{
 
 	static {
 		try {

@@ -26,22 +26,22 @@
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>   -->
 <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>   -->
 <%
+
 	String path = request.getContextPath();
-	ProdDAO productDao = new ProdDAO();
 	ProdVO product = null;
 	BookingVO bk = new BookingVO();
 	Integer prodID = null;
-
+	ProdService prodSvc = new ProdService();
 	if (request.getParameter("picno") != null) {
 		prodID = Integer.parseInt(request.getParameter("picno"));
-		product = productDao.findProductByPK(prodID);
+		product = prodSvc.findProductByPK(prodID);
 
 	}
 
 	else if (request.getAttribute("bk") != null) {
 		bk = (BookingVO) request.getAttribute("bk");
 		prodID = bk.getProdID();
-		product = productDao.findProductByPK(prodID);
+		product = prodSvc.findProductByPK(prodID);
 	}
 
 	BookingService bkDao = new BookingService();
@@ -61,6 +61,12 @@
 		list = bkDao.findDateByProdID(product.getProdID());
 
 	}
+
+	
+	
+	
+	
+	
 %>
 <script>
 	
@@ -228,9 +234,9 @@ a {
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
 		</ul>
 	</c:if>
 
