@@ -6,9 +6,9 @@ import java.sql.Timestamp;
 
 public class OrderMasterVO implements Serializable{
 	private Integer ordID;
-	private Integer rentID; // �ӯ��̽s��
-	private Integer leaseID; // �X���̽s��
-	private Integer payID; // ����覡�s�X
+	private Integer rentID; // 承租者
+	private Integer leaseID; // 出租者
+	private Integer payID; // 交易方式
 	private Integer couponID;
 	private Integer shipStatus;
 	private Integer payStatus;
@@ -17,19 +17,19 @@ public class OrderMasterVO implements Serializable{
 	private String shipCode;
 	private String returnCode;
 	private String storeCode;
-	private Date estStart; // �w�p���ɰ_��
-	private Date estEnd; // �w�p���ɰW��
-	private Timestamp shipDate; // ��ڥX�f���
+	private Date estStart; // 預計租借起日
+	private Date estEnd; // 預計出租借訖日
+	private Timestamp shipDate; // 出貨日期
 	private Timestamp arrivalDate;
 	private Timestamp returnDate;
 	private Integer rentDays;
-	private Integer rentRank; // �ӯ��̵���
+	private Integer rentRank; // 承租者評分
 	private Integer leaseRank;
-	private String rentComt; // �ӯ��̵���
+	private String rentComt; // 承租者評價
 	private String leaseComt;
 	private Timestamp rentComtdate;
 	private Timestamp leaseComtdate;
-	private Integer prodPrice; // �ӫ~�p�p
+	private Integer prodPrice; // 商品小計
 	private Integer shipFee;
 	private Integer ordPrice;
 	

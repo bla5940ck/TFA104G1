@@ -93,7 +93,7 @@ th, td {
 			</nav>
 		</aside>
 		<main class="main">
-			<div>
+			
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
 					<h5>輸入訂單明細編號 (如1):
@@ -125,7 +125,7 @@ th, td {
 					<input type="hidden" name="action" value="get_Status_Display">
 					<input type="submit" value="送出"></h5>
 				</FORM>
-			</div>
+			
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
 				<ul>
@@ -136,9 +136,7 @@ th, td {
 			</c:if>
 			
 			<table id="table-1">
-			<div>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
+				<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderListServlet">
 				<tr>
 					<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部</a></td>
 					<td><button name="status" value="0">已成立</button></td>	
@@ -148,7 +146,7 @@ th, td {
 				</tr>
 				<input type="hidden" name="action" value="get_Status_Display">
 				</FORM>
-			</div>
+	
 			</table>	
 			<table id="table-1">
 				<tr>

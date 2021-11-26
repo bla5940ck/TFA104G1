@@ -19,7 +19,7 @@
 <meta charset="BIG5">
 <title>單筆訂單明細頁面</title>
 </head>
-<style>
+<style type="text/css">
 * {
 	box-sizing: border-box;
 	text-decoration: none;
@@ -149,6 +149,7 @@ th, td {
 	text-align: center;
 }
 </style>
+
 <body bgcolor="white">
 
 	<header class="header"> header區域 </header>
@@ -261,8 +262,7 @@ th, td {
 	<footer class="footer"> footer區域 </footer>
 </body>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 </script>
