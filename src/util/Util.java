@@ -2,7 +2,9 @@ package util;
 //利用類別宣告常數，即可用呼叫的方式使用，日後維護也較簡易
 
 public class Util {
-	       
+	
+	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+
 	// MySQL 8.0.13以後只需保留serverTimezone設定即可
 	public static final String URL = 
 			"jdbc:mysql://localhost:3306/JoyLease?"
