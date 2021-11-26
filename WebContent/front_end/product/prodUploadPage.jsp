@@ -164,7 +164,7 @@ input.submit_btn:hover{
 					} else {
 						$("#form2").submit();
 					}
-				});
+				}); 
 	</script>
 </body>
 </html>
