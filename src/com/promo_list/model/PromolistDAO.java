@@ -4,7 +4,7 @@ import java.util.*;
 import java.sql.*;
 import util.Util;
 
-public class PromolistDAO implements Promolist_impl{
+public class PromolistDAO implements Promolist_interface{
 	
 	static {
 		try {

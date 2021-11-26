@@ -4,7 +4,7 @@ import java.util.List;
 
 public class testPromolistJDBC {
 	public static void main(String[] args) {
-		Promolist_impl dao = new PromolistDAO();
+		Promolist_interface dao = new PromolistDAO();
 
 	
 //		PromolistVO PromolistVO2 = new PromolistVO();
