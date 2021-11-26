@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>促銷專案管理區</title>
 <style>
   table#table-1 {
 	width: 450px;
@@ -52,7 +52,7 @@
   
   <li>
     <FORM METHOD="post" ACTION="promo.do" >
-        <b>輸入員工編號 (如7001):</b>
+        <b>輸入專案編號 :</b>
         <input type="text" name="promo_id">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
@@ -63,7 +63,7 @@
    
   <li>
      <FORM METHOD="post" ACTION="promo.do" >
-       <b>選擇員工編號:</b>
+       <b>選擇專案編號:</b>
        <select size="1" name="promo_id">
          <c:forEach var="promoVO" items="${promoSvc.all}" > 
           <option value="${promoVO.promo_id}">${promoVO.promo_id}
@@ -75,17 +75,17 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="promo.do" >
-       <b>選擇員工姓名:</b>
-       <select size="1" name="promo_id">
-         <c:forEach var="promo_id" items="${promoSvc.all}" > 
-          <option value="${promoVO.promo_id}">${promoVO.promo_id}
-         </c:forEach>   
-       </select>
-       <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
+<!--      <FORM METHOD="post" ACTION="promo.do" > -->
+<!--        <b>選擇員工姓名:</b> -->
+<!--        <select size="1" name="status"> -->
+<%--          <c:forEach var="status" items="${promoSvc.all}" >  --%>
+<%--           <option value="${promoVO.status}">${promoVO.status} --%>
+<%--          </c:forEach>    --%>
+<!--        </select> -->
+<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
+<!--        <input type="submit" value="送出"> -->
+<!--      </FORM> -->
+<!--   </li> -->
 </ul>
 
 

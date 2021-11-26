@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PromolistServive {
 	
-	private Promolist_impl dao;
+	private Promolist_interface dao;
 	public PromolistServive() {
 		dao = new PromolistDAO();
 	}

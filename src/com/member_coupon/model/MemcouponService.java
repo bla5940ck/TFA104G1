@@ -4,7 +4,7 @@ import java.util.List;
 
 public class MemcouponService {
 	
-	private Memcoupon_impl dao;
+	private Memcoupon_interface dao;
 	public MemcouponService() {
 		dao = new MemcouponDAO();
 	}

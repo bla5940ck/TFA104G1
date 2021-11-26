@@ -292,7 +292,7 @@ String promo_text = req.getParameter("promo_text").trim();
 				if (!errorMsgs.isEmpty()) {
 req.setAttribute("promoVO", promoVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/emp/addEmp.jsp");
+							.getRequestDispatcher("/promo/add_promo.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -310,7 +310,7 @@ req.setAttribute("promoVO", promoVO); // 含有輸入格式錯誤的empVO物件,
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/emp/addEmp.jsp");
+						.getRequestDispatcher("/promo/add_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}

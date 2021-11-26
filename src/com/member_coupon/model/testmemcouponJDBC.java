@@ -4,7 +4,7 @@ import java.util.List;
 
 public class testmemcouponJDBC {
 	public static void main(String[] args) {	
-	Memcoupon_impl dao = new MemcouponDAO();
+	Memcoupon_interface dao = new MemcouponDAO();
 	
 	MemcouponVO MemcouponVO1 = new MemcouponVO();
 
