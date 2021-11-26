@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title>JoyLease |Product</title>
     
-    <!-- Font awesome -->
+    <!-- Font awesome --> 
     <link href="<%=request.getContextPath()%>/front_end/product/css/font-awesome.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/front_end/product/css/bootstrap.css" rel="stylesheet">   
