@@ -236,7 +236,7 @@ th, td {
 							${prodSVC.findProductByPK(olVO.prodID).prodName}
 						</td>
 						<td>${olVO.ordID}</td>
-						<td>${olVO.price}</td>
+						<td>${olVO.prodPrice}</td>
 						<td>${olVO.estStart}</td>
 						<td>${olVO.estEnd}</td>
 						<c:choose>

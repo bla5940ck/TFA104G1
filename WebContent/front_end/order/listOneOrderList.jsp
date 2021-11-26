@@ -229,7 +229,7 @@ th, td {
 					<td><%=olVO.getProdID()%></td>
 					<td><%=prodVO.getProdName()%></td>
 					<td><%=olVO.getOrdID()%></td>
-					<td><%=olVO.getPrice()%></td>
+					<td><%=olVO.getProdPrice()%></td>
 					<td><%=olVO.getEstStart()%></td>
 					<td><%=olVO.getEstEnd()%></td>
 					<c:choose>

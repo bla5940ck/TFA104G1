@@ -156,6 +156,7 @@ th, td {
 </head>
 
 <body bgcolor='white'>
+	<header class="header"> header區域 </header>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -165,10 +166,7 @@ th, td {
 			</c:forEach>
 		</ul>
 	</c:if>
-
-<%@ include file="header.file" %>
-<!-- 	<header class="header"> header區域 </header> -->
-	<FORM METHOD="post" ACTION="/JoyLease/OrderMasterServlet" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" name="form1">
 		<div class="main_content">
 			<aside class="aside">
 				<nav class="nav">
@@ -192,18 +190,21 @@ th, td {
 						<td><a id="prodName"
 							href="<%=request.getContextPath()%>/product_view/productDetail.jsp?picno=1"><%=prodVO.getProdName()%></a></td>
 					</tr>
-					<!-- 					<tr> -->
-					<!-- 						<td>預定租借起日:</td> -->
-					<!-- 						<td><p id="estStart"></p></td> -->
-					<!-- 					</tr> -->
-					<!-- 					<tr> -->
-					<!-- 						<td>預定租借訖日:</td> -->
-					<!-- 						<td><p id="estEnd"></p></td> -->
-					<!-- 					</tr> -->
+					<tr>
+						<td>預定租借起日:</td>
+						<td><input name="estStart" id="#f_date1" type="text"></td>
+					</tr>
+					<tr>
+						<td>預定租借訖日:</td>
+						<td><input type="text" name="estEnd" id="#f_date2"></td>
+					</tr>
+					<tr>
+						<td>承租天數:</td>
+						<td><p id="rentDays"></p></td>
+					</tr>
 					<tr>
 						<td>您的姓名:</td>
-						<td><input type="hidden" name="memberID" value="<%=meVO.getMemberId()%>"><%=meVO.getName()%></td>
-<!-- 						<td><input type="text" name="recipient"></td> -->
+						<td><input type="hidden" name="rentID" value="<%=meVO.getMemberId()%>"><%=meVO.getName()%></td>
 					</tr>
 					
 					<jsp:useBean id="poDAO"
@@ -217,18 +218,15 @@ th, td {
 						</select></td>
 					</tr>
 					<tr>
-						<td>選擇折扣碼:</td>
+						<td>選擇折價券:</td>
 						<td><select size="1" name="couponID" id="cpn">
-								<option>使用折價券
+								<option id="disc" value="">
 									<%
 									for (int i = 0; i < list.size(); i++) {
 										MemcouponVO mcVO = list.get(i);
 										if (mcVO.getMember_id() == 3) {
-											// out.println(mcVO.getCoupon_id());
 											PromolistDAO pldao = new PromolistDAO();
 											PromolistVO plVO = pldao.findByPrimaryKey(mcVO.getCoupon_id());
-											// String name = plVO.getCoupon_name();
-											// out.print(name);
 								%>
 								
 								<option id="disc" value="<%=mcVO.getCoupon_id()%>">!!<%=plVO.getCoupon_name()%>!!
@@ -243,7 +241,7 @@ th, td {
 					</tr>
 					<tr>
 						<td>預設物流:</td>
-						<td><select size="1" name="code711" id="cpn">
+						<td><select size="1" name="storeCode" id="cpn">
 								<option>我的超商選項
 									<%									
 									Integer id = meVO.getMemberId();
@@ -261,7 +259,7 @@ th, td {
 					</tr>				
 					<tr>
 						<td>商品小計:</td>
-						<td><input type="hidden" name="price" value="100">100</td>
+						<td><input type="hidden" name="prodPrice" value="100">100</td>
 					</tr>
 					<tr>
 						<td>折扣:</td>
@@ -273,28 +271,46 @@ th, td {
 					</tr>
 					<tr>
 						<td>訂單金額:</td>
-						<td><p id="ordPrice"></p></td>
+						<td><input type="hidden" name="ordPrice" value="160">160</td>
 					</tr>
 				</table>
-				<input type="hidden" name="action" value="submit_order"> 
-				<input
-					type="hidden" name="prodName" value="<%=prodVO.getProdName()%>">
-
+				<input type="hidden" name="action" value="submit_order">
+				<input type="hidden" name="prodID" value="<%=prodVO.getProdID()%>"> 
+				<input type="hidden" name="prodName" value="<%=prodVO.getProdName()%>">
 				<input type="submit" value="送出訂單 !">
 			</main>
 		</div>
-		<%@ include file="footer.file" %>
-<!-- 		<footer class="footer"> footer區域 </footer> -->
+		<footer class="footer"> footer區域 </footer>
 	</FORM>
 	</head>
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$("#cpn").change(function(){
-		alert(($("#cpn")).val());
-		$("#discount").text($("#cpn").val());
-	});
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+
+<style>
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
+</style>
+
+<script>
+//         $.datetimepicker.setLocale('zh');
+//         $('#f_date1').datetimepicker({
+// 	       theme: '',              //theme: 'dark',
+// 	       timepicker:false,       //timepicker:true,
+// 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+// 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+// 		   value: new Date(),   // value:   new Date(),
+//            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+//            //startDate:	            '2017/07/10',  // 起始日
+//            //minDate:               '-1970-01-01', // 去除今日(不含)之前
+//            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+//         });
 </script>
 
-</html>
+</html> 

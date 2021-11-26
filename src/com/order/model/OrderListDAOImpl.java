@@ -12,14 +12,14 @@ import util.Util;
 public class OrderListDAOImpl implements OrderListDAO_interface {
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO ORDER_LIST(LIST_ID, PROD_ID, ORD_ID, PRICE, STATUS, EST_START, EST_END) VALUES (? ,?, ?, ?, ?, ?)";
+			"INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String FIND_BY_PK = 
 			"SELECT * FROM ORDER_LIST WHERE LIST_ID = ?";
 	private static final String GET_ALL = 
 			"SELECT * FROM ORDER_LIST";
 	private static final String FIND_BY_STATUS = 
 			"SELECT * FROM ORDER_LIST WHERE STATUS = ?";
-
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -28,6 +28,8 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		}
 	}
 
+	
+	
 	@Override
 	public void addOrderList(OrderListVO orderList) {
 		Connection con = null;
@@ -37,13 +39,11 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, orderList.getListID());
-			pstmt.setInt(2, orderList.getProdID());
-			pstmt.setInt(3, orderList.getOrdID());
-			pstmt.setInt(4, orderList.getPrice());
-			pstmt.setInt(5, orderList.getStatus());
-			pstmt.setDate(6, orderList.getEstStart());
-			pstmt.setDate(7, orderList.getEstEnd());
+			pstmt.setInt(1, orderList.getProdID());
+			pstmt.setInt(2, orderList.getOrdID());
+			pstmt.setInt(3, orderList.getProdPrice());
+			pstmt.setDate(4, orderList.getEstStart());
+			pstmt.setDate(5, orderList.getEstEnd());
 			
 			pstmt.executeUpdate();
 
@@ -86,7 +86,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				orderListVO.setListID(rs.getInt("LIST_ID"));
 				orderListVO.setProdID(rs.getInt("PROD_ID"));
 				orderListVO.setOrdID(rs.getInt("ORD_ID"));
-				orderListVO.setPrice(rs.getInt("PRICE"));
+				orderListVO.setProdPrice(rs.getInt("PRICE"));
 				orderListVO.setStatus(rs.getInt("STATUS"));
 				orderListVO.setEstStart(rs.getDate("EST_START"));
 				orderListVO.setEstEnd(rs.getDate("EST_END"));
@@ -140,7 +140,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				orderListVO.setListID(rs.getInt("LIST_ID"));
 				orderListVO.setProdID(rs.getInt("PROD_ID"));
 				orderListVO.setOrdID(rs.getInt("ORD_ID"));
-				orderListVO.setPrice(rs.getInt("PRICE"));
+				orderListVO.setProdPrice(rs.getInt("PRICE"));
 				orderListVO.setStatus(rs.getInt("STATUS"));
 				orderListVO.setEstStart(rs.getDate("EST_START"));
 				orderListVO.setEstEnd(rs.getDate("EST_END"));
@@ -199,7 +199,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				orderListVO.setListID(rs.getInt("LIST_ID"));
 				orderListVO.setProdID(rs.getInt("PROD_ID"));
 				orderListVO.setOrdID(rs.getInt("ORD_ID"));
-				orderListVO.setPrice(rs.getInt("PRICE"));
+				orderListVO.setProdPrice(rs.getInt("PRICE"));
 				orderListVO.setStatus(rs.getInt("STATUS"));
 				orderListVO.setEstStart(rs.getDate("EST_START"));
 				orderListVO.setEstEnd(rs.getDate("EST_END"));
@@ -235,12 +235,11 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		}
 		return list;
 	}
-	
 
 	public static void main(String[] args) {
 		OrderListDAO_interface oldao = new OrderListDAOImpl();
 
-		// �s�W
+		// 新增
 //		OrderListVO ol1 = new OrderListVO();
 //		ol1.setListID(2);
 //		ol1.setOrdID(1);
@@ -248,7 +247,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 //		ol1.setPrice(3600);
 //		oldao.addOrderList(ol1);
 
-		// �qPK�d��
+		// 從pk找
 		OrderListVO ol2 = oldao.findOrderListByPK(2);
 //		System.out.println(ol2);
 //		System.out.println(ol2.getListID() + ",");
@@ -257,7 +256,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 //		System.out.println(ol2.getPrice() + ",");
 		System.out.println("==========================================");
 
-		// �d�ߥ���
+		// 查全部
 		List<OrderListVO> list = oldao.getAllOrderList();
 //		for (OrderListVO ol3 : list) {
 //			System.out.println(ol3);
@@ -268,7 +267,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			System.out.println("======================================");
 //		}
 
-		// �d�ߪ��A
+		// 找狀態
 		List<OrderListVO> list1 = oldao.findOrderListByStatus(1);
 		for(OrderListVO ol4: list1) {
 			ol4.setStatus(1);
