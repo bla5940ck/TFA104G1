@@ -11,14 +11,14 @@ public class OrderListService {
 		dao = new OrderListDAOImpl();
 	}
 	
-	public OrderListVO addOrderList(Integer listID, Integer prodID, Integer ordID, Integer price, Integer status, Date estStart, Date estEnd) {
+	public OrderListVO addOrderList(Integer prodID, Integer ordID, Integer prodPrice, Date estStart, Date estEnd) {
 		
 		OrderListVO olVO = new OrderListVO();
-		olVO.setListID(listID);
+//		olVO.setListID(listID);
 		olVO.setProdID(prodID);
 		olVO.setOrdID(ordID);
-		olVO.setPrice(price);
-		olVO.setStatus(status);
+		olVO.setProdPrice(prodPrice);
+//		olVO.setStatus(status);
 		olVO.setEstStart(estStart);
 		olVO.setEstEnd(estEnd);
 		return olVO;

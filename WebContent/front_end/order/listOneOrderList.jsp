@@ -150,6 +150,7 @@ th, td {
 }
 </style>
 <body bgcolor="white">
+
 	<header class="header"> header區域 </header>
 	<div class="main_content">
 		<aside class="aside">
@@ -229,7 +230,7 @@ th, td {
 					<td><%=olVO.getProdID()%></td>
 					<td><%=prodVO.getProdName()%></td>
 					<td><%=olVO.getOrdID()%></td>
-					<td><%=olVO.getPrice()%></td>
+					<td><%=olVO.getProdPrice()%></td>
 					<td><%=olVO.getEstStart()%></td>
 					<td><%=olVO.getEstEnd()%></td>
 					<c:choose>

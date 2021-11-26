@@ -11,6 +11,8 @@
 	pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
+<jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" />
+
 
 <html>
 <head>
@@ -146,11 +148,9 @@ th, td {
 	text-align: center;
 }
 </style>
-
 </head>
 
 <body bgcolor='white'>
-	<header class="header"> header區域 </header>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
@@ -185,10 +185,10 @@ th, td {
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
 					<b>選擇訂單狀態:</b> <select size="1" name="status">
-						<option value="0">已成立
-						<option value="1">待歸還
-						<option value="2">已完成
-						<option value="9">已取消
+						<option value="0" <%=olVO.getStatus()==0?"selected":"" %>>已成立</option>
+						<option value="1" <%=olVO.getStatus()==1?"selected":"" %>>待歸還</option>
+						<option value="2" <%=olVO.getStatus()==2?"selected":"" %>>已完成</option>
+						<option value="9" <%=olVO.getStatus()==9?"selected":"" %>>已取消</option>
 					</select> <input type="hidden" name="action" value="get_Status_Display">
 					<input type="submit" value="送出">
 				</FORM>
@@ -238,9 +238,9 @@ th, td {
 							${prodSVC.findProductByPK(olVO.prodID).prodName}
 						</td>
 						<td>${olVO.ordID}</td>
-						<td>${olVO.price}</td>
-						<td>${olVO.estStart}</td>
-						<td>${olVO.estEnd}</td>
+						<td>${olVO.prodPrice}</td>
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).estStart}</td>
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
 					
 						<c:choose>
 							<c:when test="${olVO.status == '0'}"><td>已成立</td></c:when>
@@ -259,8 +259,8 @@ th, td {
 						</td>
 					<tr>
 				</c:forEach>
-				<%@ include file="page2.file"%>
-			</table>
+				</table>
+			<%@ include file="page2.file"%>
 		</main>
 	</div>
 	<footer class="footer"> footer區域 </footer>

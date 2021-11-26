@@ -74,7 +74,7 @@ public class OrderListServlet extends HttpServlet {
 
 				/************** 3.查詢完成,準備轉交 *************/
 				req.setAttribute("OrderListVO", olVO);
-				String url = "/front_end/order/listOneOrderList.jsp";
+				String url = "front_end/order/listOneOrderList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
