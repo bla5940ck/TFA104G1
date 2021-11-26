@@ -150,6 +150,7 @@ th, td {
 }
 </style>
 <body bgcolor="white">
+
 	<header class="header"> header區域 </header>
 	<div class="main_content">
 		<aside class="aside">

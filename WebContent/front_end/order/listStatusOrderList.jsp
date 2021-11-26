@@ -11,6 +11,8 @@
 	pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
+<jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" />
+
 
 <html>
 <head>
@@ -146,11 +148,9 @@ th, td {
 	text-align: center;
 }
 </style>
-
 </head>
 
 <body bgcolor='white'>
-	<header class="header"> header區域 </header>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
@@ -239,8 +239,8 @@ th, td {
 						</td>
 						<td>${olVO.ordID}</td>
 						<td>${olVO.prodPrice}</td>
-						<td>${olVO.estStart}</td>
-						<td>${olVO.estEnd}</td>
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).estStart}</td>
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
 					
 						<c:choose>
 							<c:when test="${olVO.status == '0'}"><td>已成立</td></c:when>
