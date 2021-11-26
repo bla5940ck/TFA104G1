@@ -1,25 +1,8 @@
 package util;
-
-<<<<<<< HEAD
-
-=======
 //利用類別宣告常數，即可用呼叫的方式使用，日後維護也較簡易
->>>>>>> sam
+
 public class Util {
-	
-	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	
-<<<<<<< HEAD
-	
-	public static final String URL = 
-			"jdbc:mysql://localhost:3306/JoyLease?"
-//			+ "useSSL=false&"                  
-			+ "rewriteBatchedStatements=true&" 
-			+ "serverTimezone=Asia/Taipei";     
-//			+ "allowPublicKeyRetrieval=true&"   
-//			+ "useUnicode=true&"                
-//			+ "characterEncoding=utf-8";        
-=======
+	       
 	// MySQL 8.0.13以後只需保留serverTimezone設定即可
 	public static final String URL = 
 			"jdbc:mysql://localhost:3306/JoyLease?"
@@ -29,7 +12,7 @@ public class Util {
 //			+ "allowPublicKeyRetrieval=true&"   // 配合MySQL 8以後版本對密碼儲存機制的設定
 //			+ "useUnicode=true&"                // 使用Unicode編碼 (中文才不會亂碼)
 //			+ "characterEncoding=utf-8";        // 字元採用UTF-8設定
->>>>>>> sam
+
 	
 	public static final String USER = "root";
 	
