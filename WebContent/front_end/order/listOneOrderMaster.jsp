@@ -141,7 +141,7 @@ th, td {
 
 </head>
 <body bgcolor="white">
-	<header class="header"> header區域 </header>
+<%@ include file="header2.file" %>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
