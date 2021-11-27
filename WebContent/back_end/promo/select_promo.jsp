@@ -29,10 +29,10 @@
 <body bgcolor='white'>
 
 <table id="table-1">
-   <tr><td><h3>Promo: Home</h3><h4>( MVC )</h4></td></tr>
+   <tr><td><h3>促銷專案</h3><h4>( MVC )</h4></td></tr>
 </table>
 
-<p>This is the Home page for Promo: Home</p>
+<p>促銷專案</p>
 
 <h3>資料查詢:</h3>
 	
@@ -47,17 +47,8 @@
 </c:if>
 
 <ul>
-  <li><a href='listAll_promo.jsp'>List</a> all Promo.  <br><br></li>
+  <li><a href='listAll_promo.jsp'>專案列表</a><br><br></li>
   
-  
-  <li>
-    <FORM METHOD="post" ACTION="promo.do" >
-        <b>輸入專案編號 :</b>
-        <input type="text" name="promo_id">
-        <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出">
-    </FORM>
-  </li>
 
   <jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
    
@@ -74,7 +65,7 @@
     </FORM>
   </li>
   
-  <li>
+<!--   <li> -->
 <!--      <FORM METHOD="post" ACTION="promo.do" > -->
 <!--        <b>選擇員工姓名:</b> -->
 <!--        <select size="1" name="status"> -->
@@ -89,10 +80,10 @@
 </ul>
 
 
-<h3>員工管理</h3>
+<h3>新增專案</h3>
 
 <ul>
-  <li><a href='add_promo.jsp'>Add</a> a new Emp.</li>
+  <li><a href='add_promo.jsp'>新增專案</li>
 </ul>
 
 </body>

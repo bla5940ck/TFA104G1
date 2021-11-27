@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.promo.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
     PromoService promoSvc = new PromoService();
@@ -53,7 +52,6 @@
 </head>
 <body bgcolor='white'>
 
-<!-- <h4>此頁練習採用 EL 的寫法取值:</h4> -->
 <table id="table-1">
 	<tr><td>
 		 <h3>所有專案資料 - listall_promo.jsp</h3>
@@ -97,7 +95,7 @@
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo/promo.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/promo/promo.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="promo_id"  value="${promoVO.promo_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
