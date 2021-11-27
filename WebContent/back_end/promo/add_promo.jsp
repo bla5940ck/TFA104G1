@@ -112,9 +112,9 @@
 	   promo_end = new java.sql.Date(System.currentTimeMillis());
    }
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {

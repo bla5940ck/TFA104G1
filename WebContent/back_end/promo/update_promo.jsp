@@ -50,7 +50,7 @@ PromoVO promoVO = (PromoVO) request.getAttribute("promoVO");
 <table id="table-1">
 	<tr><td>
 		 <h3>專案資料修改 - update_promo.jsp</h3>
-		 <h4><a href="select_promo.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="http://localhost:8081/TFA104G1/back_end/promo/select_promo.jsp"><img src="http://localhost:8081/TFA104G1/back_end/promo/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -119,9 +119,9 @@ PromoVO promoVO = (PromoVO) request.getAttribute("promoVO");
  	   promo_end = new java.sql.Date(System.currentTimeMillis());
     }
  %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {
