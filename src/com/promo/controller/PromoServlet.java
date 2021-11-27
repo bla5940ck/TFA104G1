@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.promo.model.PromoService;
 import com.promo.model.PromoVO;
-@WebServlet("/promo/promo.do")
+@WebServlet("/back_end/promo/promo.do")
 @MultipartConfig()
 
 public class PromoServlet extends HttpServlet {
@@ -69,21 +69,21 @@ public class PromoServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/promo/select_promo.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/select_promo.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("promoVO", promoVO); // 資料庫取出的promoVO物件,存入req
-				String url = "/promo/listOne_promo.jsp";
+				String url = "/back_end/promo/listOne_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOne_promo.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/promo/select_promo.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/select_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -105,14 +105,14 @@ public class PromoServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("promoVO", promoVO); // 資料庫取出的promoVO物件,存入req
-				String url = "/promo/update_promo.jsp";
+				String url = "/back_end/promo/update_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_promo_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/promo/listAll_promo.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/listAll_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -176,7 +176,7 @@ public class PromoServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("promoVO", promoVO); // 含有輸入格式錯誤的promoVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/promo/update_promo.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/update_promo.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
@@ -187,14 +187,14 @@ public class PromoServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("promoVO", promoVO); // 資料庫update成功後,正確的的promoVO物件,存入req
-				String url = "/promo/listOne_promo.jsp";
+				String url = "/back_end/promo/listOne_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOne_promo.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/promo/update_promo.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/update_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -255,7 +255,7 @@ public class PromoServlet extends HttpServlet {
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("promoVO", promoVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/promo/add_promo.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/add_promo.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -265,14 +265,14 @@ public class PromoServlet extends HttpServlet {
 				promoVO = promoSvc.insert(promo_name, promo_start, promo_end, promo_text, status);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/promo/listAll_promo.jsp";
+				String url = "/back_end/promo/listAll_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAll_promo.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/promo/add_promo.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/add_promo.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -293,14 +293,14 @@ public class PromoServlet extends HttpServlet {
 				promoSvc.delete(promo_id);
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-				String url = "/promo/listAll_promo.jsp";
+				String url = "/back_end/promo/listAll_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/promo/listAll_pormo.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/listAll_pormo.jsp");
 				failureView.forward(req, res);
 			}
 		}
