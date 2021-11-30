@@ -192,7 +192,7 @@ th, td {
 <%-- 						<td><%=omVO.getRentComt()%></td> --%>
 
 					<th>出租者評論</th>
-					<td><%=omVO.getLeaseComt() == null ?"出租者尚未評論該訂單" : omVO.getLeaseComt()%></td>
+					<td><%=omVO.getLeaseComt() == null ?"尚未評論" : omVO.getLeaseComt()%></td>
 <%-- 						<td><%=omVO.getLeaseComt()%></td> --%>
 						
 				</tr>

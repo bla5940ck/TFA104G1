@@ -261,7 +261,7 @@ public class OrderMasterServlet extends HttpServlet {
 						req.setAttribute("OrderMasterVO", omVO); //含有輸入格式錯誤的omVO物件,也存入req
 					} catch(Exception e) {
 						e.printStackTrace();
-						System.out.println("錯了嗎?????????????");
+//						System.out.println("錯了嗎?????????????");
 						RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 						failureView.forward(req, res);
 						return; // 程式中斷
