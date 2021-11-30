@@ -2,10 +2,10 @@ package com.promo_list.model;
 
 import java.util.List;
 
-public class PromolistServive {
+public class PromolistService {
 	
-	private Promolist_impl dao;
-	public PromolistServive() {
+	private Promolist_interface dao;
+	public PromolistService() {
 		dao = new PromolistDAO();
 	}
 	
