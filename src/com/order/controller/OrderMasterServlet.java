@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.order.model.OrderListDAOImpl;
 import com.order.model.OrderListService;
 import com.order.model.OrderListVO;
 import com.order.model.OrderMasterDAOImpl;
@@ -54,7 +55,7 @@ public class OrderMasterServlet extends HttpServlet {
 					errorMsgs.add("請輸入訂單編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -68,10 +69,13 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
+				
+				Integer listID = new Integer(req.getParameter("listID"));
+				
 				/*************************** 2.開始查詢資料 ****************************/
 
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
@@ -82,20 +86,26 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 				
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				OrderListVO olVO = oldao.findOrderListByPK(listID);
+				
+				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/			
 				req.setAttribute("OrderMasterVO", omVO);			// 資料庫取出的VO物件,存入req
+				req.setAttribute("OrderListVO", olVO);
 				String url ="front_end/order/listOneOrderMaster.jsp"; 
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -110,21 +120,29 @@ public class OrderMasterServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 *****************************/
 				Integer ordID = new Integer(req.getParameter("ordID"));
-
+				Integer listID = new Integer(req.getParameter("listID"));
+				System.out.println("明細編號"+listID);
+				
+				
 				/*************************** 2.開始查詢資料 *****************************/
 				OrderMasterService omSVC = new OrderMasterService();
 				OrderMasterVO omVO = omSVC.getOneOrderMaster(ordID);
+				
+				OrderListService olSVC = new OrderListService();
+				OrderListVO olVO = olSVC.getOneOrderList(listID);
 
 				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
+				req.setAttribute("OrderListVO", olVO);
 				String url = "/front_end/order/updateOrderMasterInput.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -141,35 +159,38 @@ public class OrderMasterServlet extends HttpServlet {
 
 				Integer shipStatus = new Integer(req.getParameter("shipStatus").trim());
 
-				if (shipStatus == 0) {
-					req.setAttribute("shipStatus", "待出貨");
-				} else {
-					req.setAttribute("shipStatus", "已出貨");
-				}
-
-				Integer ordStatus = new Integer(req.getParameter("payStatus").trim());
-				Integer payStatus = new Integer(req.getParameter("ordStatus").trim());
-				String shipCode = req.getParameter("shipCode").trim();
-				if (shipCode == null || shipCode.trim().length() == 0) {
-					errorMsgs.add("出貨代碼請勿空白");
-				}
-
-				String returnCode = req.getParameter("returnCode").trim();
-
-				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+				Integer ordStatus = new Integer(req.getParameter("ordStatus").trim());
+				Integer payStatus = new Integer(req.getParameter("payStatus").trim());
+				Integer shipCode = new Integer(req.getParameter("shipCode").trim());
+				
+				Integer returnCode = new Integer(req.getParameter("returnCode").trim());
+					
+				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");				
 				String strsd = req.getParameter("shipDate");
-				long lsd = sdf.parse(strsd).getTime();
-				Timestamp shipDate = new Timestamp(lsd);
-
+				Timestamp shipDate = null;
+				if(strsd != null && strsd.length() != 0) {
+					System.out.println("運送時間 : " + strsd);
+					shipDate = new Timestamp(Long.valueOf(strsd));
+					System.out.println(shipDate);				
+				};
+				
 				String strad = req.getParameter("arrivalDate");
-				long lad = sdf.parse(strad).getTime();
-				Timestamp arrivalDate = new Timestamp(lad);
-
+				Timestamp arrivalDate = null;
+				if(strad != null && strad.length()!=0) {
+				System.out.println(strad);
+				System.out.println("到貨時間:" + strad);
+				arrivalDate = new Timestamp(Long.valueOf(strad));
+				System.out.println(arrivalDate);
+				} ;
+				
 				String strrd = req.getParameter("returnDate");
-				long lrd = sdf.parse(strrd).getTime();
-				Timestamp returnDate = new Timestamp(lrd);
-
+				System.out.println("歸還時間:" + strrd);
+				Timestamp returnDate = null;
+				if(strrd != null && strad.length()!=0) {
+					returnDate = new Timestamp(Long.valueOf(strrd));
+					System.out.println(returnDate);
+				};
+				
 				Integer rentRank = new Integer(req.getParameter("rentRank").trim());
 				Integer leaseRank = new Integer(req.getParameter("leaseRank").trim());
 				String rentComt = req.getParameter("rentComt").trim();
@@ -179,12 +200,13 @@ public class OrderMasterServlet extends HttpServlet {
 
 				long strrc = (date.getTime());
 				Timestamp rentComtdate = new Timestamp(strrc);
-				System.out.println(rentComtdate);
+//				System.out.println(rentComtdate);
 
 				long strlc = (date.getTime());
 				Timestamp leaseComtdate = new Timestamp(strlc);
-				System.out.println(leaseComtdate);
-
+//				System.out.println(leaseComtdate);	
+				
+				//存入訂單VO
 				OrderMasterVO omVO = new OrderMasterVO();
 				omVO.setOrdID(ordID);
 				omVO.setShipStatus(shipStatus);
@@ -201,41 +223,55 @@ public class OrderMasterServlet extends HttpServlet {
 				omVO.setLeaseComt(leaseComt);
 				omVO.setRentComtdate(rentComtdate);
 				omVO.setLeaseComtdate(leaseComtdate);
-
-				System.out.println(omVO);
 				
+				//接收VO參數
+				
+				Integer listID = new Integer(req.getParameter("listID"));
+				//存入明細VO
+				OrderListVO olVO = new OrderListVO();
+				olVO.setOrdStatus(ordStatus);
+				olVO.setListID(listID);
+				olVO.setOrdID(ordID);
+				
+//				System.out.println(omVO.getOrdStatus());
+//				System.out.println(olVO.getOrdStatus());
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("OrderMasterVO", omVO); //含有輸入格式錯誤的omVO物件,也存入req
-
-					System.out.println("錯了嗎?????????????");
-
-					RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
-					failureView.forward(req, res);
-					return; // 程式中斷
+					
+					try{
+						req.setAttribute("OrderMasterVO", omVO); //含有輸入格式錯誤的omVO物件,也存入req
+					} catch(Exception e) {
+						e.printStackTrace();
+						System.out.println("錯了嗎?????????????");
+						RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
+						failureView.forward(req, res);
+						return; // 程式中斷
+					}
 				}
 	
 				/*************************** 2.開始修改資料 ****************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-				omdao.updateOrderMaster(omVO);
-
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				omdao.updateAllOrder(omVO, olVO);
+				
 				/**************************** NEW修改後的VO ****************************/
 				OrderMasterVO omVO1 = omdao.findOrderMasterByPK(ordID);
+				OrderListVO olVO1 = oldao.findOrderListByPK(listID);
 
 				/******************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("OrderMasterVO", omVO1); // 資料庫update成功後,正確的的ordermasterVO物件,存入req
+				req.setAttribute("OrderListVO", olVO1);
 				String url = "/front_end/order/listOneOrderMaster.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); //  修改成功後,轉交listOneOrderMaster.jsp
 				successView.forward(req, res);
 				System.out.println("完成");
-				System.out.println(omVO);
-				System.out.println(omVO1);
 				return;
 
 				/*************************** 其他可能的錯誤處理 ***************************/
 			} catch (Exception e) {
 				System.out.println("失敗");
+				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath() + "/front_end/order/updateOrderMasterInput.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/updateOrderMasterInput.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -243,10 +279,7 @@ public class OrderMasterServlet extends HttpServlet {
 		if ("submit_order".equals(action)) { // 來自addOrderMaster.jsp的請求
 			
 			System.out.println("進來了");
-			
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			try {
@@ -293,7 +326,7 @@ public class OrderMasterServlet extends HttpServlet {
 			
 			System.out.println("折價券編碼 : " + couponID);	
 							
-				String storeCode = req.getParameter("storeCode");
+				Integer storeCode = new Integer(req.getParameter("storeCode"));
 				
 			System.out.println("預設物流 : " + storeCode);
 			
