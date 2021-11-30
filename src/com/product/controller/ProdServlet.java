@@ -261,7 +261,7 @@ public class ProdServlet extends HttpServlet {
 		if ("update".equals(req.getParameter("action"))) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+		
 			String name = req.getParameter("product_name");
 
 			if (name == null || (name.trim().length() == 0)) {
@@ -385,6 +385,32 @@ public class ProdServlet extends HttpServlet {
 //						res.getWriter().print("<script>history.go(-1);</script>");
 
 					}
+					ProdService prodSvc = new ProdService();
+					ProdVO product = prodSvc.findProductByPK(prodID);
+					
+					
+					int picAmount = 0;
+					// //動態算出 資料庫圖片個數
+					 if (product != null) {
+					 	if (product.getPic1() != null)
+					 		picAmount++;
+					 	if (product.getPic2() != null)
+					 		picAmount++;
+					 	if (product.getPic3() != null)
+					 		picAmount++;
+					 }
+					
+					//錯誤回傳
+					if (!errorMsgs.isEmpty()) {
+						req.setAttribute("prodID", prodID);
+						req.setAttribute("product", prodVO);
+						req.setAttribute("picAmount", picAmount);
+						
+						req.getRequestDispatcher("/front_end/product/modifyProd.jsp").forward(req, res);
+					
+						return;
+
+					}
 
 				}
 
@@ -392,17 +418,10 @@ public class ProdServlet extends HttpServlet {
 					
 
 			
-			//錯誤回傳
-			if (!errorMsgs.isEmpty()) {
-//				req.setAttribute("proVO", prodVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/modifyProd.jsp");
-				failureView.forward(req, res);
-				return;
-
-			}
+		
 
 		
-			// 上架
+			//更新
 			if ("shelf".equals(req.getParameter("status"))) {
 				status = 1;
 				shelfTime = new Timestamp(date);
@@ -540,7 +559,7 @@ public class ProdServlet extends HttpServlet {
 						flag = false;
 					}
 				}
-				
+				//購物車不重複的話 就加入進去redis
 				if (flag) {
 					jedis.rpush("member" + memberID, jsonString);
 					System.out.println("加入購物車: " + jsonString);

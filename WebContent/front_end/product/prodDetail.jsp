@@ -29,6 +29,10 @@ a.aa-product-img > img{
 	height: 300px;
 }
 
+
+
+
+ <a class="aa-cartbox-img
 </style>
 <head>
 <meta charset="utf-8">
@@ -924,7 +928,7 @@ function selflog_show(id){
 		var myEndDate = new Date(endDate);
 		var date_dif = (myEndDate - myStartDate) / 86400000;
 	  console.log(date_dif);
-	  console.log(<%=product.getProdRent()%>);
+	 
 	  
 	 $.ajax({
 	    	url:"<%=path%>/prod/ProdServlet",
@@ -954,8 +958,10 @@ function selflog_show(id){
 					} else if (data == count) {
 						alert("此商品重複 確認購物車");
 					} else {
+						//加入購物車 數量+1
 						$("span.aa-cart-notify").text(
 								parseInt($("input.dataCount").val()) + 1);
+						
 						$("input.dataCount").val(
 								$("span.aa-cart-notify")
 										.text(
@@ -976,7 +982,7 @@ function selflog_show(id){
 				for (long j = 0; j <= k + 6; j++) {
 					//儲存所有的區間日期
 					long d = list.get(i).getEstStart().getTime() + 86400000 * (j - 3);//前3後3緩衝計算
-					// 			 String str = sdf.format(new Date(list.get(i).getEstStart().getTime() + 86400000 * j));%>
+					%>
 		disableddates.push(
 	<%=d%>
 		);

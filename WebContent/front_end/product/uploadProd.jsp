@@ -212,7 +212,7 @@
 							<!-- logo  -->
 							<div class="aa-logo">
 								<!-- Text based logo -->
-								<a href="index copy.html"> <img
+								<a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp"> <img
 									src="<%=request.getContextPath()%>\front_end\product\img\logo_org_noframe_191561.png" alt=""> <!-- <p>JoyLease</p> -->
 									<!-- <span class="fa fa-shopping-cart"></span> -->
 

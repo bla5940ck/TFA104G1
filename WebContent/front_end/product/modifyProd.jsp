@@ -249,7 +249,7 @@ ProdVO product = (ProdVO)request.getAttribute("product");
 							<!-- logo  -->
 							<div class="aa-logo">
 								<!-- Text based logo -->
-								<a href="index copy.html"> <img
+								<a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp"> <img
 									src="<%=request.getContextPath()%>\front_end\product\img\logo_org_noframe_191561.png" alt=""> <!-- <p>JoyLease</p> -->
 									<!-- <span class="fa fa-shopping-cart"></span> -->
 
@@ -447,19 +447,21 @@ ProdVO product = (ProdVO)request.getAttribute("product");
 										method="post" enctype="multipart/form-data"
 										class="aa-login-form">
 										<label for="">圖片一<span>*</span></label> <input type="file"
-											id='file_id1' name='file_name1' 
+											id='file_id1' name='file_name1' title=""
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片二<span></span></label>
 											 <input type="file" 
-											id='file_id2' name='file_name2'
+											id='file_id2' name='file_name2' title=""
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片三<span></span></label>
 											 <input type="file"
-											id='file_id3' name='file_name3'
+											id='file_id3' name='file_name3' title=""
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">商品名稱<span>*</span></label>
 											 <input type="text" name="product_name"	id="product_name"
-											placeholder="請商品名稱" value ="<%=product.getProdName()%>"> <label for="">商品類別<span>*</span></label>
+											placeholder="請商品名稱" value ="${product.prodName }"> <label for="">商品類別<span>*</span></label>
+										
+											
 										<jsp:useBean id="cateSvc" scope="page"
 											class="com.category.model.ProdCategoryService" />
 										<select id="cate_select" name="categorySelect"
@@ -468,7 +470,7 @@ ProdVO product = (ProdVO)request.getAttribute("product");
 											<c:forEach varStatus="status" var="cateVO"
 												items="${cateSvc.allCategory}">
 													
-												<option value="${cateVO.categoryID}" ${(cateVO.categoryID==param.cate)?'selected':''}>${cateVO.categoryName}
+												<option value="${cateVO.categoryID}" ${(cateVO.categoryID==param.cate or cateVO.categoryID==product.categoryID)?'selected':''}>${cateVO.categoryName}
 											</c:forEach>
 										</select> <br>
 										<br>
@@ -477,15 +479,15 @@ ProdVO product = (ProdVO)request.getAttribute("product");
 										
 <%-- 										<jsp:useBean id="prodSvc" scope="page" class="com.product.model.ProdService" /> --%>
 										<label for="">商品租金<span>*</span></label> <input
-											type="text" placeholder="請輸入商品租金" name="product_rent" id="product_rent" value="<%=product.getProdRent() %>"> <label for="">商品損壞賠償金<span>*</span></label>
-										<input type="text" placeholder="請輸入商品損壞賠償金" name="product_price" id="product_price" value="<%=product.getProdPrice()%>"> <label
+											type="text" placeholder="請輸入商品租金" name="product_rent" id="product_rent" value="${product.prodRent}"> <label for="">商品損壞賠償金<span>*</span></label>
+										<input type="text" placeholder="請輸入商品損壞賠償金" name="product_price" id="product_price" value="${product.prodPrice}"> <label
 											for="">備註<span></span></label>
-											 <input type="text" placeholder="請輸入備註" name="comt" id="comt" value="<%=product.getComt()%>"> <label for="">商品內容<span>*</span></label>
-										<input type="text" style="height: 150px;" name="product_cot" value="<%=product.getProdCot()%>">
+											 <input type="text" placeholder="請輸入備註" name="comt" id="comt" value="${prouct.comt}"> <label for="">商品內容<span>*</span></label>
+										<input type="text" style="height: 150px;" name="product_cot" value="${product.prodCot}">
 										<input
 			type=hidden id="fileCount" name="fileCount"><br> <input
 			type="hidden" name="action" value="update">
-			<input type="hidden" name="prodID" value="<%=product.getProdID()%>">
+			<input type="hidden" name="prodID" value="${product.prodID}">
 			<input type="hidden" id ="picNo1" name="picNo1">
 			<input type="hidden" id ="picNo2" name="picNo2">
 			<input type="hidden" id ="picNo3" name="picNo3">

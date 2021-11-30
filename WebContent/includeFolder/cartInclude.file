@@ -25,6 +25,12 @@
 <%@page import="com.product.model.*"%>
 <%@page import="com.booking.model.*"%>
 <%@page import="com.category.model.*"%>
+<style>
+	 a.aa-cartbox-img > img{
+	object-fit: contain;
+	width: 100px;
+	height: 100px;
+}</style>
 
  <%
   Integer memberID = (Integer)session.getAttribute("id");
@@ -33,8 +39,8 @@
   Jedis jedis = pool.getResource();
   List<String> cart = jedis.lrange("member"+memberID, 0, jedis.llen("member"+memberID));
 	
-	Gson gson = new Gson();
-	String path = request.getContextPath();
+  Gson gson = new Gson();
+  String path = request.getContextPath();
 
 %>
               
@@ -78,8 +84,8 @@
                       </span>
                     </li>
                   </ul>
-                  <a class="aa-cartbox-checkout aa-primary-btn" href="checkout copy.html">購物車結帳</a>
-                  <input type = button value="刷新" class="refresh-cart">
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車結帳</a>
+                  <!--  <input type = button value="刷新" class="refresh-cart"> -->
                    <input type="hidden" class="dataCount" value="<%=index1%>">
                 </div>
               </div>

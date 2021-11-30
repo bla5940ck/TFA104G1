@@ -110,7 +110,7 @@
                     </li>
                   </ul>
                   <a class="aa-cartbox-checkout aa-primary-btn" href="checkout copy.html">購物車結帳</a>
-                  <input type = button value="刷新" class="refresh-cart">
+                
                    <input type="hidden" class="dataCount" value="<%=index1%>">
                 </div>
               </div>
