@@ -42,8 +42,8 @@
 
 	
 	
-	if (request.getParameter("picno") != null) {
-		prodID = Integer.parseInt(request.getParameter("picno"));
+	if (request.getParameter("picNo") != null) {
+		prodID = Integer.parseInt(request.getParameter("picNo"));
 		product = prodSvc.findProductByPK(prodID);
 
 	}
@@ -93,7 +93,7 @@
                     tatol1 +=cartVO2.getTatolPrice();
                     %>
                     <li>
-                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?picno=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
+                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?picNo=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#"><%=cartVO2.getProdName() %></a></h4>
                         <p><%=day%>天*$<%=cartVO2.getRent()%></p>
