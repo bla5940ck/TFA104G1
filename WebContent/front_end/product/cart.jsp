@@ -51,6 +51,13 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+ <style>
+  a.cart-img > img{
+	object-fit: contain;
+	width: 185px;
+	height: 117px;
+}
+ </style>
   
 
   </head>
@@ -147,7 +154,7 @@
               <!-- logo  -->
               <div class="aa-logo">
                 <!-- Text based logo -->
-                <a href="index copy.html">
+                <a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp">
                   
                   <img src="img\logo_org_noframe_191561.png" alt="">
                   <!-- <p>JoyLease</p> -->
@@ -365,7 +372,7 @@
                       <tr>
                       	<input type="hidden" value="<%=cartVO1.getProdID() %>">
                         <td><a class="remove" ><fa class="fa fa-close"></fa></a></td>
-                        <td><a ><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO1.getProdID()%>" alt="img"></a></td>
+                        <td><a class="cart-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=<%=cartVO1.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO1.getProdID()%>" alt="img"></a></td>
                         <td><a class="aa-cart-title" href="#"><%=cartVO1.getProdName() %></a></td>
                         <td><%=cartVO1.getRent() %></td>
                         <td><%=cartVO1.getEstStart()%></td>
