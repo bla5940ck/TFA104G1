@@ -26,14 +26,14 @@ public class ProdDAO implements ProdDAOImpl {
 	public Integer add(ProdVO prod) {
 		
 		String sql = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
-		int[] cols = {1};
+		String[] cols = {"prod_id"};
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs =null;
 		Integer key = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql,pstmt.RETURN_GENERATED_KEYS);
+			pstmt = con.prepareStatement(sql,cols);
 
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
@@ -472,11 +472,11 @@ public class ProdDAO implements ProdDAOImpl {
 //		for(ProdVO p :list) {
 //			System.out.println(p.getProdRent());
 //		}
-		List<ProdVO> allByKeyword = dao.getAllByKeyword("試試看");
-		System.out.println(allByKeyword.size());
-		for(ProdVO p : allByKeyword) {
-			System.out.println();
-		}
+//		List<ProdVO> allByKeyword = dao.getAllByKeyword("試試看");
+//		System.out.println(allByKeyword.size());
+//		for(ProdVO p : allByKeyword) {
+//			System.out.println();
+//		}
 		
 //		ProdVO findProductByPK = dao.findProductByPK(1);
 //		System.out.println(findProductByPK.getProdPrice());
