@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="BIG5"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.manager.model.*"%>
@@ -7,19 +7,17 @@
 <%
 	ManagerService msSvc = new ManagerService();
 	List<ManagerVO> list = msSvc.getAll();
-	// 	out.print(list);
 	pageContext.setAttribute("list", list);
-	
-	ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO"); 
-	for(ManagerVO maVO : list){
-		out.println(maVO.getStatus());
-	};
-	
+
+	ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO");
+	// 	for(ManagerVO maVO : list){
+	// 		out.println(maVO.getStatus());
+	// 	};
 %>
 
 <html>
 <head>
-<title>©Ò¦³ºŞ²zªÌ¸ê®Æ-listAllManager.jsp</title>
+<title>æ‰€æœ‰ç®¡ç†è€…è³‡æ–™-listAllManager.jsp</title>
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -64,23 +62,24 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<h4>¦¹­¶½m²ß±Ä¥Î EL ªº¼gªk¨ú­È:</h4>
+	<h4>æ­¤é ç·´ç¿’æ¡ç”¨ EL çš„å¯«æ³•å–å€¼:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>©Ò¦³ºŞ²zªÌ¸ê®ÆlistAllManager.jsp</h3>
+				<h3>æ‰€æœ‰ç®¡ç†è€…è³‡æ–™listAllManager.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/Manager/select_page.jsp"><img
-						src="<%=request.getContextPath()%>/Manager/images/back1.gif"
-						width="100" height="32" border="0">¦^­º­¶</a>
+					<a
+						href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp"><img
+						src="<%=request.getContextPath()%>/back_end/manager/images/back1.gif"
+						width="100" height="32" border="0">å›é¦–é </a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<%--¿ù»~¦Cªí --%>
+	<%--éŒ¯èª¤åˆ—è¡¨ --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -90,14 +89,13 @@ th, td {
 
 	<table>
 		<tr>
-			<th>ºŞ²zªÌ½s¸¹</th>
-			<th>ºŞ²zªÌ±b¸¹</th>
-			<th>ºŞ²zªÌ©m¦W</th>
-			<th>ºŞ²zªÌ±K½X</th>
-			<th>ºŞ²zªÌª¬ºA</th>
-
-			<th>­×§ï</th>
-			<th>§R°£</th>
+			<th>ç®¡ç†è€…ç·¨è™Ÿ</th>
+			<th>ç®¡ç†è€…å¸³è™Ÿ</th>
+			<th>ç®¡ç†è€…å§“å</th>
+			<th>ç®¡ç†è€…å¯†ç¢¼</th>
+			<th>ç®¡ç†è€…ç‹€æ…‹</th>
+			<th>ä¿®æ”¹</th>
+			<th>åˆªé™¤</th>
 		</tr>
 		<%@ include file="page1.file"%>
 		<c:forEach var="managerVO" items="${list}" begin="<%=pageIndex%>"
@@ -108,13 +106,13 @@ th, td {
 				<td>${managerVO.managerUser}</td>
 				<td>${managerVO.managerName}</td>
 				<td>${managerVO.managerPassword}</td>
-				<td>${(managerVO.status==0)?'°±¥Î¤¤':'¨Ï¥Î¤¤'}</td>
-				
+				<td>${(managerVO.status==0)?'åœç”¨ä¸­':'ä½¿ç”¨ä¸­'}</td>
+
 				<td>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="­×§ï"> <input type="hidden"
+						<input type="submit" value="ä¿®æ”¹"> <input type="hidden"
 							name="managerID" value="${managerVO.managerID}"> <input
 							type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
@@ -123,7 +121,7 @@ th, td {
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet"
 						style="margin-bottom: 0px;">
-						<input type="submit" value="§R°£"> <input type="hidden"
+						<input type="submit" value="åˆªé™¤"> <input type="hidden"
 							name="managerID" value="${managerVO.managerID}"> <input
 							type="hidden" name="action" value="delete">
 					</FORM>
@@ -132,11 +130,6 @@ th, td {
 		</c:forEach>
 	</table>
 	<%@ include file="page2.file"%>
+	
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-
-
-</script>
 </html>

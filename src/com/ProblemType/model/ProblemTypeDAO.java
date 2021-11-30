@@ -261,34 +261,34 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 		
 		ProblemTypeDAO dao = new ProblemTypeDAO();
 		
-		//·s¼W
+		//æ–°å¢
 		ProblemTypeVO ptvo1 = new ProblemTypeVO();
 		ptvo1.setTypeID(4);
-		ptvo1.setTypeName("Ãiªº³B²z");
+		ptvo1.setTypeName("æ‡¶çš„è™•ç†");
 //		dao.insert(ptvo1);
 
 		
 		
 		
-		//­×§ï
+		//ä¿®æ”¹
 		ProblemTypeVO ptvo2 = new ProblemTypeVO();
 		ptvo2.setTypeID(1);
 		ptvo2.setTypeName("123");
 //		dao.update(ptvo2);
 		
 		
-		//§R°£
+		//åˆªé™¤
 //		dao.delete(4);
 		
 		
-		//¬d¸ß
+		//æŸ¥è©¢
 		ProblemTypeVO ptvo3 = dao.findByprimaryKey(1);
 		System.out.print(ptvo3.getTypeID() + ",");
 		System.out.println(ptvo3.getTypeName() + ",");
 		System.out.println("--------------------------");
 		
 		
-		//¥ş³¡¬d¸ß
+		//å…¨éƒ¨æŸ¥è©¢
 //		List<ProblemTypeVO> list = dao.getAll();
 //		for (ProblemTypeVO ptvo4 : list) {
 //		System.out.print(ptvo4.getTypeID() + ",");

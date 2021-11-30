@@ -1,14 +1,13 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.manager.model.*"%>
 
 <%
 	ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO");
-
 %>
 
 <html>
 <head>
-<title>ºŞ²zªÌ¸ê®Æ - listOne.jsp</title>
+<title>ç®¡ç†è€…è³‡æ–™ - listOne.jsp</title>
 
 <style>
 table#table-1 {
@@ -50,25 +49,29 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<h4>¦¹­¶¼È½m²ß±Ä¥Î Script ªº¼gªk¨ú­È:</h4>
+	<h4>æ­¤é æš«ç·´ç¿’æ¡ç”¨ Script çš„å¯«æ³•å–å€¼:</h4>
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>ºŞ²zªÌ¸ê®Æ - ListOne.jsp</h3>
+				<h3>ç®¡ç†è€…è³‡æ–™ - ListOne.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/Manager/select_page.jsp"><img src="<%=request.getContextPath()%>/Manager/images/back1.gif"
-						width="100" height="100" border="0">¦^­º­¶</a>
+					<a
+						href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">
+						<img src="<%=request.getContextPath()%>/back_end/manager/images/back1.gif"
+						width="40" height="20" border="0">å›é¦–é 
+					</a>
 				</h4>
-			</td>		</tr>
+			</td>
+		</tr>
 	</table>
 
 	<table>
 		<tr>
-			<th>ºŞ²zªÌ½s¸¹</th>
-			<th>ºŞ²zªÌ±b¸¹</th>
-			<th>ºŞ²zªÌ©m¦W</th>
-			<th>ºŞ²zªÌ±K½X</th>
-			<th>ºŞ²zªÌª¬ºA</th>
+			<th>ç®¡ç†è€…ç·¨è™Ÿ</th>
+			<th>ç®¡ç†è€…å¸³è™Ÿ</th>
+			<th>ç®¡ç†è€…å§“å</th>
+			<th>ç®¡ç†è€…å¯†ç¢¼</th>
+			<th>ç®¡ç†è€…ç‹€æ…‹</th>
 
 		</tr>
 		<tr>
@@ -76,7 +79,7 @@ th, td {
 			<td><%=managerVO.getManagerUser()%></td>
 			<td><%=managerVO.getManagerName()%></td>
 			<td><%=managerVO.getManagerPassword()%></td>
-			<td><%=managerVO.getStatus()==0?"°±¥Î¤¤":"¨Ï¥Î¤¤"%></td>
+			<td><%=managerVO.getStatus() == 0 ? "åœç”¨ä¸­" : "ä½¿ç”¨ä¸­"%></td>
 
 		</tr>
 	</table>

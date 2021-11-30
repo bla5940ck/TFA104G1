@@ -299,7 +299,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 
 		MenberServiceDAO dao = new MenberServiceDAO();
 
-		// ·s¼W
+		// æ–°å¢ž
 		MenberServiceVO msvo1 = new MenberServiceVO();
 
 		long datetime = System.currentTimeMillis();
@@ -324,7 +324,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 		
 		
 		
-		// ­×§ï
+		// ä¿®æ”¹
 		MenberServiceVO msvo2 = new MenberServiceVO();
 		msvo2.setProdID(2);
 		msvo2.setMemberID(1);
@@ -341,11 +341,11 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 //		dao.update(msvo2);
 		
 		
-		// §R°£
+		// åˆªé™¤
 //		dao.delete(7017);
 
 
-		// ³æµ§¬d¸ß
+		// å–®ç­†æŸ¥è©¢
 //		MenberServiceVO msvo3 = dao.findByprimaryKey(5);
 //		System.out.println(msvo3);
 //		System.out.print(msvo3.getMsgID() + ",");
@@ -362,7 +362,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 //		System.out.print(msvo3.getProblemStatus());
 //		System.out.println("---------------------");
 	
-		// ¥þ³¡¬d¸ß
+		// å…¨éƒ¨æŸ¥è©¢
 		List<MenberServiceVO> list = dao.getAll();
 		for(MenberServiceVO msvo4:list) {
 			System.out.print(msvo4.getMsgID() + ",");

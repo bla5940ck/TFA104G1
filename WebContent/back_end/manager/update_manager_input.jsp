@@ -1,15 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.manager.model.*"%>
 
 <%
-  ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO"); //EmpServlet.java (Concroller) ¦s¤JreqªºempVOª«¥ó (¥]¬AÀ°¦£¨ú¥XªºempVO, ¤]¥]¬A¿é¤J¸ê®Æ¿ù»~®ÉªºempVOª«¥ó)
+  ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO"); //EmpServlet.java (Concroller) å­˜å…¥reqçš„empVOç‰©ä»¶ (åŒ…æ‹¬å¹«å¿™å–å‡ºçš„empVO, ä¹ŸåŒ…æ‹¬è¼¸å…¥è³‡æ–™éŒ¯èª¤æ™‚çš„empVOç‰©ä»¶)
 %>
 
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>ºŞ²z­û¸ê®Æ­×§ï - update_manager_input.jsp</title>
+<title>ç®¡ç†å“¡è³‡æ–™ä¿®æ”¹ - update_manager_input.jsp</title>
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -46,16 +46,17 @@
 <body bgcolor='white'>
 <table id="table-1">
 	<tr><td>
-		 <h3>­û¤u¸ê®Æ­×§ï - update_manager_input.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/Manager/select_page.jsp"><img src="<%=request.getContextPath()%>/Manager/images/back1.gif" width="100" height="32" border="0">¦^­º­¶</a></h4>
+		 <h3>å“¡å·¥è³‡æ–™ä¿®æ”¹ - update_manager_input.jsp</h3>
+		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">
+		 <img src="<%=request.getContextPath()%>/back_end/manager/images/back1.gif" width="100" height="32" border="0">å›é¦–é </a></h4>
 	</td></tr>
 </table>
 
-<h3>¸ê®Æ­×§ï:</h3>
+<h3>è³‡æ–™ä¿®æ”¹:</h3>
 
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -66,27 +67,27 @@
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ManagerServlet" name="form1">
 <table>
 	<tr>
-		<td>ºŞ²z­û½s¸¹:<font color=red><b>*</b></font></td>
+		<td>ç®¡ç†å“¡ç·¨è™Ÿ:<font color=red><b>*</b></font></td>
 		<td><%=managerVO.getManagerID()%></td>
 	</tr>
 	<tr>
-		<td>ºŞ²z­û±b¸¹:</td>
+		<td>ç®¡ç†å“¡å¸³è™Ÿ:</td>
 		<td><input type="TEXT" name="managerUser" size="45" value="<%=managerVO.getManagerUser()%>" /></td>
 	</tr>
 	<tr>
-		<td>ºŞ²z­û©m¦W:</td>
+		<td>ç®¡ç†å“¡å§“å:</td>
 		<td><input type="TEXT" name="managerName" size="45"	value="<%=managerVO.getManagerName()%>" /></td>
 	</tr>
 	<tr>
-		<td>ºŞ²z­û±K½X:</td>
+		<td>ç®¡ç†å“¡å¯†ç¢¼:</td>
 		<td><input type="TEXT" name="managerPassword" size="45"	value="<%=managerVO.getManagerPassword()%>" /></td>
 	</tr>
 	<tr>
-				<td>ºŞ²z­ûª¬ºA:</td>
+				<td>ç®¡ç†å“¡ç‹€æ…‹:</td>
 				<td>
 					<select name="status" size="1" id="s">
-								<option value="1" <%=managerVO.getStatus()==1?"selected":""  %> >¨Ï¥Î¤¤</option>
-								<option value="0" <%=managerVO.getStatus()==0?"selected":""  %> >°±¥Î¤¤</option>
+								<option value="1" <%=managerVO.getStatus()==1?"selected":""  %> >ä½¿ç”¨ä¸­</option>
+								<option value="0" <%=managerVO.getStatus()==0?"selected":""  %> >åœç”¨ä¸­</option>
 					</select>
 				</td>
 			</tr>
@@ -101,7 +102,7 @@
 <input type ="hidden" name="managerID" value=<%=managerVO.getManagerID() %>>
 			<input type ="hidden" name="status" value=<%=managerVO.getStatus() %>>
 
-<input type="submit" value="°e¥X­×§ï">
+<input type="submit" value="é€å‡ºä¿®æ”¹">
 </FORM>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="BIG5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.manager.model.*"%>
 
@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>ºŞ²z­û¸ê®Æ·s¼W - addManager.jsp</title>
+<title>ç®¡ç†å“¡è³‡æ–™æ–°å¢ - addManager.jsp</title>
 <style>
 <
 style>table#table-1 {
@@ -52,22 +52,22 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>­û¤u¸ê®Æ·s¼W - addManager.jsp</h3>
+				<h3>å“¡å·¥è³‡æ–™æ–°å¢ - addManager.jsp</h3>
 			</td>
 			<td>
 				<h4>
 					<a href="select_page.jsp"><img src="images/tomcat.png"
-						width="100" height="100" border="0">¦^­º­¶</a>
+						width="100" height="100" border="0">å›é¦–é </a>
 				</h4>
 			</td>
 		</tr>
 	</table>
 
-	<h3>¸ê®Æ·s¼W:</h3>
+	<h3>è³‡æ–™æ–°å¢:</h3>
 
-	<%-- ¿ù»~ªí¦C --%>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+		<font style="color: red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 		<ul>
 			<c:forEach var="message" items="${errorMsgs}">
 				<li style="color: red">${message}</li>
@@ -78,22 +78,22 @@ th, td {
 		ACTION="<%=request.getContextPath()%>/ManagerServlet" name="form1">
 		<table>
 			<tr>
-				<td>ºŞ²z­û±b¸¹:</td>
+				<td>ç®¡ç†å“¡å¸³è™Ÿ:</td>
 				<td><input type="TEXT" name="managerUser" size="45" /></td>
 			</tr>
 			<tr>
-				<td>ºŞ²z­û©m¦W:</td>
+				<td>ç®¡ç†å“¡å§“å:</td>
 				<td><input type="TEXT" name="managerName" size="45" /></td>
 			</tr>
 			<tr>
-				<td>ºŞ²z­û±K½X:</td>
+				<td>ç®¡ç†å“¡å¯†ç¢¼:</td>
 				<td><input type="TEXT" name="managerPassword" size="45" /></td>
 			</tr>
 			<tr>
-				<td>ºŞ²z­ûª¬ºA:</td>
+				<td>ç®¡ç†å“¡ç‹€æ…‹:</td>
 				<td><select name="status" size="1" id="s">
-						<option value="0">°±¥Î¤¤</option>
-						<option value="1">¨Ï¥Î¤¤</option>
+						<option value="0">åœç”¨ä¸­</option>
+						<option value="1">ä½¿ç”¨ä¸­</option>
 
 				</select></td>
 			</tr>
@@ -103,7 +103,7 @@ th, td {
 		<br> <input type="hidden" name="action" value="insert"> 
 			
 		<input
-			type="submit" value="°e¥X·s¼W">
+			type="submit" value="é€å‡ºæ–°å¢">
 	</FORM>
 </body>
 <script

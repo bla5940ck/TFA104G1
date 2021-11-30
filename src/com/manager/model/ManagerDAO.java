@@ -274,7 +274,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 
 		ManagerDAO dao = new ManagerDAO();
 
-		//·s¼W
+		//æ–°å¢ž
 		ManagerVO mvo1 = new ManagerVO();
 		mvo1.setManagerUser("xxxxxxxxx");
 		mvo1.setManagerName("hawer");
@@ -283,7 +283,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		dao.insert(mvo1);
 	
 
-		//­×§ï
+		//ä¿®æ”¹
 		ManagerVO mvo2 = new ManagerVO();
 //		mvo2.setManagerID(3);
 //		mvo2.setManagerUser("loveme");
@@ -293,11 +293,11 @@ public class ManagerDAO implements ManagerDAO_interface {
 		dao.update(mvo2);
 
 		
-		//§R°£
+		//åˆªé™¤
 		dao.delete(5);
 		
 		
-		//¬d¸ß
+		//æŸ¥è©¢
 		ManagerVO vo3 = dao.findByprimaryKey(3);
 		System.out.print(vo3.getManagerID() + ",");
 		System.out.print(vo3.getManagerUser() + ",");
@@ -306,7 +306,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		System.out.print(vo3.getStatus() + ",");
 		System.out.println("----------------");
 		
-		//¥þ³¡¬d¸ß		
+		//å…¨éƒ¨æŸ¥è©¢		
 		List<ManagerVO> list = dao.getAll();
 		for (ManagerVO vo4 : list) {
 		System.out.print(vo4.getManagerID() + ",");

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
@@ -35,11 +35,11 @@
 
 <p>This is the Home page for IBM Manager: Home</p>
 
-<h3>¸ê®Æ¬d¸ß:</h3>
+<h3>è³‡æ–™æŸ¥è©¢:</h3>
 	
-<%-- ¿ù»~ªí¦C --%>
+<%-- éŒ¯èª¤è¡¨åˆ— --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">½Ğ­×¥¿¥H¤U¿ù»~:</font>
+	<font style="color:red">è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:</font>
 	<ul>
 	    <c:forEach var="message" items="${errorMsgs}">
 			<li style="color:red">${message}</li>
@@ -48,15 +48,15 @@
 </c:if>
 
 <ul>
-  <li><a href='listAll.jsp'>List all Managers.</a><br><br></li>
+  <li><a href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'>List all Managers.</a><br><br></li>
   
 
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ManagerServlet" >
-        <b>¿é¤JºŞ²zªÌ½s¸¹ :</b>
+        <b>è¼¸å…¥ç®¡ç†è€…ç·¨è™Ÿ :</b>
         <input type="text" name="managerID">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="°e¥X">
+        <input type="submit" value="é€å‡º">
     </FORM>
   </li>
 
@@ -64,36 +64,36 @@
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ManagerServlet" >
-       <b>¿ï¾ÜºŞ²z­û½s¸¹:</b>
+       <b>é¸æ“‡ç®¡ç†å“¡ç·¨è™Ÿ:</b>
        <select size="1" name="managerID">
          <c:forEach var="managerVO" items="${msSvc.all}" > 
           <option value="${managerVO.managerID}">${managerVO.managerID}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+       <input type="submit" value="é€å‡º">
     </FORM>
   </li>
   
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ManagerServlet" >
-       <b>¿ï¾ÜºŞ²z­û©m¦W:</b>
+       <b>é¸æ“‡ç®¡ç†å“¡å§“å:</b>
        <select size="1" name="managerID">
          <c:forEach var="managerVO" items="${msSvc.all}" > 
           <option value="${managerVO.managerID}">${managerVO.managerName}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="°e¥X">
+       <input type="submit" value="é€å‡º">
      </FORM>
   </li>
 </ul>
 
 
-<h3>ºŞ²z­ûºŞ²z</h3>
+<h3>ç®¡ç†å“¡ç®¡ç†</h3>
 
 <ul>
-  <li><a href='addManager.jsp'>Add</a> a new Manager.</li>
+  <li><a href='addManager.jsp'>Add a new Manager.</a></li>
 </ul>
 </body>
 </html>
