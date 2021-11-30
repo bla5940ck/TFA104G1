@@ -23,15 +23,17 @@ public class ProdDAO implements ProdDAOImpl {
 		}
 	}
 
-	public void add(ProdVO prod) {
+	public Integer add(ProdVO prod) {
 		
 		String sql = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+		int[] cols = {1};
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		ResultSet rs =null;
+		Integer key = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(sql,pstmt.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
@@ -49,10 +51,18 @@ public class ProdDAO implements ProdDAOImpl {
 			
 			pstmt.executeUpdate();
 			
+			rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				key = rs.getInt(1); // 只支援欄位索引值取得自增主鍵值
+				System.out.println("自增主鍵值 = " + key + "(剛新增成功的員工編號)");
+			}
+			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}finally {
 		if (pstmt != null) {
 			try {
 				pstmt.close();
@@ -67,8 +77,8 @@ public class ProdDAO implements ProdDAOImpl {
 				e.printStackTrace(System.err);
 			}
 		}
-	
-
+	}
+		return key;
 	}
 
 	@Override
@@ -100,11 +110,26 @@ public class ProdDAO implements ProdDAOImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		
@@ -153,13 +178,27 @@ public class ProdDAO implements ProdDAOImpl {
 		
 			e.printStackTrace();
 		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
 			}
-
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return prod;
@@ -227,55 +266,6 @@ public class ProdDAO implements ProdDAOImpl {
 		}
 
 		return prodList;
-	}
-	
-	public Integer getLastKey() {
-		String sql = "select * from product";
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		int lastKey = 0 ;
-		
-		
-		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				lastKey = rs.getInt("prod_id");
-			}
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		
-		return lastKey;
 	}
 	
 	
@@ -407,15 +397,89 @@ public class ProdDAO implements ProdDAOImpl {
 
 		return list;
 	}
+	public List<ProdVO> getAllByKeyword(String keyword){
+		
+		List<ProdVO> list = new ArrayList();
+		String sql = "SELECT * FROM product where prod_name like \"%\"?\"%\" or prod_cot like \"%\"?\"%\"";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProdVO prod = new ProdVO();
+				prod.setProdID(rs.getInt("prod_id"));
+				prod.setCategoryID(rs.getInt("category_id"));
+				prod.setMemberID(rs.getInt("member_id"));
+				prod.setProdStatus(rs.getInt("prod_status"));
+				prod.setProdName(rs.getString("prod_name"));
+				prod.setProdCot(rs.getString("prod_cot"));
+				prod.setShelfDate(rs.getTimestamp("shelf_date"));
+				prod.setCreationDate(rs.getTimestamp("creation_date"));
+				prod.setProdRent(rs.getInt("prod_rent"));
+				prod.setProdPrice(rs.getInt("prod_price"));
+				prod.setPic1(rs.getBytes("pic_1"));
+				prod.setPic2(rs.getBytes("pic_2"));
+				prod.setPic3(rs.getBytes("pic_3"));
+				prod.setComt(rs.getString("comt"));
+
+				list.add(prod);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
 	
 	
 	
 	public static void main(String[] args) {
 		ProdDAO dao = new ProdDAO();
-		List<ProdVO> list = dao.priceSortAsc();
-		for(ProdVO p :list) {
-			System.out.println(p.getProdRent());
+//		List<ProdVO> list = dao.priceSortAsc();
+//		for(ProdVO p :list) {
+//			System.out.println(p.getProdRent());
+//		}
+		List<ProdVO> allByKeyword = dao.getAllByKeyword("試試看");
+		System.out.println(allByKeyword.size());
+		for(ProdVO p : allByKeyword) {
+			System.out.println();
 		}
+		
+//		ProdVO findProductByPK = dao.findProductByPK(1);
+//		System.out.println(findProductByPK.getProdPrice());
 	}
 
 }

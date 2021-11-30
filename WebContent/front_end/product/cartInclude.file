@@ -9,14 +9,13 @@
 
 <%-- 放入jquery-3.6.0.min.js" 並自行引入 --%>
 <%-- 開啟redis --%>
-<%-- setAttribute('id',1); 設定會員編號為1 2 3 4 5都可以 --%>
+<%-- session.setAttribute("id",1); 設定會員編號為1 2 3 4 5都可以 --%>
 <%-- 注意自己的專案 變數名稱 不要與下面一樣  --%>
 
 
 
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+
 <%@page import="web.product.jedis.JedisPoolUtil"%>
 <%@page import="redis.clients.jedis.Jedis"%>
 <%@page import="redis.clients.jedis.JedisPool"%>
@@ -41,8 +40,8 @@
 
 	
 	
-	if (request.getParameter("picno") != null) {
-		prodID = Integer.parseInt(request.getParameter("picno"));
+	if (request.getParameter("prodID") != null) {
+		prodID = Integer.parseInt(request.getParameter("prodID"));
 		product = prodSvc.findProductByPK(prodID);
 
 	}
@@ -92,7 +91,7 @@
                     tatol1 +=cartVO2.getTatolPrice();
                     %>
                     <li>
-                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/product_view/prodDetail.jsp?picno=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
+                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/product_view/prodDetail.jsp?prodID=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#"><%=cartVO2.getProdName() %></a></h4>
                         <p><%=day%>天*$<%=cartVO2.getRent()%></p>
