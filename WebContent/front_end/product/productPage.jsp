@@ -2,6 +2,7 @@
 <%@page import="com.product.model.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 		
@@ -13,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title>JoyLease |Product</title>
     
-    <!-- Font awesome --> 
+    <!-- Font awesome -->
     <link href="<%=request.getContextPath()%>/front_end/product/css/font-awesome.css" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="<%=request.getContextPath()%>/front_end/product/css/bootstrap.css" rel="stylesheet">   
@@ -56,7 +57,9 @@
 }</style> 
   <body> 
    <%session.setAttribute("id", 1);
-
+   response.setHeader("Cache-Control","no-store"); 
+   response.setHeader("Pragma","no-cache");        
+   response.setDateHeader ("Expires", 0);
    
    %>
    
@@ -124,7 +127,7 @@
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
                   <li><a href="account copy.html">會員帳戶</a></li>
-                  <li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
+                  <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
                   <li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
                   <!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
                   <li><a href="" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
@@ -162,8 +165,9 @@
               <!-- / cart box -->
               <!-- search box -->
               <div class="aa-search-box">
-                <form action="">
-                  <input type="text" name="" id="" placeholder="健身環大冒險">
+                <form action="<%=path %>/prod/ProdServlet" method="post">
+                  <input type="text" name="searchCot" id="" placeholder="健身環大冒險">
+                  <input type="hidden" name="action" value="search">
                   <button type="submit"><span class="fa fa-search"></span></button>
                 </form>
               </div>
@@ -196,14 +200,15 @@
               <!-- <li><a href="index.html">Home</a></li> -->
               <li><a href="#">全部分類 <span class="caret"></span></a>
                 <ul class="dropdown-menu">                
-                  <li><a href="#">Nintendo</a></li>
-                  <li><a href="#">PlayStation</a></li>
-                  <li><a href="#">XBOX</a></li>
-                  <li><a href="#">其他遊戲主機</a></li>                                                
-                  <li><a href="#">電腦遊戲</a></li>
-                  <li><a href="#">桌遊</a></li>
-                  <li><a href="#">拼圖</a></li>
-                  <li><a href="#">其他</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&prodSelect=<c:out value="${prodSelect}"/>">所有商品</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=1&prodSelect=<c:out value="${prodSelect}"/>">Nintendo</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=2&prodSelect=<c:out value="${prodSelect}"/>">PlayStation</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=3&prodSelect=<c:out value="${prodSelect}"/>">XBOX</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=4&prodSelect=<c:out value="${prodSelect}"/>">其他遊戲主機</a></li>                                                
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=5&prodSelect=<c:out value="${prodSelect}"/>">電腦遊戲</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=6&prodSelect=<c:out value="${prodSelect}"/>">桌遊</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=7&prodSelect=<c:out value="${prodSelect}"/>">拼圖</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
                   <!-- <li><a href="#">And more.. <span class="caret"></span></a> -->
                     <!-- <ul class="dropdown-menu">
                       <li><a href="#">Sleep Wear</a></li>
@@ -339,7 +344,7 @@
                   
                   
                   
-                  <select name="prodSelect" class="aa-select">
+                  <select name="prodSelect" class="aa-select" value="">
                        <c:if test="${'asc'==flag}">             
                     <option value="1"  >上架時間</option>
                     <option value="2" selected="Default">價格-低到高</option>
@@ -360,9 +365,12 @@
                     <option value="3" >價格-高到低</option>
                      </c:if>
                     <input type="hidden" name = "action" value="select">
+                    <input type="hidden" name = "cateNo" value="<c:out value="${cateNo}"/>">
+					
 <!--                     <input type="submit"> -->
 
                   </select>
+                  	
 <!--                 </form> -->
 <!--                 <form action="" class="aa-show-form"> -->
 <!--                   <label for="">顯示筆數</label> -->
@@ -376,23 +384,36 @@
 <!--                 </form> -->
               </div>
               <div class="aa-product-catg-head-right">
+              
+                現在分類:<label style="color: orange; font-size:20px;">${empty categoryName ? '所有分類' : categoryName}</label>
                 <a id="grid-catg" href="#"><span class="fa fa-th"></span></a>
                 <a id="list-catg" href="#"><span class="fa fa-list"></span></a>
               </div>
             </div>
             <div class="aa-product-catg-body">
+<!--             如果搜尋陣列長度為0代表 搜尋不到物品 印出查無-->
+            <c:if test= "${fn:length(listSearch)==0 and listSearch!=null}">
+                	<label style="color:blue; font-size:20px;">"${searchCot}" </label><label style=" font-size:20px;">查無結果</label>
+                	</c:if>
+            <c:if test= "${fn:length(listSearch)>0 and listSearch!=null}">
+                	<label style=" font-size:20px;">目前搜尋:</label><label style="color:blue; font-size:20px;">"${searchCot}"  </label>
+                	</c:if>
+                	
               <ul class="aa-product-catg">
                 <!-- start single product item -->
                
-<!--                 /遞減排列 -->
+<!--                 /遞增排列 -->
                 <c:if test="${'asc'==flag}">
-                	<c:forEach var="prodEL" items="${prodList}">
-					    <c:if test="${prodEL.prodStatus==1}">
+                			
+                	<c:forEach var="prodEL" items="${listSearch==null ?prodList : listSearch}">
+<!--                 		假如狀態為1代表上架 如果沒有選擇類別 則按照原來執行 如果有 按照類別執行 -->
+					    <c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
+					   
 					    <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=${prodEL.prodID}">
-                    <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
                       <span class="aa-product-price">$${prodEL.prodRent}</span>
@@ -409,15 +430,16 @@
                  </c:if>	
                  
                  
-<!--                  	/遞增排列 -->
+<!--                  	/遞減排列 -->
                  	<c:if test="${'desc'==flag}">
-                	<c:forEach var="prodEL" items="${prodList}">
-					    <c:if test="${prodEL.prodStatus==1}">
+                	<c:forEach var="prodEL" items="${listSearch==null ?prodList : listSearch}">
+        
+					    <c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
 					    <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=${prodEL.prodID}">
-                    <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
                       <span class="aa-product-price">$${prodEL.prodRent}</span>
@@ -436,16 +458,18 @@
                  	
                  	
 <!--                  一般排列 -->
-	<c:if test="${flag==null or flag=='time'}">
+	<c:if test="${empty flag or flag=='time'}">
 	<jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
                 	<c:if test="${not empty prodSvc1.all}">
-                	<c:forEach var="prodEL" items="${prodSvc1.all}">
-                	<c:if test="${prodEL.prodStatus==1}">
+                	
+                	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.all : listSearch}">
+                	<c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
+                	
                 	<li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&picNo=${prodEL.prodID}">
-                    <img src="<%=path%>/prod/ProdServlet?picNo=${prodEL.prodID}&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
                       <span class="aa-product-price">$${prodEL.prodRent}</span>
@@ -517,14 +541,15 @@
             <div class="aa-sidebar-widget">
               <h3>分類</h3>
               <ul class="aa-catg-nav">
-                <li><a href="#">Nintendo</a></li>
-                <li><a href="#">PlayStation</a></li>
-                <li><a href="#">XBOX</a></li>
-                <li><a href="#">其他遊戲主機</a></li>                                                
-                <li><a href="#">電腦遊戲</a></li>
-                <li><a href="#">桌遊</a></li>
-                <li><a href="#">拼圖</a></li>
-                <li><a href="#">其他</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&prodSelect=<c:out value="${prodSelect}"/>">所有商品</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=1&prodSelect=<c:out value="${prodSelect}"/>">Nintendo</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=2&prodSelect=<c:out value="${prodSelect}"/>">PlayStation</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=3&prodSelect=<c:out value="${prodSelect}"/>">XBOX</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=4&prodSelect=<c:out value="${prodSelect}"/>">其他遊戲主機</a></li>                                                
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=5&prodSelect=<c:out value="${prodSelect}"/>">電腦遊戲</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=6&prodSelect=<c:out value="${prodSelect}"/>">桌遊</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=7&prodSelect=<c:out value="${prodSelect}"/>">拼圖</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
               </ul>
             </div>
             <!-- single sidebar -->
@@ -583,7 +608,7 @@
                 <c:forEach var="prodCookie" items="${listCookie}">
                 
                   <li>
-                    <a href="<%=path%>/front_end/product/prodDetail.jsp?picNo=${prodCookie.prodID}" class="aa-cartbox-img"><img alt="img" src="<%=path%>/prod/ProdServlet?action=detail&picNo=${prodCookie.prodID}&no=1"></a>
+                    <a href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodCookie.prodID}" class="aa-cartbox-img"><img alt="img" src="<%=path%>/prod/ProdServlet?action=detail&prodID=${prodCookie.prodID}&no=1"></a>
                     
                     <div class="aa-cartbox-info">
                       <p>${prodCookie.prodName}</p>
@@ -771,6 +796,8 @@
 <script> $("select.aa-select").change(function(){
 	$("form.aa-sort-form").submit();
 }) ; 
+
+	
 
 
 
