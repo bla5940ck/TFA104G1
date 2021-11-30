@@ -4,10 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
+
 <%
 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+// 	out.print(olVO.getListID());
+// 	out.print(olVO.getOrdStatus());
+
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
-	List<OrderListVO> list = oldao.findOrderListByStatus(olVO.getStatus());
+	List<OrderListVO> list = oldao.findOrderListByStatus(olVO.getOrdStatus());
 	pageContext.setAttribute("list", list);
 	
 	ProdService prodSVC = new ProdService();
@@ -19,13 +23,7 @@
 <meta charset="BIG5">
 <title>單筆訂單明細頁面</title>
 </head>
-<style type="text/css">
-* {
-	box-sizing: border-box;
-	text-decoration: none;
-	list-style: none;
-}
-
+<style>
 body {
 	margin: 0;
 	padding: 10px;
@@ -36,28 +34,9 @@ img {
 }
 
 button{
-	border: none;
+	font-size:13px;
 	outline-width: 100%;
 	background-color: white;
-}
-
-header.header {
-	background-color: #ddd;
-	width: 100%;
-	margin: 0 auto 10px auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	header.header {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	header.header {
-		width: 100%;
-	}
 }
 
 div.main_content {
@@ -66,34 +45,23 @@ div.main_content {
 	font-size: 0;
 	/*   border:1px solid red; */
 }
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	div.main_content {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	div.main_content {
-		width: 100%;
-	}
-}
-
 /*-------------------aside區域------------------- */
 aside.aside {
-	background-color: #ddd;
+	height:620px;
 	width: 200px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
+	text-align:center;
 }
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: #ddd;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -101,47 +69,14 @@ main.main {
 	padding: 10px;
 }
 
-@media ( max-width : 575.98px) {
-	aside.aside, main.main {
-		display: block;
-	}
-	aside.aside {
-		width: 100%;
-		margin: 0 0 10px 0;
-	}
-	main.main {
-		width: 100%;
-	}
-}
-
-footer.footer {
-	background-color: #ddd;
-	width: 100%;
-	margin: 10px auto 0 auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	footer.footer {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	footer.footer {
-		width: 100%;
-	}
-}
-
 table {
 	width: 100%;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+	border: 1px solid lightgrey;
 }
 
 th, td {
@@ -149,16 +84,15 @@ th, td {
 	text-align: center;
 }
 </style>
-
 <body bgcolor="white">
-
-	<header class="header"> header區域 </header>
+<%@ include file="/includeFolder/header2.file" %>
+<!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
-					<h1>出租者專區</h1>
-					<li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></li>
+					<h2>出租者專區</h2>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -166,30 +100,35 @@ th, td {
 			<div>
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<b>輸入訂單明細編號 (如1):</b> <input type="text" name="listID"> <input
-						type="hidden" name="action" value="getOne_For_Display"> <input
-						type="submit" value="送出">
+					<h5>輸入訂單明細編號 (如1): 
+					<input type="text" name="listID"> 
+					<input type="hidden" name="action" value="getOne_For_Display"> 
+					<input type="submit" value="送出"></h5>
 				</FORM>
 				<jsp:useBean id="OrdserListSvc" scope="page"
 					class="com.order.model.OrderListService" />
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<b>選擇訂單明細編號:</b> <select size="1" name="listID">
+					<h5>選擇訂單明細編號: 
+					<select size="1" name="listID">
 						<c:forEach var="OrderListVO" items="${OrdserListSvc.all}">
 							<option value="${OrderListVO.listID}">${OrderListVO.listID}
 						</c:forEach>
-					</select> <input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
+					</select> 
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="submit" value="送出"></h5>
 				</FORM>
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<b>選擇訂單狀態:</b> <select size="1" name="status">
+					<h5>選擇訂單狀態: 
+					<select size="1" name="ordStatus">
 						<option value="0">已成立
 						<option value="1">待歸還
 						<option value="2">已完成
 						<option value="9">已取消
-					</select> <input type="hidden" name="action" value="get_Status_Display">
-					<input type="submit" value="送出">
+					</select> 
+					<input type="hidden" name="action" value="get_Status_Display">
+					<input type="submit" value="送出"></h5>
 				</FORM>
 			</div>
 			<c:if test="${not empty errorMsgs}">
@@ -206,10 +145,10 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/OrderListServlet">
 						<tr>
 							<td><a href="listAllOrderList.jsp">全部</a></td>
-							<td><button name="status" value="0">已成立</button></td>
-							<td><button name="status" value="1">待歸還</button></td>
-							<td><button name="status" value="2">已完成</button></td>
-							<td><button name="status" value="9">已取消</button></td>
+							<td><button name="ordStatus" value="0">已成立</button></td>
+							<td><button name="ordStatus" value="1">待歸還</button></td>
+							<td><button name="ordStatus" value="2">已完成</button></td>
+							<td><button name="ordStatus" value="9">已取消</button></td>
 						</tr>
 						<input type="hidden" name="action" value="get_Status_Display">
 					</FORM>
@@ -235,13 +174,13 @@ th, td {
 					<td><%=olVO.getEstStart()%></td>
 					<td><%=olVO.getEstEnd()%></td>
 					<c:choose>
-						<c:when test="${olVO.status == '0'}">
+						<c:when test="<%=olVO.getOrdStatus() == 0%>">
 							<td>已成立</td>
 						</c:when>
-						<c:when test="${olVO.status == '1'}">
+						<c:when test="<%=olVO.getOrdStatus() == 1%>">
 							<td>待歸還</td>
 						</c:when>
-						<c:when test="${olVO.status == '2'}">
+						<c:when test="<%=olVO.getOrdStatus() == 2%>">
 							<td>已完成</td>
 						</c:when>
 						<c:otherwise>
@@ -251,6 +190,8 @@ th, td {
 					<td>
 						<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
 						<input type="submit" value="查看明細"> 
+						<input type="hidden" name="listID" value="<%=olVO.getListID()%>"> 
+						<input type="hidden" name="ordStatus" value="<%=olVO.getOrdStatus()%>"> 
 						<input type="hidden" name="ordID" value="<%=olVO.getOrdID()%>"> 
 						<input type="hidden" name="action" value="getOne_For_Display">
 						</FORM>
@@ -259,10 +200,12 @@ th, td {
 			</table>
 		</main>
 	</div>
-	<footer class="footer"> footer區域 </footer>
+	<%@ include file="/includeFolder/footer2.file" %>
+<!-- 	<footer class="footer"> footer區域 </footer> -->
 </body>
 
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 </script>

@@ -8,9 +8,9 @@
   <!-- Font awesome -->
   <link href="<%=request.getContextPath()%>/includeFolder/css/font-awesome.css" rel="stylesheet">
   <!-- Bootstrap -->
-  <link href="<%=request.getContextPath()%>/includeFolder/bootstrap.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/includeFolder/css/bootstrap.css" rel="stylesheet">
   <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-  <link href="<%=request.getContextPath()%>/includeFolder/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+  <link href="<%=request.getContextPath()%>/includeFolder/js/jquery.smartmenus.bootstrap.css" rel="stylesheet">
   <!-- Product view slider -->
   <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/jquery.simpleLens.css">
   <!-- slick slider -->

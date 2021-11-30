@@ -7,6 +7,12 @@
 
 <%
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+// 	out.println(omVO.getShipDate());
+	
+	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+	OrderListDAOImpl oldao = new OrderListDAOImpl();
+// 	out.println(olVO.getListID());
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
 
@@ -14,80 +20,44 @@
 <head>
 <title>訂單資訊</title>
 <style>
-* {
-	box-sizing: border-box;
-	text-decoration: none;
-	list-style: none;
-}
-
-body {
-	margin: 0;
-	padding: 10px;
-}
+ body { 
+ 	margin: 0; 
+ 	padding: 10px; 
+ } 
 
 img {
 	max-width: 100%;
 }
 
 button{
-	border: none;
+	font-size:13px;
 	outline-width: 100%;
-	background-color: white;
+	background-color:white;
 }
 
-header.header {
-	background-color: #ddd;
-	width: 100%;
-	margin: 0 auto 10px auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	header.header {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	header.header {
-		width: 100%;
-	}
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-	/*   border:1px solid red; */
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	div.main_content {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	div.main_content {
-		width: 100%;
-	}
-}
+ div.main_content { 
+ 	width: 100%; 
+ 	margin: 0 auto; 
+ 	font-size: 0; 
+ } 
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	background-color: #ddd;
 	width: 200px;
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
+	text-align:center;
 }
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: #ddd;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
+/* 	height:620px; */
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -95,97 +65,49 @@ main.main {
 	padding: 10px;
 }
 
-@media ( max-width : 575.98px) {
-	aside.aside, main.main {
-		display: block;
-	}
-	aside.aside {
-		width: 100%;
-		margin: 0 0 10px 0;
-	}
-	main.main {
-		width: 100%;
-	}
-}
-
-footer.footer {
-	background-color: #ddd;
-	width: 100%;
-	margin: 10px auto 0 auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	footer.footer {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	footer.footer {
-		width: 100%;
-	}
-}
-
 table {
-	width: 100%;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 100px;
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+	border: 1px solid lightgrey;
+	width: 800px; 	
 }
 
 th, td {
-	padding: 5px;
-	text-align: center;
+	width: 80px; 
 }
 </style>
+
 </head>
-<body>
-<%session.setAttribute("id",1); %>
-<header class="header"> header區域 </header>	
-<div class="main_content">
+<body bgcolor="white">
+<%@ include file="/includeFolder/header2.file" %>
+	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
 					<h2>出租者專區</h2>
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+					<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>
 
-		<main class="main">
-		
-		<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>輸入訂單明細編號 (如1):
-					<input type="text" name="listID"> 
-					<input type="hidden" name="action" value="getOne_For_Display"> 
-					<input type="submit" value="送出"></h5>
-				</FORM>
-				<jsp:useBean id="OrdserListSvc" scope="page"
-					class="com.order.model.OrderListService" />
-		
-			<h3>訂單資訊</h3>
-			<h4>訂單編號 :<li><%=omVO.getOrdID()%></li></h4>
-			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
-				style="margin-bottom: 0px;">
-				<input type="submit" value="更新"> 
-				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>"> 
+		<main class="main">			
+		<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
+			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
+				<input type="submit" value="更新">
+				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
+				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
 				<input type="hidden" name="action" value="getOne_For_Update">
 			</FORM>
-
-	
 			<table id="table-1">
-
 				<tr>
-					<td>承租者編號</td>
-					<td>出租者編號</td>
-					<td>交易方式</td>
-					<td>訂單日期</td>
+					<th>承租者編號</th>
+					<th>出租者編號</th>
+					<th>交易方式</th>
+					<th>訂單日期</th>
 				</tr>
 
 				<tr>
@@ -197,11 +119,11 @@ th, td {
 				</tr>
 			</table>
 			<br>
-			<table id="table-1">
+			<table>
 				<tr>
-					<td>運送狀態</td>
-					<td>付款狀態</td>
-					<td>訂單狀態</td>
+					<th>運送狀態</th>
+					<th>付款狀態</th>
+					<th>訂單狀態</th>
 				</tr>
 				<tr>
 					<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
@@ -210,11 +132,11 @@ th, td {
 				</tr>
 			</table>
 			<br>
-			<table id="table-1">
+			<table>
 				<tr>
-					<td>出貨代碼</td>
-					<td>歸還代碼</td>
-					<td>超商代碼</td>
+					<th>出貨代碼</th>
+					<th>歸還代碼</th>
+					<th>超商代碼</th>
 				</tr>
 				<tr>
 					<td><%=omVO.getShipCode()%></td>
@@ -223,85 +145,82 @@ th, td {
 				</tr>
 			</table>
 			<br>
-			<table id="table-1">
+			<table>
 				<tr>
-					<td>預計租借起日</td>
+					<th>預計租借起日</th>
 					<td><%=omVO.getEstStart()%></td>
-
-					<td>預計租借訖日</td>
+				</tr>
+				<tr>
+					<th>預計租借訖日</th>
 					<td><%=omVO.getEstEnd()%></td>
-
-					<td>承租天數</td>
+				</tr>
+				<tr>
+					<th>承租天數</th>
 					<td><%=omVO.getRentDays()%></td>
 				</tr>
-			</table>
-			<br>
-			<table id="table-1">
 				<tr>
-					<td>實際出貨日期</td>
-					<td><fmt:formatDate value="<%=omVO.getShipDate()%>"
-							pattern="yyyy-MM-dd HH:MM" /></td>
+					<th>實際出貨日期</th>
+					<td><fmt:formatDate value="<%=omVO.getShipDate()%>" 
+					pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				</tr>
 				<tr>
-					<td>實際到貨日期</td>
+					<th>實際到貨日期</th>
 					<td><fmt:formatDate value="<%=omVO.getArrivalDate()%>"
-							pattern="yyyy-MM-dd HH:MM" /></td>
+							pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				</tr>
 				<tr>
-					<td>實際歸還日期</td>
+					<th>實際歸還日期</th>
 					<td><fmt:formatDate value="<%=omVO.getReturnDate()%>"
-							pattern="yyyy-MM-dd HH:MM" /></td>
+							pattern="yyyy-MM-dd HH:mm:ss" /></td>
 				</tr>
 			</table>
 			<br>
-			<table id="table-1">
+			<table>
 				<tr>
-					<td>承租者評分</td>
+					<th>承租者評分</th>
 					<td><%=omVO.getRentRank()%></td>
 
-					<td>出租者評分</td>
+					<th>出租者評分</th>
 					<td><%=omVO.getLeaseRank()%></td>
 				</tr>
 				<tr>
-					<td>承租者評論</td>
+					<th>承租者評論</th>
 					<td><%=omVO.getRentComt()%></td>
 
-					<td>出租者評論</td>
+					<th>出租者評論</th>
 					<td><%=omVO.getLeaseComt()%></td>
 				</tr>
 				<tr>
-					<td>承租者評論日期</td>
-					<td><fmt:formatDate value="<%=omVO.getRentComtdate()%>"
-							pattern="yyyy-MM-dd" /></td>
+					<th>承租者評論日期</th>
+					<td><fmt:formatDate value="<%=omVO.getRentComtdate()%>" pattern="yyyy-MM-dd" /></td>
 
-					<td>出租者評論日期</td>
-					<td><fmt:formatDate value="<%=omVO.getLeaseComtdate()%>"
-							pattern="yyyy-MM-dd" /></td>
+					<th>出租者評論日期</th>
+					<td><fmt:formatDate value="<%=omVO.getLeaseComtdate()%>" pattern="yyyy-MM-dd" /></td>
 				</tr>
 			</table>
 			<br>
-			<table id="table-1">
+			<table>
 				<tr>
-					<td>折價券編號</td>
+					<th>折價券編號</th>
 					<td><%=omVO.getCouponID()%></td>
 				</tr>
 				<tr>
-					<td>商品小計</td>
+					<th>商品小計</th>
 					<td><%=omVO.getProdPrice()%></td>
 				</tr>
 				<tr>
-					<td>運費</td>
+					<th>運費</th>
 					<td><%=omVO.getShipFee()%></td>
 				</tr>
 				<tr>
-					<td>訂單金額</td>
+					<th>訂單金額</th>
 					<td><%=omVO.getOrdPrice()%></td>
 				</tr>
 			</table>
-
 		</main>
 	</div>
-<footer class="footer"> footer區域 </footer></body>
+	<%@ include file="/includeFolder/footer2.file" %>
+</body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
