@@ -142,14 +142,14 @@ th, td {
 					<tr>
 						<th>出貨代碼</th>
 						<td><input type="TEXT" name="shipCode" size="20"
-							value="${OrderMasterVO.shipCode}"></td>
+							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"></td>
 
 					</tr>
 
 					<tr>
 						<th>歸還代碼</th>
 						<td><input type="TEXT" name="returnCode" size="20"
-							value="${OrderMasterVO.returnCode}" /></td>
+							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /></td>
 					</tr>
 
 				</table>
@@ -160,17 +160,17 @@ th, td {
 					<tr>
 						<th>出貨日期</th>
 						<td><input type="hidden"  id="getShipDate">
-						<p id="shipDate"><%=omVO.getShipDate()%></p></td>
+						<p id="shipDate">${OrderMasterVO.shipDate}</p></td>
 					</tr>
 					<tr>
 						<th>實際到貨日期</th>
 						<td><input type="hidden" id="getArrivalDate">
-						<p id="arrivalDate"><%=omVO.getArrivalDate()%></td>																	
+						<p id="arrivalDate">${OrderMasterVO.arrivalDate}</p></td>																	
 					</tr>
 					<tr>
 						<th>實際歸還日期</th>
 						<td><input type="hidden" id="getReturnDate">
-						<p id="returnDate"><%=omVO.getReturnDate()%></td>
+						<p id="returnDate">${OrderMasterVO.returnDate}</p></td>
 					</tr>
 				</table>
 				<table>
@@ -188,7 +188,7 @@ th, td {
 					</tr>
 					<tr>
 						<th>出租方評價</th>
-						<td><p id="rr"><%=omVO.getLeaseRank()%></p></td>
+						<td><p id="lr"><%=omVO.getLeaseRank()%></p></td>
 						<td><select name="leaseRank" size="1">
 								<option value="${OrderMasterVO.leaseRank}">評價</option>
 								<option value="1">1</option>
@@ -200,7 +200,7 @@ th, td {
 					</tr>
 					<tr>
 						<th>承租方評論</th>
-						<td><p id="rc"><%=omVO.getRentComt()%></p></td>
+						<td><p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td>
 						<td><select name="rentComt">
 								<option value="${OrderMasterVO.rentComt}">請選擇</option>
 								<option value="出貨快 !">出貨快 !</option>
@@ -214,7 +214,7 @@ th, td {
 					</tr>
 					<tr>
 						<th>出租方評論</th>
-						<td><p id="lc"><%=omVO.getLeaseComt()%></p></td>
+						<td><p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td>
 						<td><select name="leaseComt">
 								<option value="${OrderMasterVO.leaseComt}">請選擇</option>
 								<option value="出貨快 !">歸還快速 !</option>
@@ -350,11 +350,13 @@ function ShowReturnDate(){
 		rr.text("3");
 	}else if(<%=omVO.getRentRank()%> == 4){
 		rr.text("4");
-	}else{
+	}else if(<%=omVO.getRentRank()%> == 5){
 		rr.text("5");
-	};
+	}else{
+		rr.text("尚未評分");
+	}
 	/*=====出租方評級=====*/
-	var lr = $("#rr");
+	var lr = $("#lr");
 	if(<%=omVO.getLeaseRank()%> == 1){
 		lr.text("1");
 	}else if(<%=omVO.getLeaseRank()%> == 2){
@@ -363,9 +365,11 @@ function ShowReturnDate(){
 		lr.text("3");
 	}else if(<%=omVO.getLeaseRank()%> == 4){
 		lr.text("4");
-	}else{
+	}else if(<%=omVO.getLeaseRank()%> == 5){
 		lr.text("5");
-	};
+	}else{
+		lr.text("尚未評分");
+	}
 	
 	/*=====承租方評論=====*/
 
