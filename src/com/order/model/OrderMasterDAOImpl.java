@@ -298,11 +298,12 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			//1. 設定於pstmt.executeUpdate()之前
 			con.setAutoCommit(false);
 			// 先新增訂單
-			int cols[] = {1}; // 或 int cols[] = {1};
-
+//			int cols[] = {1}; // 或 int cols[] = {1};
+			String cols[] = {"ORD_ID"};
+			
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			pstmt2 = con.prepareStatement(INSERT_STMT_ORDERLIST);
-			
+
 			pstmt.setInt(1, omVO.getRentID());
 			pstmt.setInt(2, omVO.getLeaseID());
 			pstmt.setInt(3, omVO.getPayID());
@@ -319,6 +320,11 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setInt(10, omVO.getProdPrice());
 			pstmt.setInt(11, omVO.getShipFee());
 			pstmt.setInt(12, omVO.getOrdPrice());
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("set auto_increment_offset=1000");
+			stmt.executeUpdate("set auto_increment_increment=1");
+			
 			pstmt.executeUpdate();
 			
 			//取得對應的字增主鍵值
@@ -326,7 +332,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			rs = pstmt.getGeneratedKeys();
 			while(rs.next()) {
 			 key= rs.getInt(1);
-//			 System.out.println(key);
+			 System.out.println(key);
 			}
 			rs.close();
 			//同時再新增訂單明細內容
@@ -336,6 +342,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt2.setDate(4, olVO.getEstStart());
 			pstmt2.setDate(5, olVO.getEstEnd());
 		
+			stmt = con.createStatement();
+			stmt.executeUpdate("set auto_increment_offset=1001");
+			stmt.executeUpdate("set auto_increment_increment=1");
+			
 			pstmt2.executeUpdate();
 			
 			con.commit();
@@ -399,13 +409,13 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setInt(15, omVO.getOrdID());
 			pstmt.executeUpdate();
 			
-//			int key =0;
-//			rs = pstmt.getGeneratedKeys();
-//			while(rs.next()) {
-//			 key= rs.getInt(1);
-//			 System.out.println(key);
-//			}
-//			rs.close();
+			int key =0;
+			rs = pstmt.getGeneratedKeys();
+			while(rs.next()) {
+			 key= rs.getInt(1);
+			 System.out.println(key);
+			}
+			rs.close();
 			//同時再更新訂單明細內容  UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?
 			pstmt2 = con.prepareStatement(UPDATE_ORDERLIST);
 				pstmt2.setInt(1, olVO.getOrdStatus());
@@ -453,66 +463,66 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		java.sql.Date date = new java.sql.Date(datetime);
 		
 		//更新訂單主檔+明細
-		OrderMasterVO om2 = new OrderMasterVO();
-		om2.setShipStatus(9);
-		om2.setOrdStatus(1);
-		om2.setPayStatus(3);
-		om2.setShipCode(11111);
-		om2.setReturnCode(222222);
-		om2.setShipDate(timeStamp);
-		om2.setArrivalDate(timeStamp);
-		om2.setReturnDate(timeStamp);
-		om2.setRentRank(3);
-		om2.setLeaseRank(3);
-		om2.setRentComt("1234567");
-		om2.setLeaseComt("gg");
-		om2.setRentComtdate(timeStamp);
-		om2.setLeaseComtdate(timeStamp);
-		om2.setOrdID(114);
-
-		OrderListVO olVO = new OrderListVO();
-		olVO.setListID(6);
-		olVO.setOrdID(114);
-		olVO.setOrdStatus(1);
+//		OrderMasterVO om2 = new OrderMasterVO();
+//		om2.setShipStatus(9);
+//		om2.setOrdStatus(1);
+//		om2.setPayStatus(3);
+//		om2.setShipCode(11111);
+//		om2.setReturnCode(222222);
+//		om2.setShipDate(timeStamp);
+//		om2.setArrivalDate(timeStamp);
+//		om2.setReturnDate(timeStamp);
+//		om2.setRentRank(3);
+//		om2.setLeaseRank(3);
+//		om2.setRentComt("1234567");
+//		om2.setLeaseComt("gg");
+//		om2.setRentComtdate(timeStamp);
+//		om2.setLeaseComtdate(timeStamp);
+//		om2.setOrdID(114);
+//
+//		OrderListVO olVO = new OrderListVO();
+//		olVO.setListID(6);
+//		olVO.setOrdID(114);
+//		olVO.setOrdStatus(1);
 		
 //		OrderListDAOImpl oldao = new OrderListDAOImpl();
 		
 //		olVO = oldao.findOrderListByPK(6);
-		System.out.println("更新前" + olVO.getOrdStatus());		
-		omdao.updateAllOrder(om2, olVO);
-		System.out.println("更新後" + olVO.getOrdStatus());		
+//		System.out.println("更新前" + olVO.getOrdStatus());		
+//		omdao.updateAllOrder(om2, olVO);
+//		System.out.println("更新後" + olVO.getOrdStatus());		
 
 		//新增訂單主檔 + 明細
-//		OrderMasterVO omVO = new OrderMasterVO();
-//		OrderListVO olVO = new OrderListVO();
-//		omVO.setRentID(1);
-//		omVO.setLeaseID(5);
-//		omVO.setPayID(2);
-//		omVO.setCouponID(null);
-//		omVO.setOrdDate(timeStamp);
-//		omVO.setStoreCode("19374");
-//		omVO.setEstStart(date);
-//		omVO.setEstEnd(date);
-//		omVO.setRentDays(2);
-//		omVO.setProdPrice(1000);
-//		omVO.setShipFee(120);
-//		omVO.setOrdPrice(1120);
-//		
-//		Integer prodID = 2;
+		OrderMasterVO omVO = new OrderMasterVO();
+		OrderListVO olVO = new OrderListVO();
+		omVO.setRentID(1);
+		omVO.setLeaseID(5);
+		omVO.setPayID(2);
+		omVO.setCouponID(null);
+		omVO.setOrdDate(timeStamp);
+		omVO.setStoreCode(19374);
+		omVO.setEstStart(date);
+		omVO.setEstEnd(date);
+		omVO.setRentDays(2);
+		omVO.setProdPrice(1000);
+		omVO.setShipFee(120);
+		omVO.setOrdPrice(1120);
+		
+		Integer prodID = 2;
 //		Integer ordID = omVO.getOrdID();
-//		Integer prodPrice = 3600;
-//		java.sql.Date estStart = new java.sql.Date(datetime);
-//		java.sql.Date estEnd = new java.sql.Date(datetime);
-//
-//		olVO.setProdID(prodID);
+		Integer prodPrice = 3600;
+		java.sql.Date estStart = new java.sql.Date(datetime);
+		java.sql.Date estEnd = new java.sql.Date(datetime);
+
+		olVO.setProdID(prodID);
 //		olVO.setOrdID(ordID);
-//		olVO.setProdPrice(prodPrice);
-//		olVO.setEstStart(estStart);
-//		olVO.setEstEnd(estEnd);
-//		
-//		omdao.insertAllOrder(omVO, olVO);
-//		
-//		System.out.println(omVO);
+		olVO.setProdPrice(prodPrice);
+		olVO.setEstStart(estStart);
+		olVO.setEstEnd(estEnd);
+		
+		omdao.insertAllOrder(omVO, olVO);
+		
+		System.out.println(omVO);
 
 		// 新增
 //		OrderMasterVO om1 = new OrderMasterVO();
