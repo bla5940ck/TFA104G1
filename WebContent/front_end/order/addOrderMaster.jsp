@@ -6,7 +6,6 @@
 <%@page import="com.promo_list.model.*"%>
 <%@page import="com.member.model.*"%>
 <%@page import="com.order.model.*"%>
-<%@ page import="com.order.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%
 	ProdDAO prodDAO = new ProdDAO();
@@ -156,7 +155,7 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-	<header class="header"> header區域 </header>
+<%@ include file="header.file" %>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -242,7 +241,7 @@ th, td {
 					<tr>
 						<td>預設物流:</td>
 						<td><select size="1" name="storeCode" id="cpn">
-								<option>我的超商選項
+								<option value="0">我的超商選項
 									<%									
 									Integer id = meVO.getMemberId();
 									for(int i = 0; i < list2.size(); i++){

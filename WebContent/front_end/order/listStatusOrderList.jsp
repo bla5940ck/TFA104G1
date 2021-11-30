@@ -7,7 +7,11 @@
 <%
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
-	List<OrderListVO> list = oldao.findOrderListByStatus(olVO.getStatus());
+	
+	OrderListService olSVC = new OrderListService();
+	List<OrderListVO> list = olSVC.getStatus(olVO.getOrdStatus());
+	
+// 	List<OrderListVO> list = oldao.findOrderListByStatus(olVO.getOrdStatus());
 	pageContext.setAttribute("list", list);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
@@ -19,80 +23,44 @@
 <meta charset="UTF-8">
 <title>訂單狀態查詢</title>
 <style>
-* {
-	box-sizing: border-box;
-	text-decoration: none;
-	list-style: none;
-}
-
-body {
-	margin: 0;
-	padding: 10px;
-}
+ body { 
+ 	margin: 0; 
+ 	padding: 10px; 
+ } 
 
 img {
 	max-width: 100%;
 }
 
 button{
-	border: none;
+	font-size:13px;
 	outline-width: 100%;
-	background-color: white;
+	background-color:white;
 }
 
-header.header {
-	background-color: #ddd;
-	width: 100%;
-	margin: 0 auto 10px auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	header.header {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	header.header {
-		width: 100%;
-	}
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-	/*   border:1px solid red; */
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	div.main_content {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	div.main_content {
-		width: 100%;
-	}
-}
+ div.main_content { 
+ 	width: 100%; 
+ 	margin: 0 auto; 
+ 	font-size: 0; 
+ } 
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	background-color: #ddd;
 	width: 200px;
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
+	text-align:center;
 }
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: #ddd;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -100,47 +68,14 @@ main.main {
 	padding: 10px;
 }
 
-@media ( max-width : 575.98px) {
-	aside.aside, main.main {
-		display: block;
-	}
-	aside.aside {
-		width: 100%;
-		margin: 0 0 10px 0;
-	}
-	main.main {
-		width: 100%;
-	}
-}
-
-footer.footer {
-	background-color: #ddd;
-	width: 100%;
-	margin: 10px auto 0 auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	footer.footer {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	footer.footer {
-		width: 100%;
-	}
-}
-
 table {
 	width: 100%;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+	border: 1px solid lightgrey;
 }
 
 th, td {
@@ -151,12 +86,13 @@ th, td {
 </head>
 
 <body bgcolor='white'>
+<%@ include file="/includeFolder/header2.file" %>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
-					<h1>出租者專區</h1>
-					<li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></li>
+					<h2>出租者專區</h2>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -164,9 +100,10 @@ th, td {
 			<div>
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<b>輸入訂單明細編號 (如1):</b> <input type="text" name="listID"> <input
-						type="hidden" name="action" value="getOne_For_Display"> <input
-						type="submit" value="送出">
+					<h5>輸入訂單明細編號 (如1): 
+					<input type="text" name="listID"> 
+					<input type="hidden" name="action" value="getOne_For_Display"> 
+					<input type="submit" value="送出"></h5>
 				</FORM>
 
 				<jsp:useBean id="OrdserListSvc" scope="page"
@@ -174,23 +111,27 @@ th, td {
 
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<b>選擇訂單明細編號:</b> <select size="1" name="listID">
+					<h5>選擇訂單明細編號:
+					<select size="1" name="listID">
 						<c:forEach var="OrderListVO" items="${OrdserListSvc.all}">
 							<option value="${OrderListVO.listID}">${OrderListVO.listID}
 						</c:forEach>
-					</select> <input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
+					</select> 
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="submit" value="送出"></h5>
 				</FORM>
 
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<b>選擇訂單狀態:</b> <select size="1" name="status">
-						<option value="0" <%=olVO.getStatus()==0?"selected":"" %>>已成立</option>
-						<option value="1" <%=olVO.getStatus()==1?"selected":"" %>>待歸還</option>
-						<option value="2" <%=olVO.getStatus()==2?"selected":"" %>>已完成</option>
-						<option value="9" <%=olVO.getStatus()==9?"selected":"" %>>已取消</option>
-					</select> <input type="hidden" name="action" value="get_Status_Display">
-					<input type="submit" value="送出">
+					<h5>選擇訂單狀態:
+					<select size="1" name="ordStatus">
+						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option>
+						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option>
+						<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option>
+						<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option>
+					</select> 
+					<input type="hidden" name="action" value="get_Status_Display">
+					<input type="submit" value="送出"></h5>
 				</FORM>
 			</div>
 			<c:if test="${not empty errorMsgs}">
@@ -207,10 +148,10 @@ th, td {
 						ACTION="<%=request.getContextPath()%>/OrderListServlet">
 						<tr>
 							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部</a></td>
-							<td><button name="status" value="0">已成立</button></td>
-							<td><button name="status" value="1">待歸還</button></td>
-							<td><button name="status" value="2">已完成</button></td>
-							<td><button name="status" value="9">已取消</button></td>
+							<td><button name="ordStatus" value="0">已成立</button></td>
+							<td><button name="ordStatus" value="1">待歸還</button></td>
+							<td><button name="ordStatus" value="2">已完成</button></td>
+							<td><button name="ordStatus" value="9">已取消</button></td>
 						</tr>
 						<input type="hidden" name="action" value="get_Status_Display">
 					</FORM>
@@ -243,18 +184,19 @@ th, td {
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
 					
 						<c:choose>
-							<c:when test="${olVO.status == '0'}"><td>已成立</td></c:when>
-							<c:when test="${olVO.status == '1'}"><td>待歸還</td></c:when>							
-							<c:when test="${olVO.status == '2'}"><td>已完成</td></c:when>							
+							<c:when test="${olVO.ordStatus == '0'}"><td>已成立</td></c:when>
+							<c:when test="${olVO.ordStatus == '1'}"><td>待歸還</td></c:when>							
+							<c:when test="${olVO.ordStatus == '2'}"><td>已完成</td></c:when>							
 							<c:otherwise><td>已取消</td></c:otherwise>							
 						</c:choose>
 						<td>
 							<FORM METHOD="post"
 								ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
 								style="margin-bottom: 0px;">
-								<input type="submit" value="查看明細"> <input type="hidden"
-									name="ordID" value="${olVO.ordID}"> <input
-									type="hidden" name="action" value="getOne_For_Display">
+								<input type="submit" value="查看明細"> 
+								<input type="hidden" name="ordID" value="${olVO.ordID}">
+								<input type="hidden" name="listID" value="${olVO.listID}">
+								<input type="hidden" name="action" value="getOne_For_Display">
 							</FORM>
 						</td>
 					<tr>
@@ -263,7 +205,7 @@ th, td {
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
-	<footer class="footer"> footer區域 </footer>
+	<%@ include file="/includeFolder/footer2.file" %>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </html>

@@ -8,24 +8,24 @@ public class OrderMasterVO implements Serializable{
 	private Integer ordID;
 	private Integer rentID; // 承租者
 	private Integer leaseID; // 出租者
-	private Integer payID; // 交易方式
+	private Integer payID; // 付款方式
 	private Integer couponID;
 	private Integer shipStatus;
 	private Integer payStatus;
 	private Integer ordStatus;
 	private Timestamp ordDate;
-	private String shipCode;
-	private String returnCode;
-	private String storeCode;
-	private Date estStart; // 預計租借起日
-	private Date estEnd; // 預計出租借訖日
-	private Timestamp shipDate; // 出貨日期
+	private Integer shipCode;
+	private Integer returnCode;
+	private Integer storeCode;
+	private Date estStart; // 預計開始
+	private Date estEnd; // 預計結束
+	private Timestamp shipDate; // 實際出貨日期
 	private Timestamp arrivalDate;
 	private Timestamp returnDate;
 	private Integer rentDays;
-	private Integer rentRank; // 承租者評分
+	private Integer rentRank; // 承租評價
 	private Integer leaseRank;
-	private String rentComt; // 承租者評價
+	private String rentComt; // 承租評價日期
 	private String leaseComt;
 	private Timestamp rentComtdate;
 	private Timestamp leaseComtdate;
@@ -39,8 +39,8 @@ public class OrderMasterVO implements Serializable{
 	}
 
 	public OrderMasterVO(Integer ordID, Integer rentID, Integer leaseID, Integer payID, Integer couponID,
-			Integer shipStatus, Integer payStatus, Integer ordStatus, Timestamp ordDate, String shipCode,
-			String returnCode, String storeCode, Date estStart, Date estEnd, Timestamp shipDate,
+			Integer shipStatus, Integer payStatus, Integer ordStatus, Timestamp ordDate, Integer shipCode,
+			Integer returnCode, Integer storeCode, Date estStart, Date estEnd, Timestamp shipDate,
 			Timestamp arrivalDate, Timestamp returnDate, Integer rentDays, Integer rentRank, Integer leaseRank,
 			String rentComt, String leaseComt, Timestamp rentComtdate, Timestamp leaseComtdate, Integer prodPrice,
 			Integer shipFee, Integer ordPrice) {
@@ -146,27 +146,27 @@ public class OrderMasterVO implements Serializable{
 		this.ordDate = ordDate;
 	}
 
-	public String getShipCode() {
+	public Integer getShipCode() {
 		return shipCode;
 	}
 
-	public void setShipCode(String shipCode) {
+	public void setShipCode(Integer shipCode) {
 		this.shipCode = shipCode;
 	}
 
-	public String getReturnCode() {
+	public Integer getReturnCode() {
 		return returnCode;
 	}
 
-	public void setReturnCode(String returnCode) {
+	public void setReturnCode(Integer returnCode) {
 		this.returnCode = returnCode;
 	}
 
-	public String getStoreCode() {
+	public Integer getStoreCode() {
 		return storeCode;
 	}
 
-	public void setStoreCode(String storeCode) {
+	public void setStoreCode(Integer storeCode) {
 		this.storeCode = storeCode;
 	}
 
