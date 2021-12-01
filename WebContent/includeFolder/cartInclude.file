@@ -58,12 +58,12 @@
                    <ul>
                     <% 
                     int index1 =0;
-                    int tatol1=0;
+                    int total1=0;
                     for(String item : cart) {
                     	index1++;
                     CartVO cartVO2 = gson.fromJson(item, CartVO.class);
                     long day =1+ ((cartVO2.getEstEnd().getTime()-cartVO2.getEstStart().getTime())/(24*60*60*1000));
-                    tatol1 +=cartVO2.getTatolPrice();
+                    total1 +=cartVO2.getTotalPrice();
                     %>
                     <li>
                       <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO2.getProdID()%>">
@@ -83,7 +83,7 @@
                         總計
                       </span>
                       <span class="aa-cartbox-total-price">
-                        $<%=tatol1%>
+                        $<%=total1%>
                       </span>
                     </li>
                   </ul>

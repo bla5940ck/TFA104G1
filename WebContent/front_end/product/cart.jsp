@@ -364,7 +364,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <% int tatol=0;
+                    <% int total=0;
                        int index=0;
                        CartVO cartVO1=null;
                     for(String item : cart) {
@@ -378,11 +378,11 @@
                         <td><%=cartVO1.getRent() %></td>
                         <td><%=cartVO1.getEstStart()%></td>
                          <td><%=cartVO1.getEstEnd()%></td>
-                        <td><%=cartVO1.getTatolPrice()%></td>
+                        <td><%=cartVO1.getTotalPrice()%></td>
                        
                       </tr>
                          <%
-                         tatol +=cartVO1.getTatolPrice();
+                         total +=cartVO1.getTotalPrice();
                     } 
                          
                          %>
@@ -407,15 +407,15 @@
                  <tbody>
                    <tr>
                      <th>小計</th>
-                     <td>$<%=tatol %></td>
+                     <td>$<%=total %></td>
                    </tr>
                    <tr>
                      <th>總計</th>
-                     <td>$<%=tatol %></td>
+                     <td>$<%=total %></td>
                    </tr>
                  </tbody>
                </table>
-               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&tatol=<%=tatol %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>" class="aa-cart-view-btn">購物車結帳</a>
+               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&total=<%=total %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>&prodName=<%=cartVO1.getProdName()%>&prodRent=<%=cartVO1.getRent() %>" class="aa-cart-view-btn">購物車結帳</a>
              </div>
            </div>
          </div>
