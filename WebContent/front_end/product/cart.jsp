@@ -366,9 +366,10 @@
                     <tbody>
                     <% int tatol=0;
                        int index=0;
+                       CartVO cartVO1=null;
                     for(String item : cart) {
                     	index++ ;
-                    CartVO cartVO1 = gson.fromJson(item, CartVO.class);%>
+                    	cartVO1 = gson.fromJson(item, CartVO.class);%>
                       <tr>
                       	<input type="hidden" value="<%=cartVO1.getProdID() %>">
                         <td><a class="remove" ><fa class="fa fa-close"></fa></a></td>
@@ -414,7 +415,7 @@
                    </tr>
                  </tbody>
                </table>
-               <a href="#" class="aa-cart-view-btn">購物車結帳</a>
+               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&tatol=<%=tatol %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>" class="aa-cart-view-btn">購物車結帳</a>
              </div>
            </div>
          </div>
@@ -613,7 +614,7 @@ $("a.remove").click(function(){
 	      beforeSend: function(){       // 在 request 發送之前執行
 	      }  
 	    	  ,success: function(data){ 
-	    		 console.log(data);
+	    		  
 	    $("span.aa-cart-notify").text(data);
         $(that).closest("tr").animate({
           "opacity": 0
