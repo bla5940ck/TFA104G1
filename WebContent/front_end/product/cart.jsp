@@ -369,7 +369,9 @@
                        CartVO cartVO1=null;
                     for(String item : cart) {
                     	index++ ;
-                    	cartVO1 = gson.fromJson(item, CartVO.class);%>
+                    	cartVO1 = gson.fromJson(item, CartVO.class);
+                    	request.setAttribute("cartVO1",cartVO1);
+                    	%>
                       <tr>
                       	<input type="hidden" value="<%=cartVO1.getProdID() %>">
                         <td><a class="remove" ><fa class="fa fa-close"></fa></a></td>
@@ -415,7 +417,9 @@
                    </tr>
                  </tbody>
                </table>
+               <c:if test="${not empty cartVO1}">
                <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&total=<%=total %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>&prodName=<%=cartVO1.getProdName()%>&prodRent=<%=cartVO1.getRent() %>" class="aa-cart-view-btn">購物車結帳</a>
+            	</c:if>
              </div>
            </div>
          </div>

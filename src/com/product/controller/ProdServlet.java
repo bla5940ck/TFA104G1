@@ -30,10 +30,10 @@ import javax.servlet.http.*;
 @MultipartConfig()
 public class ProdServlet extends HttpServlet {
 	private static JedisPool pool = JedisPoolUtil.getJedisPool();
-	Timer timer;
+//	Timer timer;
 
 	public void destroy() {
-		timer.cancel();
+//		timer.cancel();
 	}
 
 	public void init() {
