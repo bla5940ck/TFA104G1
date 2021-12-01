@@ -618,7 +618,9 @@ $("a.remove").click(function(){
 	      beforeSend: function(){       // 在 request 發送之前執行
 	      }  
 	    	  ,success: function(data){ 
-	    		  
+	    		  $("table.aa-totals-table").load(
+location.href + " table.aa-totals-table");
+	    		 
 	    $("span.aa-cart-notify").text(data);
         $(that).closest("tr").animate({
           "opacity": 0
