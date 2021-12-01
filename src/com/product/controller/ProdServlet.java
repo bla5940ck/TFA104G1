@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.*;
 import java.util.*;
@@ -29,36 +30,36 @@ import javax.servlet.http.*;
 @MultipartConfig()
 public class ProdServlet extends HttpServlet {
 	private static JedisPool pool = JedisPoolUtil.getJedisPool();
-	Timer timer;
+//	Timer timer;
 
 	public void destroy() {
-		timer.cancel();
+//		timer.cancel();
 	}
 
 	public void init() {
-		timer = new Timer();
-//	        Calendar cal = new GregorianCalendar(2021, Calendar.MARCH, 0, 0, 0, 0);  
-
-		TimerTask task = new TimerTask() {
-
-			public void run() {
-
-				BookingDAO bkDao = new BookingDAO();
-				List<BookingVO> list = bkDao.getAll();
-				// 歸還時間比現在時間小
-				for (BookingVO bk : list) {
-					if ((bk.getEstEnd().getTime() + 24 * 60 * 60 * 1000) < new Date().getTime()) {
-						bk.setStatus(2);
-						bkDao.update(bk);
-
-					}
-				}
-
-				System.out.println(new Date(scheduledExecutionTime()));
-			}
-		};
-
-		timer.scheduleAtFixedRate(task, 1000, 30 * 1000);
+//		timer = new Timer();
+////	        Calendar cal = new GregorianCalendar(2021, Calendar.MARCH, 0, 0, 0, 0);  
+//
+//		TimerTask task = new TimerTask() {
+//
+//			public void run() {
+//
+//				BookingDAO bkDao = new BookingDAO();
+//				List<BookingVO> list = bkDao.getAll();
+//				// 歸還時間比現在時間小
+//				for (BookingVO bk : list) {
+//					if ((bk.getEstEnd().getTime() + 24 * 60 * 60 * 1000) < new Date().getTime()) {
+//						bk.setStatus(2);
+//						bkDao.update(bk);
+//
+//					}
+//				}
+//
+//				System.out.println(new Date(scheduledExecutionTime()));
+//			}
+//		};
+//
+//		timer.scheduleAtFixedRate(task, 1000, 30 * 1000);
 
 	}
 
@@ -541,7 +542,7 @@ public class ProdServlet extends HttpServlet {
 			cartVO.setEstEnd(edate);
 			cartVO.setProdName(prodName);
 			cartVO.setRent(rent);
-			cartVO.setTatolPrice(tatolPrice);
+			cartVO.setTotalPrice(tatolPrice);
 
 //				JedisPool pool = JedisPoolUtil.getJedisPool();
 			Jedis jedis = null;
@@ -700,7 +701,9 @@ public class ProdServlet extends HttpServlet {
 
 			String startDate = req.getParameter("startDate");
 			String endDate = req.getParameter("endDate");
-			String total = req.getParameter("tatol");
+			int total = Integer.valueOf(req.getParameter("total"));
+			int prodRent = Integer.valueOf(req.getParameter("prodRent"));
+			String prodName = req.getParameter("prodName");
 			System.out.println(startDate);
 			System.out.println(endDate);
 			System.out.println("---------");
@@ -730,9 +733,9 @@ public class ProdServlet extends HttpServlet {
 			System.out.println(sdate);
 			System.out.println(endDate);
 
-			BookingService bkService = new BookingService();
-			bk.setProdID(prodID);
-
+//			BookingService bkService = new BookingService();
+//			bk.setProdID(prodID);
+			
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("bk", bk);
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
@@ -740,8 +743,16 @@ public class ProdServlet extends HttpServlet {
 				return;
 
 			}
-
-			bkService.addBk(prodID, 1, sdate, edate);
+			
+			
+			CartVO cartVO = new CartVO(prodID, sdate, edate, prodName, prodRent, total);
+			req.setAttribute("cartVO", cartVO);
+//			
+			req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
+//			bkService.addBk(prodID, 1, sdate, edate);
+			
+			
+			
 		}
 
 	}
