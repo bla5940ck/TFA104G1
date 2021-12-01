@@ -515,7 +515,7 @@ public class ProdServlet extends HttpServlet {
 			Integer tatolPrice =null;
 			System.out.println(req.getParameter("tatolPrice"));
 			if(req.getParameter("tatolPrice")!=null) {
-				System.out.println("123");
+				
 				tatolPrice= Integer.valueOf(req.getParameter("tatolPrice"));
 			}else {
 				res.getWriter().print(404);
@@ -700,6 +700,7 @@ public class ProdServlet extends HttpServlet {
 
 			String startDate = req.getParameter("startDate");
 			String endDate = req.getParameter("endDate");
+			String total = req.getParameter("tatol");
 			System.out.println(startDate);
 			System.out.println(endDate);
 			System.out.println("---------");
@@ -734,7 +735,7 @@ public class ProdServlet extends HttpServlet {
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("bk", bk);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/productDetail.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
 				failureView.forward(req, res);
 				return;
 

@@ -941,7 +941,7 @@ function selflog_show(id){
 	    		startDate:$("#startDate").val(),
 	    		endDate :$("#endDate").val(),
 	    		rent :<%=product.getProdRent()%>,
-	    		tatolPrice: date_dif * <%=product.getProdRent()%>,
+	    		tatolPrice: (date_dif+1) * <%=product.getProdRent()%>,
 	    		prodName:"<%=product.getProdName()%>",
 	    		index:count
 	    	},
@@ -949,6 +949,7 @@ function selflog_show(id){
 				alert("時間輸入錯誤");
 			},
 	    	success: function(data){
+	    		
 	    			console.log(data);
 	    			if(data ==404){
 	    				alert("日期輸入錯誤");
@@ -959,15 +960,19 @@ function selflog_show(id){
 						alert("此商品重複 確認購物車");
 					} else {
 						//加入購物車 數量+1
+					 $("div.aa-cartbox-summary").load("<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=product.getProdID()%>" + " div.aa-cartbox-summary");
+					 
+					 
+// 						location.reload();
 						$("span.aa-cart-notify").text(
 								parseInt($("input.dataCount").val()) + 1);
-						
+								
 						$("input.dataCount").val(
 								$("span.aa-cart-notify")
 										.text(
 												parseInt($("input.dataCount")
 														.val()) + 1))
-										
+							
 						alert("加入購物車");
 					}
 
@@ -1002,6 +1007,8 @@ function selflog_show(id){
 	<%=product.getProdRent()%>
 		$("#subtotal").html((date_dif + 1) * rent);
 		});
+		
+		
 		
 		
 	
