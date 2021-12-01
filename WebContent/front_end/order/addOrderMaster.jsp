@@ -21,6 +21,8 @@
 
 	MemcouponDAO mcdao = new MemcouponDAO();
 	List<MemcouponVO> list = mcdao.getAll();
+	
+	CartVO cartVO = (CartVO)request.getAttribute("cartVO");
 %>
 
 <html>
