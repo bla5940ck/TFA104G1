@@ -8,9 +8,11 @@
 <%@page import="com.order.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%
-	ProdDAO prodDAO = new ProdDAO();
-	ProdVO prodVO = prodDAO.findProductByPK(1);
-
+	System.out.print("進入新增");
+	//會員id
+	String memID = (String)session.getAttribute("id"); 
+	out.print(memID);
+	
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 	List<DefAddressVO> list2 = dadao.getAll();
 	
@@ -23,6 +25,19 @@
 	List<MemcouponVO> list = mcdao.getAll();
 	
 	CartVO cartVO = (CartVO)request.getAttribute("cartVO");
+	
+	//商品編號+名稱
+	ProdDAO prodDAO = new ProdDAO();
+	ProdVO prodVO = prodDAO.findProductByPK(cartVO.getProdID());
+	out.print(prodVO.getProdID());
+	out.print(prodVO.getProdName());
+	//起訖日
+	out.print(cartVO.getEstStart());
+	out.print(cartVO.getEstEnd());
+	//商品租金+總金額
+	out.print(cartVO.getRent());
+	out.print(cartVO.getTotalPrice());
+	
 %>
 
 <html>
