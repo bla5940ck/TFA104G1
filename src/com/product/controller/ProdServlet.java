@@ -515,7 +515,7 @@ public class ProdServlet extends HttpServlet {
 			Integer rent = Integer.valueOf(req.getParameter("rent"));
 			Integer tatolPrice =null;
 			System.out.println(req.getParameter("tatolPrice"));
-			if(req.getParameter("tatolPrice")!=null) {
+			if(req.getParameter("tatolPrice")!=null && !req.getParameter("tatolPrice").equals("NaN")) {
 				
 				tatolPrice= Integer.valueOf(req.getParameter("tatolPrice"));
 			}else {
