@@ -2367,8 +2367,7 @@ img {
   color: #555;
 }
 #cart-view .cart-view-area .cart-view-table .table tbody tr td img {
-  width: 80px;
-  height: 100px;
+  width: 100%;
 }
 #cart-view .cart-view-area .cart-view-table .table tbody tr td .aa-cart-quantity {
   padding: 5px;
