@@ -748,7 +748,7 @@ public class ProdServlet extends HttpServlet {
 			CartVO cartVO = new CartVO(prodID, sdate, edate, prodName, prodRent, total);
 			req.setAttribute("cartVO", cartVO);
 //			
-			req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
+			req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp").forward(req, res);;
 //			bkService.addBk(prodID, 1, sdate, edate);
 			
 			
