@@ -53,6 +53,7 @@
                   <span class="aa-cart-notify"></span>
                   
                 </a>
+                
                 <div class="aa-cartbox-summary">
                    <ul>
                     <% 
@@ -61,7 +62,7 @@
                     for(String item : cart) {
                     	index1++;
                     CartVO cartVO2 = gson.fromJson(item, CartVO.class);
-                    long day = (cartVO2.getEstEnd().getTime()-cartVO2.getEstStart().getTime())/(24*60*60*1000);
+                    long day =1+ ((cartVO2.getEstEnd().getTime()-cartVO2.getEstStart().getTime())/(24*60*60*1000));
                     tatol1 +=cartVO2.getTatolPrice();
                     %>
                     <li>
@@ -72,6 +73,8 @@
                         <p><%=day%>天*$<%=cartVO2.getRent()%></p>
                         	<input type="hidden" value="<%=cartVO2.getProdID() %>">
                       </div>
+                      
+                      
                       <a class="aa-remove-product" ><span class="fa fa-times"></span></a>
                     </li>
                             <%} %>       
@@ -116,7 +119,9 @@ let prodid1 = $(that).closest("li").find("input").eq(0).val();
 	      },                  // 傳送資料到指定的 url
 	      beforeSend: function(){       // 在 request 發送之前執行
 	      }  
-	    	  ,success: function(data){ 
+	      
+	    	  ,success: function(data){
+	    	  
 	    $("span.aa-cart-notify").text(parseInt($("input.dataCount").val())-1);
 	    $("input.dataCount").val(data);
       $(that).closest("li").animate({
