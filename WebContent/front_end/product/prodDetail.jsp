@@ -321,7 +321,8 @@ request.setAttribute("product", product);
 										<h3><%=product.getProdName() %></h3>
 										<div class="aa-price-block">
 											租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
-											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span>
+											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span><br>
+											會員編號: <span class="aa-product-avilability"><%=product.getMemberID()%></span><br>
 										</div>
 										<%
 											String comt = (product.getComt() == null) ? "" : product.getComt();
@@ -767,6 +768,7 @@ function selflog_show(id){
 	    		rent :<%=product.getProdRent()%>,
 	    		tatolPrice: (date_dif+1) * <%=product.getProdRent()%>,
 	    		prodName:"<%=product.getProdName()%>",
+	    		leaseID:"<%=product.getMemberID()%>",
 	    		index:count
 	    	},
 	    	error : function(request) {

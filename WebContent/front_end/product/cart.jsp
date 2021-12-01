@@ -281,7 +281,7 @@
                  </tbody>
                </table>
                <c:if test="${not empty cartVO1}">
-               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&total=<%=total %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>&prodName=<%=cartVO1.getProdName()%>&prodRent=<%=cartVO1.getRent() %>" class="aa-cart-view-btn">購物車結帳</a>
+               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&total=<%=total %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>&prodName=<%=cartVO1.getProdName()%>&prodRent=<%=cartVO1.getRent() %>&leaseID=<%=cartVO1.getLeaseID() %>" class="aa-cart-view-btn">購物車結帳</a>
             	</c:if>
              </div>
            </div>
