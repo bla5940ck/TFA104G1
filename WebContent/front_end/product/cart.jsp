@@ -55,7 +55,7 @@
   a.cart-img > img{
 	object-fit: contain;
 	width: 185px;
-	height: 117px;
+	height: 140px;
 }
  </style>
   
@@ -93,41 +93,7 @@
                 <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
               </div>
                 
-                <!-- start language -->
-                <!-- <div class="aa-language">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <img src="img/flag/english.jpg" alt="english flag">ENGLISH
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                      <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
-                    </ul>
-                  </div>
-                </div> -->
-                <!-- / language -->
-
-                <!-- start currency -->
-                <!-- <div class="aa-currency">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <i class="fa fa-usd"></i>USD
-                      <span class="caret"></span>
-                    </a> -->
-                    <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> -->
-                      <!-- <li><a href="#"><i class="fa fa-euro"></i>EURO</a></li>
-                      <li><a href="#"><i class="fa fa-jpy"></i>YEN</a></li> -->
-                    <!-- </ul>
-                  </div>
-                </div> 
-                < / currency -->
-                <!-- start cellphone -->
-                <!-- <div class="cellphone hidden-xs">
-                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
-                </div> -->
-                <!-- / cellphone -->
-              <!-- </div> -->
+               
               <!-- / header top left -->
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
@@ -221,100 +187,14 @@
                   <li><a href="#">桌遊</a></li>
                   <li><a href="#">拼圖</a></li>
                   <li><a href="#">其他</a></li>
-                  <!-- <li><a href="#">And more.. <span class="caret"></span></a> -->
-                    <!-- <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul> -->
-                  <!-- </li> -->
+             
                 </ul>
               </li>
               <li><a href="#">使用教學</a>
-                <!-- <ul class="dropdown-menu">  
-                  <li><a href="#">Kurta & Kurti</a></li>                                                                
-                  <li><a href="#">Trousers</a></li>              
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>                
-                  <li><a href="#">Sarees</a></li>
-                  <li><a href="#">Shoes</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>
-                      <li><a href="#">And more.. <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Rings</a></li>
-                          <li><a href="#">Earrings</a></li>
-                          <li><a href="#">Jewellery Sets</a></li>
-                          <li><a href="#">Lockets</a></li>
-                          <li class="disabled"><a class="disabled" href="#">Disabled item</a></li>                       
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Polo T-Shirts</a></li>
-                          <li><a href="#">SKirts</a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Make Up</a></li>
-                          <li><a href="#">Hair Care</a></li>
-                          <li><a href="#">Perfumes</a></li>
-                          <li><a href="#">Skin Care</a></li>
-                          <li><a href="#">Hand Bags</a></li>
-                          <li><a href="#">Single Bags</a></li>
-                          <li><a href="#">Travel Bags</a></li>
-                          <li><a href="#">Wallets & Belts</a></li>                        
-                          <li><a href="#">Sunglases</a></li>
-                          <li><a href="#">Nail</a></li>                       
-                        </ul>
-                      </li>                   
-                    </ul>
-                  </li>
-                </ul> -->
+        
               </li>
               <li><a href="#">Q&A</a>
-                <!-- <ul class="dropdown-menu">                
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>
-                  <li><a href="#">Standard</a></li>                                                
-                  <li><a href="#">T-Shirts</a></li>
-                  <li><a href="#">Shirts</a></li>
-                  <li><a href="#">Jeans</a></li>
-                  <li><a href="#">Trousers</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul>
-                  </li>
-                </ul> -->
-              </li>
-              <!-- <li><a href="#">Sports</a></li>
-             <li><a href="#">Digital <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Camera</a></li>
-                  <li><a href="#">Mobile</a></li>
-                  <li><a href="#">Tablet</a></li>
-                  <li><a href="#">Laptop</a></li>                                                
-                  <li><a href="#">Accesories</a></li>                
-                </ul>
-              </li>
-              <li><a href="#">Furniture</a></li>            
-              <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="blog-archive.html">Blog Style 1</a></li>
-                  <li><a href="blog-archive-2.html">Blog Style 2</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>                
-                </ul>
-              </li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Pages <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="product.html">Shop Page</a></li>
-                  <li><a href="product-detail.html">Shop Single</a></li>                
-                  <li><a href="404.html">404 Page</a></li>                 -->
+         
                 </ul>
               </li>
             </ul>
@@ -323,24 +203,7 @@
       </div>       
     </div>
   </section>
-  <!-- / menu -->  
- 
-  <!-- catg header banner section -->
-  <!-- <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
-   <div class="aa-catg-head-banner-area">
-     <div class="container">
-      <div class="aa-catg-head-banner-content">
-        <h2>Cart Page</h2>
-        <ol class="breadcrumb">
-          <li><a href="index.html">Home</a></li>                   
-          <li class="active">Cart</li>
-        </ol>
-      </div>
-     </div>
-   </div>
-  </section> -->
-  <!-- / catg header banner section -->
+
 
  <!-- Cart view section -->
  <section id="cart-view">
@@ -418,7 +281,7 @@
                  </tbody>
                </table>
                <c:if test="${not empty cartVO1}">
-               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&total=<%=total %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>&prodName=<%=cartVO1.getProdName()%>&prodRent=<%=cartVO1.getRent() %>" class="aa-cart-view-btn">購物車結帳</a>
+               <a href="<%=path%>/prod/ProdServlet?action=checkout&prodID=<%=cartVO1.getProdID()%>&total=<%=total %>&startDate=<%=cartVO1.getEstStart()%>&endDate=<%=cartVO1.getEstEnd()%>&prodName=<%=cartVO1.getProdName()%>&prodRent=<%=cartVO1.getRent() %>&leaseID=<%=cartVO1.getLeaseID() %>" class="aa-cart-view-btn">購物車結帳</a>
             	</c:if>
              </div>
            </div>

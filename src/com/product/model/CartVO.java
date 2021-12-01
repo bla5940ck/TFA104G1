@@ -10,8 +10,20 @@ public class CartVO implements Serializable{
 	private String prodName;
 	private Integer rent;
 	private Integer totalPrice;
+	private Integer leaseID;
 	
-	public CartVO(Integer prodID, Date estStart, Date estEnd, String prodName, Integer rent, Integer totalPrice) {
+
+
+	public Integer getLeaseID() {
+		return leaseID;
+	}
+
+	public void setLeaseID(Integer leaseID) {
+		this.leaseID = leaseID;
+	}
+
+	public CartVO(Integer prodID, Date estStart, Date estEnd, String prodName, Integer rent, Integer totalPrice,
+			Integer leaseID) {
 		super();
 		this.prodID = prodID;
 		this.estStart = estStart;
@@ -19,6 +31,7 @@ public class CartVO implements Serializable{
 		this.prodName = prodName;
 		this.rent = rent;
 		this.totalPrice = totalPrice;
+		this.leaseID = leaseID;
 	}
 
 	public CartVO() {
