@@ -146,40 +146,7 @@ request.setAttribute("product", product);
 								<p style="font-size: 20px; margin: 0; font-weight: normal;">JoyLease</p>
 							</div>
 
-							<!-- start language -->
-							<!-- <div class="aa-language">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <img src="img/flag/english.jpg" alt="english flag">ENGLISH
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                      <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
-                    </ul>
-                  </div>
-                </div> -->
-							<!-- / language -->
-
-							<!-- start currency -->
-							<!-- <div class="aa-currency">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <i class="fa fa-usd"></i>USD
-                      <span class="caret"></span>
-                    </a> -->
-							<!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> -->
-							<!-- <li><a href="#"><i class="fa fa-euro"></i>EURO</a></li>
-                      <li><a href="#"><i class="fa fa-jpy"></i>YEN</a></li> -->
-							<!-- </ul>
-                  </div>
-                </div> 
-                < / currency -->
-							<!-- start cellphone -->
-							<!-- <div class="cellphone hidden-xs">
-                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
-                </div> -->
-							<!-- / cellphone -->
+						
 							<!-- </div> -->
 							<!-- / header top left -->
 							<div class="aa-header-top-right">
@@ -269,123 +236,17 @@ request.setAttribute("product", product);
 									<li><a href="#">桌遊</a></li>
 									<li><a href="#">拼圖</a></li>
 									<li><a href="#">其他</a></li>
-									<!-- <li><a href="#">And more.. <span class="caret"></span></a> -->
-									<!-- <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul> -->
-									<!-- </li> -->
+							
+									
 								</ul></li>
 							<li><a href="#">使用教學</a> <!-- <ul class="dropdown-menu">  
-                  <li><a href="#">Kurta & Kurti</a></li>                                                                
-                  <li><a href="#">Trousers</a></li>              
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>                
-                  <li><a href="#">Sarees</a></li>
-                  <li><a href="#">Shoes</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>
-                      <li><a href="#">And more.. <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Rings</a></li>
-                          <li><a href="#">Earrings</a></li>
-                          <li><a href="#">Jewellery Sets</a></li>
-                          <li><a href="#">Lockets</a></li>
-                          <li class="disabled"><a class="disabled" href="#">Disabled item</a></li>                       
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Polo T-Shirts</a></li>
-                          <li><a href="#">SKirts</a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Make Up</a></li>
-                          <li><a href="#">Hair Care</a></li>
-                          <li><a href="#">Perfumes</a></li>
-                          <li><a href="#">Skin Care</a></li>
-                          <li><a href="#">Hand Bags</a></li>
-                          <li><a href="#">Single Bags</a></li>
-                          <li><a href="#">Travel Bags</a></li>
-                          <li><a href="#">Wallets & Belts</a></li>                        
-                          <li><a href="#">Sunglases</a></li>
-                          <li><a href="#">Nail</a></li>                       
-                        </ul>
-                      </li>                   
-                    </ul>
-                  </li>
-                </ul> --></li>
-							<li><a href="#">Q&A</a> <!-- <ul class="dropdown-menu">                
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>
-                  <li><a href="#">Standard</a></li>                                                
-                  <li><a href="#">T-Shirts</a></li>
-                  <li><a href="#">Shirts</a></li>
-                  <li><a href="#">Jeans</a></li>
-                  <li><a href="#">Trousers</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul>
-                  </li>
-                </ul> --></li>
-							<!-- <li><a href="#">Sports</a></li>
-             <li><a href="#">Digital <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Camera</a></li>
-                  <li><a href="#">Mobile</a></li>
-                  <li><a href="#">Tablet</a></li>
-                  <li><a href="#">Laptop</a></li>                                                
-                  <li><a href="#">Accesories</a></li>                
-                </ul>
-              </li>
-              <li><a href="#">Furniture</a></li>            
-              <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="blog-archive.html">Blog Style 1</a></li>
-                  <li><a href="blog-archive-2.html">Blog Style 2</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>                
-                </ul>
-              </li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Pages <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="product.html">Shop Page</a></li>
-                  <li><a href="product-detail.html">Shop Single</a></li>                
-                  <li><a href="404.html">404 Page</a></li>                 -->
-						</ul>
-						</li>
-						</ul>
-					</div>
+                 
 					<!--/.nav-collapse -->
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- / menu -->
-
-	<!-- catg header banner section -->
-	<!-- <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
-   <div class="aa-catg-head-banner-area">
-     <div class="container">
-      <div class="aa-catg-head-banner-content">
-        <h2>SwitchOLED</h2>
-        <ol class="breadcrumb">
-          <li><a href="index copy.html">Home</a></li>         
-          <li><a href="#">Product</a></li>
-          <li class="active">T-shirt</li>
-        </ol>
-      </div>
-     </div>
-   </div>
-  </section> -->
-	<!-- / catg header banner section -->
+	
 
 	<!-- product category -->
 	<section id="aa-product-details">
@@ -460,7 +321,8 @@ request.setAttribute("product", product);
 										<h3><%=product.getProdName() %></h3>
 										<div class="aa-price-block">
 											租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
-											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span>
+											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span><br>
+											會員編號: <span class="aa-product-avilability"><%=product.getMemberID()%></span><br>
 										</div>
 										<%
 											String comt = (product.getComt() == null) ? "" : product.getComt();
@@ -485,7 +347,7 @@ request.setAttribute("product", product);
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
-										<a class="aa-ckeckout-btn" href="#">直接結帳</a>
+										<a class="aa-add-to-cart-btn" href="">直接結帳</a>
 									</div>
 									<br>
 									<div>
@@ -685,27 +547,7 @@ request.setAttribute("product", product);
 														</div>
 													</div>
 												</div>
-												<!-- Modal view content -->
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<div class="aa-product-view-content">
-														<h3>SwitchOLED</h3>
-														<div class="aa-price-block">
-															<span class="aa-product-view-price">$34.99</span>
-															<p class="aa-product-avilability">
-																庫存狀態: <span>有現貨</span>
-															</p>
-														</div>
-														<p>
-															最新OLED新機 紅藍色主機款<br> Switch熱門遊戲任選一款<br>
-															送任天堂原廠飲料提袋+耀西捲線器<br> 推薦(可選配)瑪利歐派對超級巨星 寶可夢鑽石珍珠<br>
-														</p>
-														<h4>數量</h4>
-														<!-- <div class="aa-prod-view-size">
-                              <a href="#">S</a>
-                              <a href="#">M</a>
-                              <a href="#">L</a>
-                              <a href="#">XL</a>
-                            </div> -->
+												
 														<div class="aa-prod-quantity">
 															<form action="">
 																<select name="" id="">
@@ -745,24 +587,7 @@ request.setAttribute("product", product);
 	<!-- / product category -->
 
 
-	<!-- Subscribe section -->
-	<!-- <section id="aa-subscribe">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-subscribe-area">
-            <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-	<!-- / Subscribe section -->
+
 
 	<!-- footer -->
 	<footer id="aa-footer">
@@ -943,6 +768,7 @@ function selflog_show(id){
 	    		rent :<%=product.getProdRent()%>,
 	    		tatolPrice: (date_dif+1) * <%=product.getProdRent()%>,
 	    		prodName:"<%=product.getProdName()%>",
+	    		leaseID:"<%=product.getMemberID()%>",
 	    		index:count
 	    	},
 	    	error : function(request) {

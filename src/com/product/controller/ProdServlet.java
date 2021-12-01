@@ -513,9 +513,10 @@ public class ProdServlet extends HttpServlet {
 			String estEnd = req.getParameter("endDate");
 			String prodName = req.getParameter("prodName");
 			Integer rent = Integer.valueOf(req.getParameter("rent"));
+			Integer leaseID  = Integer.valueOf(req.getParameter("leaseID"));
 			Integer tatolPrice =null;
 			System.out.println(req.getParameter("tatolPrice"));
-			if(req.getParameter("tatolPrice")!=null) {
+			if(req.getParameter("tatolPrice")!=null && !req.getParameter("tatolPrice").equals("NaN")) {
 				
 				tatolPrice= Integer.valueOf(req.getParameter("tatolPrice"));
 			}else {
@@ -543,7 +544,7 @@ public class ProdServlet extends HttpServlet {
 			cartVO.setProdName(prodName);
 			cartVO.setRent(rent);
 			cartVO.setTotalPrice(tatolPrice);
-
+			cartVO.setLeaseID(leaseID);
 //				JedisPool pool = JedisPoolUtil.getJedisPool();
 			Jedis jedis = null;
 			jedis = pool.getResource();
@@ -704,6 +705,7 @@ public class ProdServlet extends HttpServlet {
 			int total = Integer.valueOf(req.getParameter("total"));
 			int prodRent = Integer.valueOf(req.getParameter("prodRent"));
 			String prodName = req.getParameter("prodName");
+			Integer leaseID = Integer.valueOf(req.getParameter("leaseID"));
 			System.out.println(startDate);
 			System.out.println(endDate);
 			System.out.println("---------");
@@ -745,10 +747,10 @@ public class ProdServlet extends HttpServlet {
 			}
 			
 			
-			CartVO cartVO = new CartVO(prodID, sdate, edate, prodName, prodRent, total);
+			CartVO cartVO = new CartVO(prodID, sdate, edate, prodName, prodRent, total,leaseID);
 			req.setAttribute("cartVO", cartVO);
 //			
-			req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
+			req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp").forward(req, res);;
 //			bkService.addBk(prodID, 1, sdate, edate);
 			
 			
