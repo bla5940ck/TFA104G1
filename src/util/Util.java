@@ -1,19 +1,20 @@
 package util;
+//利用類別宣告常數，即可用呼叫的方式使用，日後維護也較簡易
 
-// �Q�����O�ŧi�`�ơA�Y�i�ΩI�s���覡�ϥΡA�����@�]��²��
 public class Util {
 	
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	
-	// MySQL 8.0.13�H��u�ݫO�dserverTimezone�]�w�Y�i
+
+	// MySQL 8.0.13以後只需保留serverTimezone設定即可
 	public static final String URL = 
 			"jdbc:mysql://localhost:3306/JoyLease?"
-//			+ "useSSL=false&"                   // ���ϥΥ[�K�s�u (�ݦ����Ҥ~��)
-			+ "rewriteBatchedStatements=true&"  // �妸��s�ݭn����T
-			+ "serverTimezone=Asia/Taipei";     // �]�w�ɰϸ�T
-//			+ "allowPublicKeyRetrieval=true&"   // �t�XMySQL 8�H�᪩����K�X�x�s����]�w
-//			+ "useUnicode=true&"                // �ϥ�Unicode�s�X (����~���|�ýX)
-//			+ "characterEncoding=utf-8";        // �r���ĥ�UTF-8�]�w
+//			+ "useSSL=false&"                   // 不使用加密連線 (需有憑證才行)
+			+ "rewriteBatchedStatements=true&"  // 批次更新需要此資訊
+			+ "serverTimezone=Asia/Taipei";     // 設定時區資訊
+//			+ "allowPublicKeyRetrieval=true&"   // 配合MySQL 8以後版本對密碼儲存機制的設定
+//			+ "useUnicode=true&"                // 使用Unicode編碼 (中文才不會亂碼)
+//			+ "characterEncoding=utf-8";        // 字元採用UTF-8設定
+
 	
 	public static final String USER = "root";
 	
