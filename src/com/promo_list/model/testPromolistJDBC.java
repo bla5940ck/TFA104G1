@@ -46,7 +46,7 @@ public class testPromolistJDBC {
 //		System.out.print(promolistVO3.getStart_date() + ",");
 //		System.out.print(promolistVO3.getEnd_date() + ",");
 		
-
+//
 //		List<PromolistVO> list = dao.getAll();
 //		for (PromolistVO promolistVO4 : list) {
 //			System.out.print(promolistVO4.getCoupon_id() + ",");
@@ -60,6 +60,19 @@ public class testPromolistJDBC {
 //			System.out.print(promolistVO4.getEnd_date() + ",");
 //			System.out.println();
 //		}
+		List<PromolistVO> list = dao.getPromoid(102);
+		for (PromolistVO promolistVO4 : list) {
+			System.out.print(promolistVO4.getCoupon_id() + ",");
+			System.out.print(promolistVO4.getPromo_id() + ",");
+			System.out.print(promolistVO4.getCategory_id() + ",");
+			System.out.print(promolistVO4.getCoupon_name() + ",");
+			System.out.print(promolistVO4.getDiscount() + ",");
+			System.out.print(promolistVO4.getAmount() + ",");
+			System.out.print(promolistVO4.getUsed() + ",");
+			System.out.print(promolistVO4.getStart_date() + ",");
+			System.out.print(promolistVO4.getEnd_date() + ",");
+			System.out.println();
+		}
 		
 		
 	}

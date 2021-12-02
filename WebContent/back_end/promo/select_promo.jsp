@@ -48,7 +48,14 @@
 
 <ul>
   <li><a href='listAll_promo.jsp'>專案列表</a><br><br></li>
-  
+  <li>
+    <FORM METHOD="post" ACTION="promo.do" >
+        <b>輸入專案編號 (如101):</b>
+        <input type="text" name="promo_id">
+        <input type="hidden" name="action" value="getOne_For_Display">
+        <input type="submit" value="送出">
+    </FORM>
+  </li>
 
   <jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
    
@@ -65,18 +72,18 @@
     </FORM>
   </li>
   
-<!--   <li> -->
-<!--      <FORM METHOD="post" ACTION="promo.do" > -->
-<!--        <b>選擇員工姓名:</b> -->
-<!--        <select size="1" name="status"> -->
-<%--          <c:forEach var="status" items="${promoSvc.all}" >  --%>
-<%--           <option value="${promoVO.status}">${promoVO.status} --%>
-<%--          </c:forEach>    --%>
-<!--        </select> -->
-<!--        <input type="hidden" name="action" value="getOne_For_Display"> -->
-<!--        <input type="submit" value="送出"> -->
-<!--      </FORM> -->
-<!--   </li> -->
+  <li>
+     <FORM METHOD="post" ACTION="promo.do" >
+       <b>選擇專案名稱:</b>
+       <select size="1" name="promo_id">
+         <c:forEach var="promoVO" items="${promoSvc.all}" > 
+          <option value="${promoVO.promo_id}">${promoVO.promo_name}
+         </c:forEach>   
+       </select>
+       <input type="hidden" name="action" value="getOne_For_Display">
+       <input type="submit" value="送出">
+     </FORM>
+  </li>
 </ul>
 
 

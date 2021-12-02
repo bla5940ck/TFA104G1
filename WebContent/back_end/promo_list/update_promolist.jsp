@@ -49,7 +49,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>專案資料修改 - update_promo.jsp</h3>
-		 <h4><a href="http://localhost:8081/TFA104G1/back_end/promo_list/select_promolist.jsp"><img src="http://localhost:8081/TFA104G1/back_end/promo_list/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+<!-- 		 <h4><a href="http://localhost:8081/TFA104G1/back_end/promo_list/select_promolist.jsp"><img src="http://localhost:8081/TFA104G1/back_end/promo_list/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4> -->
 	</td></tr>
 </table>
 
@@ -72,9 +72,13 @@
 		<td><%=promolistVO.getCoupon_id()%></td>
 	</tr>
 	<tr>
-		<td>專案編號:</td>
-		<td><input type="TEXT" name="promo_id" size="45" value="<%=promolistVO.getPromo_id()%>" /></td>
+		<td>專案編號:<font color=red><b>*</b></font></td>
+		<td><%=promolistVO.getPromo_id()%></td>
 	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>專案編號:</td> -->
+<%-- 		<td><input type="TEXT" name="promo_id" size="45" value="<%=promolistVO.getPromo_id()%>" /></td> --%>
+<!-- 	</tr> -->
 	<tr>
 		<td>商品類別編號:</td>
 		<td><input type="TEXT" name="category_id" size="45" value="<%=promolistVO.getCategory_id()%>" /></td>

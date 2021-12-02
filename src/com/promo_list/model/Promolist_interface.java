@@ -9,8 +9,7 @@ import java.util.List;
 		public PromolistVO findByPrimaryKey(Integer coupon_id);
 		public List<PromolistVO> getAll();
 		public List<PromolistVO> getPromoid(Integer promo_id);
-		public List<PromolistVO> getPromoid();
-
+//		public PromolistVO getOne_For_Insert(Integer promo_id);
 	
 	}
 

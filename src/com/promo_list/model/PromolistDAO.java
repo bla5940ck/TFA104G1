@@ -14,7 +14,7 @@ public class PromolistDAO implements Promolist_interface{
 		}
 	}
 		           
-		private static final String GET_LIST = 
+		private static final String FIND_BY_PROMOID = 
 			"SELECT * FROM promo_list where promo_id = ?";
 		
 		private static final String INSERT_STMT = 
@@ -40,7 +40,7 @@ public class PromolistDAO implements Promolist_interface{
 			try {
 
 				con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-				pstmt = con.prepareStatement(GET_LIST);
+				pstmt = con.prepareStatement(FIND_BY_PROMOID);
 
 				pstmt.setInt(1, promo_id);
 
@@ -57,6 +57,7 @@ public class PromolistDAO implements Promolist_interface{
 					promolistVO.setUsed(rs.getInt("used"));
 					promolistVO.setStart_date(rs.getDate("start_date"));
 					promolistVO.setEnd_date(rs.getDate("end_date"));
+					list.add(promolistVO);
 				}
 
 				
@@ -90,11 +91,7 @@ public class PromolistDAO implements Promolist_interface{
 			return list;
 		}
 		
-		@Override
-		public List<PromolistVO> getPromoid() {
-			// TODO Auto-generated method stub
-			return null;
-		}
+
 
 		
 		
@@ -354,5 +351,68 @@ public class PromolistDAO implements Promolist_interface{
 		}
 		return list;
 	}
+
+
+//	@Override
+//	public List<PromolistVO> getPromoid(Integer promo_id) {
+//		List<PromolistVO> list = new ArrayList<PromolistVO>();
+//		PromolistVO promolistVO = null;
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//
+//		try {
+//
+//			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+//			pstmt = con.prepareStatement(FIND_BY_PROMOID);
+//
+//			pstmt.setInt(1, promo_id);
+//
+//			rs = pstmt.executeQuery();
+//
+//			while (rs.next()) {
+//				promolistVO = new PromolistVO();
+//				promolistVO.setCoupon_id(rs.getInt("coupon_id"));
+//				promolistVO.setPromo_id(rs.getInt("promo_id"));
+//				promolistVO.setCategory_id(rs.getInt("category_id"));
+//				promolistVO.setCoupon_name(rs.getString("coupon_name"));
+//				promolistVO.setDiscount(rs.getDouble("discount"));
+//				promolistVO.setAmount(rs.getInt("amount"));
+//				promolistVO.setUsed(rs.getInt("used"));
+//				promolistVO.setStart_date(rs.getDate("start_date"));
+//				promolistVO.setEnd_date(rs.getDate("end_date"));
+//			}
+//
+//			
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//			
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		return list;
+//	}
 
 }
