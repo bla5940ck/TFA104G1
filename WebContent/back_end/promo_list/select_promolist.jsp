@@ -83,7 +83,7 @@
 <h3>新增專案明細</h3>
 
 <ul>
-  <li><a href='add_promolist.jsp'>新增專案</li>
+  <li><a href='add_promolist.jsp'>新增專案明細</li>
 </ul>
 
 </body>
