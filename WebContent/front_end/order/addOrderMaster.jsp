@@ -18,10 +18,10 @@
 	CartVO cartVO = (CartVO)request.getAttribute("cartVO");
 	
 	//商品編號+名稱
-	ProdDAO prodDAO = new ProdDAO();
-	ProdVO prodVO = prodDAO.findProductByPK(cartVO.getProdID());
-	System.out.println("商品編號 : " + prodVO.getProdID());
-	System.out.println("商品名稱 : " + prodVO.getProdName());
+// 	ProdDAO prodDAO = new ProdDAO();
+// 	ProdVO prodVO = prodDAO.findProductByPK(cartVO.getProdID());
+// 	System.out.println("商品編號 : " + prodVO.getProdID());
+// 	System.out.println("商品名稱 : " + prodVO.getProdName());
 	
 	//起訖日
 	System.out.println("起始日 : " + cartVO.getEstStart());
@@ -160,7 +160,7 @@ th, td {
 					<h3>確認以下資訊</h3>
 					<tr>
 						<td>出租者:</td>
-						<td><input type="hidden" name="rentID" value="<%=leaseName%>"><%=leaseName%></td>
+						<td><input type="hidden" name="leaseID" value="<%=cartVO.getLeaseID()%>"><%=leaseName%></td>
 					</tr>
 					<tr>
 						<td>商品名稱 :</td>
@@ -199,13 +199,14 @@ th, td {
 					<jsp:useBean id="mcDAO"	class="com.member_coupon.model.MemcouponDAO" /> 					
 					<tr>
 						<td>選擇折價券:</td>
-						<td><select size="1" name="couponID" id="couponID">
-								<option>請選擇折價券
+						<td><select size="1"  id="coupon" >
+								<option value="0">請選擇折價券
 								<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 								<c:choose>
-									<c:when test="${mcVO.member_id == id}">
-										<option value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
-									</c:when>
+									<c:when test="${mcVO.member_id == id}">											
+<%-- 										<option value="${mcVO.coupon_id}">${mcVO.coupon_name} --%>
+										<option data-id="${mcVO.coupon_id}" value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
+									</c:when>									
 								</c:choose>
 								</c:forEach>
 						</select></td>
@@ -242,19 +243,20 @@ th, td {
 					</tr>
 					<tr>
 						<td>運費:</td>
-						<td><input type="hidden" name="shipFee" value="60">60</td>
+						<td><input type="hidden" id="shipFee" name="shipFee" value="60">60 元</td>
 					</tr>
 					<tr>
 						<td>訂單金額:</td>
-						<td><p id="ordPrice"></p></td>
+						<td><p id="thisOrder"></p></td>
 					</tr>
 				</table>
-<!-- 				<input type="hidden" name="action" value="submit_order"> -->
-<%-- 				<input type="hidden" name="prodID" value="<%=prodVO.getProdID()%>">  --%>
-<%-- 				<input type="hidden" name="prodName" value="<%=prodVO.getProdName()%>"> --%>
-<!-- 				<input type="hidden" name="discount" id="discount"> -->
-<!-- 				<input type="hidden" name="ordPrice" id="ordPrice" -->
-<!-- 				<input type="submit" value="送出訂單 !"> -->
+				<input type="hidden" name="action" value="submit_order">
+				<input type="hidden" name="prodID" value="<%=cartVO.getProdID()%>"> 
+				<input type="hidden" name="prodName" value="<%=cartVO.getProdName()%>">
+				<input type="hidden" name="couponID" id="couponID">	
+				<input type="hidden" name="ordPrice" id="ordPrice">
+				<input type="hidden" name="rentID" value="<%=memID%>">
+				<input type="submit" value="送出訂單 !">
 			</main>
 		</div>
 	<%@ include file="/includeFolder/footer2.file" %>
@@ -263,19 +265,33 @@ th, td {
 </body>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-var couponID = $("#couponID");
-var discount = $("#discount");
-couponID.change(function(){
-	alert((couponID).val());
-	discount.text(couponID.val()+ "元");
 
-
-var ordPrice = $("#ordPrice");
-var prodPrice = $("prodPrice");
+var coupon = $("#coupon");	//折價券
+var discount = $("#discount");	//折扣
+var thisOrder = $("#thisOrder");	//前端顯示的訂單金額
+var prodPrice = $("#prodPrice");	//商品小計
+var orderPrice = $("#orderPrice");	//回傳servlet的訂單金額
 var totalPrice = parseInt(<%=totalPrice%>);
-ordPrice.text(parseInt((couponID).val())+totalPrice);
+var data_id = "";
 
-});
+coupon.change(function(){
+	alert((coupon).val());
+	discount.text(coupon.val()+"元");
+
+	var finalPrice = parseInt(totalPrice-(coupon).val()+60);
+	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
+	document.getElementById("ordPrice").setAttribute('value', finalPrice);
+	
+	data_id = $("#coupon option:selected").attr('data-id');
+	console.log(data_id);
+	
+	document.getElementById("couponID").setAttribute('value',data_id);
+	
+	});
+
+thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
+// thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
+document.getElementById("ordPrice").setAttribute('value', totalPrice-(coupon).val() + 60);
 </script>
 
 </html> 
