@@ -5,13 +5,19 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tomcat.dbcp.dbcp2.SQLExceptionList;
+
 import util.Util;
 
 public class OrderListDAOImpl implements OrderListDAO_interface {
 
 	private static final String INSERT_STMT = 
+//			"INSERT INTO ORDER_LIST(PROD_ID, PROD_PRICE, EST_START, EST_END) VALUES (?, ?, ?, ?)";
 			"INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String FIND_BY_PK = 
 			"SELECT * FROM ORDER_LIST WHERE LIST_ID = ?";
@@ -30,6 +36,46 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		}
 	}
 
+	
+	@Override
+	public void insertOrder(OrderListVO olVO, Connection con) {
+		// TODO Auto-generated method stub
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = con.prepareStatement(INSERT_STMT);
+						
+			pstmt.setInt(1, olVO.getProdID());
+			pstmt.setInt(2, olVO.getOrdID());
+			pstmt.setInt(3, olVO.getProdPrice());
+			pstmt.setDate(4, olVO.getEstStart());
+			pstmt.setDate(5, olVO.getEstEnd());
+			
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("set auto_increment_increment=1;");
+			pstmt.executeUpdate();
+		}catch(SQLException se) {
+			if(con != null) {
+				try {
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-orderList");
+					con.rollback();
+				}catch(SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		}finally {
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				}catch(SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 	
 	
 	@Override
@@ -266,19 +312,25 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		OrderListDAO_interface oldao = new OrderListDAOImpl();
 
 		//更新
-		OrderListVO ol1 = new OrderListVO();
-		ol1.setOrdStatus(9);
-		ol1.setListID(6);
-		oldao.update(ol1);
+//		OrderListVO ol1 = new OrderListVO();
+//		ol1.setOrdStatus(9);
+//		ol1.setListID(6);
+//		oldao.update(ol1);
 		
 		
 		// 新增
+//		long datetime = System.currentTimeMillis();
+//		Timestamp timeStamp = new Timestamp(datetime);
+//		java.sql.Date date = new java.sql.Date(datetime);
 //		OrderListVO ol1 = new OrderListVO();
-//		ol1.setListID(2);
-//		ol1.setOrdID(1);
 //		ol1.setProdID(1);
-//		ol1.setPrice(3600);
+//		ol1.setOrdID(1);
+//		ol1.setEstStart(date);
+//		ol1.setEstEnd(date);
+//		ol1.setProdPrice(100);
+//		
 //		oldao.addOrderList(ol1);
+//		System.out.println("新增成功");
 
 		// 從pk找
 		OrderListVO ol2 = oldao.findOrderListByPK(2);
@@ -303,8 +355,8 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		// 找狀態
 		List<OrderListVO> list1 = oldao.findOrderListByStatus(1);
 		for(OrderListVO ol4: list1) {
-			ol4.setOrdStatus(1);
-			System.out.println(ol4);
+//			ol4.setOrdStatus(1);
+//			System.out.println(ol4);
 		}
 		
 	}

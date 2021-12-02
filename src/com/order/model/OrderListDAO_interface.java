@@ -9,4 +9,5 @@ public interface OrderListDAO_interface {
 	List<OrderListVO> getAllOrderList();		//找全部
 	List<OrderListVO> findOrderListByStatus(Integer ordStaus); //找狀態
 	void update(OrderListVO orderList);
+	void insertOrder(OrderListVO olVO, java.sql.Connection con);
 }

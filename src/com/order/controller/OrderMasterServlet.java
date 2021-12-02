@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -364,9 +365,9 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************存入訂單主檔VO***********/
 				omVO.setLeaseID(leaseID);
 				omVO.setRentID(rentID); 	//承租方編號
-				omVO.setOrdDate(ordDate);	//訂單日期
 				omVO.setPayID(payID);		//付款方式編碼
 				omVO.setCouponID(couponID); //折價券編碼
+				omVO.setOrdDate(ordDate);	//訂單日期
 				omVO.setStoreCode(storeCode); //超商編碼
 				omVO.setEstStart(estStart);
 				omVO.setEstEnd(estEnd);
@@ -378,11 +379,13 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println("訂單存入");
 				
 				/*************存入訂單明細VO***********/
-				
-				olVO.setProdID(prodID);
-				olVO.setProdPrice(prodPrice);
-				olVO.setEstStart(estStart);
-				olVO.setEstEnd(estEnd);
+				List<OrderListVO> list = new ArrayList<OrderListVO>();
+				OrderListVO newol = new OrderListVO();
+				newol.setProdID(prodID);
+				newol.setProdPrice(prodPrice);
+				newol.setEstStart(estStart);
+				newol.setEstEnd(estEnd);
+				list.add(newol);
 				
 				System.out.println("明細存入");
 	
@@ -397,12 +400,10 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 			
 				/***********************開始新增************************/
-				System.out.println("這裡1");
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-				System.out.println("這裡2");
 
-				omdao.insertAllOrder(omVO, olVO);
-				
+//				omdao.insertAllOrder(omVO, olVO);
+				omdao.inesetWithList(omVO, list);
 				System.out.println("訂單+明細新增");
 				
 				/***********************新增完成準備轉交************************/
