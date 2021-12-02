@@ -40,6 +40,7 @@
   Jedis jedis = pool.getResource();
   List<String> cart = jedis.lrange("member"+memberID, 0, jedis.llen("member"+memberID));
   request.setAttribute("cart",cart);
+  
   Gson gson = new Gson();
   String path = request.getContextPath();
 

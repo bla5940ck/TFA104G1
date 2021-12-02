@@ -28,11 +28,27 @@ a.aa-product-img > img{
 	width: 250px;
 	height: 300px;
 }
+ input[type="submit"]{padding:5px 15px; background:red; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+color:white;
+}
+
+ input[type="button"]{padding:5px 15px; background:#ccc; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
 
 
-
-
- <a class="aa-cartbox-img
+input[type="text"]{padding:5px 15px;
+border-style:solid;
+border-collapse:collapse;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
+ 
 </style>
 <head>
 <meta charset="utf-8">
@@ -330,7 +346,7 @@ request.setAttribute("product", product);
 										備註: <span><%=comt%></span><br>
 										<td class="start">預計租借日期: <input id="startDate"
 											type="text"><br> 預計歸還日期: <input id="endDate"
-											type="text"><br>
+											type="text"><br><br>
 										</td>
 										<td>金額試算: <label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn">
@@ -347,7 +363,7 @@ request.setAttribute("product", product);
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
-										<a class="aa-add-to-cart-btn" href="">直接結帳</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="<%=path%>/front_end/product/cart.jsp?prodID=<%=product.getProdID()%>">直接結帳</a>
 									</div>
 									<br>
 									<div>
@@ -486,6 +502,7 @@ request.setAttribute("product", product);
                     <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
                     <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
 										<figcaption>
+											<span class="aa-product-nmae">${prodEL.prodName}</span><br>
 											<span class="aa-product-price">$${prodEL.prodRent}</span>
 								
 										</figcaption>
@@ -857,8 +874,11 @@ function selflog_show(id){
 		
 		
 		if (listCookie != null && cookieID != 0 &&listCookie.size()!=0) {
-			
 			for (ProdVO p : listCookie) {
+			
+				if(p==null)
+					listCookie.remove(0);
+				
 				flag = flag || (p.getProdID() == cookieID);
 			} //假如編號有重複 就不加入瀏覽清單
 			if (!flag) {
