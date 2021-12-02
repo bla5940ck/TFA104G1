@@ -10,12 +10,10 @@
 <%@ page import="com.product.model.*"%>
 <%
 	System.out.println("進入新增");
+
 	//會員id
 	Integer memID = (Integer)session.getAttribute("id"); 
 	System.out.println("承租者編號 : " + memID);
-		
-// 	MemberJDBCDAO medao = new MemberJDBCDAO();
-// 	MemberVO meVO = medao.findByPrimaryKey(1);
 	
 	CartVO cartVO = (CartVO)request.getAttribute("cartVO");
 	
@@ -24,45 +22,35 @@
 	ProdVO prodVO = prodDAO.findProductByPK(cartVO.getProdID());
 	System.out.println("商品編號 : " + prodVO.getProdID());
 	System.out.println("商品名稱 : " + prodVO.getProdName());
+	
 	//起訖日
 	System.out.println("起始日 : " + cartVO.getEstStart());
 	System.out.println("結束日 : " + cartVO.getEstEnd());
 	Date esstr = cartVO.getEstStart();	
 	Date eestr = cartVO.getEstEnd();
 	long rd = ((eestr.getTime())-(esstr.getTime()));
-	System.out.println(rd);
 	Date rdd = new Date(rd);
 	Integer rentDays = new Integer((rdd.getDate()));
 	Integer rentDay = new Integer((rdd.getDay()));
 	System.out.println("租借天數Date : " + rentDays);
 	System.out.println("租借天數Day : " + rentDay);
+	
 	// 出租者編號
 	MemberService memSVC = new MemberService();
 	MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
 	System.out.println("出租者會員姓名 + " + memVO.getName());
 	String leaseName =  memVO.getName();
+	
 	// 預設物流
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 	List<DefAddressVO> list2 = dadao.getAll();
  	DefAddressVO daVO = new DefAddressVO();
- 	for(int i = 0; i< list2.size(); i++){
- 		DefAddressVO daVO1 = list2.get(i);
- 		if(daVO1.getMemberId() == memID){
- 			System.out.println("超商選項 : " + daVO1.getName711());
- 			String name711 = daVO1.getName711();
- 		}
- 	}
+ 	
 	// 折價券
-// 	MemcouponDAO mcdao = new MemcouponDAO();
-// 	List<MemcouponVO> list = mcdao.getAll();
-// 	for(MemcouponVO memcou : list){
-// 		if(memcou.getMember_id() == memID){
-// 			PromolistDAO pldao = new PromolistDAO();
-// 			PromolistVO plVO = pldao.findByPrimaryKey(memcou.getCoupon_id());
-// 			System.out.println(plVO);
-// 		}
-// 	}
-
+	MemcouponDAO mcdao = new MemcouponDAO();
+	List<MemcouponVO> list = mcdao.getAll();
+	MemcouponVO mcVO = new MemcouponVO();
+	
 	//商品租金+總金額
 	Integer rent = cartVO.getRent();
 	System.out.println("商品租金 : " + rent);
@@ -134,44 +122,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 	width: 200px;
-	height: 25px;
-}
-
-/***選單***/
-
-.box select {
-  background-color: #0563af;
-  color: white;
-  padding: 12px;
-  width: 250px;
-  border: none;
-  font-size: 14px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  appearance: button;
-  outline: none;
-}
-
-.box::before {
-  font-family: FontAwesome;
-  position: absolute;
-  width: 20%;
-  height: 80%;
-  text-align: center;
-  font-size: 28px;
-  line-height: 45px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-
-/* .box:hover::before { */
-/*   color: rgba(255, 255, 255, 0.6); */
-/*   background-color: rgba(255, 255, 255, 0.2); */
-/* } */
-
-.box select option {
-  padding: 30px;
+	height: 35px;
 }
 
 </style>
@@ -235,47 +186,37 @@ th, td {
 					<table id="table-1">					
 					<jsp:useBean id="poDAO"	class="com.order.model.PaymentOptionsDAOImpl" /> 
 					<tr>
-					
 						<td>選擇付款方式:</td>
 						<td>
-						<div class="box">
-						<select size="1" name="payID" style="width:150px">
+						<select size="1" name="payID" style="width:120px">
 								<c:forEach var="poVO" items="${poDAO.getAllPaymentOptions()}">
 									<option value="${poVO.payID}">${poVO.payName}
 								</c:forEach>
 						</select>
-						</div>
 						</td>
 					</tr>
-<!-- 					<tr> -->
-<!-- 						<td>選擇折價券:</td> -->
-<!-- 						<td><select size="1" name="couponID" id="cpn"> -->
-<!-- 								<option id="disc" value=""> -->
-									<%
-// 									for (int i = 0; i < list.size(); i++) {
-// 										MemcouponVO mcVO = list.get(i);
-// 										if (mcVO.getMember_id() == 3) {
-// 											PromolistDAO pldao = new PromolistDAO();
-// 											PromolistVO plVO = pldao.findByPrimaryKey(mcVO.getCoupon_id());
- 								%> 
+					<jsp:useBean id="plDAO"	class="com.promo_list.model.PromolistDAO" /> 					
+					<jsp:useBean id="mcDAO"	class="com.member_coupon.model.MemcouponDAO" /> 					
+					<tr>
+						<td>選擇折價券:</td>
+						<td><select size="1" name="couponID" id="couponID">
+								<option>請選擇折價券
+								<c:forEach var="mcVO" items="${mcDAO.getAll()}">
+								<c:choose>
+									<c:when test="${mcVO.member_id == id}">
+										<option value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
+									</c:when>
+								</c:choose>
+								</c:forEach>
+						</select></td>
+					</tr>
 								
-<%-- 								<option id="disc" value="<%=mcVO.getCoupon_id()%>">!!<%=plVO.getCoupon_name()%>!! --%>
-<!-- 									 可折扣 : -->
-<%-- 									<%=Math.round(plVO.getDiscount())%>元<br> --%>
-<!-- 								</option> -->
-<%-- 								<% --%>
-// 									}
-// 									}
-<%-- 								%> --%>
-<!-- 						</select></td> -->
-<!-- 					</tr> -->		
-					
 					<jsp:useBean id="daDAO"	class="com.member.model.DefAddressJDBCDAO" /> 
 					<jsp:useBean id="meDAO"	class="com.member.model.MemberJDBCDAO" /> 
 					
 					<tr>
 						<td>選擇超商:</td>
-						<td><select size="1" name="code711" style="width:150px">
+						<td><select size="1" name="code711" style="width:120px">
 								<c:forEach var="daVO" items="${daDAO.getAll()}">
 								<c:choose>
 									<c:when test="${daVO.memberId == id}">
@@ -295,22 +236,23 @@ th, td {
 						<td>總租金:</td>
 						<td><input type="hidden" name="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>
 					</tr>
-<!-- 					<tr> -->
-<!-- 						<td>折扣:</td> -->
-<!-- 						<td><p id="discount"></p></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<td>運費:</td> -->
-<!-- 						<td><input type="hidden" name="shipFee" value="60">60</td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<td>訂單金額:</td> -->
-<!-- 						<td><input type="hidden" name="ordPrice" value="160">160</td> -->
-<!-- 					</tr> -->
+					<tr>
+						<td>折扣:</td>
+						<td><p id="discount"></p></td>
+					</tr>
+					<tr>
+						<td>運費:</td>
+						<td><input type="hidden" name="shipFee" value="60">60</td>
+					</tr>
+					<tr>
+						<td>訂單金額:</td>
+						<td><input type="hidden" name="ordPrice" id="ordPrice" value="">	</td>
+					</tr>
 				</table>
 <!-- 				<input type="hidden" name="action" value="submit_order"> -->
 <%-- 				<input type="hidden" name="prodID" value="<%=prodVO.getProdID()%>">  --%>
 <%-- 				<input type="hidden" name="prodName" value="<%=prodVO.getProdName()%>"> --%>
+<!-- 				<input type="hidden" name="discount" id="discount"> -->
 <!-- 				<input type="submit" value="送出訂單 !"> -->
 			</main>
 		</div>
@@ -319,32 +261,14 @@ th, td {
 	</head>
 </body>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-
-<style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
-</style>
-
 <script>
-//         $.datetimepicker.setLocale('zh');
-//         $('#f_date1').datetimepicker({
-// 	       theme: '',              //theme: 'dark',
-// 	       timepicker:false,       //timepicker:true,
-// 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-// 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-// 		   value: new Date(),   // value:   new Date(),
-//            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-//            //startDate:	            '2017/07/10',  // 起始日
-//            //minDate:               '-1970-01-01', // 去除今日(不含)之前
-//            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-//         });
+var couponID = $("#couponID");
+var discount = $("#discount");
+couponID.change(function(){
+	alert((couponID).val());
+	discount.text(couponID.val()+ "元");
+});
+
 </script>
 
 </html> 
