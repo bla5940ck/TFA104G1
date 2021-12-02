@@ -27,6 +27,45 @@ public class PromolistServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
+		if ("getPromolist".equals(action)) { // 來自select_Promo.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer promo_id = new Integer(req.getParameter("promo_id").trim());
+				/*************************** 2.開始查詢資料 *****************************************/
+				PromolistService promolistSvc = new PromolistService();
+				List<PromolistVO> promolistVO = promolistSvc.getPromoid(promo_id);
+				if (promolistVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/promo/promoAll.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("promolistVO", promolistVO); // 資料庫取出的promoVO物件,存入req
+				String url = "/back_end/promo_list/promolistAll.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOne_promo.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/promoAll.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_Promo.jsp的請求
 
