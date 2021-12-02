@@ -234,7 +234,7 @@ th, td {
 					</tr>
 					<tr>
 						<td>總租金:</td>
-						<td><input type="hidden" name="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>
+						<td><input type="hidden" name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>
 					</tr>
 					<tr>
 						<td>折扣:</td>
@@ -246,13 +246,14 @@ th, td {
 					</tr>
 					<tr>
 						<td>訂單金額:</td>
-						<td><input type="hidden" name="ordPrice" id="ordPrice" value="">	</td>
+						<td><p id="ordPrice"></p></td>
 					</tr>
 				</table>
 <!-- 				<input type="hidden" name="action" value="submit_order"> -->
 <%-- 				<input type="hidden" name="prodID" value="<%=prodVO.getProdID()%>">  --%>
 <%-- 				<input type="hidden" name="prodName" value="<%=prodVO.getProdName()%>"> --%>
 <!-- 				<input type="hidden" name="discount" id="discount"> -->
+<!-- 				<input type="hidden" name="ordPrice" id="ordPrice" -->
 <!-- 				<input type="submit" value="送出訂單 !"> -->
 			</main>
 		</div>
@@ -267,8 +268,14 @@ var discount = $("#discount");
 couponID.change(function(){
 	alert((couponID).val());
 	discount.text(couponID.val()+ "元");
-});
 
+
+var ordPrice = $("#ordPrice");
+var prodPrice = $("prodPrice");
+var totalPrice = parseInt(<%=totalPrice%>);
+ordPrice.text(parseInt((couponID).val())+totalPrice);
+
+});
 </script>
 
 </html> 
