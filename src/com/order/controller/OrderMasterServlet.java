@@ -161,11 +161,31 @@ public class OrderMasterServlet extends HttpServlet {
 
 				Integer ordStatus = new Integer(req.getParameter("ordStatus").trim());
 				Integer payStatus = new Integer(req.getParameter("payStatus").trim());
-				Integer shipCode = new Integer(req.getParameter("shipCode").trim());
 				
-				Integer returnCode = new Integer(req.getParameter("returnCode").trim());
-					
-				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");				
+//				Integer shipCode = new Integer(req.getParameter("shipCode").trim());
+//				Integer returnCode = new Integer(req.getParameter("returnCode").trim());
+				
+				String sc = (req.getParameter("shipCode").trim());				
+				Integer shipCode = 0;				
+				if(sc != null) {
+					try {
+						shipCode = new Integer(sc);
+					} catch (Exception e) {
+						errorMsgs.add("格式不正確" + e.getMessage());
+					}
+				};
+				
+				String rc = (req.getParameter("returnCode").trim());
+				Integer returnCode = 0;
+				if(rc != null) {
+					try {
+						returnCode = new Integer(rc);
+					} catch (Exception e) {
+						errorMsgs.add("格式不正確");
+					}
+				};				
+				
+//				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");				
 				String strsd = req.getParameter("shipDate");
 				Timestamp shipDate = null;
 				if(strsd != null && strsd.length() != 0) {
@@ -184,9 +204,9 @@ public class OrderMasterServlet extends HttpServlet {
 				} ;
 				
 				String strrd = req.getParameter("returnDate");
-				System.out.println("歸還時間:" + strrd);
 				Timestamp returnDate = null;
-				if(strrd != null && strad.length()!=0) {
+				if(strrd != null && strrd.length()!=0) {
+					System.out.println("歸還時間:" + strrd);
 					returnDate = new Timestamp(Long.valueOf(strrd));
 					System.out.println(returnDate);
 				};
@@ -241,7 +261,7 @@ public class OrderMasterServlet extends HttpServlet {
 						req.setAttribute("OrderMasterVO", omVO); //含有輸入格式錯誤的omVO物件,也存入req
 					} catch(Exception e) {
 						e.printStackTrace();
-						System.out.println("錯了嗎?????????????");
+//						System.out.println("錯了嗎?????????????");
 						RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 						failureView.forward(req, res);
 						return; // 程式中斷
