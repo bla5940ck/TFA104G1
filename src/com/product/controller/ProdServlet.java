@@ -694,67 +694,54 @@ public class ProdServlet extends HttpServlet {
 		///////////// 結帳////////////////////
 		if ("checkout".equals(req.getParameter("action"))) {
 			System.out.println("點到結帳");
-
+			Jedis jedis = null;
+			jedis = pool.getResource();
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
-			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
-
-			String startDate = req.getParameter("startDate");
-			String endDate = req.getParameter("endDate");
-			int total = Integer.valueOf(req.getParameter("total"));
-			int prodRent = Integer.valueOf(req.getParameter("prodRent"));
-			String prodName = req.getParameter("prodName");
-			Integer leaseID = Integer.valueOf(req.getParameter("leaseID"));
-			System.out.println(startDate);
-			System.out.println(endDate);
-			System.out.println("---------");
-			java.sql.Date sdate = null;
-			java.sql.Date edate = null;
-			BookingVO bk = new BookingVO();
-
-			if (startDate.trim().length() == 0) {
-				errorMsgs.add("租借日期不能為空白");
-			}
-
-			if (endDate.trim().length() == 0) {
-				errorMsgs.add("租借日期不能為空白");
-			}
-
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-
-				sdate = new java.sql.Date(df.parse(startDate).getTime());
-				edate = new java.sql.Date(df.parse(endDate).getTime());
-			} catch (Exception e) {
-
-				errorMsgs.add("日期格式為 yyyy-MM-DD");
-			}
-
-			System.out.println(prodID);
-			System.out.println(sdate);
-			System.out.println(endDate);
-
-//			BookingService bkService = new BookingService();
-//			bk.setProdID(prodID);
+			Integer memberID = (Integer) req.getSession().getAttribute("id");
+			List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
 			
-			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("bk", bk);
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
-				failureView.forward(req, res);
+			List<CartVO> checkoutList = new ArrayList();
+			String[] checkbox = req.getParameterValues("cartCheckbox");
+			if(req.getParameterValues("cartCheckbox")==null) {
+				//錯誤判斷
+				errorMsgs.add("請勾選至少一樣商品");
+				
+				
+				
+			}else {
+				for(String i :checkbox) {
+					
+					Integer prodID = Integer.valueOf(i);
+					
+					if (memberID != null) {
+						
+						for (String item : cart) {
+							CartVO cartVO1 = gson.fromJson(item, CartVO.class);
+							if (cartVO1.getProdID() == prodID) {
+								checkoutList.add(cartVO1);	
+								System.out.println("vo: "+ cartVO1.getProdID());
+							}
+						}
+					}
+				}
+	
+				
+			}
+			//錯誤返回
+			if(!errorMsgs.isEmpty()) {
+				req.getRequestDispatcher("/front_end/product/cart.jsp").forward(req, res);
+				
 				return;
-
+				
 			}
-			
-			
-			CartVO cartVO = new CartVO(prodID, sdate, edate, prodName, prodRent, total,leaseID);
-			req.setAttribute("cartVO", cartVO);
-//			
-			req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp").forward(req, res);;
-//			bkService.addBk(prodID, 1, sdate, edate);
+
 			
 			
 			
+			jedis.close();
+			req.setAttribute("checkoutList", checkoutList);
+//				req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp").forward(req, res);
 		}
 
 	}

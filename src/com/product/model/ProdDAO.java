@@ -203,7 +203,7 @@ public class ProdDAO implements ProdDAOImpl {
 
 		return prod;
 	}
-
+	
 	@Override
 	public List<ProdVO> getAll() {
 		List<ProdVO> prodList = new ArrayList<ProdVO>();
@@ -211,7 +211,7 @@ public class ProdDAO implements ProdDAOImpl {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(sql);
