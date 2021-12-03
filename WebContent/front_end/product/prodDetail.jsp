@@ -22,38 +22,33 @@ img.simpleLens-big-image {
 	height: 300px;
 }
 
-a.aa-product-img>img {
+
+a.aa-product-img > img{
 	object-fit: contain;
 	width: 250px;
 	height: 300px;
 }
-
-input[type="submit"] {
-	padding: 5px 15px;
-	background: red;
-	border: 0 none;
-	cursor: pointer;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	color: white;
+ input[type="submit"]{padding:5px 15px; background:red; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+color:white;
 }
 
-input[type="button"] {
-	padding: 5px 15px;
-	background: #ccc;
-	border: 0 none;
-	cursor: pointer;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+ input[type="button"]{padding:5px 15px; background:#ccc; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
 }
 
-input[type="text"] {
-	padding: 5px 15px;
-	border-style: solid;
-	border-collapse: collapse; -webkit-border-radius : 5px;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
+
+input[type="text"]{padding:5px 15px;
+border-style:solid;
+border-collapse:collapse;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
 }
+ 
 </style>
 <head>
 <meta charset="utf-8">
@@ -107,40 +102,40 @@ input[type="text"] {
 <%-- <script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script> --%>
 </head>
 <body>
-	<%
-		ProdService prodSvc = new ProdService();
-		ProdVO product = null;
-		BookingVO bk = new BookingVO();
-		Integer prodID = null;
+<%	ProdService prodSvc = new ProdService();
+ProdVO product = null;
+BookingVO bk = new BookingVO();
+Integer prodID = null;
 
-		if (request.getParameter("prodID") != null) {
-			prodID = Integer.parseInt(request.getParameter("prodID"));
-			product = prodSvc.findProductByPK(prodID);
-		} else if (request.getAttribute("bk") != null) {
-			bk = (BookingVO) request.getAttribute("bk");
-			prodID = bk.getProdID();
-			product = prodSvc.findProductByPK(prodID);
-		}
+ if (request.getParameter("prodID") != null) {
+	prodID = Integer.parseInt(request.getParameter("prodID"));
+	product = prodSvc.findProductByPK(prodID);
+}
+else if (request.getAttribute("bk") != null) {
+	bk = (BookingVO) request.getAttribute("bk");
+	prodID = bk.getProdID();
+	product = prodSvc.findProductByPK(prodID);
+}
 
-		BookingService bkDao = new BookingService();
+BookingService bkDao = new BookingService();
 
-		int picAmount = 0;
-		//動態算出 資料庫圖片個數
-		if (product != null) {
-			if (product.getPic1() != null)
-				picAmount++;
-			if (product.getPic2() != null)
-				picAmount++;
-			if (product.getPic3() != null)
-				picAmount++;
-		}
-		List<BookingVO> list = null;
-		if (product != null) {
-			list = bkDao.findDateByProdID(product.getProdID());
-		}
+int picAmount = 0;
+//動態算出 資料庫圖片個數
+if (product != null) {
+	if (product.getPic1() != null)
+		picAmount++;
+	if (product.getPic2() != null)
+		picAmount++;
+	if (product.getPic3() != null)
+		picAmount++;
+}
+List<BookingVO> list = null;
+if (product != null) {
+	list = bkDao.findDateByProdID(product.getProdID());
+}
 
-		request.setAttribute("product", product);
-	%>
+request.setAttribute("product", product);
+%>
 
 	<!-- wpf loader Two -->
 	<div id="wpf-loader-two">
@@ -167,7 +162,7 @@ input[type="text"] {
 								<p style="font-size: 20px; margin: 0; font-weight: normal;">JoyLease</p>
 							</div>
 
-
+						
 							<!-- </div> -->
 							<!-- / header top left -->
 							<div class="aa-header-top-right">
@@ -257,17 +252,17 @@ input[type="text"] {
 									<li><a href="#">桌遊</a></li>
 									<li><a href="#">拼圖</a></li>
 									<li><a href="#">其他</a></li>
-
-
+							
+									
 								</ul></li>
 							<li><a href="#">使用教學</a> <!-- <ul class="dropdown-menu">  
                  
 					<!--/.nav-collapse -->
-					</div>
 				</div>
 			</div>
+		</div>
 	</section>
-
+	
 
 	<!-- product category -->
 	<section id="aa-product-details">
@@ -339,7 +334,7 @@ input[type="text"] {
 								<!-- Modal view content -->
 								<div class="col-md-7 col-sm-7 col-xs-12">
 									<div class="aa-product-view-content">
-										<h3><%=product.getProdName()%></h3>
+										<h3><%=product.getProdName() %></h3>
 										<div class="aa-price-block">
 											租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
 											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span><br>
@@ -351,13 +346,13 @@ input[type="text"] {
 										備註: <span><%=comt%></span><br>
 										<td class="start">預計租借日期: <input id="startDate"
 											type="text"><br> 預計歸還日期: <input id="endDate"
-											type="text"><br>
-										<br>
+											type="text"><br><br>
 										</td>
 										<td>金額試算: <label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn">
 
-										</td> </br>
+										</td>
+										</br>
 										<td></td>
 
 										</form>
@@ -368,9 +363,7 @@ input[type="text"] {
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-											class="aa-add-to-cart-btn"
-											href="<%=path%>/front_end/product/cart.jsp?prodID=<%=product.getProdID()%>">直接結帳</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="<%=path%>/front_end/product/cart.jsp">直接結帳</a>
 									</div>
 									<br>
 									<div>
@@ -499,34 +492,27 @@ input[type="text"] {
 							<h3>相關瀏覽</h3>
 							<ul class="aa-product-catg aa-related-item-slider">
 								<!-- start single product item -->
-
-								<jsp:useBean id="prodSvc1" scope="page"
-									class="com.product.model.ProdService" />
+								
+								<jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
 								<c:forEach var="prodEL" items="${prodSvc1.all}">
-									<c:if
-										test="${prodEL.categoryID==product.categoryID and prodEL.prodStatus==1 and prodEL.prodID!=product.prodID}">
-										<li>
-											<figure>
-												<a class="aa-product-img"
-													href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
-													<img
-													src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail">
-												</a>
-												<a class="aa-add-card-btn"
-													href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span
-													class="fa fa-shopping-cart"></span>看商品細圖</a>
-												<figcaption>
-													<span class="aa-product-nmae">${prodEL.prodName}</span><br>
-													<span class="aa-product-price">$${prodEL.prodRent}</span>
-
-												</figcaption>
-											</figure>
-											<div class="aa-product-hvr-content">
-												<a href="#" data-toggle="tooltip" data-placement="top"
-													title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										</li>
-									</c:if>
-								</c:forEach>
+								<c:if test="${prodEL.categoryID==product.categoryID and prodEL.prodStatus==1 and prodEL.prodID!=product.prodID}">
+								<li>
+									<figure>
+										<a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+										<figcaption>
+											<span class="aa-product-nmae">${prodEL.prodName}</span><br>
+											<span class="aa-product-price">$${prodEL.prodRent}</span>
+								
+										</figcaption>
+									</figure>
+									<div class="aa-product-hvr-content">
+										<a href="#" data-toggle="tooltip" data-placement="top"
+											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+								</li>
+							</c:if>
+							</c:forEach>
 
 							</ul>
 
@@ -578,40 +564,41 @@ input[type="text"] {
 														</div>
 													</div>
 												</div>
-
-												<div class="aa-prod-quantity">
-													<form action="">
-														<select name="" id="">
-															<option value="0" selected="1">1</option>
-															<option value="1">2</option>
-															<option value="2">3</option>
-															<option value="3">4</option>
-															<option value="4">5</option>
-															<option value="5">6</option>
-														</select>
-													</form>
-													<p class="aa-prod-category">
-														分類:<a href="#">Nintendo</a>
-													</p>
-												</div>
-												<div class="aa-prod-view-bottom">
-													<a href="#" class="e"><span class="fa fa-shopping-cart"></span>加入購物車</a>
-													<a href="#" class="aa-add-to-cart-btn">點我看商品</a>
+												
+														<div class="aa-prod-quantity">
+															<form action="">
+																<select name="" id="">
+																	<option value="0" selected="1">1</option>
+																	<option value="1">2</option>
+																	<option value="2">3</option>
+																	<option value="3">4</option>
+																	<option value="4">5</option>
+																	<option value="5">6</option>
+																</select>
+															</form>
+															<p class="aa-prod-category">
+																分類:<a href="#">Nintendo</a>
+															</p>
+														</div>
+														<div class="aa-prod-view-bottom">
+															<a href="#" class="e"><span
+																class="fa fa-shopping-cart"></span>加入購物車</a> <a href="#"
+																class="aa-add-to-cart-btn">點我看商品</a>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+									<!-- /.modal-content -->
 								</div>
+								<!-- /.modal-dialog -->
 							</div>
-							<!-- /.modal-content -->
+							<!-- / quick view modal -->
 						</div>
-						<!-- /.modal-dialog -->
 					</div>
-					<!-- / quick view modal -->
 				</div>
 			</div>
-		</div>
-		</div>
 		</div>
 	</section>
 	<!-- / product category -->
@@ -816,26 +803,24 @@ function selflog_show(id){
 						alert("此商品重複 確認購物車");
 					} else {
 						//加入購物車 數量+1
-					 $("div.aa-cartbox-summary").load("<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=product.getProdID()%>
-		"
-														+ " div.aa-cartbox-summary");
-
-								// 						location.reload();
+					 $("div.aa-cartbox-summary").load("<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=product.getProdID()%>" + " div.aa-cartbox-summary");
+					 
+					 
+// 						location.reload();
+						$("span.aa-cart-notify").text(
+								parseInt($("input.dataCount").val()) + 1);
+								
+						$("input.dataCount").val(
 								$("span.aa-cart-notify")
 										.text(
 												parseInt($("input.dataCount")
-														.val()) + 1);
-
-								$("input.dataCount").val(
-										$("span.aa-cart-notify").text(
-												parseInt($("input.dataCount")
 														.val()) + 1))
+							
+						alert("加入購物車");
+					}
 
-								alert("加入購物車");
-							}
-
-						},
-					});
+				},
+			});
 		};
 
 		var disableddates = new Array();
@@ -844,7 +829,8 @@ function selflog_show(id){
 
 				for (long j = 0; j <= k + 6; j++) {
 					//儲存所有的區間日期
-					long d = list.get(i).getEstStart().getTime() + 86400000 * (j - 3);//前3後3緩衝計算%>
+					long d = list.get(i).getEstStart().getTime() + 86400000 * (j - 3);//前3後3緩衝計算
+					%>
 		disableddates.push(
 	<%=d%>
 		);
@@ -864,11 +850,17 @@ function selflog_show(id){
 	<%=product.getProdRent()%>
 		$("#subtotal").html((date_dif + 1) * rent);
 		});
+		
+		
+		
+		
+	
 	</script>
 
 
 
 	<%
+	
 		//瀏覽圖片儲存
 		Integer cookieID = 0;
 		Boolean flag = false;
@@ -876,36 +868,37 @@ function selflog_show(id){
 		if ("y".equals(request.getParameter("cookie"))) {
 			cookieID = Integer.valueOf(request.getParameter("prodID"));
 			prodCookie = prodSvc.findProductByPK(cookieID);
-
-			List<ProdVO> listCookie = (List<ProdVO>) session.getAttribute("listCookie");
-
-			
-			if (listCookie != null && cookieID != 0 && listCookie.size() != 0) {
-				for (ProdVO p : listCookie) {
-					
-
-					if (p == null)
-						listCookie.remove(0);
-
-					flag = flag || (p.getProdID() == cookieID);
-				} //假如編號有重複 就不加入瀏覽清單
-				if (!flag) {
-					if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
-						listCookie.remove(0);
-					}
-					listCookie.add(prodCookie);
-
-				}
-
-				session.setAttribute("listCookie", listCookie);
-			}
-			//還沒瀏覽時，new 一個list
-			if (listCookie == null ||listCookie.size()==0) {
-				listCookie = new ArrayList();
-				listCookie.add(prodCookie);
-				session.setAttribute("listCookie", listCookie);
-			}
 		}
+		
+		List<ProdVO> listCookie = (List<ProdVO>) session.getAttribute("listCookie");
+		
+		
+		if (listCookie != null && cookieID != 0 &&listCookie.size()!=0) {
+			for (ProdVO p : listCookie) {
+			
+				if(p==null)
+					listCookie.remove(0);
+				
+				flag = flag || (p.getProdID() == cookieID);
+			} //假如編號有重複 就不加入瀏覽清單
+			if (!flag) {
+				if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
+					listCookie.remove(0);
+				}
+				listCookie.add(prodCookie);
+				
+			}
+			
+			session.setAttribute("listCookie", listCookie);
+		}
+		//還沒瀏覽時，new 一個list
+		if (listCookie == null) {
+			listCookie = new ArrayList();
+			listCookie.add(prodCookie);
+			session.setAttribute("listCookie", listCookie);
+
+		}
+		
 	%>
 
 

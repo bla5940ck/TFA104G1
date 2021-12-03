@@ -2,7 +2,7 @@ package com.product.model;
 
 import java.sql.Timestamp;
 
-public class ProdVO {
+public class ProdVO implements java.io.Serializable{
 	private Integer prodID;
 	private Integer categoryID;
 	private Integer memberID;
