@@ -220,7 +220,7 @@ public class ProdServlet extends HttpServlet {
 			Integer prodID = 0;
 			ProdService prodSvc = new ProdService();
 			//讀圖片用
-			if (req.getParameter("prodID") != null) {
+			if (req.getParameter("prodID") != null && !req.getParameter("prodID").isEmpty()) {
 				prodID = Integer.parseInt(req.getParameter("prodID"));
 			}
 		
