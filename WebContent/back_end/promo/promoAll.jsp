@@ -88,6 +88,7 @@
 			<td>${promoVO.promo_end}</td>
 			<td>${promoVO.promo_text}</td> 
 <%-- 			<td>${promoVO.status}</td> --%>
+			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="專案明細">
@@ -110,8 +111,6 @@
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-<ul>
-  <li><a href='add_promo.jsp'>新增專案</li>
-</ul>
+
 </body>
 </html>

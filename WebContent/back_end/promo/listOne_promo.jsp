@@ -76,6 +76,12 @@
 			<td>${promoVO.promo_text}</td> 
 			<td>${promoVO.status}</td>
 			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="專案明細">
+			     <input type="hidden" name="promo_id"  value="${promoVO.promo_id}">
+			     <input type="hidden" name="action"	value="getPromolist"></FORM>
+			</td>
+			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo/promo.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="promo_id"  value="${promoVO.promo_id}">
