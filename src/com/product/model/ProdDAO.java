@@ -23,9 +23,10 @@ public class ProdDAO implements ProdDAOImpl {
 		}
 	}
 
+	private static String INSERT  = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
 	public Integer add(ProdVO prod) {
 		
-		String sql = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+		
 		String[] cols = {"prod_id"};
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -33,7 +34,7 @@ public class ProdDAO implements ProdDAOImpl {
 		Integer key = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql,cols);
+			pstmt = con.prepareStatement(INSERT,cols);
 
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
@@ -81,15 +82,14 @@ public class ProdDAO implements ProdDAOImpl {
 		return key;
 	}
 
-	@Override
+	private static String UPDATE= "update product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
 	public void update(ProdVO prod) {
-		String sql = "update product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
 			pstmt.setString(3, prod.getProdName());
@@ -141,9 +141,9 @@ public class ProdDAO implements ProdDAOImpl {
 
 	}
 
-	@Override
+
+	private static String findProductByPK = "select * from product where prod_id = ?";
 	public ProdVO findProductByPK(Integer prodId) {
-		String sql = "select * from product where prod_id = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -151,7 +151,7 @@ public class ProdDAO implements ProdDAOImpl {
 
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(findProductByPK);
 			pstmt.setInt(1, prodId);
 
 			rs = pstmt.executeQuery();
@@ -204,17 +204,17 @@ public class ProdDAO implements ProdDAOImpl {
 		return prod;
 	}
 	
-	@Override
+
+	private static String ALL = "select * from product group by prod_id order by shelf_date desc";
 	public List<ProdVO> getAll() {
 		List<ProdVO> prodList = new ArrayList<ProdVO>();
-		String sql = "select * from product group by prod_id order by shelf_date desc";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(ALL);
 
 			rs = pstmt.executeQuery();
 
@@ -269,17 +269,16 @@ public class ProdDAO implements ProdDAOImpl {
 	}
 	
 	
-	
+	private static String ASC = "select * from product group by prod_id order by prod_rent;";
 	public List<ProdVO> priceSortAsc(){
 		List<ProdVO> list = new ArrayList();
-		String sql = "select * from product group by prod_id order by prod_rent;";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(ASC);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -334,17 +333,16 @@ public class ProdDAO implements ProdDAOImpl {
 	}
 	
 	
-	
+	private static String DESC = "select * from product group by prod_id order by prod_rent desc;";
 	public List<ProdVO> priceSortDesc(){
 		List<ProdVO> list = new ArrayList();
-		String sql = "select * from product group by prod_id order by prod_rent desc;";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(DESC);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -397,17 +395,17 @@ public class ProdDAO implements ProdDAOImpl {
 
 		return list;
 	}
+	private static String SEARCH = "SELECT * FROM product where prod_name like \"%\"?\"%\" or prod_cot like \"%\"?\"%\"";
 	public List<ProdVO> getAllByKeyword(String keyword){
 		
 		List<ProdVO> list = new ArrayList();
-		String sql = "SELECT * FROM product where prod_name like \"%\"?\"%\" or prod_cot like \"%\"?\"%\"";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(SEARCH);
 			
 			pstmt.setString(1, keyword);
 			pstmt.setString(2, keyword);
