@@ -12,8 +12,8 @@
 	System.out.println("進入新增");
 
 	//會員id
-// 	Integer memID = (Integer)session.getAttribute("id"); 
-// 	System.out.println("承租者編號 : " + memID);
+	Integer memID = (Integer)session.getAttribute("id"); 
+	System.out.println("承租者編號 : " + memID);
 	
 // 	CartVO cartVO = (CartVO)request.getAttribute("cartVO");
 	
@@ -171,14 +171,10 @@ th, td {
 				<%List<CartVO> checkoutList = (List<CartVO>)request.getAttribute("checkoutList"); 		
 				
 				for(CartVO cartVO: checkoutList){
-					
-					Integer memID = (Integer)session.getAttribute("id"); 
-					System.out.println("承租者編號 : " + memID);
 					//會員名稱
 					MemberService memSVC = new MemberService();
-					System.out.println(cartVO.getLeaseID());
 				 	MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
-				 	System.out.println("出租者會員姓名  " + memVO.getName());
+				 	System.out.println("出租者會員姓名 + " + memVO.getName());
 				 	String leaseName =  memVO.getName();
 					//起訖日
 				 	System.out.println("起始日 : " + cartVO.getEstStart());
@@ -199,7 +195,7 @@ th, td {
 					// 折價券
 				 	MemcouponDAO mcdao = new MemcouponDAO();
 				 	List<MemcouponVO> list = mcdao.getAll();
-				 	MemcouponVO mcVO = new MemcouponVO();						 	
+				 	MemcouponVO mcVO = new MemcouponVO();
 					
 					//商品租金+總金額
 				 	Integer rent = cartVO.getRent();
@@ -254,7 +250,7 @@ th, td {
 								<option value="0">請選擇折價券
 								<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 								<c:choose>
-									<c:when test="${mcVO.member_id == id}">										
+									<c:when test="${mcVO.member_id == id}">											
 										<option value="${mcVO.coupon_id}">${mcVO.coupon_name}
 										<option data-id="${mcVO.coupon_id}" value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 									</c:when>									
