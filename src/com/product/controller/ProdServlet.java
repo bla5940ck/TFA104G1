@@ -575,6 +575,12 @@ public class ProdServlet extends HttpServlet {
 			jedis.close();
 
 		}
+		
+		
+		
+		
+		
+		
 		////////////////// 購物車刪除///////////////////////
 		if ("delete".equals(req.getParameter("action"))) {
 
@@ -741,7 +747,7 @@ public class ProdServlet extends HttpServlet {
 			
 			jedis.close();
 			req.setAttribute("checkoutList", checkoutList);
-//				req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp").forward(req, res);
+				req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp").forward(req, res);
 		}
 
 	}
