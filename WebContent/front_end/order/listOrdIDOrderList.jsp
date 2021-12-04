@@ -9,7 +9,7 @@
 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
 	
 	OrderListService olSVC = new OrderListService();
-	List<OrderListVO> list = olSVC.getStatus(olVO.getOrdStatus());
+	List<OrderListVO> list = olSVC.getOrdID(olVO.getOrdID());
 	
 // 	List<OrderListVO> list = oldao.findOrderListByStatus(olVO.getOrdStatus());
 	pageContext.setAttribute("list", list);
@@ -123,7 +123,7 @@ th, td {
 
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>選擇訂單明細狀態:
+					<h5>選擇訂單狀態:
 					<select size="1" name="ordStatus">
 						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option>
 						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option>
@@ -163,7 +163,7 @@ th, td {
 					<th>商品編號</th>
 					<th>商品名稱</th>
 					<th>訂單編號</th>
-					<th>訂單金額</th>
+					<th>商品金額</th>
 					<th>預計開始日期</th>
 					<th>預計結束日期</th>
 					<th>訂單狀態</th>
@@ -191,12 +191,12 @@ th, td {
 						</c:choose>
 						<td>
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
+								ACTION="<%=request.getContextPath()%>/OrderListServlet"
 								style="margin-bottom: 0px;">
-								<input type="submit" value="查看明細"> 
+								<input type="submit" value="更新"> 
 								<input type="hidden" name="ordID" value="${olVO.ordID}">
 								<input type="hidden" name="listID" value="${olVO.listID}">
-								<input type="hidden" name="action" value="getOne_For_Display">
+								<input type="hidden" name="action" value="getOne_For_Update">
 							</FORM>
 						</td>
 					<tr>

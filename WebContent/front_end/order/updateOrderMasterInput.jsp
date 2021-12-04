@@ -96,7 +96,7 @@ th, td {
 				<nav class="nav">
 					<h2>出租者專區</h2>
 					<ul class="nav_list">
-						<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+						<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
 					</ul>
 				</nav>
 			</aside>

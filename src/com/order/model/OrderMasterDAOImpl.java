@@ -30,7 +30,9 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 
 	private static final String INSERT_STMT_ORDERLIST = "INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String UPDATE_ORDERLIST = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
+	private static final String UPDATE2 = "UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?";
 
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -496,8 +498,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				System.out.println(key);
 			}
 			rs.close();
-			// 同時再更新訂單明細內容 UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID
-			// = ?
+			// 同時再更新訂單明細內容 UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID =?
 			pstmt2 = con.prepareStatement(UPDATE_ORDERLIST);
 			pstmt2.setInt(1, olVO.getOrdStatus());
 			pstmt2.setInt(2, olVO.getListID());
@@ -535,6 +536,44 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		}
 	}
 
+	@Override
+	public void updateWithListStatus(OrderMasterVO omVO, Connection con) {
+//		System.out.println("訂單主檔執行更新");
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = con.prepareStatement(UPDATE2);
+			
+			pstmt.setInt(1, omVO.getOrdStatus());
+			pstmt.setInt(2, omVO.getOrdID());
+			
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-orderMaster");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	
 	public static void main(String[] args) {
 		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 
