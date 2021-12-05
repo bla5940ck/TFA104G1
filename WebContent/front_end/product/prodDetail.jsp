@@ -363,7 +363,7 @@ request.setAttribute("product", product);
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="<%=path%>/front_end/product/cart.jsp?prodID=<%=product.getProdID()%>">直接結帳</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="<%=path%>/front_end/product/cart.jsp">直接結帳</a>
 									</div>
 									<br>
 									<div>
