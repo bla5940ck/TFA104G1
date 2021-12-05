@@ -71,7 +71,31 @@ public class MemberService {
 		return memberVO;
 	}
 	
-	public MemberVO 	getOneMember(Integer memberId) {
+	public MemberVO updateStatus(Integer status ,Integer memberId
+			) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemberId(memberId);
+		memberVO.setStatus(status);
+		dao.updateStatus(memberVO);
+		return memberVO;
+	}
+	
+	public MemberVO updateOneMember(Integer memberId,String name,
+			String email, Timestamp creatDate,String loginId,String phoneNum,Integer status
+			) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemberId(memberId);
+		memberVO.setEmail(email);
+		memberVO.setLoginId(loginId);
+		memberVO.setPhoneNum(phoneNum);
+		memberVO.setStatus(status);
+		memberVO.setCreatDate(creatDate);
+		memberVO.setName(name);
+		dao.updateOneStatus(memberVO);
+		return memberVO;
+	}
+	
+	public MemberVO getOneMember(Integer memberId) {
 		return dao.findByPrimaryKey(memberId);
 	}
 	
@@ -79,7 +103,15 @@ public class MemberService {
 		return dao.findLoginID(loginId);
 	}
 	
+	public MemberVO 	login(String loginId,String password) {
+		return dao.login(loginId,password);
+	}
+	
+	
 	public List<MemberVO> getAll(){
 		return dao.getAll();
+	}
+	public List<MemberVO> getPdrMember(){
+		return dao.findPdrID();
 	}
 }

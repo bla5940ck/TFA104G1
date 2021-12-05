@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>忘記密碼</title>
 </head>
 <body>
-<div>XXXX</div>
+
 </body>
 </html>

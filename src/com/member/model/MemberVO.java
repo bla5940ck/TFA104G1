@@ -3,7 +3,7 @@ package com.member.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class MemberVO {
+public class MemberVO  implements java.io.Serializable{
 	private Integer memberId;
 	private String bankCode;
 	private String email;
@@ -145,11 +145,12 @@ public class MemberVO {
 	public void setIdcB(byte[] idcB) {
 		this.idcB = idcB;
 	}
+	private Integer foul;
+
 	public Integer getFoul() {
 		return foul;
 	}
 	public void setFoul(Integer foul) {
 		this.foul = foul;
 	}
-	private Integer foul;
 }

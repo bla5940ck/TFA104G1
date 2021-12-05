@@ -27,16 +27,30 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		private static final String GET_ONE_STMT = 
 			"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
 			+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
-			+ "FROM member where member_id = ?";
+			+ "FROM JoyLease.member where member_id = ?";
 		private static final String GET_LOGIN_STMT = 
 				"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
 				+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
 				+ "FROM member where login_id = ?";
+		private static final String LOGIN = 
+				"SELECT login_id,password FROM member where login_id = ? and password=? ";
 //		private static final String DELETE = 
 //			"DELETE FROM member where member_id = ?";
 		private static final String UPDATE = 
 			"UPDATE member set bank_code=?,	email=?,  login_id=?,	idcn	=?,	phone_num=?,	password=?,status	=?,	name=?,	nickname=?,	birthday	=?,	address=?,	bank_account=?, account_name=?,rent_score=?,	lease_score=?,	creat_date=?,	pic=?,	idc_f=?,	idc_b=?,	foul	=? where (member_id = ?)";
 
+		private static final String UPDATESTATUS = 
+				"UPDATE member set status	=? where (member_id = ?)";
+		
+		private static final String UPDATEONEMEMBER = 
+				"UPDATE member set member_id = ?"
+				+ ",name=?, email=?,creat_date=?,login_id=?,phone_num=?, ,status	=?where (member_id = ?)";
+
+		
+		private static final String GET_PDR_ONE_STMT = 
+				"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
+				+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
+				+ "FROM member where status = '0'";
 	
 	@Override
 	public void insert(MemberVO memberVO) {
@@ -164,6 +178,98 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 	}
 
 	@Override
+	public void updateStatus(MemberVO memberVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+	
+		try {
+	
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATESTATUS);
+			pstmt.setInt(1, memberVO.getStatus());
+			pstmt.setInt(2, memberVO.getMemberId());
+			
+			pstmt.executeUpdate();
+	
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void updateOneStatus(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+	
+		System.out.println(memberVO.getCreatDate().toString());
+		System.out.println(UPDATEONEMEMBER.toString());
+		try {
+	
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATEONEMEMBER);
+			pstmt.setInt(1, memberVO.getMemberId());
+			pstmt.setString(2, memberVO.getName());
+			pstmt.setString(3, memberVO.getEmail());
+			pstmt.setTimestamp(4, memberVO.getCreatDate());
+			pstmt.setString(5, memberVO.getLoginId());
+			pstmt.setString(6, memberVO.getPhoneNum());
+			pstmt.setInt(7, memberVO.getStatus());
+			pstmt.executeUpdate();
+	
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+
+	@Override
 	public MemberVO findByPrimaryKey(Integer memberId) {
 		MemberVO memberVO = null;
 		Connection con = null;
@@ -175,6 +281,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
+			
+//			System.out.println(GET_ONE_STMT .toString()+ memberId.toString());
 
 			pstmt.setInt(1, memberId);
 
@@ -238,7 +346,85 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		}
 		return memberVO;
 	}
+	@Override
+	public List<MemberVO> findPdrID() {
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		MemberVO memberVO = null;
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_PDR_ONE_STMT);
+			rs = pstmt.executeQuery();
+			
+//			System.out.println(GET_PDR_ONE_STMT.toString());
+			
+			while (rs.next()) {
+				
+				memberVO = new MemberVO();
+				memberVO.setMemberId(rs.getInt("member_id"));
+				memberVO.setBankCode(rs.getString("bank_code"));
+				memberVO.setEmail(rs.getString("email"));
+				memberVO.setLoginId(rs.getString("login_id"));
+				memberVO.setIdcn(rs.getString("idcn"));
+				memberVO.setPhoneNum(rs.getString("phone_num"));
+				memberVO.setPassword(rs.getString("password"));
+				memberVO.setStatus(rs.getInt("status"));
+				memberVO.setName(rs.getString("name"));
+				memberVO.setNickName(rs.getString("nickname"));
+				memberVO.setBirthday(rs.getDate("birthday"));
+				memberVO.setAddress(rs.getString("address"));
+				memberVO.setBankAccount(rs.getString("bank_account"));
+				memberVO.setRentScore(rs.getDouble("rent_score"));
+				memberVO.setLeaseScore(rs.getDouble("lease_score"));
+				memberVO.setCreatDate(rs.getTimestamp("creat_date"));
+				memberVO.setPic(rs.getBytes("pic"));
+				memberVO.setIdcF(rs.getBytes("idc_f"));
+				memberVO.setIdcB(rs.getBytes("idc_b"));
+				memberVO.setFoul(rs.getInt("foul"));
+
+				list.add(memberVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	@Override
 	public List<MemberVO> getAll() {
 		
@@ -425,31 +611,31 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		System.out.println("---------------------");		
 		
 				// 全部查詢
-//				List<MemberVO> list = dao.getAll();
-//				for (MemberVO aMember : list) {
-//					System.out.print(aMember.getMemberId() + ", ");
-//					System.out.print(aMember.getBankCode() + ", ");
-//					System.out.print(aMember.getEmail() + ", ");
-//					System.out.print(aMember.getLoginId() + ", ");
-//					System.out.print(aMember.getIdcn() + ", ");
-//					System.out.print(aMember.getPhoneNum() + ", ");
-//					System.out.print(aMember.getPassword()+ ", ");
-//					System.out.print(aMember.getStatus() + ", ");
-//					System.out.print(aMember.getName() + ", ");
-//					System.out.print(aMember.getNickName() + ", ");
-//					System.out.print(aMember.getBirthday() + ", ");
-//					System.out.print(aMember.getAddress() + ", ");
-//					System.out.print(aMember.getBankAccount()+ ", ");
-//					System.out.print(aMember.getAccountName() + ", ");
-//					System.out.print(aMember.getRentScore() + ", ");
-//					System.out.print(aMember.getLeaseScore() + ", ");
-//					System.out.print(aMember.getCreatDate() + ", ");
-//					System.out.print(aMember.getPic() + ", ");
-//					System.out.print(aMember.getIdcF() + ", ");
-//					System.out.print(aMember.getIdcB() + ", ");
-//					System.out.print(aMember.getFoul());
-//					System.out.println();
-//				}
+				List<MemberVO> list = dao.getAll();
+				for (MemberVO aMember : list) {
+					System.out.print(aMember.getMemberId() + ", ");
+					System.out.print(aMember.getBankCode() + ", ");
+					System.out.print(aMember.getEmail() + ", ");
+					System.out.print(aMember.getLoginId() + ", ");
+					System.out.print(aMember.getIdcn() + ", ");
+					System.out.print(aMember.getPhoneNum() + ", ");
+					System.out.print(aMember.getPassword()+ ", ");
+					System.out.print(aMember.getStatus() + ", ");
+					System.out.print(aMember.getName() + ", ");
+					System.out.print(aMember.getNickName() + ", ");
+					System.out.print(aMember.getBirthday() + ", ");
+					System.out.print(aMember.getAddress() + ", ");
+					System.out.print(aMember.getBankAccount()+ ", ");
+					System.out.print(aMember.getAccountName() + ", ");
+					System.out.print(aMember.getRentScore() + ", ");
+					System.out.print(aMember.getLeaseScore() + ", ");
+					System.out.print(aMember.getCreatDate() + ", ");
+					System.out.print(aMember.getPic() + ", ");
+					System.out.print(aMember.getIdcF() + ", ");
+					System.out.print(aMember.getIdcB() + ", ");
+					System.out.print(aMember.getFoul());
+					System.out.println();
+				}
 	}
 
 	@Override
@@ -527,4 +713,71 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		}
 		return memberVO;
 	}
+
+	@Override
+	public MemberVO login(String loginId,String password) {
+		// TODO Auto-generated method stub
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(LOGIN);
+
+			pstmt.setString(1, loginId);
+			pstmt.setString(2, password);
+
+			rs = pstmt.executeQuery();
+			
+			if (rs !=null) {
+				while (rs.next()) {
+					memberVO = new MemberVO();
+					memberVO.setLoginId(rs.getString("login_id"));
+					memberVO.setPassword(rs.getString("password"));
+					break;
+				}
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	
+	}
+		
+	
+
+
 }
