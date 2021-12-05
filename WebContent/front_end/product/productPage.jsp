@@ -21,6 +21,8 @@
    response.setHeader("Pragma","no-cache");        
    response.setDateHeader ("Expires", 0);
    
+
+   
    %>
  <%@ include file="/includeFolder/header.file"%>
   <!-- / catg header banner section -->
@@ -118,7 +120,16 @@
                   <div class="aa-product-hvr-content">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
-                    <span class="aa-badge aa-hot" href="#">很搶手</span>
+                  
+                    <c:if test="${(prodEL.prodID %4) ==0 }">
+                    <span class="aa-badge aa-sale" href="#">新上架</span>
+                  </c:if>
+                    <c:if test="${(prodEL.prodID % 4) ==1 }">
+                   <span class="aa-badge aa-sold-out" href="#">超熱門</span>
+                    </c:if>
+                     <c:if test="${(prodEL.prodID % 4) ==2 }">
+                   <span class="aa-badge aa-hot" href="#">很搶手</span>
+                    </c:if>
                 </li>	
 					 </c:if>	
 			</c:forEach>
@@ -144,7 +155,15 @@
                   <div class="aa-product-hvr-content">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
-                    <span class="aa-badge aa-hot" href="#">很搶手</span>
+                     <c:if test="${(prodEL.prodID %4) ==0 }">
+                    <span class="aa-badge aa-sale" href="#">新上架</span>
+                  </c:if>
+                    <c:if test="${(prodEL.prodID % 4) ==1 }">
+                   <span class="aa-badge aa-sold-out" href="#">超熱門</span>
+                    </c:if>
+                     <c:if test="${(prodEL.prodID % 4) ==2 }">
+                   <span class="aa-badge aa-hot" href="#">很搶手</span>
+                    </c:if>
                 </li>	
 					 </c:if>	
 			</c:forEach>
@@ -157,14 +176,14 @@
 	<jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
                 	<c:if test="${not empty prodSvc1.all}">
                 	
-                	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.all : listSearch}">
+                	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.all : listSearch}" varStatus="loop">
                 	<c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
-                	
+                	<c:if test="${loop.index <12 and (param.page==null or param.page==1)}">
                 	<li>
                   <figure>
                     <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
                     <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
                       <span class="aa-product-price">$${prodEL.prodRent}</span>
@@ -174,9 +193,52 @@
                   <div class="aa-product-hvr-content">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
-                    <span class="aa-badge aa-hot" href="#">很搶手</span>
+                  <c:if test="${(prodEL.prodID %4) ==0 }">
+                    <span class="aa-badge aa-sale" href="#">新上架</span>
+                  </c:if>
+                    <c:if test="${(prodEL.prodID % 4) ==1 }">
+                   <span class="aa-badge aa-sold-out" href="#">超熱門</span>
+                    </c:if>
+                     <c:if test="${(prodEL.prodID % 4) ==2 }">
+                   <span class="aa-badge aa-hot" href="#">很搶手</span>
+                    </c:if>
+                    
+                    
                 </li>
-  	
+  			</c:if>
+  				<c:if test="${loop.index >=12 and loop.index<24 and param.page==2}">
+  			<li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span>
+                       <p class="aa-product-descrip">$${prodEL.prodCot}</p>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                  <c:if test="${(prodEL.prodID %4) ==0 }">
+                    <span class="aa-badge aa-sale" href="#">新上架</span>
+                  </c:if>
+                    <c:if test="${(prodEL.prodID % 4) ==1 }">
+                   <span class="aa-badge aa-sold-out" href="#">超熱門</span>
+                    </c:if>
+                     <c:if test="${(prodEL.prodID % 4) ==2 }">
+                   <span class="aa-badge aa-hot" href="#">很搶手</span>
+                    </c:if>
+                    
+                    
+                </li>
+  			
+  			
+  			
+  			</c:if>
+  			
+  			
                 	</c:if>
 		</c:forEach>
 		</c:if>
@@ -211,17 +273,17 @@
               <nav>
                 <ul class="pagination">
                   <li>
-                    <a href="#" aria-label="Previous">
+                    <a href="<%=request.getRequestURI()%>?page=${param.page>1 ? param.page-1 : 1}" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
+                  <li><a href="<%=request.getRequestURI()%>">1</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=2">2</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=3">3</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=4">4</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=5">5</a></li>
                   <li>
-                    <a href="#" aria-label="Next">
+                    <a href="<%=request.getRequestURI()%>?page=${param.page!=null? 1+param.page :2}" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </a>
                   </li>
@@ -325,27 +387,7 @@
       </div>
     </div>
   </section>
-  <!-- / product category -->
 
-
-  <!-- Subscribe section -->
-  <!-- <section id="aa-subscribe">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-subscribe-area">
-            <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  <!-- / Subscribe section -->
 
    <!-- footer -->  
    <footer id="aa-footer">

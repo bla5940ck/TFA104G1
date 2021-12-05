@@ -4,7 +4,9 @@
 	pageEncoding="UTF-8"%>
 		
 <!DOCTYPE html>
+ <link href="<%=request.getContextPath()%>/front_end/product/css/modify.css" rel="stylesheet">
 <html lang="en">
+
 <style>
 #preview1 {
 	border: 1px solid lightgray;
@@ -112,16 +114,16 @@
 									<form action="<%=request.getContextPath()%>/prod/ProdServlet"
 										method="post" enctype="multipart/form-data"
 										class="aa-login-form">
-										<label for="">圖片一<span>*</span></label> <input type="file"
+										<label for="">圖片一<span>*</span></label> <input type="file" class="file"
 											id='file_id1' name='file_name1'
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片二<span></span></label>
-											 <input type="file"
+											 <input type="file" class="file"
 											id='file_id2' name='file_name2'
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片三<span></span></label>
 											 <input type="file"
-											id='file_id3' name='file_name3'
+											id='file_id3' name='file_name3' class="file"
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">商品名稱<span>*</span></label>
 											 <input type="text" name="product_name"	id="product_name"
