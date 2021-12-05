@@ -318,7 +318,11 @@ public class ProdServlet extends HttpServlet {
 			prodVO.setCategoryID(cate);
 			prodVO.setComt(comt);
 			prodVO.setProdID(Integer.valueOf(req.getParameter("prodID")));
-			int status = 0;
+			int prodStatus = 0;
+			if(req.getParameter("prodStatus")!=null) {
+				prodStatus = Integer.valueOf(req.getParameter("prodStatus"));
+			}
+			
 			
 			int i=1;
 			
@@ -424,10 +428,10 @@ public class ProdServlet extends HttpServlet {
 		
 			//更新
 			if ("shelf".equals(req.getParameter("status"))) {
-				status = 1;
+				prodStatus = 1;
 				shelfTime = new Timestamp(date);
 			} else if ("complete".equals(req.getParameter("status"))) {
-				status = 0;
+				prodStatus = 0;
 				shelfTime = null; // 下架時候上架時間空
 			}
 
@@ -442,7 +446,7 @@ public class ProdServlet extends HttpServlet {
 			byte[] pic2 = prodVO.getPic2()==null ? prod_original.getPic2() : prodVO.getPic2();
 			byte[] pic3 = prodVO.getPic3()==null ? prod_original.getPic3() : prodVO.getPic3();
 			
-			prodSvc.updateProd(prodID, cate, name, cot, rent, price, comt, pic1, pic2, 	pic3 , shelfTime, status);
+			prodSvc.updateProd(prodID, cate, name, cot, rent, price, comt, pic1, pic2, 	pic3 , shelfTime, prodStatus);
 			req.getSession().setAttribute("prodID", prodID);//修改後
 			
 			if ("shelf".equals(req.getParameter("status"))) {
@@ -683,8 +687,21 @@ public class ProdServlet extends HttpServlet {
 			
 		
 		
+		///////////商品狀態更改///////////////////
 		
-		
+		if("changeStaus".equals(req.getParameter("action"))) {
+			
+			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
+			Integer prodStatus = Integer.valueOf(req.getParameter("prodStatus"));
+			
+			ProdService prodSvc = new ProdService();
+			ProdVO prodVO = prodSvc.findProductByPK(prodID);
+			
+			prodSvc.updateProd(prodID, prodVO.getCategoryID(), prodVO.getProdName(), prodVO.getProdCot(), prodVO.getProdRent(), prodVO.getProdPrice(), prodVO.getComt(), prodVO.getPic1(), prodVO.getPic2(), prodVO.getPic3(), prodVO.getShelfDate(), prodStatus);
+			
+			res.sendRedirect(req.getContextPath()+"/front_end/product/leaseProdPage.jsp");
+			
+		}
 		
 		
 			
