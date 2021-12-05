@@ -12,45 +12,6 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script>
-<meta content="text/html; charset=UTF-8">
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title>JoyLease | Cart</title>
-    
-    <!-- Font awesome -->
-    <link href="<%=request.getContextPath()%>/front_end/product/css/font-awesome.css" rel="stylesheet">
-    <!-- Bootstrap -->
-    <link href="<%=request.getContextPath()%>/front_end/product/css/bootstrap copy.css" rel="stylesheet">   
-    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-<!--     <link href="css/jquery.smartmenus.bootstrap.css" rel="stylesheet"> -->
-    <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front_end/product/css/jquery.simpleLens.css">    
-    <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front_end/product/css/slick.css">
-    <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front_end/product/css/nouislider.css">
-    <!-- Theme color -->
-    <link id="switcher" href="<%=request.getContextPath()%>/front_end/product/css/theme-color/dark-navy-theme.css" rel="stylesheet">
-    <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
-    <!-- Top Slider CSS -->
-<!--     <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all"> -->
-
-    <!-- Main style sheet -->
-    <link href="<%=request.getContextPath()%>/front_end/product/css/style copy.css" rel="stylesheet">    
-
-    <!-- Google Font -->
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
  <style>
   a.cart-img > img{
 	object-fit: contain;
@@ -58,151 +19,17 @@
 	height: 140px;
 }
  </style>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>JoyLease | Cart</title>
+    
+   	<%@ include file="/includeFolder/header.file"%>
+   
+
   
 
-  </head>
-  <body> 
-  
 
-  
-  
-  
-  
-   <!-- wpf loader Two -->
-    <div id="wpf-loader-two">          
-      <div class="wpf-loader-two-inner">
-        <span>Loading</span>
-      </div>
-    </div> 
-    <!-- / wpf loader Two -->       
-  <!-- SCROLL TOP BUTTON -->
-    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
-  <!-- END SCROLL TOP BUTTON -->
-
-
-  <!-- Start header section -->
-  <header id="aa-header">
-    <!-- start header top  -->
-    <div class="aa-header-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="aa-header-top-area">
-              <!-- start header top left -->
-              <div class="aa-header-top-left">
-                <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
-              </div>
-                
-               
-              <!-- / header top left -->
-              <div class="aa-header-top-right">
-                <ul class="aa-head-top-nav-right">
-                  <li><a href="account copy.html">會員帳戶</a></li>
-                  <li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
-                  <li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
-                  <!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / header top  -->
-
-    <!-- start header bottom  -->
-    <div class="aa-header-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="aa-header-bottom-area">
-              <!-- logo  -->
-              <div class="aa-logo">
-                <!-- Text based logo -->
-                <a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp">
-                  
-                  <img src="<%=request.getContextPath()%>/front_end/product\img\logo_org_noframe_191561.png" alt="">
-                  <!-- <p>JoyLease</p> -->
-<!--                   <span class="fa fa-shopping-cart"></span>  -->
-
-
-<!--                 小購物車   -->
-
-
-                </a>
-                <!-- img based logo -->
-                <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
-              </div>
-              <!-- / logo  -->
-                 <!-- cart box -->
-         
-              
-                  <%@ include file="/includeFolder/cartInclude.file" %> 
-              
-              
-              
-              <!-- / cart box -->
-              <!-- search box -->
-              <div class="aa-search-box">
-                <form action="">
-                  <input type="text" name="" id="" placeholder="健身環大冒險">
-                  <button type="submit"><span class="fa fa-search"></span></button>
-                </form>
-              </div>
-              <!-- / search box -->             
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / header bottom  -->
-  </header>
-  <!-- / header section -->
-  <!-- menu -->
-  <section id="menu">
-    <div class="container">
-      <div class="menu-area">
-        <!-- Navbar -->
-        <div class="navbar navbar-default" role="navigation">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>          
-          </div>
-          <div class="navbar-collapse collapse">
-            <!-- Left nav -->
-            <ul class="nav navbar-nav ">
-              <!-- <li><a href="index.html">Home</a></li> -->
-              <li><a href="#">全部分類 <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Nintendo</a></li>
-                  <li><a href="#">PlayStation</a></li>
-                  <li><a href="#">XBOX</a></li>
-                  <li><a href="#">其他遊戲主機</a></li>                                                
-                  <li><a href="#">電腦遊戲</a></li>
-                  <li><a href="#">桌遊</a></li>
-                  <li><a href="#">拼圖</a></li>
-                  <li><a href="#">其他</a></li>
-             
-                </ul>
-              </li>
-              <li><a href="#">使用教學</a>
-        
-              </li>
-              <li><a href="#">Q&A</a>
-         
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>       
-    </div>
-  </section>
 
 <%
 ;
@@ -331,7 +158,7 @@ CartVO cartVO1=null;
             <%} %>   
                 
                     <td colspan="6" class="aa-cart-view-bottom">
-                          <input class="aa-cart-view-btn" type="submit" value="更新購物車">
+                          <input class="aa-cart-view-btn" type="button" value="更新購物車">
                         </td>
                 
                 
@@ -625,7 +452,7 @@ $("input.cart-checkbox").click(function(){
   
   
   
-  
+
   
   $("a.aa-cart-view-btn").click(function(){
 	 
@@ -635,30 +462,15 @@ $("input.cart-checkbox").click(function(){
   
 //   $("input.cart-checkbox")
   
-  
+  $("input.aa-cart-view-btn").click(function(){
+	  history.go(0);
+  });
   
   
 window.onload = function () {
 	
 	
-// 	var list =$(".cart-checkbox");
-// 	var i=0
-// 	for(var i ;i<list.length;i++){
-// 		console.log(list.parent);
-// 		console.log(list[0])
-// 	}
-	
-	
-// 	if(list.is(":checked")){
-// 		console.log(list[0]);
-// 		console.log(list)
-// 		total+= parseInt(list.closest("tr").find("td").eq(6).text());
-// 		prodSelect += 1;
-// 		$("#td-total").text(total);
-// 		$("#prod-select").text(prodSelect);
-			
-	
-// }
+
 }
 	
 
