@@ -1,0 +1,164 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head>
+<meta content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- Font awesome -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/font-awesome.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/bootstrap.css" rel="stylesheet">
+  <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+  <!-- Product view slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/jquery.simpleLens.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/slick.css">
+  <!-- price picker slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/nouislider.css">
+  <!-- Theme color -->
+  <link id="switcher" href="<%=request.getContextPath()%>/includeFolder/css/theme-color/dark-navy-theme.css" rel="stylesheet">
+  <!-- <link id="switcher" href="<%=request.getContextPath()%>/includeFolder/css/theme-color/bridge-theme.css" rel="stylesheet"> -->
+  <!-- Top Slider CSS -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+
+  <!-- Main style sheet -->	
+ <link href="<%=request.getContextPath()%>/includeFolder/css/style copy.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  </div>
+  <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+  <!-- END SCROLL TOP BUTTON -->
+  <!-- Start header section -->
+  <header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-top-area">
+              <!-- start header top left -->
+              <div class="aa-header-top-left">
+                <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
+              </div>
+              <div class="aa-header-top-right">
+                <ul class="aa-head-top-nav-right">
+                  <li><a href="account copy.html">會員帳戶</a></li>
+<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>             
+                  <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
+                  <!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
+                  <li><a href="" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header top  -->
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-bottom-area">
+              <div class="aa-logo">
+                  <a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp">
+                  <img src="<%=request.getContextPath()%>/includeFolder/img/logo_org_noframe_191561.png" alt="">
+                </a>
+              </div>
+              <!--  cart box -->
+            <%@ include file="/includeFolder/cartInclude.file" %> 
+              <!-- / cart box -->
+              <!-- search box -->
+              <div class="aa-search-box">
+                 <form action="<%=path %>/prod/ProdServlet" method="post">
+                <input type="text" name="searchCot" id="" placeholder="健身環大冒險">
+                  <input type="hidden" name="action" value="search">
+                  <button type="submit"><span class="fa fa-search"></span></button>
+                </form>
+              </div>
+              <!-- / search box -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header bottom  -->
+  </header>
+  <!-- / header section -->
+  <!-- menu -->
+  <section id="menu">
+    <div class="container">
+      <div class="menu-area">
+        <!-- Navbar -->
+        <div class="navbar navbar-default" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav ">
+              <li><a href="#">全部分類<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&prodSelect=<c:out value="${prodSelect}"/>">所有商品</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=1&prodSelect=<c:out value="${prodSelect}"/>">Nintendo</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=2&prodSelect=<c:out value="${prodSelect}"/>">PlayStation</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=3&prodSelect=<c:out value="${prodSelect}"/>">XBOX</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=4&prodSelect=<c:out value="${prodSelect}"/>">其他遊戲主機</a></li>                                                
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=5&prodSelect=<c:out value="${prodSelect}"/>">電腦遊戲</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=6&prodSelect=<c:out value="${prodSelect}"/>">桌遊</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=7&prodSelect=<c:out value="${prodSelect}"/>">拼圖</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
+                </ul>
+              </li>
+              <li><a href="#">使用教學</a>
+              </li>
+              <li><a href="#">Q&A</a>
+              </li>
+            </ul>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="<%=path%>/front_end/product/js/bootstrap.js"></script>  
+  <!-- SmartMenus jQuery plugin -->
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.smartmenus.js"></script>
+  <!-- SmartMenus jQuery Bootstrap Addon -->
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.smartmenus.bootstrap.js"></script>  
+  <!-- To Slider JS -->
+  <script src="<%=path%>/front_end/product/js/sequence.js"></script>
+<!--   <script src="js/sequence-theme.modern-slide-in.js"></script>   -->
+  <!-- Product view slider -->
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.simpleGallery.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.simpleLens.js"></script>
+  <!-- slick slider -->
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/slick.js"></script>
+  <!-- Price picker slider -->
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/nouislider.js"></script>
+  <!-- Custom js -->
+  	<script type="text/javascript" src="js/time.js"></script>
+  <script src="<%=path%>/front_end/product/js/custom.js"></script> 
+	<script> $("select.aa-select").change(function(){
+	$("form.aa-sort-form").submit();
+}) ; </script>
+	
+</html>
