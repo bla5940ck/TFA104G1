@@ -380,12 +380,16 @@ public class OrderMasterServlet extends HttpServlet {
 				
 				/*************存入訂單明細VO***********/
 				List<OrderListVO> list = new ArrayList<OrderListVO>();
-				OrderListVO newol = new OrderListVO();
+				for(OrderListVO newol : list) {
+					
+				
+//				OrderListVO newol = new OrderListVO();
 				newol.setProdID(prodID);
 				newol.setProdPrice(prodPrice);
 				newol.setEstStart(estStart);
 				newol.setEstEnd(estEnd);
 				list.add(newol);
+				}
 				
 				System.out.println("明細存入");
 	
@@ -407,7 +411,7 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println("訂單+明細新增");
 				
 				/***********************新增完成準備轉交************************/
-				String url = "/front_end/order/listAllOrderList.jsp";
+				String url = "/front_end/order/listAllOrderMaster.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
 				

@@ -169,6 +169,7 @@ th, td {
 						<td><input type="hidden" name="rentDays" value="<%=rentDays%>"><%=rentDays%> 天</td>
 						<td><input type="hidden" name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>		
 					</tr>
+<%}%> 
 
 			
 					<table id="tabel-1">
@@ -225,17 +226,17 @@ th, td {
 					</tr>
 					<tr>
 						<td>訂單金額:</td>
-						<td><p id="thisOrder"><%=totalPrice%></p></td>
+						<td><p id="thisOrder"></p></td>
 					</tr>
 					</table>
 			</table>
 				<input type="hidden" name="action" value="submit_order">
-				<input type="hidden" name="leaseID" value="<%=cartVO.getLeaseID()%>"> 
-				<input type="hidden" name="prodID" value="<%=cartVO.getProdID()%>"> 
-				<input type="hidden" name="prodName" value="<%=cartVO.getProdName()%>">
+<%-- 				<input type="hidden" name="leaseID" value="<%=cartVO.getLeaseID()%>">  --%>
+<%-- 				<input type="hidden" name="prodID" value="<%=cartVO.getProdID()%>">  --%>
+<%-- 				<input type="hidden" name="prodName" value="<%=cartVO.getProdName()%>"> --%>
 				<input type="hidden" name="couponID" id="couponID">	
 				<input type="hidden" name="ordPrice" id="ordPrice">
-				<input type="hidden" name="rentID" value="<%=memID%>">
+<%-- 				<input type="hidden" name="rentID" value="<%=memID%>"> --%>
 				<input type="submit" value="送出訂單 !">
 			</main>
 		</div>
@@ -250,7 +251,7 @@ var discount = $("#discount");	//折扣
 var thisOrder = $("#thisOrder");	//前端顯示的訂單金額
 var prodPrice = $("#prodPrice");	//商品小計
 var orderPrice = $("#orderPrice");	//回傳servlet的訂單金額
-var totalPrice = parseInt(<%=totalPrice%>);
+<%-- var totalPrice = parseInt(<%=totalPrcice%>); --%>
 // var totalPrice = parseInt((totalPrice).val());
 //  consloe.log(totalPrice);
 // cartVO.getTotalPrice()
@@ -271,10 +272,11 @@ coupon.change(function(){
 	
 	});
 
-	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
+	thisOrder.text(prodPrice.val());
+
+// 	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
 // 	thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
-	document.getElementById("ordPrice").setAttribute('value', totalPrice-(coupon).val() + 60);
-<%}%> 
+// 	document.getElementById("ordPrice").setAttribute('value', totalPrice-(coupon).val() + 60);
 </script>
 
 </html>
