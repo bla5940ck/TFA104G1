@@ -165,6 +165,7 @@ public class OrderListServlet extends HttpServlet {
 			try {
 
 				String str = req.getParameter("ordID");
+				System.out.println(str);
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入訂單編號");
 				}
@@ -255,26 +256,25 @@ public class OrderListServlet extends HttpServlet {
 				Integer ordStatus = new Integer(req.getParameter("ordStatus"));
 				Integer ordID = new Integer(req.getParameter("ordID"));
 				
-//				OrderListVO olVO = new OrderListVO();
-//				olVO.setOrdStatus(ordStatus);
-//				olVO.setListID(listID);
-//				olVO.setOrdID(ordID);
-//				System.out.println("這邊");
-//				OrderListDAOImpl oldao = new OrderListDAOImpl();
-//				oldao.update(olVO);
-//				req.setAttribute("OrderListVO", olVO);
-				
+				OrderListVO olVO = new OrderListVO();
+				olVO.setOrdStatus(ordStatus);
+				olVO.setListID(listID);
+				olVO.setOrdID(ordID);
+				System.out.println("這邊");
 				OrderListDAOImpl oldao = new OrderListDAOImpl();
-				List<OrderListVO> uplist = new ArrayList<OrderListVO>();
-				OrderListVO upol = new OrderListVO();
-				upol.setListID(listID);
-				upol.setOrdStatus(ordStatus);
-				upol.setOrdID(ordID);
+				oldao.update(olVO);
+				req.setAttribute("OrderListVO", olVO);
+				
+//				OrderListDAOImpl oldao = new OrderListDAOImpl();
+//				List<OrderListVO> uplist = new ArrayList<OrderListVO>();
+//				OrderListVO upol = new OrderListVO();
+//				upol.setListID(listID);
+//				upol.setOrdStatus(ordStatus);
+//				upol.setOrdID(ordID);
 				
 				OrderMasterVO omVO = new OrderMasterVO();
 				omVO.setOrdStatus(ordStatus);
 				
-				oldao.update2(upol, omVO);
 				
 
 				String url = "/front_end/order/listOrdIDOrderList.jsp";

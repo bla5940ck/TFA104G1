@@ -14,6 +14,10 @@
 <%
 	OrderMasterService ordserMasterSvc = new OrderMasterService();
 	List<OrderMasterVO> list = ordserMasterSvc.getAll();
+	for(OrderMasterVO omVO : list){
+		System.out.println(omVO.getOrdStatus());
+	}
+	
 	pageContext.setAttribute("list", list);	
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 // 	List<DefAddressVO> daVO = dadao.getAll();

@@ -10,62 +10,6 @@
 <%@ page import="com.product.model.*"%>
 <%
 	System.out.println("進入新增");
-
-	//會員id
-// 	Integer memID = (Integer)session.getAttribute("id"); 
-// 	System.out.println("承租者編號 : " + memID);
-	
-// 	CartVO cartVO = (CartVO)request.getAttribute("cartVO");
-	
-// 	List<CartVO> checkoutList = (List<CartVO>)request.getAttribute("checkoutList");
-	
-	
-// 	for(CartVO cartVO : checkoutList){
-// 		System.out.println("商品編號 : " + cartVO.getProdID());
-// 		Integer prodID = new Integer(cartVO.getProdID());		
-// 		request.setAttribute("prodID", prodID);
-// 	};
-
-	//商品編號+名稱
-// 	ProdDAO prodDAO = new ProdDAO();
-// 	ProdVO prodVO = prodDAO.findProductByPK(cartVO.getProdID());
-// 	System.out.println("商品編號 : " + prodVO.getProdID());
-// 	System.out.println("商品名稱 : " + prodVO.getProdName());
-	
-	//起訖日
-// 	System.out.println("起始日 : " + cartVO.getEstStart());
-// 	System.out.println("結束日 : " + cartVO.getEstEnd());
-// 	Date esstr = cartVO.getEstStart();	
-// 	Date eestr = cartVO.getEstEnd();
-// 	long rd = ((eestr.getTime())-(esstr.getTime()));
-// 	Date rdd = new Date(rd);
-// 	Integer rentDays = new Integer((rdd.getDate()));
-// 	Integer rentDay = new Integer((rdd.getDay()));
-// 	System.out.println("租借天數Date : " + rentDays);
-// 	System.out.println("租借天數Day : " + rentDay);
-	
-	// 出租者編號
-// 	MemberService memSVC = new MemberService();
-// 	MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
-// 	System.out.println("出租者會員姓名 + " + memVO.getName());
-// 	String leaseName =  memVO.getName();
-	
-	// 預設物流
-// 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
-// 	List<DefAddressVO> list2 = dadao.getAll();
-//  	DefAddressVO daVO = new DefAddressVO();
- 	
-	// 折價券
-// 	MemcouponDAO mcdao = new MemcouponDAO();
-// 	List<MemcouponVO> list = mcdao.getAll();
-// 	MemcouponVO mcVO = new MemcouponVO();
-	
-	//商品租金+總金額
-// 	Integer rent = cartVO.getRent();
-// 	System.out.println("商品租金 : " + rent);
-// 	Integer totalPrice = cartVO.getTotalPrice();
-// 	System.out.println("總租金 : " + totalPrice);
-	
 %>
 
 <html>
@@ -109,11 +53,11 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height:1120px;
+	height:100%;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
-	border: 1px solid #999;
+/* 	border: 1px solid #999; */
 	padding: 10px;
 }
 
@@ -135,7 +79,6 @@ th, td {
 }
 
 </style>
-
 </head>
 
 <body bgcolor='white'>
@@ -161,15 +104,10 @@ th, td {
 				</nav>
 			</aside>
 			<main class="main">
-				<div>
-					<h3>結帳頁面</h3>
-				</div>
-
-				<table id="table-1">
-					<h3>確認以下資訊</h3>
+				<div><h3>結帳頁面</h3></div>
+				<h3>確認以下資訊</h3>
 					
 				<%List<CartVO> checkoutList = (List<CartVO>)request.getAttribute("checkoutList"); 		
-				
 				for(CartVO cartVO: checkoutList){
 					
 					Integer memID = (Integer)session.getAttribute("id"); 
@@ -206,35 +144,34 @@ th, td {
 				 	System.out.println("商品租金 : " + rent);
 				 	Integer totalPrice = cartVO.getTotalPrice();
 				 	System.out.println("總租金 : " + totalPrice);
-				
+					pageContext.setAttribute("list", checkoutList);	
 				%>
 					
+           		<label class="cart-lable" style="color:Navy; font-size:30px; border-color:blue; border-style:dotted;">賣場編號: shop1000<%=cartVO.getLeaseID()%> <%=leaseName%> </label>
+               	<table class="table">
+                <thead>
+                  <tr>
+                        <th>商品圖片</th>
+                        <th>商品名稱</th>
+                        <th>商品租金</th>
+                        <th>預計租借日</th>
+                        <th>預計歸還日</th>
+                        <th>承租天數:</th>
+                        <th>總計</th>
+                      </tr>
+				</thead>          
 					<tr>
-						<th>出租者:</td>
-						<td><input type="hidden" name="leaseID" value="<%=cartVO.getLeaseID()%>"><%=leaseName%></td>
-					</tr>
-					<tr>
-						<td>商品名稱 :</td>
-						<td><a id="prodName"
-							href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO.getProdID()%>"><%=cartVO.getProdName()%></a></td>
-					</tr>
-					</table>
-					<table id="table-1">
-					<tr>
-						<td>預定租借起日:</td>
+						<td><a class="cart-img" href="#" alt="img"></a></td>
+						<td><a id="prodName" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO.getProdID()%>"><%=cartVO.getProdName()%></a></td>
+						<td><input type="hidden" name="prodPrice" value="<%=rent%>"><%=rent%> 元</td>
 						<td><input type="hidden" name="estStart" value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
-					</tr>
-					<tr>
-						<td>預定租借訖日:</td>
 						<td><input type="hidden" name="estEnd" value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
+						<td><input type="hidden" name="rentDays" value="<%=rentDays%>"><%=rentDays%> 天</td>
+						<td><input type="hidden" name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>		
 					</tr>
-					<tr>
-						<td>承租天數:</td>
-						<td>
-						<input type="hidden" name="rentDays" value="<%=rentDays%>"><%=rentDays%> 天</td>
-					</tr>
-					</table>
-					<table id="table-1">					
+
+			
+					<table id="tabel-1">
 					<jsp:useBean id="poDAO"	class="com.order.model.PaymentOptionsDAOImpl" /> 
 					<tr>
 						<td>選擇付款方式:</td>
@@ -278,16 +215,6 @@ th, td {
 								</c:forEach>
 						</select></td>
 					</tr>
-					</table>
-					<table id="table-1">
-					<tr>
-						<td>商品小計:</td>
-						<td><input type="hidden" name="prodPrice" value="<%=rent%>"><%=rent%> 元</td>
-					</tr>
-					<tr>
-						<td>總租金:</td>
-						<td><input type="hidden" name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>
-					</tr>
 					<tr>
 						<td>折扣:</td>
 						<td><p id="discount"></p></td>
@@ -298,22 +225,22 @@ th, td {
 					</tr>
 					<tr>
 						<td>訂單金額:</td>
-						<td><p id="thisOrder"></p></td>
+						<td><p id="thisOrder"><%=totalPrice%></p></td>
 					</tr>
-				</table>
+					</table>
+			</table>
 				<input type="hidden" name="action" value="submit_order">
+				<input type="hidden" name="leaseID" value="<%=cartVO.getLeaseID()%>"> 
 				<input type="hidden" name="prodID" value="<%=cartVO.getProdID()%>"> 
 				<input type="hidden" name="prodName" value="<%=cartVO.getProdName()%>">
 				<input type="hidden" name="couponID" id="couponID">	
 				<input type="hidden" name="ordPrice" id="ordPrice">
 				<input type="hidden" name="rentID" value="<%=memID%>">
 				<input type="submit" value="送出訂單 !">
-					
 			</main>
 		</div>
-	<%@ include file="/includeFolder/footer2.file" %>
 	</FORM>
-	</head>
+	<%@ include file="/includeFolder/footer2.file" %>
 </body>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
@@ -324,6 +251,9 @@ var thisOrder = $("#thisOrder");	//前端顯示的訂單金額
 var prodPrice = $("#prodPrice");	//商品小計
 var orderPrice = $("#orderPrice");	//回傳servlet的訂單金額
 var totalPrice = parseInt(<%=totalPrice%>);
+// var totalPrice = parseInt((totalPrice).val());
+//  consloe.log(totalPrice);
+// cartVO.getTotalPrice()
 var data_id = "";
 
 coupon.change(function(){
@@ -341,10 +271,10 @@ coupon.change(function(){
 	
 	});
 
-thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
-// thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
-document.getElementById("ordPrice").setAttribute('value', totalPrice-(coupon).val() + 60);
+	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
+// 	thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
+	document.getElementById("ordPrice").setAttribute('value', totalPrice-(coupon).val() + 60);
+<%}%> 
 </script>
 
 </html>
-<%}%> 
