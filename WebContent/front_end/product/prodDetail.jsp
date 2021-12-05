@@ -167,7 +167,7 @@ request.setAttribute("product", product);
 							<!-- / header top left -->
 							<div class="aa-header-top-right">
 								<ul class="aa-head-top-nav-right">
-									<li><a href="account copy.html">會員帳戶</a></li>
+									<li><a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp">會員中心</a></li>
 									<li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
 									<li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
 									<!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->

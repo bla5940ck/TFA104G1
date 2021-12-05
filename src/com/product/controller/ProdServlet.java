@@ -485,7 +485,6 @@ public class ProdServlet extends HttpServlet {
 			ProdService prodSvc = new ProdService();
 			ProdVO product = prodSvc.findProductByPK(prodID);
 			int picAmount = 0;
-			System.out.println("有近來");
 			//動態算出 資料庫圖片個數
 			if (product != null) {
 				if (product.getPic1() != null)
@@ -510,7 +509,6 @@ public class ProdServlet extends HttpServlet {
 
 		////////////// 加入購物車/////////////////////////////
 		if ("cart".equals(req.getParameter("action"))) {
-//				System.out.println("加入購物車");
 
 			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
 			String estStart = req.getParameter("startDate");
@@ -623,8 +621,8 @@ public class ProdServlet extends HttpServlet {
 			}
 					
 			categoryName = categoryName==null ? "所有商品" :categoryName;
-			System.out.println("prodS:" + req.getParameter("prodSelect"));
-			System.out.println("cateNo: "+cateNo);
+//			System.out.println("prodS:" + req.getParameter("prodSelect"));
+//			System.out.println("cateNo: "+cateNo);
 			if (req.getParameter("prodSelect").equals("2")) {
 				// 依價格排序
 
