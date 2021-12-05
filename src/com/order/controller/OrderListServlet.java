@@ -256,26 +256,36 @@ public class OrderListServlet extends HttpServlet {
 				Integer ordStatus = new Integer(req.getParameter("ordStatus"));
 				Integer ordID = new Integer(req.getParameter("ordID"));
 				
-				OrderListVO olVO = new OrderListVO();
-				olVO.setOrdStatus(ordStatus);
-				olVO.setListID(listID);
-				olVO.setOrdID(ordID);
+				OrderListVO olVO = new OrderListVO();				
+//				olVO.setListID(listID);
+//				olVO.setOrdID(ordID);
 				System.out.println("這邊");
-				OrderListDAOImpl oldao = new OrderListDAOImpl();
-				oldao.update(olVO);
-				req.setAttribute("OrderListVO", olVO);
-				
-//				OrderListDAOImpl oldao = new OrderListDAOImpl();
-//				List<OrderListVO> uplist = new ArrayList<OrderListVO>();
-//				OrderListVO upol = new OrderListVO();
-//				upol.setListID(listID);
-//				upol.setOrdStatus(ordStatus);
-//				upol.setOrdID(ordID);
 				
 				OrderMasterVO omVO = new OrderMasterVO();
-				omVO.setOrdStatus(ordStatus);
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				
+				if(ordStatus == 2) {
+					System.out.println("這");
+					
+					
+					olVO.setListID(listID);
+					olVO.setOrdStatus(ordStatus);
+					olVO.setOrdID(ordID);
+					
+					omVO.setOrdID(ordID);
+					omVO.setOrdStatus(ordStatus);
+					
+					oldao.update2(olVO, omVO);
+				}else {
+					olVO.setListID(listID);
+					olVO.setOrdStatus(ordStatus);
+					olVO.setOrdID(ordID);
+					
+					oldao.update(olVO);
+				}
 				
 				
+				req.setAttribute("OrderListVO", olVO);
 
 				String url = "/front_end/order/listOrdIDOrderList.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneOrderMaster.jsp

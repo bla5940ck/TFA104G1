@@ -12,9 +12,12 @@
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 // 	out.println(omVO.getShipDate());
 	
-	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
-	OrderListDAOImpl oldao = new OrderListDAOImpl();
-// 	out.println(olVO.getListID());
+// 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+// 	OrderListDAOImpl oldao = new OrderListDAOImpl();
+// 	List<OrderListVO> olVO = oldao.getAllOrderList();
+// 	for(OrderListVO ol : olVO){
+		
+// 	}
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -102,7 +105,14 @@ th, td {
 			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
 				<input type="submit" value="更新">
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
+				<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
+								<c:choose>
+									<c:when test="${olVO.ordID == omVO.ordID}">
+						<input type="hidden" name="listID" value="${olVO.listID}">
+									</c:when>
+								</c:choose>
+								</c:forEach>
 				<input type="hidden" name="action" value="getOne_For_Update">
 			</FORM>
 			<table id="table-1">

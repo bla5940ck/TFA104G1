@@ -251,17 +251,20 @@ th, td {
 						<td>${omVO.shipFee}</td>
 						<td>${omVO.ordPrice}</td>
 						<td>
-<!-- 							<FORM METHOD="post" -->
-<%-- 								ACTION="<%=request.getContextPath()%>/OrderMasterServlet" --%>
-<!-- 								style="margin-bottom: 0px;"> -->
-<!-- 								<input type="submit" value="修改">  -->
-<%-- 								<input type="hidden" name="ordID" value="${omVO.ordID}">  --%>
-<!-- 								<input type="hidden" name="action" value="getOne_For_Update"> -->
-<!-- 							</FORM> -->
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
+								style="margin-bottom: 0px;">
+								<input type="submit" value="狀態修改"> 
+								<input type="hidden" name="ordID" value="${omVO.ordID}"> 
+<%-- 								<input type="hidden" name="listID" value="${omVO.ordID}">  --%>
+								<input type="hidden" name="action" value="getOne_For_Update">
+							</FORM>
+						</td>
+						<td>	
 							<FORM METHOD="post"
 								ACTION="<%=request.getContextPath()%>/OrderListServlet"
 								style="margin-bottom: 0px;">
-								<input type="submit" value="明細"> 
+								<input type="submit" value="查看明細"> 
 								<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 								<input type="hidden" name="action" value="getlist_For_Display">
 							</FORM>

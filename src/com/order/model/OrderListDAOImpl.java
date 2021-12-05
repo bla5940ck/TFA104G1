@@ -25,7 +25,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 	private static final String UPDATE = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE (LIST_ID = ?)";
 	private static final String FIND_BY_ORD_ID = "SELECT * FROM ORDER_LIST WHERE ORD_ID = ?";
 	private static final String UPDATE_LIST_STATUS = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
-	private static final String UPDATE_ORDER_STATUS = "UPDATR ORDER_MASTER SET ORD_STATUS =? WHERE ORD_ID = ?";
+	private static final String UPDATE_ORDER_STATUS = "UPDATE ORDER_MASTER SET ORD_STATUS =? WHERE (ORD_ID = ?)";
 	
 	static {
 		try {
@@ -345,6 +345,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
@@ -354,12 +355,25 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			pstmt.setInt(2, olVO.getListID());
 
 			pstmt.executeUpdate();
+			
+//			pstmt2 = con.prepareStatement(UPDATE_ORDER_STATUS);
+//			UPDATR ORDER_MASTER SET ORD_STATUS =? WHERE ORD_ID = ?
+//			pstmt2.setInt(1, omVO.getOrdStatus());
+//			pstmt2.setInt(2, omVO.getOrdID());
+//			pstmt2.executeUpdate();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt2 != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
@@ -374,73 +388,53 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				}
 			}
 		}
-	};
+	}
 
 	@Override
-	public void update2(List<OrderListVO>list, OrderMasterVO omVO) {
-		System.out.println("執行更新");
+	public void update2(OrderListVO olVO, OrderMasterVO omVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 
 		try {
-			
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			con.setAutoCommit(false);
-			
-			String cols[] = { "ORD_ID" };
-			pstmt = con.prepareStatement(UPDATE_LIST_STATUS, cols);
-			System.out.println("這");
-				
-			OrderListDAOImpl oldao = new OrderListDAOImpl();
-			for(OrderListVO upol : list) {
-//				pstmt = con.prepareStatement(UPDATE_LIST_STATUS);
-				System.out.println("明細更新");
-				pstmt.setInt(1, upol.getOrdStatus());
-				pstmt.setInt(2, upol.getListID());
-				pstmt.setInt(3, upol.getOrdID());						
-				list.add(upol);
-				pstmt.executeUpdate();
-			}
-			
-				String next_ordID = null;
-				ResultSet rs = pstmt.getGeneratedKeys();
-				while (rs.next()) {
-					next_ordID = rs.getString(1);
-					System.out.println("訂單編號 : " + next_ordID);
-				}
-				rs.close();
-			
-				
-			pstmt2 = con.prepareStatement(UPDATE_LIST_STATUS);	
-			omVO.setOrdID(new Integer(151));
-			pstmt2.executeUpdate();
-			System.out.println("訂單主檔執行更新");
-			
-			oldao.update2(list, omVO);
+			pstmt = con.prepareStatement(UPDATE);
 
-			con.commit();
-			con.setAutoCommit(true);
+			pstmt.setInt(1, olVO.getOrdStatus());
+			pstmt.setInt(2, olVO.getListID());
+
+			pstmt.executeUpdate();
 			
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					se.printStackTrace();
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-orderList");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. " + excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. " + se.getMessage());
+			pstmt2 = con.prepareStatement(UPDATE_ORDER_STATUS);
+//			UPDATR ORDER_MASTER SET ORD_STATUS =? WHERE ORD_ID = ?
+			pstmt2.setInt(1, omVO.getOrdStatus());
+			pstmt2.setInt(2, omVO.getOrdID());
+			pstmt2.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt2 != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -450,25 +444,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		OrderListDAO_interface oldao = new OrderListDAOImpl();
 
 		// 更新交易控制
-		List<OrderListVO> testList = new ArrayList<OrderListVO>();
-		OrderListVO ola = new OrderListVO();
-		System.out.println("第一筆明細更新");
-		ola.setOrdStatus(3);
-		ola.setListID(36);
-		ola.setOrdID(151);
-//		testList.add(ola);
-		
-		OrderListVO olb = new OrderListVO();
-		System.out.println("第二筆明細更新");
-		olb.setOrdStatus(3);
-		olb.setListID(37);
-		olb.setOrdID(151);
-//		testList.add(olb);
-				
-		OrderMasterVO omVO = new OrderMasterVO();
-		omVO.setOrdStatus(3);
-		
-		oldao.update2(testList, omVO);
+
 
 		// 更新
 //		OrderListVO ol1 = new OrderListVO();

@@ -5,7 +5,7 @@
 
 <%
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
-	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+// 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
 // 	out.println(olVO.getListID());
 %>
 
@@ -228,7 +228,11 @@ th, td {
 				</table>
 				<input type="hidden" name="action" value="update"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
+				<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
+				<input type="hidden" name="listID" value="${olVO.listID}">
+				</c:forEach>
+<%-- 				<input type="hidden" name="listID" value="<%=olVO.getListID()%>"> --%>
 				<input type="hidden" name="shipDate" id="shipTimelong" value="<%=omVO.getShipDate()== null ? "" : omVO.getShipDate().getTime()%>">
 				<input type="hidden" name="arrivalDate" id="arrivalTimelong" value="<%=omVO.getArrivalDate()== null ? "" : omVO.getArrivalDate().getTime()%>">
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">

@@ -11,6 +11,6 @@ public interface OrderListDAO_interface {
 	List<OrderListVO> findOrderListByOrdID(Integer ordID); //找狀態
 	void update(OrderListVO olVO);
 	void insertOrder(OrderListVO olVO, java.sql.Connection con);
-	void update2(List<OrderListVO>list, OrderMasterVO omVO);
+	void update2(OrderListVO olVO, OrderMasterVO omVO);
 	
 }
