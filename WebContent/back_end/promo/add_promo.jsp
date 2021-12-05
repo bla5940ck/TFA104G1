@@ -1,11 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.promo.model.*"%>
 
 <%
   PromoVO promoVO = (PromoVO) request.getAttribute("promoVO");
 %>
-<%= promoVO==null %>--${promoVO==null}--${promoVO.promo_name}--${promoVO.promo_start}
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -68,77 +68,89 @@
 <FORM METHOD="post" ACTION="promo.do" name="form1">
 <table>
 	<tr>
-		<td>員工姓名:</td>
-		<td><input type="TEXT" name="promo_name" size="45" 
-			 value="<%= (promoVO==null)? "" : promoVO.getPromo_id()%>" /></td>
-			 promo_start
-			 promo_end
-			 promo_text
-			 status
+		<td>專案名稱:</td>
+		<td><input type="TEXT" name="promo_name" size="45"></td>
 	</tr>
-<!-- 	<tr> -->
-<!-- 		<td>職位:</td> -->
-<!-- 		<td><input type="TEXT" name="job" size="45" -->
-<%-- 			 value="<%= (empVO==null)? "MANAGER" : empVO.getJob()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>雇用日期:</td> -->
-<!-- 		<td><input name="hiredate" id="f_date1" type="text"></td> -->
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>薪水:</td> -->
-<!-- 		<td><input type="TEXT" name="sal" size="45" -->
-<%-- 			 value="<%= (empVO==null)? "10000" : empVO.getSal()%>" /></td> --%>
-<!-- 	</tr> -->
-<!-- 	<tr> -->
-<!-- 		<td>獎金:</td> -->
-<!-- 		<td><input type="TEXT" name="comm" size="45" -->
-<%-- 			 value="<%= (empVO==null)? "100" : empVO.getComm()%>" /></td> --%>
-<!-- 	</tr> -->
 
-<%-- 	<jsp:useBean id="deptSvc" scope="page" class="com.dept.model.DeptService" /> --%>
-<!-- 	<tr> -->
-<!-- 		<td>部門:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="deptno"> -->
-<%-- 			<c:forEach var="deptVO" items="${deptSvc.all}"> --%>
-<%-- 				<option value="${deptVO.deptno}" ${(empVO.deptno==deptVO.deptno)? 'selected':'' } >${deptVO.dname} --%>
-<%-- 			</c:forEach> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
+	<tr>
+		<td>開始日期:</td>
+		<td><input name="promo_start" id="f_date1" type="text"></td>
+	</tr>
+	<tr>
+		<td>結束日期:</td>
+		<td><input name="promo_end" id="f_date2" type="text"></td>
+	</tr>
+	<tr>
+		<td>專案內容:</td>
+		<td><input type="TEXT" name="promo_text" size="45"/></td>
+	</tr>
+	<tr>
+		<td>專案狀態:</td>
+		<td><input type="TEXT" name="status" size="1"></td>
+	</tr>
+	
 </table>
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
 </body>
-
-
-
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 
-<%-- <%  --%>
-//   java.sql.Date hiredate = null;
-//   try {
-// 	    hiredate = empVO.getHiredate();
-//    } catch (Exception e) {
-// 	    hiredate = new java.sql.Date(System.currentTimeMillis());
-//    }
-<%-- %> --%>
-<%-- <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" /> --%>
-<%-- <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script> --%>
-<%-- <script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script> --%>
+<% 
+  java.sql.Date promo_start = null;
+  try {
+	  promo_start = promoVO.getPromo_start();
+   } catch (Exception e) {
+	   promo_start = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
+<% 
+  java.sql.Date promo_end = null;
+  try {
+	  promo_end = promoVO.getPromo_end();
+   } catch (Exception e) {
+	   promo_end = new java.sql.Date(System.currentTimeMillis());
+   }
+%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/back_end/promo/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
-/*   .xdsoft_datetimepicker .xdsoft_datepicker { */
-/*            width:  300px;   /* width:  300px; */ */
-/*   } */
-/*   .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box { */
-/*            height: 151px;   /* height:  151px; */ */
-/*   } */
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
 </style>
 
 <script>
-//         $.da
+        $.datetimepicker.setLocale('zh');
+        $('#f_date1').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+		   value: '<%=promo_start%>', // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
+        
+        $.datetimepicker.setLocale('zh');
+        $('#f_date2').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+		   value: '<%=promo_end%>', // value:   new Date(),
+           //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+           //startDate:	            '2017/07/10',  // 起始日
+           //minDate:               '-1970-01-01', // 去除今日(不含)之前
+           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+        });
         
         
    
@@ -191,4 +203,7 @@
         //      }});
         
 </script>
+
+
+
 </html>

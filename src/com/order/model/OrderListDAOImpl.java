@@ -12,13 +12,15 @@ import util.Util;
 public class OrderListDAOImpl implements OrderListDAO_interface {
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
+			"INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String FIND_BY_PK = 
 			"SELECT * FROM ORDER_LIST WHERE LIST_ID = ?";
 	private static final String GET_ALL = 
 			"SELECT * FROM ORDER_LIST";
 	private static final String FIND_BY_STATUS = 
-			"SELECT * FROM ORDER_LIST WHERE STATUS = ?";
+			"SELECT * FROM ORDER_LIST WHERE ORD_STATUS = ?";
+	private static final String UPDATE =
+			"UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE (LIST_ID = ?)";
 	
 	static {
 		try {
@@ -86,8 +88,8 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				orderListVO.setListID(rs.getInt("LIST_ID"));
 				orderListVO.setProdID(rs.getInt("PROD_ID"));
 				orderListVO.setOrdID(rs.getInt("ORD_ID"));
-				orderListVO.setProdPrice(rs.getInt("PRICE"));
-				orderListVO.setStatus(rs.getInt("STATUS"));
+				orderListVO.setProdPrice(rs.getInt("PROD_PRICE"));
+				orderListVO.setOrdStatus(rs.getInt("ORD_STATUS"));
 				orderListVO.setEstStart(rs.getDate("EST_START"));
 				orderListVO.setEstEnd(rs.getDate("EST_END"));
 			}
@@ -140,8 +142,8 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				orderListVO.setListID(rs.getInt("LIST_ID"));
 				orderListVO.setProdID(rs.getInt("PROD_ID"));
 				orderListVO.setOrdID(rs.getInt("ORD_ID"));
-				orderListVO.setProdPrice(rs.getInt("PRICE"));
-				orderListVO.setStatus(rs.getInt("STATUS"));
+				orderListVO.setProdPrice(rs.getInt("PROD_PRICE"));
+				orderListVO.setOrdStatus(rs.getInt("ORD_STATUS"));
 				orderListVO.setEstStart(rs.getDate("EST_START"));
 				orderListVO.setEstEnd(rs.getDate("EST_END"));
 				
@@ -179,7 +181,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 	}
 
 	@Override
-	public List<OrderListVO> findOrderListByStatus(Integer status) {
+	public List<OrderListVO> findOrderListByStatus(Integer ordStatus) {
 		List<OrderListVO> list = new ArrayList<OrderListVO>();
 		OrderListVO orderListVO = null;
 		
@@ -191,7 +193,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(FIND_BY_STATUS);
 			
-			pstmt.setInt(1, status);
+			pstmt.setInt(1, ordStatus);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -199,8 +201,8 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 				orderListVO.setListID(rs.getInt("LIST_ID"));
 				orderListVO.setProdID(rs.getInt("PROD_ID"));
 				orderListVO.setOrdID(rs.getInt("ORD_ID"));
-				orderListVO.setProdPrice(rs.getInt("PRICE"));
-				orderListVO.setStatus(rs.getInt("STATUS"));
+				orderListVO.setProdPrice(rs.getInt("PROD_PRICE"));
+				orderListVO.setOrdStatus(rs.getInt("ORD_STATUS"));
 				orderListVO.setEstStart(rs.getDate("EST_START"));
 				orderListVO.setEstEnd(rs.getDate("EST_END"));
 				
@@ -236,9 +238,40 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		return list;
 	}
 
+	@Override
+	public void update(OrderListVO orderList) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATE);
+
+			pstmt.setInt(1, orderList.getOrdStatus());
+			pstmt.setInt(2, orderList.getListID());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		OrderListDAO_interface oldao = new OrderListDAOImpl();
 
+		//更新
+		OrderListVO ol1 = new OrderListVO();
+		ol1.setOrdStatus(9);
+		ol1.setListID(6);
+		oldao.update(ol1);
+		
+		
 		// 新增
 //		OrderListVO ol1 = new OrderListVO();
 //		ol1.setListID(2);
@@ -270,7 +303,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		// 找狀態
 		List<OrderListVO> list1 = oldao.findOrderListByStatus(1);
 		for(OrderListVO ol4: list1) {
-			ol4.setStatus(1);
+			ol4.setOrdStatus(1);
 			System.out.println(ol4);
 		}
 		

@@ -25,6 +25,13 @@
 <%@page import="com.product.model.*"%>
 <%@page import="com.booking.model.*"%>
 <%@page import="com.category.model.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+	 a.aa-cartbox-img > img{
+	object-fit: contain;
+	width: 100px;
+	height: 100px;
+}</style>
 
  <%
   Integer memberID = (Integer)session.getAttribute("id");
@@ -32,44 +39,11 @@
   JedisPool pool = JedisPoolUtil.getJedisPool(); 
   Jedis jedis = pool.getResource();
   List<String> cart = jedis.lrange("member"+memberID, 0, jedis.llen("member"+memberID));
-	
-	Gson gson = new Gson();
-	String path = request.getContextPath();
-	ProdService prodSvc = new ProdService();
-	ProdVO product = null;
-	BookingVO bk = new BookingVO();
-	Integer prodID = null;
+  request.setAttribute("cart",cart);
+  
+  Gson gson = new Gson();
+  String path = request.getContextPath();
 
-	
-	
-	if (request.getParameter("picNo") != null) {
-		prodID = Integer.parseInt(request.getParameter("picNo"));
-		product = prodSvc.findProductByPK(prodID);
-
-	}
-
-	else if (request.getAttribute("bk") != null) {
-		bk = (BookingVO) request.getAttribute("bk");
-		prodID = bk.getProdID();
-		product = prodSvc.findProductByPK(prodID);
-	}
-
-	BookingService bkDao = new BookingService();
-
-	int picAmount = 0;
-	//動態算出 資料庫圖片個數
-	if (product != null) {
-		if (product.getPic1() != null)
-			picAmount++;
-		if (product.getPic2() != null)
-			picAmount++;
-		if (product.getPic3() != null)
-			picAmount++;
-	}
-	List<BookingVO> list = null;
-	if (product != null) {
-		list = bkDao.findDateByProdID(product.getProdID());
-	}
 %>
               
               
@@ -81,24 +55,28 @@
                   <span class="aa-cart-notify"></span>
                   
                 </a>
+                
                 <div class="aa-cartbox-summary">
                    <ul>
                     <% 
                     int index1 =0;
-                    int tatol1=0;
+                    int total1=0;
                     for(String item : cart) {
                     	index1++;
                     CartVO cartVO2 = gson.fromJson(item, CartVO.class);
-                    long day = (cartVO2.getEstEnd().getTime()-cartVO2.getEstStart().getTime())/(24*60*60*1000);
-                    tatol1 +=cartVO2.getTatolPrice();
+                    long day =1+ ((cartVO2.getEstEnd().getTime()-cartVO2.getEstStart().getTime())/(24*60*60*1000));
+                    total1 +=cartVO2.getTotalPrice();
                     %>
                     <li>
-                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?picNo=<%=cartVO2.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
+                      <a class="aa-cartbox-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO2.getProdID()%>">
+                      <img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO2.getProdID()%>" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#"><%=cartVO2.getProdName() %></a></h4>
                         <p><%=day%>天*$<%=cartVO2.getRent()%></p>
                         	<input type="hidden" value="<%=cartVO2.getProdID() %>">
                       </div>
+                      
+                      
                       <a class="aa-remove-product" ><span class="fa fa-times"></span></a>
                     </li>
                             <%} %>       
@@ -107,12 +85,14 @@
                         總計
                       </span>
                       <span class="aa-cartbox-total-price">
-                        $<%=tatol1%>
+                        $<%=total1%>
                       </span>
                     </li>
                   </ul>
-                  <a class="aa-cartbox-checkout aa-primary-btn" href="checkout copy.html">購物車結帳</a>
-                  <input type = button value="刷新" class="refresh-cart">
+                  <c:if test="${not empty cart}">
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車結帳</a>
+                  </c:if>
+                  <!--  <input type = button value="刷新" class="refresh-cart"> -->
                    <input type="hidden" class="dataCount" value="<%=index1%>">
                 </div>
               </div>
@@ -143,13 +123,19 @@ let prodid1 = $(that).closest("li").find("input").eq(0).val();
 	      },                  // 傳送資料到指定的 url
 	      beforeSend: function(){       // 在 request 發送之前執行
 	      }  
-	    	  ,success: function(data){ 
+	      
+	    	  ,success: function(data){
+	    if(data==0){
+	    $("span.aa-cartbox-total-price").text("沒有商品");  
+	    $("a.aa-cartbox-checkout aa-primary-btn").text("");
+	    }
 	    $("span.aa-cart-notify").text(parseInt($("input.dataCount").val())-1);
 	    $("input.dataCount").val(data);
       $(that).closest("li").animate({
         "opacity": 0
       }, 1000, "swing", function(){
         $(this).remove();
+        
       });
      
     }
@@ -161,6 +147,7 @@ let prodid1 = $(that).closest("li").find("input").eq(0).val();
 
 
 //刷新購物車
+
 $("input.refresh-cart").click(function(){
 	
 	location.reload();

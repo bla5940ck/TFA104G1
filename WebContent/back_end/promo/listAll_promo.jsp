@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.promo.model.*"%>
-<%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
     PromoService promoSvc = new PromoService();
@@ -53,7 +52,6 @@
 </head>
 <body bgcolor='white'>
 
-<!-- <h4>此頁練習採用 EL 的寫法取值:</h4> -->
 <table id="table-1">
 	<tr><td>
 		 <h3>所有專案資料 - listall_promo.jsp</h3>
@@ -78,7 +76,7 @@
 		<th>專案開始日期</th>
 		<th>專案結束日期</th>
 		<th>專案內容</th>
-		<th>專案狀態</th>
+<!-- 		<th>專案狀態</th> -->
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="promoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -89,9 +87,15 @@
 			<td>${promoVO.promo_start}</td>
 			<td>${promoVO.promo_end}</td>
 			<td>${promoVO.promo_text}</td> 
-			<td>${promoVO.status}</td>
+<%-- 			<td>${promoVO.status}</td> --%>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/promo/promo.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="專案明細">
+			     <input type="hidden" name="promo_id"  value="${promoVO.promo_id}">
+			     <input type="hidden" name="action"	value="getPromolist"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo/promo.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="promo_id"  value="${promoVO.promo_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
@@ -106,6 +110,8 @@
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-
+<ul>
+  <li><a href='add_promo.jsp'>新增專案</li>
+</ul>
 </body>
 </html>

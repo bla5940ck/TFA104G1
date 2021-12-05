@@ -17,11 +17,7 @@ public class ProdCategoryService {
 	
 	
 	public ProdCategoryVO findCategoryByPK(Integer id) {
-		
-		ProdCategoryVO cateVO = new ProdCategoryVO();
-		
 		return dao.findCategoryByPK(id);
-		
-		
+	
 	}
 }

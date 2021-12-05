@@ -7,18 +7,18 @@ public class OrderListVO implements Serializable {
 	private Integer listID;
 	private Integer prodID;
 	private Integer ordID;
-	private Integer prodPrice;	//�ӫ~���B
-	private Integer status;
+	private Integer prodPrice;	//商品小計
+	private Integer ordStatus;
 	private Date estStart;
 	private Date estEnd;
 
-	public OrderListVO(Integer listID, Integer prodID, Integer ordID, Integer prodPrice, Integer status, Date estStart, Date estEnd) {
+	public OrderListVO(Integer listID, Integer prodID, Integer ordID, Integer prodPrice, Integer ordStatus, Date estStart, Date estEnd) {
 		super();
 		this.listID = listID;
 		this.prodID = prodID;
 		this.ordID = ordID;
 		this.prodPrice = prodPrice;
-		this.status = status;
+		this.ordStatus = ordStatus;
 		this.estStart = estStart;
 		this.estEnd = estEnd;
 	}
@@ -51,11 +51,11 @@ public class OrderListVO implements Serializable {
 		this.prodPrice = prodPrice;
 	}
 	
-	public Integer getStatus() {
-		return status;
+	public Integer getOrdStatus() {
+		return ordStatus;
 	}
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setOrdStatus(Integer ordStatus) {
+		this.ordStatus = ordStatus;
 	}
 	public Date getEstStart() {
 		return estStart;
@@ -72,6 +72,6 @@ public class OrderListVO implements Serializable {
 	@Override
 	public String toString() {
 		return "OrderListVO [listID=" + listID + ", prodID=" + prodID + ", ordID=" + ordID + ", prodPrice=" + prodPrice
-				+ ", status=" + status + ", estStart=" + estStart + ", estEnd=" + estEnd + "]";
+				+ ", ordStatus=" + ordStatus + ", estStart=" + estStart + ", estEnd=" + estEnd + "]";
 	}
 }

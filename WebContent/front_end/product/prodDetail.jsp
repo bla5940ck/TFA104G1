@@ -21,6 +21,34 @@ img.simpleLens-big-image {
 	width: 350px;
 	height: 300px;
 }
+
+
+a.aa-product-img > img{
+	object-fit: contain;
+	width: 250px;
+	height: 300px;
+}
+ input[type="submit"]{padding:5px 15px; background:red; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+color:white;
+}
+
+ input[type="button"]{padding:5px 15px; background:#ccc; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
+
+
+input[type="text"]{padding:5px 15px;
+border-style:solid;
+border-collapse:collapse;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
+ 
 </style>
 <head>
 <meta charset="utf-8">
@@ -74,6 +102,40 @@ img.simpleLens-big-image {
 <%-- <script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script> --%>
 </head>
 <body>
+<%	ProdService prodSvc = new ProdService();
+ProdVO product = null;
+BookingVO bk = new BookingVO();
+Integer prodID = null;
+
+ if (request.getParameter("prodID") != null) {
+	prodID = Integer.parseInt(request.getParameter("prodID"));
+	product = prodSvc.findProductByPK(prodID);
+}
+else if (request.getAttribute("bk") != null) {
+	bk = (BookingVO) request.getAttribute("bk");
+	prodID = bk.getProdID();
+	product = prodSvc.findProductByPK(prodID);
+}
+
+BookingService bkDao = new BookingService();
+
+int picAmount = 0;
+//動態算出 資料庫圖片個數
+if (product != null) {
+	if (product.getPic1() != null)
+		picAmount++;
+	if (product.getPic2() != null)
+		picAmount++;
+	if (product.getPic3() != null)
+		picAmount++;
+}
+List<BookingVO> list = null;
+if (product != null) {
+	list = bkDao.findDateByProdID(product.getProdID());
+}
+
+request.setAttribute("product", product);
+%>
 
 	<!-- wpf loader Two -->
 	<div id="wpf-loader-two">
@@ -100,40 +162,7 @@ img.simpleLens-big-image {
 								<p style="font-size: 20px; margin: 0; font-weight: normal;">JoyLease</p>
 							</div>
 
-							<!-- start language -->
-							<!-- <div class="aa-language">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <img src="img/flag/english.jpg" alt="english flag">ENGLISH
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                      <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
-                    </ul>
-                  </div>
-                </div> -->
-							<!-- / language -->
-
-							<!-- start currency -->
-							<!-- <div class="aa-currency">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <i class="fa fa-usd"></i>USD
-                      <span class="caret"></span>
-                    </a> -->
-							<!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> -->
-							<!-- <li><a href="#"><i class="fa fa-euro"></i>EURO</a></li>
-                      <li><a href="#"><i class="fa fa-jpy"></i>YEN</a></li> -->
-							<!-- </ul>
-                  </div>
-                </div> 
-                < / currency -->
-							<!-- start cellphone -->
-							<!-- <div class="cellphone hidden-xs">
-                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
-                </div> -->
-							<!-- / cellphone -->
+						
 							<!-- </div> -->
 							<!-- / header top left -->
 							<div class="aa-header-top-right">
@@ -223,123 +252,17 @@ img.simpleLens-big-image {
 									<li><a href="#">桌遊</a></li>
 									<li><a href="#">拼圖</a></li>
 									<li><a href="#">其他</a></li>
-									<!-- <li><a href="#">And more.. <span class="caret"></span></a> -->
-									<!-- <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul> -->
-									<!-- </li> -->
+							
+									
 								</ul></li>
 							<li><a href="#">使用教學</a> <!-- <ul class="dropdown-menu">  
-                  <li><a href="#">Kurta & Kurti</a></li>                                                                
-                  <li><a href="#">Trousers</a></li>              
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>                
-                  <li><a href="#">Sarees</a></li>
-                  <li><a href="#">Shoes</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>
-                      <li><a href="#">And more.. <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Rings</a></li>
-                          <li><a href="#">Earrings</a></li>
-                          <li><a href="#">Jewellery Sets</a></li>
-                          <li><a href="#">Lockets</a></li>
-                          <li class="disabled"><a class="disabled" href="#">Disabled item</a></li>                       
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Polo T-Shirts</a></li>
-                          <li><a href="#">SKirts</a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Make Up</a></li>
-                          <li><a href="#">Hair Care</a></li>
-                          <li><a href="#">Perfumes</a></li>
-                          <li><a href="#">Skin Care</a></li>
-                          <li><a href="#">Hand Bags</a></li>
-                          <li><a href="#">Single Bags</a></li>
-                          <li><a href="#">Travel Bags</a></li>
-                          <li><a href="#">Wallets & Belts</a></li>                        
-                          <li><a href="#">Sunglases</a></li>
-                          <li><a href="#">Nail</a></li>                       
-                        </ul>
-                      </li>                   
-                    </ul>
-                  </li>
-                </ul> --></li>
-							<li><a href="#">Q&A</a> <!-- <ul class="dropdown-menu">                
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>
-                  <li><a href="#">Standard</a></li>                                                
-                  <li><a href="#">T-Shirts</a></li>
-                  <li><a href="#">Shirts</a></li>
-                  <li><a href="#">Jeans</a></li>
-                  <li><a href="#">Trousers</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul>
-                  </li>
-                </ul> --></li>
-							<!-- <li><a href="#">Sports</a></li>
-             <li><a href="#">Digital <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Camera</a></li>
-                  <li><a href="#">Mobile</a></li>
-                  <li><a href="#">Tablet</a></li>
-                  <li><a href="#">Laptop</a></li>                                                
-                  <li><a href="#">Accesories</a></li>                
-                </ul>
-              </li>
-              <li><a href="#">Furniture</a></li>            
-              <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="blog-archive.html">Blog Style 1</a></li>
-                  <li><a href="blog-archive-2.html">Blog Style 2</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>                
-                </ul>
-              </li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Pages <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="product.html">Shop Page</a></li>
-                  <li><a href="product-detail.html">Shop Single</a></li>                
-                  <li><a href="404.html">404 Page</a></li>                 -->
-						</ul>
-						</li>
-						</ul>
-					</div>
+                 
 					<!--/.nav-collapse -->
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- / menu -->
-
-	<!-- catg header banner section -->
-	<!-- <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
-   <div class="aa-catg-head-banner-area">
-     <div class="container">
-      <div class="aa-catg-head-banner-content">
-        <h2>SwitchOLED</h2>
-        <ol class="breadcrumb">
-          <li><a href="index copy.html">Home</a></li>         
-          <li><a href="#">Product</a></li>
-          <li class="active">T-shirt</li>
-        </ol>
-      </div>
-     </div>
-   </div>
-  </section> -->
-	<!-- / catg header banner section -->
+	
 
 	<!-- product category -->
 	<section id="aa-product-details">
@@ -366,9 +289,9 @@ img.simpleLens-big-image {
 												<!--                       大圖 -->
 												<div class="simpleLens-big-image-container">
 													<a
-														data-lens-image="<%=path%>/prod/ProdServlet?action=detail&picNo=<%=prodID%>&no=1"
+														data-lens-image="<%=path%>/prod/ProdServlet?action=detail&prodID=<%=prodID%>&no=1"
 														class="simpleLens-lens-image"><img
-														src="<%=path%>/prod/ProdServlet?action=detail&picNo=<%=prodID%>&no=1"
+														src="<%=path%>/prod/ProdServlet?action=detail&prodID=<%=prodID%>&no=1"
 														class="simpleLens-big-image"></a>
 												</div>
 											</div>
@@ -381,11 +304,11 @@ img.simpleLens-big-image {
 												%>
 
 												<a
-													data-big-image="<%=path%>/prod/ProdServlet?action=detail&picNo=<%=prodID%>&no=<%=i%>"
-													data-lens-image="<%=path%>/prod/ProdServlet?action=detail&picNo=<%=prodID%>&no=<%=i%>"
+													data-big-image="<%=path%>/prod/ProdServlet?action=detail&prodID=<%=prodID%>&no=<%=i%>"
+													data-lens-image="<%=path%>/prod/ProdServlet?action=detail&prodID=<%=prodID%>&no=<%=i%>"
 													class="simpleLens-thumbnail-wrapper" href="#"> <img
-													src="<%=path%>/prod/ProdServlet?action=detail&picNo=<%=prodID%>&no=<%=i%>"
-													data-lens-image="<%=path%>/prod/ProdServlet?action=detail&picNo=<%=prodID%>&no=<%=i%>">
+													src="<%=path%>/prod/ProdServlet?action=detail&prodID=<%=prodID%>&no=<%=i%>"
+													data-lens-image="<%=path%>/prod/ProdServlet?action=detail&prodID=<%=prodID%>&no=<%=i%>">
 												</a>
 
 												<%
@@ -414,7 +337,8 @@ img.simpleLens-big-image {
 										<h3><%=product.getProdName() %></h3>
 										<div class="aa-price-block">
 											租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
-											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span>
+											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span><br>
+											會員編號: <span class="aa-product-avilability"><%=product.getMemberID()%></span><br>
 										</div>
 										<%
 											String comt = (product.getComt() == null) ? "" : product.getComt();
@@ -422,7 +346,7 @@ img.simpleLens-big-image {
 										備註: <span><%=comt%></span><br>
 										<td class="start">預計租借日期: <input id="startDate"
 											type="text"><br> 預計歸還日期: <input id="endDate"
-											type="text"><br>
+											type="text"><br><br>
 										</td>
 										<td>金額試算: <label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn">
@@ -439,7 +363,7 @@ img.simpleLens-big-image {
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
-										<a class="aa-ckeckout-btn" href="#">直接結帳</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="<%=path%>/front_end/product/cart.jsp">直接結帳</a>
 									</div>
 									<br>
 									<div>
@@ -568,246 +492,28 @@ img.simpleLens-big-image {
 							<h3>相關瀏覽</h3>
 							<ul class="aa-product-catg aa-related-item-slider">
 								<!-- start single product item -->
+								
+								<jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
+								<c:forEach var="prodEL" items="${prodSvc1.all}">
+								<c:if test="${prodEL.categoryID==product.categoryID and prodEL.prodStatus==1 and prodEL.prodID!=product.prodID}">
 								<li>
 									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/man/polo-shirt-2.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
+										<a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
 										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">Polo T-Shirt</a>
-											</h4>
-											<span class="aa-product-price">$200 %></span><span
-												class="aa-product-price"><del>$65.50</del></span>
+											<span class="aa-product-nmae">${prodEL.prodName}</span><br>
+											<span class="aa-product-price">$${prodEL.prodRent}</span>
+								
 										</figcaption>
 									</figure>
 									<div class="aa-product-hvr-content">
 										<a href="#" data-toggle="tooltip" data-placement="top"
 											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div> <!-- product badge --> <span class="aa-badge aa-sale" href="#">新上架</span>
 								</li>
+							</c:if>
+							</c:forEach>
 
-
-
-
-
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/women/girl-2.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">Lorem ipsum doller</a>
-											</h4>
-											<span class="aa-product-price">$45.50</span>
-										</figcaption>
-									</figure>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div> <!-- product badge --> <span class="aa-badge aa-sold-out"
-									href="#">超熱門</span>
-								</li>
-
-
-
-
-
-
-
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/man/t-shirt-1.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-									</figure>
-									<figcaption>
-										<h4 class="aa-product-title">
-											<a href="#">T-Shirt</a>
-										</h4>
-										<span class="aa-product-price">$45.50</span>
-									</figcaption>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div> <!-- product badge --> <span class="aa-badge aa-hot" href="#">很搶手</span>
-								</li>
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/women/girl-3.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">Lorem ipsum doller</a>
-											</h4>
-											<span class="aa-product-price">$45.50</span><span
-												class="aa-product-price"><del>$65.50</del></span>
-										</figcaption>
-									</figure>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div>
-								</li>
-
-
-
-
-
-
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/man/polo-shirt-1.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">Polo T-Shirt</a>
-											</h4>
-											<span class="aa-product-price">$45.50</span><span
-												class="aa-product-price"><del>$65.50</del></span>
-										</figcaption>
-									</figure>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div>
-								</li>
-
-
-
-
-
-
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/women/girl-4.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">Lorem ipsum doller</a>
-											</h4>
-											<span class="aa-product-price">$45.50</span><span
-												class="aa-product-price"><del>$65.50</del></span>
-										</figcaption>
-									</figure>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div> <!-- product badge --> <span class="aa-badge aa-sold-out"
-									href="#">超熱門</span>
-								</li>
-
-
-
-
-
-
-
-
-
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/man/polo-shirt-4.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">Polo T-Shirt</a>
-											</h4>
-											<span class="aa-product-price">$45.50</span><span
-												class="aa-product-price"><del>$65.50</del></span>
-										</figcaption>
-									</figure>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div> <!-- product badge --> <span class="aa-badge aa-hot" href="#">很搶手</span>
-								</li>
-								<!-- start single product item -->
-								<li>
-									<figure>
-										<a class="aa-product-img" href="#"><img
-											src="img/women/girl-1.png" alt="polo shirt img"></a>
-										<a class="aa-add-card-btn" href="#"><span
-											class="fa fa-shopping-cart"></span>加入購物車</a>
-										<figcaption>
-											<h4 class="aa-product-title">
-												<a href="#">This is Title</a>
-											</h4>
-											<span class="aa-product-price">$45.50</span><span
-												class="aa-product-price"><del>$65.50</del></span>
-										</figcaption>
-									</figure>
-									<div class="aa-product-hvr-content">
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-										<a href="#" data-toggle="tooltip" data-placement="top"
-											title="Compare"><span class="fa fa-exchange"></span></a> <a
-											href="#" data-toggle2="tooltip" data-placement="top"
-											title="Quick View" data-toggle="modal"
-											data-target="#quick-view-modal"><span
-											class="fa fa-search"></span></a>
-									</div> <!-- product badge --> <span class="aa-badge aa-sale" href="#">新上架</span>
-								</li>
 							</ul>
 
 
@@ -858,27 +564,7 @@ img.simpleLens-big-image {
 														</div>
 													</div>
 												</div>
-												<!-- Modal view content -->
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<div class="aa-product-view-content">
-														<h3>SwitchOLED</h3>
-														<div class="aa-price-block">
-															<span class="aa-product-view-price">$34.99</span>
-															<p class="aa-product-avilability">
-																庫存狀態: <span>有現貨</span>
-															</p>
-														</div>
-														<p>
-															最新OLED新機 紅藍色主機款<br> Switch熱門遊戲任選一款<br>
-															送任天堂原廠飲料提袋+耀西捲線器<br> 推薦(可選配)瑪利歐派對超級巨星 寶可夢鑽石珍珠<br>
-														</p>
-														<h4>數量</h4>
-														<!-- <div class="aa-prod-view-size">
-                              <a href="#">S</a>
-                              <a href="#">M</a>
-                              <a href="#">L</a>
-                              <a href="#">XL</a>
-                            </div> -->
+												
 														<div class="aa-prod-quantity">
 															<form action="">
 																<select name="" id="">
@@ -918,24 +604,7 @@ img.simpleLens-big-image {
 	<!-- / product category -->
 
 
-	<!-- Subscribe section -->
-	<!-- <section id="aa-subscribe">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-subscribe-area">
-            <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-	<!-- / Subscribe section -->
+
 
 	<!-- footer -->
 	<footer id="aa-footer">
@@ -1101,6 +770,7 @@ function selflog_show(id){
 		var myEndDate = new Date(endDate);
 		var date_dif = (myEndDate - myStartDate) / 86400000;
 	  console.log(date_dif);
+	 
 	  
 	 $.ajax({
 	    	url:"<%=path%>/prod/ProdServlet",
@@ -1113,14 +783,16 @@ function selflog_show(id){
 	    		startDate:$("#startDate").val(),
 	    		endDate :$("#endDate").val(),
 	    		rent :<%=product.getProdRent()%>,
-	    		tatolPrice: date_dif * <%=product.getProdRent()%>,
+	    		tatolPrice: (date_dif+1) * <%=product.getProdRent()%>,
 	    		prodName:"<%=product.getProdName()%>",
+	    		leaseID:"<%=product.getMemberID()%>",
 	    		index:count
 	    	},
 	    	error : function(request) {
 				alert("時間輸入錯誤");
 			},
 	    	success: function(data){
+	    		
 	    			console.log(data);
 	    			if(data ==404){
 	    				alert("日期輸入錯誤");
@@ -1130,13 +802,20 @@ function selflog_show(id){
 					} else if (data == count) {
 						alert("此商品重複 確認購物車");
 					} else {
+						//加入購物車 數量+1
+					 $("div.aa-cartbox-summary").load("<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=product.getProdID()%>" + " div.aa-cartbox-summary");
+					 
+					 
+// 						location.reload();
 						$("span.aa-cart-notify").text(
 								parseInt($("input.dataCount").val()) + 1);
+								
 						$("input.dataCount").val(
 								$("span.aa-cart-notify")
 										.text(
 												parseInt($("input.dataCount")
 														.val()) + 1))
+							
 						alert("加入購物車");
 					}
 
@@ -1151,7 +830,7 @@ function selflog_show(id){
 				for (long j = 0; j <= k + 6; j++) {
 					//儲存所有的區間日期
 					long d = list.get(i).getEstStart().getTime() + 86400000 * (j - 3);//前3後3緩衝計算
-					// 			 String str = sdf.format(new Date(list.get(i).getEstStart().getTime() + 86400000 * j));%>
+					%>
 		disableddates.push(
 	<%=d%>
 		);
@@ -1171,17 +850,23 @@ function selflog_show(id){
 	<%=product.getProdRent()%>
 		$("#subtotal").html((date_dif + 1) * rent);
 		});
+		
+		
+		
+		
+	
 	</script>
 
 
 
 	<%
+	
 		//瀏覽圖片儲存
 		Integer cookieID = 0;
 		Boolean flag = false;
 		ProdVO prodCookie = null;
 		if ("y".equals(request.getParameter("cookie"))) {
-			cookieID = Integer.valueOf(request.getParameter("picNo"));
+			cookieID = Integer.valueOf(request.getParameter("prodID"));
 			prodCookie = prodSvc.findProductByPK(cookieID);
 		}
 		
@@ -1189,14 +874,19 @@ function selflog_show(id){
 		
 		
 		if (listCookie != null && cookieID != 0 &&listCookie.size()!=0) {
-			if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
-				listCookie.remove(0);
-			}
 			for (ProdVO p : listCookie) {
+			
+				if(p==null)
+					listCookie.remove(0);
+				
 				flag = flag || (p.getProdID() == cookieID);
 			} //假如編號有重複 就不加入瀏覽清單
 			if (!flag) {
+				if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
+					listCookie.remove(0);
+				}
 				listCookie.add(prodCookie);
+				
 			}
 			
 			session.setAttribute("listCookie", listCookie);
@@ -1208,6 +898,7 @@ function selflog_show(id){
 			session.setAttribute("listCookie", listCookie);
 
 		}
+		
 	%>
 
 

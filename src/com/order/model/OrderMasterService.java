@@ -13,7 +13,7 @@ public class OrderMasterService {
 	}
 
 	public OrderMasterVO addOrderMaster(Integer rentID, Integer leaseID, Integer payID, Integer couponID,
-			Timestamp ordDate, String storeCode, Date estStart, Date estEnd, Integer rentDays, Integer prodPrice,
+			Timestamp ordDate, Integer storeCode, Date estStart, Date estEnd, Integer rentDays, Integer prodPrice,
 			Integer shipFee, Integer ordPrice) {
 
 		OrderMasterVO omVO = new OrderMasterVO();
@@ -36,7 +36,7 @@ public class OrderMasterService {
 	}
 
 	public OrderMasterVO updateorderMaster(Integer ordID, Integer shipStatus, Integer ordStatus, Integer payStatus,
-			String shipCode, String returnCode, Timestamp shipDate, Timestamp arrivalDate, Timestamp returnDate,
+			Integer shipCode, Integer returnCode, Timestamp shipDate, Timestamp arrivalDate, Timestamp returnDate,
 			Integer rentRank, Integer leaseRank, String rentComt, String leaseComt, Timestamp rentComtdate,
 			Timestamp leaseComtdate) {
 

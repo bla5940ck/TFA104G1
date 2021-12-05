@@ -65,7 +65,7 @@ main.main {
 table {
 	width: 100%;
 	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 5px;	
 }
 
 table, th, td {
@@ -80,8 +80,7 @@ th, td {
 </head>
 <body>
 <%session.setAttribute("id",1); %>
-<%@ include file="header.file" %>
-
+<%@ include file="/includeFolder/header2.file" %>
 <!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<aside class="aside">
@@ -105,7 +104,8 @@ th, td {
 					class="com.order.model.OrderListService" />
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>選擇訂單明細編號: <select size="1" name="listID">
+					<h5>選擇訂單明細編號: 
+					<select size="1" name="listID">
 						<c:forEach var="OrderListVO" items="${OrdserListSvc.all}">
 							<option value="${OrderListVO.listID}">${OrderListVO.listID}
 						</c:forEach>
@@ -116,7 +116,7 @@ th, td {
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
 					<h5>選擇訂單狀態:
-					<select size="1" name="status">
+					<select size="1" name="ordStatus">
 						<option value="0">已成立
 						<option value="1">待歸還
 						<option value="2">已完成
@@ -141,10 +141,10 @@ th, td {
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
 				<tr>
 					<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部</a></td>
-					<td><button name="status" value="0">已成立</button></td>	
-					<td><button name="status" value="1">待歸還</button></td>	
-					<td><button name="status" value="2">已完成</button></td>	
-					<td><button name="status" value="9">已取消</button></td>					
+					<td><button name="ordStatus" value="0">已成立</button></td>	
+					<td><button name="ordStatus" value="1">待歸還</button></td>	
+					<td><button name="ordStatus" value="2">已完成</button></td>	
+					<td><button name="ordStatus" value="9">已取消</button></td>					
 				</tr>
 				<input type="hidden" name="action" value="get_Status_Display">
 				</FORM>
@@ -177,9 +177,9 @@ th, td {
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estStart}</td>
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
 						<c:choose>
-							<c:when test="${olVO.status == '0'}"><td>已成立</td></c:when>
-							<c:when test="${olVO.status == '1'}"><td>待歸還</td></c:when>							
-							<c:when test="${olVO.status == '2'}"><td>已完成</td></c:when>							
+							<c:when test="${olVO.ordStatus == '0'}"><td>已成立</td></c:when>
+							<c:when test="${olVO.ordStatus == '1'}"><td>待歸還</td></c:when>							
+							<c:when test="${olVO.ordStatus == '2'}"><td>已完成</td></c:when>							
 							<c:otherwise><td>已取消</td></c:otherwise>							
 						</c:choose>
 
@@ -188,6 +188,7 @@ th, td {
 								ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
 								<input type="submit" value="查看明細"> 
 								<input type="hidden" name="ordID" value="${olVO.ordID}"> 
+								<input type="hidden" name="listID" value="${olVO.listID}"> 								
 								<input type="hidden" name="action" value="getOne_For_Display">
 							</FORM>
 						</td>
@@ -197,8 +198,7 @@ th, td {
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
-	<%@ include file="footer.file" %>
-	
+	<%@ include file="/includeFolder/footer2.file" %>
 <!-- 	<footer class="footer"> footer區域 </footer> -->
 </body>
 <script

@@ -1,10 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.order.model.*"%>
 
 <%
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+// 	out.println(olVO.getListID());
 %>
+
+<% 
+    java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String formatDate = df.format(new java.util.Date());
+//     out.println(formatDate);
+%>
+
 
 <html>
 <head>
@@ -12,73 +22,36 @@
 <title>訂單資料更新:</title>
 
 <style>
-* {
-	box-sizing: border-box;
-	text-decoration: none;
-	list-style: none;
-}
-
-body {
-	margin: 0;
-	padding: 10px;
-}
+ body { 
+ 	margin: 0; 
+ 	padding: 10px; 
+ } 
 
 img {
 	max-width: 100%;
 }
 
-header.header {
-	background-color: #ddd;
-	width: 100%;
-	margin: 0 auto 10px auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	header.header {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	header.header {
-		width: 100%;
-	}
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-	/*   border:1px solid red; */
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	div.main_content {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	div.main_content {
-		width: 100%;
-	}
-}
+ div.main_content { 
+ 	width: 100%; 
+ 	margin: 0 auto; 
+ 	font-size: 0; 
+ } 
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	background-color: #ddd;
 	width: 200px;
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
+	text-align:center;
 }
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: #ddd;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
 	display: inline-block;
 	vertical-align: top;
@@ -87,51 +60,15 @@ main.main {
 	padding: 10px;
 }
 
-@media ( max-width : 575.98px) {
-	aside.aside, main.main {
-		display: block;
-	}
-	aside.aside {
-		width: 100%;
-		margin: 0 0 10px 0;
-	}
-	main.main {
-		width: 100%;
-	}
-}
-
-footer.footer {
-	background-color: #ddd;
-	width: 100%;
-	margin: 10px auto 0 auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	footer.footer {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	footer.footer {
-		width: 100%;
-	}
-}
-</style>
-
-
-
-<style>
 table {
-	width: 100%;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 100px;	
 }
 
 table, th, td {
-	border: 1px solid #CCCCFF;
+	border: 1px solid lightgrey;
+	width: 800px; 
 }
 
 th, td {
@@ -139,10 +76,10 @@ th, td {
 	text-align: center;
 }
 </style>
-
 </head>
 
 <body bgcolor='white'>
+<%@ include file="/includeFolder/header2.file" %>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -152,15 +89,14 @@ th, td {
 			</c:forEach>
 		</ul>
 	</c:if>
-	<header class="header"> header區域 </header>
 	<FORM METHOD="post" ACTION="/TFA104G1/OrderMasterServlet" name="form1">
 
 		<div class="main_content">
 			<aside class="aside">
 				<nav class="nav">
-					<h1>出租者專區</h1>
+					<h2>出租者專區</h2>
 					<ul class="nav_list">
-						<li><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderList.jsp">全部訂單</a></li>
+						<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
 					</ul>
 				</nav>
 			</aside>
@@ -168,11 +104,10 @@ th, td {
 			
 			
 				<div>
-					<h3>更新訂單</h3>
-					<h3>
-						訂單編號 :<%=omVO.getOrdID()%></h3>
+					<h4>更新訂單</h4>
+					<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
 				</div>
-				<table id="table-1">
+				<table>
 					<tr>
 						<th>運送狀態 :</th>
 						<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
@@ -199,7 +134,7 @@ th, td {
 								<option value="0">已成立</option>
 								<option value="1">待歸還</option>
 								<option value="2">已完成</option>
-								<option value="3">已取消</option>
+								<option value="9">已取消</option>
 						</select></td>
 					</tr>
 				</table>
@@ -207,29 +142,35 @@ th, td {
 					<tr>
 						<th>出貨代碼</th>
 						<td><input type="TEXT" name="shipCode" size="20"
-							value="${OrderMasterVO.shipCode}"></td>
+							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"></td>
 
 					</tr>
 
 					<tr>
 						<th>歸還代碼</th>
 						<td><input type="TEXT" name="returnCode" size="20"
-							value="${OrderMasterVO.returnCode}" /></td>
+							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /></td>
 					</tr>
 
 				</table>
+					<input type="button" onclick="ShowShipDate()" value="出貨時間 ">
+					<input type="button" onclick="ShowArrivalDate()" value="到貨時間 ">
+					<input type="button" onclick="ShowReturnDate()" value="歸還時間 ">
 				<table>
 					<tr>
 						<th>出貨日期</th>
-						<td><input name="shipDate" type="TEXT" value="<%=omVO.getShipDate()%>"></td>
+						<td><input type="hidden"  id="getShipDate">
+						<p id="shipDate">${OrderMasterVO.shipDate}</p></td>
 					</tr>
 					<tr>
 						<th>實際到貨日期</th>
-						<td><input type="TEXT" name="arrivalDate" value="<%=omVO.getArrivalDate()%>"></td>
+						<td><input type="hidden" id="getArrivalDate">
+						<p id="arrivalDate">${OrderMasterVO.arrivalDate}</p></td>																	
 					</tr>
 					<tr>
 						<th>實際歸還日期</th>
-						<td><input type="TEXT" name="returnDate" value="<%=omVO.getReturnDate()%>"></td>
+						<td><input type="hidden" id="getReturnDate">
+						<p id="returnDate">${OrderMasterVO.returnDate}</p></td>
 					</tr>
 				</table>
 				<table>
@@ -247,7 +188,7 @@ th, td {
 					</tr>
 					<tr>
 						<th>出租方評價</th>
-						<td><p id="rr"><%=omVO.getLeaseRank()%></p></td>
+						<td><p id="lr"><%=omVO.getLeaseRank()%></p></td>
 						<td><select name="leaseRank" size="1">
 								<option value="${OrderMasterVO.leaseRank}">評價</option>
 								<option value="1">1</option>
@@ -259,7 +200,7 @@ th, td {
 					</tr>
 					<tr>
 						<th>承租方評論</th>
-						<td><p id="rc"><%=omVO.getRentComt()%></p></td>
+						<td><p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td>
 						<td><select name="rentComt">
 								<option value="${OrderMasterVO.rentComt}">請選擇</option>
 								<option value="出貨快 !">出貨快 !</option>
@@ -273,7 +214,7 @@ th, td {
 					</tr>
 					<tr>
 						<th>出租方評論</th>
-						<td><p id="lc"><%=omVO.getLeaseComt()%></p></td>
+						<td><p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td>
 						<td><select name="leaseComt">
 								<option value="${OrderMasterVO.leaseComt}">請選擇</option>
 								<option value="出貨快 !">歸還快速 !</option>
@@ -287,12 +228,16 @@ th, td {
 				</table>
 				<input type="hidden" name="action" value="update"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
+				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
+				<input type="hidden" name="shipDate" id="shipTimelong" value="<%=omVO.getShipDate()== null ? "" : omVO.getShipDate().getTime()%>">
+				<input type="hidden" name="arrivalDate" id="arrivalTimelong" value="<%=omVO.getArrivalDate()== null ? "" : omVO.getArrivalDate().getTime()%>">
+				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">
 				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
 				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
 				<input type="submit" value="確認更新">
 			</main>
 		</div>
-		<footer class="footer"> footer區域 </footer>
+	<%@ include file="/includeFolder/footer2.file" %>
 	</FORM>
 </body>
 
@@ -300,8 +245,52 @@ th, td {
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+var shipDate = $("#shipDate");
+var getShipDate = $("#getShipDate");
+var shipTimelong = $("#shipTimelong");
 
+function ShowShipDate(){
+	
+	var Today=new Date();
+ 	var shipTime = (Today.getFullYear()+ "-" + (Today.getMonth()+1) + "-" 
+ 	+ Today.getDate() + " " + Today.getHours() + ":" + Today.getMinutes() + ":" + Today.getSeconds());
+	shipDate.text(shipTime);
+	document.getElementById("getShipDate").setAttribute('value', shipTime);
+	var shipTimelong = (Today.getTime());
+	document.getElementById("shipTimelong").setAttribute('value', shipTimelong);
+	
+};
+	
+	
+var arrivalDate = $("#arrivalDate");
+var getArrivalDate = $("#getArrivalDate");
+var arrivalTimelong = $("#arrivalTimelong");
 
+function ShowArrivalDate(){
+	var Today=new Date();
+ 	var arrivalTime = (Today.getFullYear()+ "-" + (Today.getMonth()+1) + "-" 
+ 	+ Today.getDate() + " " + Today.getHours() + ":" + Today.getMinutes() + ":" + Today.getSeconds());
+ 	arrivalDate.text(arrivalTime);	
+	document.getElementById("getArrivalDate").setAttribute('value', arrivalTime);
+	var arrivalTimelong = (Today.getTime());
+	document.getElementById("arrivalTimelong").setAttribute('value', arrivalTimelong);
+
+};
+
+var returnDate = $("#returnDate");
+var getReturnDate = $("#getReturnDate");
+var returnTimelong = $("#returnTimelong");
+
+function ShowReturnDate(){
+	var Today=new Date();
+ 	var returnTime = (Today.getFullYear()+ "-" + (Today.getMonth()+1) + "-" 
+ 	+ Today.getDate() + " " + Today.getHours() + ":" + Today.getMinutes() + ":" + Today.getSeconds());
+ 	returnDate.text(returnTime);	
+	document.getElementById("getReturnDate").setAttribute('value', returnTime);
+	var returnTimelong = (Today.getTime());
+	document.getElementById("returnTimelong").setAttribute('value', returnTimelong);
+
+};	
 	/*=====運送狀態=====*/
 
 	var shipS = $("#shipS");
@@ -361,11 +350,13 @@ th, td {
 		rr.text("3");
 	}else if(<%=omVO.getRentRank()%> == 4){
 		rr.text("4");
-	}else{
+	}else if(<%=omVO.getRentRank()%> == 5){
 		rr.text("5");
-	};
+	}else{
+		rr.text("尚未評分");
+	}
 	/*=====出租方評級=====*/
-	var lr = $("#rr");
+	var lr = $("#lr");
 	if(<%=omVO.getLeaseRank()%> == 1){
 		lr.text("1");
 	}else if(<%=omVO.getLeaseRank()%> == 2){
@@ -374,9 +365,11 @@ th, td {
 		lr.text("3");
 	}else if(<%=omVO.getLeaseRank()%> == 4){
 		lr.text("4");
-	}else{
+	}else if(<%=omVO.getLeaseRank()%> == 5){
 		lr.text("5");
-	};
+	}else{
+		lr.text("尚未評分");
+	}
 	
 	/*=====承租方評論=====*/
 
