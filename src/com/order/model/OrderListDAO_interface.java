@@ -8,5 +8,9 @@ public interface OrderListDAO_interface {
 	OrderListVO findOrderListByPK(int listID);	//從pk找
 	List<OrderListVO> getAllOrderList();		//找全部
 	List<OrderListVO> findOrderListByStatus(Integer ordStaus); //找狀態
-	void update(OrderListVO orderList);
+	List<OrderListVO> findOrderListByOrdID(Integer ordID); //找狀態
+	void update(OrderListVO olVO);
+	void insertOrder(OrderListVO olVO, java.sql.Connection con);
+	void update2(OrderListVO olVO, OrderMasterVO omVO);
+	
 }

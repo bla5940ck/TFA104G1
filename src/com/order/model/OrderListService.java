@@ -24,6 +24,14 @@ public class OrderListService {
 		return olVO;
 	}
 
+	public OrderListVO updateList(Integer ordStatus) {
+		OrderListVO olVO = new OrderListVO();
+		olVO.setOrdStatus(ordStatus);
+		dao.update(olVO);
+		return olVO;
+	}
+	
+	
 	public OrderListVO getOneOrderList(Integer listID) {
 		return dao.findOrderListByPK(listID);
 	}
@@ -34,5 +42,9 @@ public class OrderListService {
 	
 	public List<OrderListVO> getStatus(Integer status){
 		return dao.findOrderListByStatus(status);
+	}
+	
+	public List<OrderListVO> getOrdID(Integer ordID){
+		return dao.findOrderListByOrdID(ordID);
 	}
 }
