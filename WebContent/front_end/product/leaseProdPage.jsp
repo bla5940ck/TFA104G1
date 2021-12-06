@@ -78,7 +78,7 @@
 					</br>
 					<li class="pure-menu-item subnav-item">
 						<div class="item-conatiner">
-							<a href="#"
+							<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp"
 								class="pure-menu-link subnav-item-link icon-nav-order "> <svg
 									class="nav-icon nav-icon-order" width="18" height="22"
 									viewBox="0 0 24 24" data-icon="ec-order"> </svg> <lable
@@ -148,7 +148,7 @@
 									d="M9.5 10.5H16c.552 0 1 .444 1 1 0 .552-.445 1-1 1H9.5c-.552 0-1-.444-1-1 0-.552.445-1 1-1zM10 21c0-1.105-.895-2-2-2s-2 .895-2 2 .895 2 2 2 2-.895 2-2zm9.5 0c0-1.105-.895-2-2-2s-2 .895-2 2 .895 2 2 2 2-.895 2-2zM4.496 2H4.5c.552.005.998.445 1 .996L7 15h11.5L20 4.996S20.082 4 21 4c.915 0 1 .762 1 1l-1.5 11.004c0 .55-.448.996-1 .996H6c-.552 0-1-.45-1-.996L3.616 4H1.01C.45 4 0 3.556 0 3c0-.552.45-1 1.01-1H4.495zM9.5 5.5H16c.552 0 1 .444 1 1 0 .552-.445 1-1 1H9.5c-.552 0-1-.444-1-1 0-.552.445-1 1-1z"></path>
 								</svg> <lable class="cart-member" style="font-size:20px">購物車</lable>
 							</a> <span class="subnav-item-count" style="color:blue"></span>
-						</div></li>
+						</div></li></ul>
 					</br>
 		</aside>
 

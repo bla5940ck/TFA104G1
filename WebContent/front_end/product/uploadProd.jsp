@@ -153,6 +153,17 @@
 										<input
 			type=hidden id="fileCount" name="fileCount"><br> <input
 			type="hidden" name="action" value="upload">
+			<div>
+標籤:&nbsp&nbsp  <label ><input type="checkbox" id="ps4" name="checkbox1" value="ps4">#ps4</label> 
+<label ><input id=""type="checkbox" name="checkbox1" value="ps5">#ps5</label> 
+<label ><input id="" type="checkbox" name="checkbox1" value="OLED">#OLED</label> 
+<label ><input id="" type="checkbox" name="checkbox1" value="瑪利歐">#瑪利歐</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="薩爾達">#薩爾達</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="賽車">#賽車</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="冒險">#冒險</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="動作">#動作</label>
+		
+	</div>
 										<button type="submit" class="aa-browse-btn" id="submit1" >建立商品</button>
 <!-- 										<button type="submit" class="aa-browse-btn" -->
 <!-- 											style="background-color: lightblue; color: #000;">上架商品</button> -->
