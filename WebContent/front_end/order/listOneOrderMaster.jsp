@@ -89,7 +89,7 @@ th, td {
 
 </head>
 <body bgcolor="white">
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
@@ -220,10 +220,10 @@ th, td {
 					<th>折價券編號</th>
 					<td><%=omVO.getCouponID()%></td>
 				</tr>
-				<tr>
-					<th>商品小計</th>
-					<td><%=omVO.getProdPrice()%></td>
-				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>商品小計</th> -->
+<%-- 					<td><%=omVO.getProdPrice()%></td> --%>
+<!-- 				</tr> -->
 				<tr>
 					<th>運費</th>
 					<td><%=omVO.getShipFee()%></td>
