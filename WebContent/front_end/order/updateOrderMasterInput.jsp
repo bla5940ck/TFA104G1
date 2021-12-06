@@ -79,7 +79,7 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>

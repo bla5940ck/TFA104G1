@@ -98,7 +98,7 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
@@ -180,8 +180,8 @@ th, td {
 <!-- 					<th>出租者評論</th> -->
 <!-- 					<th>承租者評論日期</th> -->
 <!-- 					<th>出租者評論日期</th> -->
-					<th>商品小計</th>
-					<th>運費</th>
+<!-- 					<th>商品小計</th> -->
+<!-- 					<th>運費</th> -->
 					<th>訂單金額</th>
 				</tr>
 				<%@ include file="page1.file"%>
@@ -247,8 +247,8 @@ th, td {
 <%-- 								pattern="yyyy-MM-dd" /></td> --%>
 <%-- 						<td><fmt:formatDate value="${omVO.leaseComtdate}" --%>
 <%-- 								pattern="yyyy-MM-dd" /></td> --%>
-						<td>${omVO.prodPrice}</td>
-						<td>${omVO.shipFee}</td>
+<%-- 						<td>${omVO.prodPrice}</td> --%>
+<%-- 						<td>${omVO.shipFee}</td> --%>
 						<td>${omVO.ordPrice}</td>
 						<td>
 							<FORM METHOD="post"

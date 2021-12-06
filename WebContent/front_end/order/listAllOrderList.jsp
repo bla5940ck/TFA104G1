@@ -80,7 +80,7 @@ th, td {
 </head>
 <body>
 <%session.setAttribute("id",1); %>
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 <!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<aside class="aside">
