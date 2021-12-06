@@ -1,4 +1,4 @@
-package com.ProblemType.controller;
+package com.problemtype.controller;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ProblemType.model.ProblemTypeDAO;
-import com.ProblemType.model.ProblemTypeService;
-import com.ProblemType.model.ProblemTypeVO;
+import com.problemtype.model.ProblemTypeDAO;
+import com.problemtype.model.ProblemTypeService;
+import com.problemtype.model.ProblemTypeVO;
 
 
 

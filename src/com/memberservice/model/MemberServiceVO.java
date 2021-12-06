@@ -3,7 +3,7 @@ package com.memberservice.model;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-public class MenberServiceVO {
+public class MemberServiceVO {
 	private Integer msgID;
 	private Integer prodID;
 	private Integer memberID;
@@ -18,12 +18,12 @@ public class MenberServiceVO {
 	private byte[] pic3;
 	private Integer problemStatus;
 
-	public MenberServiceVO() {
+	public MemberServiceVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public MenberServiceVO(Integer msgID, Integer prodID, Integer memberID, Integer managerID, Integer typeID,
+	public MemberServiceVO(Integer msgID, Integer prodID, Integer memberID, Integer managerID, Integer typeID,
 			Integer ordID, Timestamp msgDate, String problemMsg, String msgRes, byte[] pic1, byte[] pic2, byte[] pic3,
 			Integer problemStatus) {
 		super();

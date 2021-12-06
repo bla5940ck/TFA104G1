@@ -1,4 +1,4 @@
-package com.ProblemType.model;
+package com.problemtype.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

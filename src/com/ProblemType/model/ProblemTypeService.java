@@ -1,10 +1,10 @@
-package com.ProblemType.model;
+package com.problemtype.model;
 
 import java.util.List;
 
-import com.ProblemType.model.ProblemTypeDAO;
-import com.ProblemType.model.ProblemTypeDAO_interface;
-import com.ProblemType.model.ProblemTypeVO;
+import com.problemtype.model.ProblemTypeDAO;
+import com.problemtype.model.ProblemTypeDAO_interface;
+import com.problemtype.model.ProblemTypeVO;
 
 public class ProblemTypeService {
 	private ProblemTypeDAO_interface dao;

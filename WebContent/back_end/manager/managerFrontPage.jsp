@@ -2,15 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.manager.model.*"%>
 
-<%
-	ManagerVO managervo = (ManagerVO) request.getAttribute("managerVO");
-%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>管理員資料新增 - addManager.jsp</title>
+<title>Insert title here</title>
 <style>
 body {
 	margin: 0;
@@ -19,12 +15,6 @@ body {
 
 img {
 	max-width: 100%;
-}
-
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
 }
 
 div.main_content {
@@ -74,7 +64,6 @@ th, td {
 </style>
 <style>
 table#table-1 {
-width: 80%;
 	background-color: #CCCCFF;
 	border: 2px solid black;
 	text-align: center;
@@ -108,39 +97,76 @@ th, td {
 	padding: 1px;
 }
 </style>
+<style>
+@import "bourbon";
+
+body {
+	background: #eee !important;
+}
+
+.wrapper {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
+.form-signin {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+	position: relative;
+	font-size: 16px;
+	height: auto;
+	padding: 10px;
+	@
+	include
+	box-sizing(border-box);
+	&:
+	focus
+	{
+	z-index
+	:
+	2;
+}
+
+}
+input[type="text"] {
+	width: 50%;
+	margin-bottom: -1px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	margin-bottom: -1px;
+}
+
+input[type="password"] {
+	width: 50%;
+	margin-bottom: 20px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.login {
+	width: 50%;
+	font-size: 13px;
+	outline-width: 100%;
+	background-color: #6495ed;
+}
+</style>
 </head>
+
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<aside class="aside">
-			
+			<ul class="nav_list" style="background-color: #F0B594; height: 100%">
 				
-				<ul class="nav_list" style="background-color:#F0B594;height:100%">
-					<h2>
-						<a>管理者專區</a> <br> <a>問題處理</a> <br> <a>商品管理</a> <br>
-						<a>訂單管理</a> <br> <a>會員管理</a> <br> <a>帳務管理</a> <br>
-						<a>會員審核</a> <br> <a>專案專區</a>
-					</h2>
-					<form action="/TFA104G1/ManagerServlet" method="post" >
-				<button class="signOut" type="submit">sign out</button>
-				<input type="hidden" name="action" value="sign_out" />
-				</form>
-				</ul>
-		
+			</ul>
 		</aside>
-		<main class="main" style="background-color:#C0C0C0;">
-			<table id="table-1">
-				<tr>
-					
-					<td>
-						<h4>
-							<a href="select_page.jsp">回首頁</a>
-						</h4>
-					</td>
-				</tr>
-			</table>
-
-			<h3>資料新增:</h3>
+		<main class="main" style="background-color: #C0C0C0;">
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -151,43 +177,10 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-			<FORM METHOD="post"
-				ACTION="<%=request.getContextPath()%>/ManagerServlet" name="form1">
-				<table>
-					<tr>
-						<td>管理員帳號:</td>
-						<td><input type="TEXT" name="managerUser" size="45" /></td>
-					</tr>
-					<tr>
-						<td>管理員姓名:</td>
-						<td><input type="TEXT" name="managerName" size="45" /></td>
-					</tr>
-					<tr>
-						<td>管理員密碼:</td>
-						<td><input type="TEXT" name="managerPassword" size="45" /></td>
-					</tr>
-					<tr>
-						<td>管理員狀態:</td>
-						<td><select name="status" size="1" id="s">
-								<option value="0">停用中</option>
-								<option value="1">使用中</option>
 
-						</select></td>
-					</tr>
+			
 
-
-				</table>
-				<br> <input type="hidden" name="action" value="insert">
-
-				<input type="submit" value="送出新增">
-			</FORM>
 		</main>
 	</div>
-	
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	
-</script>
 </html>

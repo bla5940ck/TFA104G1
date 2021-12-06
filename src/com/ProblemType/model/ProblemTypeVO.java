@@ -1,4 +1,4 @@
-package com.ProblemType.model;
+package com.problemtype.model;
 
 public class ProblemTypeVO {
 	private Integer typeID;

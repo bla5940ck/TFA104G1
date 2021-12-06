@@ -8,5 +8,6 @@ public interface ManagerDAO_interface {
 	public void delete(Integer manager_id);
 	public ManagerVO findByprimaryKey(Integer manager_id);
 	public List<ManagerVO> getAll();
+	public ManagerVO login(String manager_user,String manager_password);
 }
 

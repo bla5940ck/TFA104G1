@@ -9,4 +9,21 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <filter>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>com.manager.controller.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/back_end/manager/select_page.jsp</url-pattern>
+    <url-pattern>/back_end/manager/listAll.jsp</url-pattern>
+    <url-pattern>/back_end/manager/listOne.jsp</url-pattern>
+    <url-pattern>/back_end/manager/addManager.jsp</url-pattern>
+    <url-pattern>/back_end/manager/update_manager.jsp</url-pattern>    
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
 </web-app>

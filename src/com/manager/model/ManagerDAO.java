@@ -25,6 +25,8 @@ public class ManagerDAO implements ManagerDAO_interface {
 			"DELETE FROM Manager where manager_id =? ";
 	private static final String UPDATE = 
 			"UPDATE Manager set manager_user=?,manager_name=?,manager_password=?,status=? where manager_id=?";
+	private static final String LOGIN =
+			"SELECT * FROM Manager where manager_user =?,manager_password =?";
 
 	@Override
 	public void insert(ManagerVO managerVO) {
@@ -268,6 +270,63 @@ public class ManagerDAO implements ManagerDAO_interface {
 		}
 
 		return li;
+	}
+
+	
+	
+	@Override
+	public ManagerVO login(String managerUser, String managerPassword) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ManagerVO vo = new ManagerVO();
+		
+		try {
+			
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL,USER,PASSWORD);
+			ps = con.prepareStatement(LOGIN);
+			
+			ps.setString(1, managerUser);
+			ps.setString(2, managerPassword);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				vo = new ManagerVO();
+				vo.setManagerUser(rs.getString("manager_user"));
+				vo.setManagerUser(rs.getString("manager_password"));
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured." + se.getMessage());
+		} catch (Exception se) {
+			throw new RuntimeException("A database error occured." + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception se) {
+					se.printStackTrace(System.err);
+				}
+			}
+
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return vo;
 	}
 
 	public static void main(String[] args) {

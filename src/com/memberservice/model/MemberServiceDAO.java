@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenberServiceDAO implements MenberServiceDAO_interface {
+public class MemberServiceDAO implements MemberServiceDAO_interface {
 	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	public static final String URL = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
 	public static final String USER = "root";
@@ -28,7 +28,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 			"UPDATE member_service set prod_id=?,member_id=?,manager_id=?,type_id=?,ord_id=?,msg_date=?,problem_msg=?,msg_res=?,pic_1=?,pic_2=?,pic_3=?,problem_status=? where msg_id=?";
 
 	@Override
-	public void insert(MenberServiceVO manberServiceVO) {
+	public void insert(MemberServiceVO manberServiceVO) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -78,7 +78,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 	}
 
 	@Override
-	public void update(MenberServiceVO manberServiceVO) {
+	public void update(MemberServiceVO manberServiceVO) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -166,12 +166,12 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 	}
 
 	@Override
-	public MenberServiceVO findByprimaryKey(Integer msgID) {
+	public MemberServiceVO findByprimaryKey(Integer msgID) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		MenberServiceVO msvo = null;
+		MemberServiceVO msvo = null;
 		try {
 			
 			Class.forName(DRIVER);
@@ -184,7 +184,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 			
 			if (rs.next()) {
 				
-				msvo = new MenberServiceVO();
+				msvo = new MemberServiceVO();
 				msvo.setMsgID(rs.getInt("msg_id"));
 				msvo.setProdID(rs.getInt("prod_id"));
 				msvo.setMemberID(rs.getInt("member_id"));
@@ -233,9 +233,9 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 	}
 
 	@Override
-	public List<MenberServiceVO> getAll() {
-		List<MenberServiceVO> li = new ArrayList<>();
-		MenberServiceVO msvo = null;
+	public List<MemberServiceVO> getAll() {
+		List<MemberServiceVO> li = new ArrayList<>();
+		MemberServiceVO msvo = null;
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -247,7 +247,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				msvo = new MenberServiceVO();
+				msvo = new MemberServiceVO();
 				msvo.setMsgID(rs.getInt("msg_id"));
 				msvo.setProdID(rs.getInt("prod_ID"));
 				msvo.setMemberID(rs.getInt("member_ID"));
@@ -297,10 +297,10 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 
 	public static void main(String[] args) throws Exception {
 
-		MenberServiceDAO dao = new MenberServiceDAO();
+		MemberServiceDAO dao = new MemberServiceDAO();
 
 		// 新增
-		MenberServiceVO msvo1 = new MenberServiceVO();
+		MemberServiceVO msvo1 = new MemberServiceVO();
 
 		long datetime = System.currentTimeMillis();
 		Timestamp timestamp = new Timestamp(datetime);
@@ -325,7 +325,7 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 		
 		
 		// 修改
-		MenberServiceVO msvo2 = new MenberServiceVO();
+		MemberServiceVO msvo2 = new MemberServiceVO();
 		msvo2.setProdID(2);
 		msvo2.setMemberID(1);
 		msvo2.setManagerID(1);
@@ -363,8 +363,8 @@ public class MenberServiceDAO implements MenberServiceDAO_interface {
 //		System.out.println("---------------------");
 	
 		// 全部查詢
-		List<MenberServiceVO> list = dao.getAll();
-		for(MenberServiceVO msvo4:list) {
+		List<MemberServiceVO> list = dao.getAll();
+		for(MemberServiceVO msvo4:list) {
 			System.out.print(msvo4.getMsgID() + ",");
 			System.out.print(msvo4.getProdID() + ",");
 			System.out.print(msvo4.getMemberID() + ",");
