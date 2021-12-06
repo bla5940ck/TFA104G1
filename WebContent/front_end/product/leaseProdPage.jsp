@@ -17,6 +17,7 @@
  <link href="<%=request.getContextPath()%>/front_end/product/css/style2.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css"
 	href="https://s.yimg.com/qs/mall/yps/common/yps.20170504.2017-0504-153103.css" />
+
 <style>
 
 </style>
@@ -82,7 +83,7 @@
 									class="nav-icon nav-icon-order" width="18" height="22"
 									viewBox="0 0 24 24" data-icon="ec-order"> </svg> <lable
 									style="font-size:20px">訂單查詢</lable>
-							</a> <span class="subnav-item-count">0</span>
+							</a> <span class=""></span>
 						</div>
 					</li>
 					</br>
@@ -96,7 +97,37 @@
 							</a>
 						</div>
 					</li>
-					</br>
+					
+					<br>
+						<li class="pure-menu-item subnav-item">
+						<div class="item-conatiner">
+							<a href=""
+								class="pure-menu-link subnav-item-link icon-nav-notification ">
+								<svg class="nav-icon nav-icon-notification" width="22"
+									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
+								</svg> <lable style="font-size:20px">會員管理</lable>
+							</a>
+						</div>
+					</li>
+					<br>
+						<li class="pure-menu-item subnav-item">
+						<div class="item-conatiner">
+							<a href=""
+								class="pure-menu-link subnav-item-link icon-nav-notification ">
+								<svg class="nav-icon nav-icon-notification" width="22"
+									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
+								</svg> <lable style="font-size:20px">帳務管理</lable>
+							</a>
+						</div>
+					</li>
+					
+					<br>
+					
+					
+					
+					
+					
+					
 					<li class="pure-menu-item subnav-item">
 						<div class="item-conatiner">
 							<a href=""
@@ -115,8 +146,8 @@
 								<svg class="nav-icon nav-icon-cart" width="22" height="22"
 									viewBox="0 0 24 24" data-icon="ec-cart"> <path
 									d="M9.5 10.5H16c.552 0 1 .444 1 1 0 .552-.445 1-1 1H9.5c-.552 0-1-.444-1-1 0-.552.445-1 1-1zM10 21c0-1.105-.895-2-2-2s-2 .895-2 2 .895 2 2 2 2-.895 2-2zm9.5 0c0-1.105-.895-2-2-2s-2 .895-2 2 .895 2 2 2 2-.895 2-2zM4.496 2H4.5c.552.005.998.445 1 .996L7 15h11.5L20 4.996S20.082 4 21 4c.915 0 1 .762 1 1l-1.5 11.004c0 .55-.448.996-1 .996H6c-.552 0-1-.45-1-.996L3.616 4H1.01C.45 4 0 3.556 0 3c0-.552.45-1 1.01-1H4.495zM9.5 5.5H16c.552 0 1 .444 1 1 0 .552-.445 1-1 1H9.5c-.552 0-1-.444-1-1 0-.552.445-1 1-1z"></path>
-								</svg> <lable style="font-size:20px">購物車</lable>
-							</a> <span class="subnav-item-count">0</span>
+								</svg> <lable class="cart-member" style="font-size:20px">購物車</lable>
+							</a> <span class="subnav-item-count" style="color:blue"></span>
 						</div></li>
 					</br>
 		</aside>
@@ -663,6 +694,15 @@
 					}
 
 				});
+		
+		
+			$(window).on('load',function(){
+				$("span.subnav-item-count").text(<%=index1%>)
+				 
+			});
+		
+		
+		
 	</script>
 
 
