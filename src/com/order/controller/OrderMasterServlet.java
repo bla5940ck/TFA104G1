@@ -363,8 +363,8 @@ public class OrderMasterServlet extends HttpServlet {
 				OrderListVO olVO = new OrderListVO();
 				
 				/*************存入訂單主檔VO***********/
-				omVO.setLeaseID(leaseID);
 				omVO.setRentID(rentID); 	//承租方編號
+				omVO.setLeaseID(leaseID);
 				omVO.setPayID(payID);		//付款方式編碼
 				omVO.setCouponID(couponID); //折價券編碼
 				omVO.setOrdDate(ordDate);	//訂單日期
@@ -379,17 +379,23 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println("訂單存入");
 				
 				/*************存入訂單明細VO***********/
-				List<OrderListVO> list = new ArrayList<OrderListVO>();
-				for(OrderListVO newol : list) {
-					
+//				List<OrderListVO> list = new ArrayList<OrderListVO>();
+				System.out.println(req.getSession().getAttribute("list1"));
+				List<OrderListVO> list =  (List<OrderListVO>)req.getSession().getAttribute("list1");
+				System.out.println(list.size());
+//				for(OrderListVO newol : list) {
+//					
+//				
+////				OrderListVO newol = new OrderListVO();
+//				newol.setProdID(prodID);
+//				newol.setProdPrice(prodPrice);
+//				newol.setEstStart(estStart);
+//				newol.setEstEnd(estEnd);
+//				list.add(newol);
+//				
+//				}
 				
-//				OrderListVO newol = new OrderListVO();
-				newol.setProdID(prodID);
-				newol.setProdPrice(prodPrice);
-				newol.setEstStart(estStart);
-				newol.setEstEnd(estEnd);
-				list.add(newol);
-				}
+				
 				
 				System.out.println("明細存入");
 	
@@ -420,7 +426,7 @@ public class OrderMasterServlet extends HttpServlet {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
-				failureView.forward(req, res);
+					failureView.forward(req, res);
 				
 			}
 		}

@@ -1,3 +1,7 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -107,16 +111,26 @@ th, td {
 				<div><h3>結帳頁面</h3></div>
 				<h3>確認以下資訊</h3>
 					
-				<%List<CartVO> checkoutList = (List<CartVO>)request.getAttribute("checkoutList"); 		
+				<%
+				boolean flag = true;
+				
+				List<CartVO> checkoutList = (List<CartVO>)request.getAttribute("checkoutList"); 		
+// 				Set<CartVO> treeSet = new TreeSet();
+				List<OrderListVO> orderList = new ArrayList();
 				for(CartVO cartVO: checkoutList){
+// 					treeSet.add(cartVO);
+// 					Iterator<CartVO> it = treeSet.iterator();
+// 					while(it.hasNext()){
+// 						it.next().getLeaseID();
+// 					}
 					
 					Integer memID = (Integer)session.getAttribute("id"); 
-					System.out.println("承租者編號 : " + memID);
+// 					System.out.println("承租者編號 : " + memID);
 					//會員名稱
 					MemberService memSVC = new MemberService();
 					System.out.println(cartVO.getLeaseID());
 				 	MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
-				 	System.out.println("出租者會員姓名  " + memVO.getName());
+// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
 				 	String leaseName =  memVO.getName();
 					//起訖日
 				 	System.out.println("起始日 : " + cartVO.getEstStart());
@@ -127,8 +141,8 @@ th, td {
 				 	Date rdd = new Date(rd);
 				 	Integer rentDays = new Integer((rdd.getDate()));
 				 	Integer rentDay = new Integer((rdd.getDay()));
-				 	System.out.println("租借天數Date : " + rentDays);
-				 	System.out.println("租借天數Day : " + rentDay);
+// 				 	System.out.println("租借天數Date : " + rentDays);
+// 				 	System.out.println("租借天數Day : " + rentDay);
 					// 預設物流
 				 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 				 	List<DefAddressVO> list2 = dadao.getAll();
@@ -141,10 +155,19 @@ th, td {
 					
 					//商品租金+總金額
 				 	Integer rent = cartVO.getRent();
-				 	System.out.println("商品租金 : " + rent);
+// 				 	System.out.println("商品租金 : " + rent);
 				 	Integer totalPrice = cartVO.getTotalPrice();
-				 	System.out.println("總租金 : " + totalPrice);
-					pageContext.setAttribute("list", checkoutList);	
+// 				 	System.out.println("總租金 : " + totalPrice);
+					pageContext.setAttribute("list", checkoutList);
+					
+					OrderListVO olVO = new OrderListVO(); // 第一筆明細a
+					olVO.setProdID(cartVO.getProdID());
+					olVO.setProdPrice(cartVO.getRent());
+					olVO.setEstStart(cartVO.getEstStart());
+					olVO.setEstEnd(cartVO.getEstEnd());
+					
+					orderList.add(olVO);
+					
 				%>
 					
            		<label class="cart-lable" style="color:Navy; font-size:30px; border-color:blue; border-style:dotted;">賣場編號: shop1000<%=cartVO.getLeaseID()%> <%=leaseName%> </label>
@@ -161,15 +184,24 @@ th, td {
                       </tr>
 				</thead>          
 					<tr>
-						<td><a class="cart-img" href="#" alt="img"></a></td>
+						<td><a class="cart-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?cookie=y&prodID=<%=cartVO.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO.getProdID()%>" alt="img"></a></td>
 						<td><a id="prodName" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO.getProdID()%>"><%=cartVO.getProdName()%></a></td>
 						<td><input type="hidden" name="prodPrice" value="<%=rent%>"><%=rent%> 元</td>
 						<td><input type="hidden" name="estStart" value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
 						<td><input type="hidden" name="estEnd" value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
 						<td><input type="hidden" name="rentDays" value="<%=rentDays%>"><%=rentDays%> 天</td>
-						<td><input type="hidden" name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>		
+						<td><input type="hidden" class="prodPrice" name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%> 元</td>		
+						<input type="hidden" name="rentID" value="<%=memID%>">
+						<input type="hidden" name="leaseID" value="<%=cartVO.getLeaseID()%>"> 
+						<input type="hidden" name="prodID" value="<%=cartVO.getProdID()%>"> 
+						<input type="hidden" name="prodName" value="<%=cartVO.getProdName()%>">
+						
 					</tr>
-<%}%> 
+					
+				<%}
+				session.setAttribute("list1", orderList);
+				%> 
+				
 
 			
 					<table id="tabel-1">
@@ -193,7 +225,6 @@ th, td {
 								<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 								<c:choose>
 									<c:when test="${mcVO.member_id == id}">										
-										<option value="${mcVO.coupon_id}">${mcVO.coupon_name}
 										<option data-id="${mcVO.coupon_id}" value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 									</c:when>									
 								</c:choose>
@@ -251,18 +282,21 @@ var discount = $("#discount");	//折扣
 var thisOrder = $("#thisOrder");	//前端顯示的訂單金額
 var prodPrice = $("#prodPrice");	//商品小計
 var orderPrice = $("#orderPrice");	//回傳servlet的訂單金額
-<%-- var totalPrice = parseInt(<%=totalPrcice%>); --%>
-// var totalPrice = parseInt((totalPrice).val());
-//  consloe.log(totalPrice);
-// cartVO.getTotalPrice()
+
+var total = 0;
+var form = $("input.prodPrice");
+form.each(function(index, item){
+  console.log("索引值：" + index + "； 內容：" + $(item).val());
+  total += parseInt($(item).val());
+
 var data_id = "";
 
 coupon.change(function(){
-	alert((coupon).val());
+	alert(coupon.val());
 	discount.text(coupon.val()+"元");
 
-	var finalPrice = parseInt(totalPrice-(coupon).val()+60);
-	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
+	var finalPrice = parseInt(total-coupon.val()+60);
+	thisOrder.text(parseInt(total-coupon.val()+ 60) + "元");
 	document.getElementById("ordPrice").setAttribute('value', finalPrice);
 	
 	data_id = $("#coupon option:selected").attr('data-id');
@@ -272,11 +306,13 @@ coupon.change(function(){
 	
 	});
 
-	thisOrder.text(prodPrice.val());
+	thisOrder.text(total + "元");
+});
+
 
 // 	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
 // 	thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
-// 	document.getElementById("ordPrice").setAttribute('value', totalPrice-(coupon).val() + 60);
+	document.getElementById("ordPrice").setAttribute('value', total-coupon.val() + 60);
 </script>
 
 </html>

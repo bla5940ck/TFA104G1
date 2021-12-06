@@ -15,7 +15,7 @@
 	OrderMasterService ordserMasterSvc = new OrderMasterService();
 	List<OrderMasterVO> list = ordserMasterSvc.getAll();
 	for(OrderMasterVO omVO : list){
-		System.out.println(omVO.getOrdStatus());
+// 		System.out.println(omVO.getOrdStatus());
 	}
 	
 	pageContext.setAttribute("list", list);	
