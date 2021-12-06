@@ -168,8 +168,8 @@ request.setAttribute("product", product);
 							<div class="aa-header-top-right">
 								<ul class="aa-head-top-nav-right">
 									<li><a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp">會員中心</a></li>
-									<li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
-									<li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
+									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
+									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
 									<!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
 									<li><a href="" data-toggle="modal"
 										data-target="#login-modal">會員登入</a></li>
@@ -321,7 +321,14 @@ request.setAttribute("product", product);
 								</div>
 
 
-
+                                         <% 
+											String comt = (product.getComt() == null) ? "" : product.getComt();
+											
+										
+										
+										
+										
+										%>
 
 
 
@@ -332,29 +339,37 @@ request.setAttribute("product", product);
 
 
 								<!-- Modal view content -->
+								
 								<div class="col-md-7 col-sm-7 col-xs-12">
 									<div class="aa-product-view-content">
-										<h3><%=product.getProdName() %></h3>
+										<h3 style="color:green;font-weight:bold;"><%=product.getProdName() %></h3>
 										<div class="aa-price-block">
-											租金: <span class="aa-product-view-price">$<%=product.getProdRent()%></span><br>
-											商品損壞賠償金: <span class="aa-product-avilability">$<%=product.getProdPrice()%></span><br>
-											會員編號: <span class="aa-product-avilability"><%=product.getMemberID()%></span><br>
-										</div>
-										<%
-											String comt = (product.getComt() == null) ? "" : product.getComt();
-										%>
-										備註: <span><%=comt%></span><br>
-										<td class="start">預計租借日期: <input id="startDate"
-											type="text"><br> 預計歸還日期: <input id="endDate"
-											type="text"><br><br>
-										</td>
-										<td>金額試算: <label id="subtotal" style="color: red"></label>元<input
-											type="button" value="試算" id="subtotal_btn">
+										<ul>
+											 <li>   <span style="font-size:20px" class="aa-product-view-price">租金: $<%=product.getProdRent()%></span></li>
+											<li>   <span style="font-size:20px"  class="aa-product-avilability">商品損壞賠償金: $<%=product.getProdPrice()%></span></li>
+											<li><span style="font-size:20px" class="aa-product-avilability">會員編號:  <%=product.getMemberID()%></span></li>
 
+										<li> <span style="font-size:20px">備註: <%=comt%></span></li>
+										<td class="start" style="font-size:20px">
+										<li><span style="font-size:20px">預計租借日期: <input id="startDate" type="text" ></span></li>
+										 <span style="font-size:20px">預計歸還日期: <input id="endDate" type="text"></span></li>
+										</td><br><br>
+										<td> <li style="font-size:20px">金額試算:<label id="subtotal" style="color: red"></label>元<input
+											type="button" value="試算" id="subtotal_btn"></li>
+<%  List<String> labelList = jedis.lrange("prod"+product.getProdID(), 0, jedis.llen("member"+memberID));
+	pageContext.setAttribute("labelList", labelList);
+	System.out.print("數量  "+  labelList.size());
+	%>
 										</td>
 										</br>
-										<td></td>
-
+										<li>
+											標籤:&nbsp
+											<c:forEach var="label" items="${labelList}">
+													<span style="color:yellow"><a herf="#">#${label}</a></span>&nbsp
+											</c:forEach>
+										</li>
+										</ul>
+											</div>
 										</form>
 										<p class="aa-prod-category">
 											<%--                         分類: <a href="#"><%=product.getCategoryID() %></a> --%>

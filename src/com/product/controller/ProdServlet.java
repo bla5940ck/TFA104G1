@@ -81,8 +81,22 @@ public class ProdServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			ProdVO prod = new ProdVO();
 			System.out.println(ServletFileUpload.isMultipartContent(req));
-
+			
+			Jedis jedis = null;
+			jedis = pool.getResource();
+			
+			
+			
+			List<String> list = new ArrayList();
+			
 			//驗證商品
+			String[] labels = req.getParameterValues("checkbox1");
+			
+		
+			
+			
+			
+			
 			
 			String name = req.getParameter("product_name");
 //			System.out.println(name.trim().length() == 0);
@@ -199,7 +213,11 @@ public class ProdServlet extends HttpServlet {
 			Integer key = prodService.AddProd(cate, name, cot, rent, price, comt, prod.getPic1(), prod.getPic2(), prod.getPic3(),
 					prod.getShelfDate());
 		
-
+			
+			for(int k = 0 ;k<labels.length;k++) {
+				jedis.rpush("prod"+key , labels[k]);
+				 
+			}
 			
 			
 			ProdService prodSvc = new ProdService();
