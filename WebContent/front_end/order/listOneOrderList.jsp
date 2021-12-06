@@ -85,14 +85,14 @@ th, td {
 }
 </style>
 <body bgcolor="white">
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 <!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
 					<h2>出租者專區</h2>
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>

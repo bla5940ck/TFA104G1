@@ -51,6 +51,13 @@ public class PromolistService {
 	public List<PromolistVO> getAll() {
 		return dao.getAll();
 	}
+
+	public List<PromolistVO> getPromoid(Integer promo_id) {
+		return dao.getPromoid(promo_id);
+	}
 	
-	
+//	public PromolistVO getOne_For_Insert(Integer promo_id) {
+//		return dao.getOne_For_Insert(promo_id);
+//	}
+//	
 }

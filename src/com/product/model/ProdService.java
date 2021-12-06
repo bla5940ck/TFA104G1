@@ -1,17 +1,24 @@
 package com.product.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
+import com.category.model.ProdCategoryDAO;
+import com.category.model.ProdCategoryDAOImpl;
+import com.category.model.ProdCategoryImpl;
 
 
 
 public class ProdService {
 	private ProdDAOImpl dao;
+	private ProdCategoryDAOImpl dao2;
 	public ProdService() {
 		dao = new ProdDAO();
+		dao2 = new ProdCategoryDAO();
 	}
 
-	public ProdVO AddProd( Integer cate, String name, String cot, Integer rent,
+	public Integer AddProd( Integer cate, String name, String cot, Integer rent,
 			Integer price, String comt, byte[] pic1, byte[] pic2, byte[] pic3,Timestamp shelfDate) {
 		ProdVO prod = new ProdVO();
 		
@@ -27,9 +34,9 @@ public class ProdService {
 		prod.setPic3(pic3);
 		prod.setShelfDate(shelfDate);
 	
-			dao.add(prod);
+			Integer key =dao.add(prod);
  			
-		return prod;
+		return key;
 	}
 	public ProdVO updateProd(Integer prodID, Integer cate, String name, String cot, Integer rent,
 			Integer price, String comt, byte[] pic1, byte[] pic2, byte[] pic3,Timestamp shelfDate,Integer status) {
@@ -62,6 +69,13 @@ public class ProdService {
 	public List<ProdVO> getSortDesc(){
 		return dao.priceSortDesc();
 	}
-
+	public List<ProdVO> getAllByKeyword(String keyword){
+		return dao.getAllByKeyword(keyword);
+	}
+//	public String getCateNameByProdID(Integer categoryID) {
+//		
+//		dao2.findCategoryByPK(categoryID);
+//		
+//	}
 	
 }

@@ -72,6 +72,10 @@
 		<td>專案編號:</td>
 		<td><input type="TEXT" name="promo_id" size="45"></td>
 	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>專案編號:<font color=red><b>*</b></font></td> -->
+<%-- 		<td>${promolistVO}</td> --%>
+<!-- 	</tr> -->
 	<tr>
 		<td>商品類別編號:</td>
 		<td><input type="TEXT" name="category_id" size="45"></td>

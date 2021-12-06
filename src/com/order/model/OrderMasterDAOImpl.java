@@ -27,12 +27,12 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String FIND_BY_PK = "SELECT * FROM ORDER_MASTER WHERE ORD_ID = ?";
 	private static final String GET_ALL = "SELECT * FROM ORDER_MASTER";
-	
-	private static final String INSERT_STMT_ORDERLIST = 
-			"INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
-	private static final String UPDATE_ORDERLIST =
-			"UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
 
+	private static final String INSERT_STMT_ORDERLIST = "INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
+	private static final String UPDATE_ORDERLIST = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
+	private static final String UPDATE2 = "UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?";
+
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -40,7 +40,89 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			e.printStackTrace();
 		}
 	}
-		
+
+	@Override
+	public void inesetWithList(OrderMasterVO omVO, List<OrderListVO> list) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+
+			// 設定autoCommit false在pstmt.executeUpdate()之前
+			con.setAutoCommit(false);
+
+			// 先新增訂單
+			String cols[] = { "ORD_ID" }; // 填入自增主鍵的欄位
+			pstmt = con.prepareStatement(INSERT_STMT, cols);
+
+			pstmt.setInt(1, omVO.getRentID());
+			pstmt.setInt(2, omVO.getLeaseID());
+			pstmt.setInt(3, omVO.getPayID());
+			if (omVO.getCouponID() == null) {
+				pstmt.setNull(4, Types.NULL);
+			} else {
+				pstmt.setInt(4, omVO.getCouponID());
+			}
+			pstmt.setTimestamp(5, omVO.getOrdDate());
+			pstmt.setInt(6, omVO.getStoreCode());
+			pstmt.setDate(7, omVO.getEstStart());
+			pstmt.setDate(8, omVO.getEstEnd());
+			pstmt.setInt(9, omVO.getRentDays());
+			pstmt.setInt(10, omVO.getProdPrice());
+			pstmt.setInt(11, omVO.getShipFee());
+			pstmt.setInt(12, omVO.getOrdPrice());
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("set auto_increment_offset=1000;");
+			stmt.executeUpdate("set auto_increment_increment=1;"); // 自增主鍵-遞增
+			pstmt.executeUpdate();
+
+			String next_ordID = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_ordID = rs.getString(1);
+				System.out.println("自增主鍵值 = " + next_ordID + "剛新增成功的訂單編號");
+			} else {
+				System.out.println("未取得自增主鍵直");
+			}
+			rs.close();
+			// 同時再新增訂單明細
+			OrderListDAOImpl oldao = new OrderListDAOImpl();
+			System.out.println("新增前有 : " + list.size());
+			for (OrderListVO olVO : list) {
+				olVO.setOrdID(new Integer(next_ordID));
+				oldao.insertOrder(olVO, con);
+			}
+
+			// 設定autoCommit(true)於pstmt.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("新增後有 : " + list.size());
+			System.out.println("新增訂單編號" + next_ordID + "時,共有明細" + list.size() + "筆,同時被新增");
+
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-orderMaster");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
 	@Override
 	public void addOrderMaster(OrderMasterVO orderMaster) {
 		Connection con = null;
@@ -282,25 +364,25 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public void insertAllOrder(OrderMasterVO omVO, OrderListVO olVO) {
-		
+
 		Connection con = null;
 //		Connection con1 = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
-	
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			
-			//1. 設定於pstmt.executeUpdate()之前
+
+			// 1. 設定於pstmt.executeUpdate()之前
 			con.setAutoCommit(false);
 			// 先新增訂單
 //			int cols[] = {1}; // 或 int cols[] = {1};
-			String cols[] = {"ORD_ID"};
-			
+			String cols[] = { "ORD_ID" };
+
 			pstmt = con.prepareStatement(INSERT_STMT, cols);
 			pstmt2 = con.prepareStatement(INSERT_STMT_ORDERLIST);
 
@@ -320,41 +402,41 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setInt(10, omVO.getProdPrice());
 			pstmt.setInt(11, omVO.getShipFee());
 			pstmt.setInt(12, omVO.getOrdPrice());
-			
+
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("set auto_increment_offset=1000");
 			stmt.executeUpdate("set auto_increment_increment=1");
-			
+
 			pstmt.executeUpdate();
-			
-			//取得對應的字增主鍵值
-			int key =0;
+
+			// 取得對應的字增主鍵值
+			int key = 0;
 			rs = pstmt.getGeneratedKeys();
-			while(rs.next()) {
-			 key= rs.getInt(1);
-			 System.out.println(key);
+			while (rs.next()) {
+				key = rs.getInt(1);
+				System.out.println(key);
 			}
 			rs.close();
-			//同時再新增訂單明細內容
-		 	pstmt2.setInt(1, olVO.getProdID());
+			// 同時再新增訂單明細內容
+			pstmt2.setInt(1, olVO.getProdID());
 			pstmt2.setInt(2, key);
 			pstmt2.setInt(3, olVO.getProdPrice());
 			pstmt2.setDate(4, olVO.getEstStart());
 			pstmt2.setDate(5, olVO.getEstEnd());
-		
+
 			stmt = con.createStatement();
 			stmt.executeUpdate("set auto_increment_offset=1001");
 			stmt.executeUpdate("set auto_increment_increment=1");
-			
+
 			pstmt2.executeUpdate();
-			
+
 			con.commit();
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
 			try {
-				//發生例外進行rollback動作
+				// 發生例外進行rollback動作
 				con.rollback();
-			}catch(SQLException se) {
+			} catch (SQLException se) {
 				se.printStackTrace();
 			}
 			e.printStackTrace();
@@ -375,23 +457,23 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			}
 		}
 	}
-	
+
 	public void updateAllOrder(OrderMasterVO omVO, OrderListVO olVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			
-			//1. 設定於pstmt.executeUpdate()之前
+
+			// 1. 設定於pstmt.executeUpdate()之前
 			con.setAutoCommit(false);
 			// 先更新訂單
-			int cols[] = {1}; // 或 int cols[] = {1};
-			
+			int cols[] = { 1 }; // 或 int cols[] = {1};
+
 			pstmt = con.prepareStatement(UPDATE, cols);
-			
+
 			pstmt.setInt(1, omVO.getShipStatus());
 			pstmt.setInt(2, omVO.getOrdStatus());
 			pstmt.setInt(3, omVO.getPayStatus());
@@ -408,31 +490,31 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setTimestamp(14, omVO.getLeaseComtdate());
 			pstmt.setInt(15, omVO.getOrdID());
 			pstmt.executeUpdate();
-			
-			int key =0;
+
+			int key = 0;
 			rs = pstmt.getGeneratedKeys();
-			while(rs.next()) {
-			 key= rs.getInt(1);
-			 System.out.println(key);
+			while (rs.next()) {
+				key = rs.getInt(1);
+				System.out.println(key);
 			}
 			rs.close();
-			//同時再更新訂單明細內容  UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?
+			// 同時再更新訂單明細內容 UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID =?
 			pstmt2 = con.prepareStatement(UPDATE_ORDERLIST);
-				pstmt2.setInt(1, olVO.getOrdStatus());
-				pstmt2.setInt(2, olVO.getListID());
-				pstmt2.setInt(3, olVO.getOrdID());
-				
-				pstmt2.executeUpdate();
-				con.commit();
-				con.setAutoCommit(true);
-			
+			pstmt2.setInt(1, olVO.getOrdStatus());
+			pstmt2.setInt(2, olVO.getListID());
+			pstmt2.setInt(3, olVO.getOrdID());
+
+			pstmt2.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			try {
-				//發生例外進行rollback動作
+				// 發生例外進行rollback動作
 				con.rollback();
-			}catch(SQLException se) {
+			} catch (SQLException se) {
 				se.printStackTrace();
 			}
 			e.printStackTrace();
@@ -453,16 +535,87 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			}
 		}
 	}
-	
 
+	@Override
+	public void updateWithListStatus(OrderMasterVO omVO, Connection con) {
+//		System.out.println("訂單主檔執行更新");
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = con.prepareStatement(UPDATE2);
+			
+			pstmt.setInt(1, omVO.getOrdStatus());
+			pstmt.setInt(2, omVO.getOrdID());
+			
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-orderMaster");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	
 	public static void main(String[] args) {
-		OrderMasterDAO_interface omdao = new OrderMasterDAOImpl();
+		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 
 		long datetime = System.currentTimeMillis();
 		Timestamp timeStamp = new Timestamp(datetime);
 		java.sql.Date date = new java.sql.Date(datetime);
+
+		//新增訂單主檔+明細(交易控制2版)
+		OrderMasterVO omVO = new OrderMasterVO();
+		omVO.setRentID(2);
+		omVO.setLeaseID(1);
+		omVO.setPayID(2);
+		omVO.setCouponID(null);
+		omVO.setOrdDate(timeStamp);
+		omVO.setStoreCode(19374);
+		omVO.setEstStart(date);
+		omVO.setEstEnd(date);
+		omVO.setRentDays(1);
+		omVO.setProdPrice(1000);
+		omVO.setShipFee(60);
+		omVO.setOrdPrice(1120);
 		
-		//更新訂單主檔+明細
+		List<OrderListVO> testList = new ArrayList<OrderListVO>();
+		OrderListVO ola = new OrderListVO(); // 第一筆明細a
+		ola.setProdID(6);
+		ola.setProdPrice(400);
+//		ola.setOrdStatus(0);
+		ola.setEstStart(date);
+		ola.setEstEnd(date);
+		
+		OrderListVO olb = new OrderListVO(); // 第二筆明細b
+		olb.setProdID(7);
+		olb.setProdPrice(60);
+//		olb.setOrdStatus(0);
+		olb.setEstStart(date);
+		olb.setEstEnd(date);
+		
+		testList.add(ola);
+		testList.add(olb);
+		omdao.inesetWithList(omVO, testList);
+
+		// 更新訂單主檔+明細
 //		OrderMasterVO om2 = new OrderMasterVO();
 //		om2.setShipStatus(9);
 //		om2.setOrdStatus(1);
@@ -484,45 +637,45 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		olVO.setListID(6);
 //		olVO.setOrdID(114);
 //		olVO.setOrdStatus(1);
-		
+
 //		OrderListDAOImpl oldao = new OrderListDAOImpl();
-		
+
 //		olVO = oldao.findOrderListByPK(6);
 //		System.out.println("更新前" + olVO.getOrdStatus());		
 //		omdao.updateAllOrder(om2, olVO);
 //		System.out.println("更新後" + olVO.getOrdStatus());		
 
-		//新增訂單主檔 + 明細
-		OrderMasterVO omVO = new OrderMasterVO();
-		OrderListVO olVO = new OrderListVO();
-		omVO.setRentID(1);
-		omVO.setLeaseID(5);
-		omVO.setPayID(2);
-		omVO.setCouponID(null);
-		omVO.setOrdDate(timeStamp);
-		omVO.setStoreCode(19374);
-		omVO.setEstStart(date);
-		omVO.setEstEnd(date);
-		omVO.setRentDays(2);
-		omVO.setProdPrice(1000);
-		omVO.setShipFee(120);
-		omVO.setOrdPrice(1120);
-		
-		Integer prodID = 2;
-//		Integer ordID = omVO.getOrdID();
-		Integer prodPrice = 3600;
-		java.sql.Date estStart = new java.sql.Date(datetime);
-		java.sql.Date estEnd = new java.sql.Date(datetime);
-
-		olVO.setProdID(prodID);
-//		olVO.setOrdID(ordID);
-		olVO.setProdPrice(prodPrice);
-		olVO.setEstStart(estStart);
-		olVO.setEstEnd(estEnd);
-		
-		omdao.insertAllOrder(omVO, olVO);
-		
-		System.out.println(omVO);
+		// 新增訂單主檔 + 明細
+//		OrderMasterVO omVO = new OrderMasterVO();
+//		OrderListVO olVO = new OrderListVO();
+//		omVO.setRentID(1);
+//		omVO.setLeaseID(5);
+//		omVO.setPayID(2);
+//		omVO.setCouponID(null);
+//		omVO.setOrdDate(timeStamp);
+//		omVO.setStoreCode(19374);
+//		omVO.setEstStart(date);
+//		omVO.setEstEnd(date);
+//		omVO.setRentDays(2);
+//		omVO.setProdPrice(1000);
+//		omVO.setShipFee(120);
+//		omVO.setOrdPrice(1120);
+//
+//		Integer prodID = 2;
+////		Integer ordID = omVO.getOrdID();
+//		Integer prodPrice = 3600;
+//		java.sql.Date estStart = new java.sql.Date(datetime);
+//		java.sql.Date estEnd = new java.sql.Date(datetime);
+//
+//		olVO.setProdID(prodID);
+////		olVO.setOrdID(ordID);
+//		olVO.setProdPrice(prodPrice);
+//		olVO.setEstStart(estStart);
+//		olVO.setEstEnd(estEnd);
+//
+//		omdao.insertAllOrder(omVO, olVO);
+//
+//		System.out.println(omVO);
 
 		// 新增
 //		OrderMasterVO om1 = new OrderMasterVO();

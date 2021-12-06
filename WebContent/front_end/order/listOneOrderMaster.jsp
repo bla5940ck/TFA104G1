@@ -1,3 +1,5 @@
+<%@page import="com.member.model.DefAddressJDBCDAO"%>
+<%@page import="com.member.model.DefAddressVO"%>
 <%@page import="com.booking.model.BookingVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,11 +12,15 @@
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 // 	out.println(omVO.getShipDate());
 	
-	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
-	OrderListDAOImpl oldao = new OrderListDAOImpl();
-// 	out.println(olVO.getListID());
+// 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+// 	OrderListDAOImpl oldao = new OrderListDAOImpl();
+// 	List<OrderListVO> olVO = oldao.getAllOrderList();
+// 	for(OrderListVO ol : olVO){
+		
+// 	}
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
+<jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
 
 <html>
 <head>
@@ -83,13 +89,13 @@ th, td {
 
 </head>
 <body bgcolor="white">
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
 					<h2>出租者專區</h2>
-					<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+					<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -99,7 +105,14 @@ th, td {
 			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
 				<input type="submit" value="更新">
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
+				<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
+								<c:choose>
+									<c:when test="${olVO.ordID == omVO.ordID}">
+						<input type="hidden" name="listID" value="${olVO.listID}">
+									</c:when>
+								</c:choose>
+								</c:forEach>
 				<input type="hidden" name="action" value="getOne_For_Update">
 			</FORM>
 			<table id="table-1">
@@ -139,8 +152,8 @@ th, td {
 					<th>超商代碼</th>
 				</tr>
 				<tr>
-					<td><%=omVO.getShipCode()%></td>
-					<td><%=omVO.getReturnCode()%></td>
+					<td><%=omVO.getShipCode() == 0 ? "待出貨" : omVO.getShipCode()%></td>
+					<td><%=omVO.getReturnCode() == 0 ? "待歸還" : omVO.getReturnCode()%></td>
 					<td><%=omVO.getStoreCode()%></td>
 				</tr>
 			</table>
@@ -178,17 +191,20 @@ th, td {
 			<table>
 				<tr>
 					<th>承租者評分</th>
-					<td><%=omVO.getRentRank()%></td>
+					<td><%=omVO.getRentRank() == 0 ? "承租者尚未評分" : omVO.getRentRank()%></td>
 
 					<th>出租者評分</th>
-					<td><%=omVO.getLeaseRank()%></td>
+					<td><%=omVO.getLeaseRank() == 0 ? "出租者尚未評分" : omVO.getLeaseRank()%></td>
 				</tr>
 				<tr>
 					<th>承租者評論</th>
-					<td><%=omVO.getRentComt()%></td>
+					<td><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></td>
+<%-- 						<td><%=omVO.getRentComt()%></td> --%>
 
 					<th>出租者評論</th>
-					<td><%=omVO.getLeaseComt()%></td>
+					<td><%=omVO.getLeaseComt() == null ?"尚未評論" : omVO.getLeaseComt()%></td>
+<%-- 						<td><%=omVO.getLeaseComt()%></td> --%>
+						
 				</tr>
 				<tr>
 					<th>承租者評論日期</th>
@@ -204,10 +220,10 @@ th, td {
 					<th>折價券編號</th>
 					<td><%=omVO.getCouponID()%></td>
 				</tr>
-				<tr>
-					<th>商品小計</th>
-					<td><%=omVO.getProdPrice()%></td>
-				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>商品小計</th> -->
+<%-- 					<td><%=omVO.getProdPrice()%></td> --%>
+<!-- 				</tr> -->
 				<tr>
 					<th>運費</th>
 					<td><%=omVO.getShipFee()%></td>

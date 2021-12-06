@@ -86,13 +86,13 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
 					<h2>出租者專區</h2>
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -123,7 +123,7 @@ th, td {
 
 				<FORM METHOD="post"
 					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>選擇訂單狀態:
+					<h5>選擇訂單明細狀態:
 					<select size="1" name="ordStatus">
 						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option>
 						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option>
