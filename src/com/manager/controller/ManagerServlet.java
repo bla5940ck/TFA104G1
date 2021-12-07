@@ -299,6 +299,7 @@ public class ManagerServlet extends HttpServlet {
 
 					String user = list.get(i).getManagerUser();
 					String password = list.get(i).getManagerPassword();
+					Integer id = list.get(i).getManagerID();
 
 					System.out.println("帳號 : " + user);
 					System.out.println("密碼 : " + password);
@@ -307,10 +308,11 @@ public class ManagerServlet extends HttpServlet {
 
 						System.out.println(req.getParameter("managerUser") + "你好");
 
+						req.getSession().setAttribute("managerID", id);
 						req.getSession().setAttribute("managerUser", user);
 						req.getSession().setAttribute("managerPassword", password);
 
-						RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/select_page.jsp");
+						RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/afterLogin.jsp");
 						successView.forward(req, res);
 						return;
 					}

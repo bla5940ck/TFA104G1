@@ -92,6 +92,10 @@ h2 {
 	color: blue;
 	display: inline;
 }
+
+.signOut{
+background-color:#6495ed;
+}
 </style>
 
 </head>
@@ -107,15 +111,15 @@ h2 {
 						<a>會員審核</a> <br> <a>專案專區</a>
 					</h2>
 					<form action="/TFA104G1/ManagerServlet" method="post" >
-				<button class="signOut" type="submit">sign out</button>
-				<input type="hidden" name="action" value="sign_out" />
-				</form>
+						<button class="signOut" type="submit">sign out</button>
+						<input type="hidden" name="action" value="sign_out" />
+					</form>
 				</ul>
 			</nav>
 		</aside>
 		<main class="main" style="background-color:#C0C0C0;">					
 
-			<h3>資料查詢:</h3>
+			<h3>管理員查詢:</h3>
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -128,11 +132,12 @@ h2 {
 			</c:if>
 
 			<ul>
-				<li><a
-					href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'>管理員列表</a><br>
-				<br></li>
-
-
+				<li>
+					<a href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'>管理員列表</a><br>
+				</li>				
+				<li>
+					<a href='<%=request.getContextPath()%>/back_end/manager/addManager.jsp'>新增管理員</a><br>
+				</li>
 				<li>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet">
@@ -141,44 +146,33 @@ h2 {
 							type="submit" value="送出">
 					</FORM>
 				</li>
-
-				<jsp:useBean id="msSvc" scope="page"
-					class="com.manager.model.ManagerService" />
-
+					<jsp:useBean id="msSvc" scope="page" class="com.manager.model.ManagerService" />
 				<li>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>選擇管理員編號:</b> <select size="1" name="managerID">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/ManagerServlet">
+						<b>選擇管理員編號:</b> 
+						<select size="1" name="managerID">
 							<c:forEach var="managerVO" items="${msSvc.all}">
 								<option value="${managerVO.managerID}">${managerVO.managerID}
 							</c:forEach>
-						</select> <input type="hidden" name="action" value="getOne_For_Display">
+						</select> 
+						<input type="hidden" name="action" value="getOne_For_Display">
 						<input type="submit" value="送出">
 					</FORM>
 				</li>
-
 				<li>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>選擇管理員姓名:</b> <select size="1" name="managerID">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/ManagerServlet">
+						<b>選擇管理員姓名:</b> 
+						<select size="1" name="managerID">
 							<c:forEach var="managerVO" items="${msSvc.all}">
 								<option value="${managerVO.managerID}">${managerVO.managerName}
 							</c:forEach>
-						</select> <input type="hidden" name="action" value="getOne_For_Display">
+						</select> 
+						<input type="hidden" name="action" value="getOne_For_Display">
 						<input type="submit" value="送出">
 					</FORM>
 				</li>
-			</ul>
-
-
-			<h3>管理員管理</h3>
-
-			<ul>
-				<li><a href='<%=request.getContextPath()%>/back_end/manager/addManager.jsp'>新增管理員</a></li>
-			</ul>
-			
+			</ul>			
 		</main>
-	</div>
-	
+	</div>	
 </body>
 </html>

@@ -237,6 +237,8 @@ if ("delete".equals(action)) { // 來自listAllEmp.jsp
 				.getRequestDispatcher("/back_end/problemtype/listAllProblemType.jsp");
 		failureView.forward(req, res);
 	}
-}
+	}
+
+
 	}
 	}

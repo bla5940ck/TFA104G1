@@ -4,6 +4,8 @@
 
 <%
 	MemberServiceVO memberserviceVO = (MemberServiceVO) request.getAttribute("memberserviceVO");
+	Integer memID = (Integer)session.getAttribute("id");
+	out.print(memID);
 %>
 <!DOCTYPE html>
 <html>
@@ -11,44 +13,44 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>問題狀態新增-addProblemType.jsp</title>
 <style>
-body {
-	margin: 0;
-	padding: 10px;
-}
+body { 
+ 	margin: 0; 
+ 	padding: 10px; 
+ } 
 
 img {
 	max-width: 100%;
 }
 
-button {
-	font-size: 13px;
+button{
+	font-size:13px;
 	outline-width: 100%;
-	background-color: white;
+	background-color:white;
 }
 
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-	/*   border:1px solid red; */
-}
+ div.main_content { 
+ 	width: 100%; 
+ 	margin: 0 auto; 
+ 	font-size: 0; 
+ } 
+
 /*-------------------aside區域------------------- */
 aside.aside {
-	height: 620px;
-	width: 200px;
+	width: 150px;
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
-	text-align: center;
+	text-align:center;
 }
 
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
-	width: calc(100% - 200px - 10px);
-	height: 100%;
+	width: calc(100% - 150px - 10px);
+	height:920px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -59,7 +61,8 @@ main.main {
 table {
 	width: 100%;
 	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-bottom: 5px;	
+	font-size: 12px;
 }
 
 table, th, td {
@@ -68,31 +71,8 @@ table, th, td {
 
 th, td {
 	padding: 5px;
-	text-align: center;
+	text-align: left;
 }
-
-/************上傳*************/
-canvas{
-		width:45%;
-		height:35%;
-		border:1px solid;
-	}
-canvas1{
-		width:50%;
-		height:40%;
-		border:1px solid;
-	}
-canvas2{
-		width:50%;
-		height:40%;
-		border:1px solid;
-	}
-canvas3{
-		width:50%;
-		height:40%;
-		border:1px solid;
-	}
-
 </style>
 </head>
 
@@ -111,38 +91,27 @@ canvas3{
 			</nav>
 		</aside>
 		<main class="main">
-			<table id="table-1">
-				<tr>
-					<td>
-						<h3>問題狀態新增-addProblemType.jsp</h3>
-					</td>
-					<td>
-						<h4>
-							<a href="select_page.jsp"><img src="images/tomcat.png"
-								width="100" height="100" border="0">回首頁</a>
-						</h4>
-					</td>
-				</tr>
-			</table>
+			
 
-			<h3>資料新增:</h3>
+			<h2>問題回報</h2>
 
 			<%-- 錯誤表列 --%>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
+			
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/MemberServiceServlet"
 				name="form1">
-				<table>
+				<input type="hidden" name="action" value="problemTypeReport" />
+				<table id="table-1">
+					<tr>
+					<td>反應會員編號</td>
+					<td>
+						<input type="hidden" name="memberID" value="memID"> <%=memID %>
+						
+					</td>
+					</tr>
 					<tr>
 						<td>問題類型:</td>
-						<td><select id="sel">
+						<td><select id="sel" name="problemtype1">
 								<option value="0">請選擇</option>
 								<option value="1">訂單</option>
 								<option value="2">會員</option>
@@ -153,55 +122,43 @@ canvas3{
 					<br>
 					<tr>
 						<td>選擇問題:</td>
-						<td><select id="sel2"></select></td>
+						<td><select id="sel2" name="problemtype2"></select></td>
 					</tr>
 					<br>
 					<tr>
 						<td>問題描述:</td>
-						<td><textarea style="width: 90%; height: 90%">
-						
-					</textarea></td>
+							<td><textarea class="problem1" name="action" value=""></textarea>
+						</td>
 					</tr>
 					<br>
 					<tr>
 						<td>上傳圖片一</td>
-						<td>
-							<div>
-								<canvas id="canv1"></canvas>
-								<div>
+						<div>
+						<td><canvas id="canv1"></canvas>								
 									<input type="file" multiple="false" accept="image/*"
-									 onchange=upload1() id = "finput1" name = "pic1">
-								</div>
-							</div>
+									 onchange=upload1() id = "finput1" name = "pic1">							
 						</td>
+						</div>
 					</tr>
 					<tr>
 						<td>上傳圖片二</td>
-						<td>
-							<div>
-								<canvas id="canv2"></canvas>
-								<div>
+						<div>
+						<td><canvas id="canv2"></canvas>								
 									<input type="file" multiple="false" accept="image/*"
-									 onchange=upload2() id = "finput2" name = "pic2">
-								</div>
-							</div>
+									 onchange=upload2() id = "finput2" name = "pic2">							
 						</td>
+						</div>
 					</tr>
 					<tr>
 						<td>上傳圖片三</td>
-						<td>
-							<div>
-								<canvas id="canv3"></canvas>
-								<div>
+						<div>
+						<td><canvas id="canv3"></canvas>								
 									<input type="file" multiple="false" accept="image/*"
 									 onchange=upload3() id = "finput3" name = "pic3">
-								</div>
-							</div>
 						</td>
+						</div>
 					</tr>
-
-
-				</table>
+					</table>
 				<br>
 				<input type="hidden" name="action" value="insert">
 				<input type="submit" value="送出新增">
@@ -242,11 +199,12 @@ canvas3{
 									break;
 								case 1:
 									$("#sel2 option").remove();
+									
 									var array = [ "未收到商品", "商品毀損", "商品不符合", "收到商品異常",
 										"歸還商品異常", "未歸還商品", "取消訂單", "完成訂單" ];											
 									$.each(array, function(i, val) {
 										$("#sel2").append(
-												$("<option value='" + array[i] + "'>"
+												$("<option value='" + i + "'>"
 												+ array[i] + "</option>"));
 									});
 									break;
@@ -256,7 +214,7 @@ canvas3{
 											//利用each遍歷array中的值並將每個值新增到Select中
 									$.each(array, function(i, val) {
 										$("#sel2").append(
-											$("<option value='" + array[i] + "'>"
+											$("<option value='" + i + "'>"
 												+ array[i] + "</option>"));
 									});
 									break;
@@ -265,7 +223,7 @@ canvas3{
 										var array = [ "盜用圖片", "未依分類", "金額誇張" ];											
 									$.each(array, function(i, val) {
 										$("#sel2").append(
-												$("<option value='" + array[i] + "'>"
+												$("<option value='" + i + "'>"
 													+ array[i] + "</option>"));
 									});
 									break;
@@ -275,7 +233,7 @@ canvas3{
 													"北美洲", "南極洲" ];											
 									$.each(array, function(i, val) {
 										$("#sel2").append(
-												$("<option value='" + array[i] + "'>"
+												$("<option value='" + i + "'>"
 														+ array[i] + "</option>"));
 									});
 									break;

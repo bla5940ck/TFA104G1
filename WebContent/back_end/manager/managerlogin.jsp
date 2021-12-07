@@ -184,10 +184,10 @@ input[type="password"] {
 			</c:if>
 
 			<div class="wrapper">
-				<h2 class="form-signin-heading">Please login</h2>
+				<h2 class="form-signin-heading">請登入</h2>
 				<form action="/TFA104G1/ManagerServlet" method="post" >
-				<input type="text" class="form-control" name="managerUser"	placeholder="user" /> 
-				<input type="password" class="form-control"	name="managerPassword" placeholder="Password" />
+				<input type="text" class="form-control" name="managerUser"	placeholder="請輸入帳號" /> 
+				<input type="password" class="form-control"	name="managerPassword" placeholder="請輸入密碼" />
 				<button class="login" type="submit">Login</button>
 				<input type="hidden" name="action" value="login" />
 				

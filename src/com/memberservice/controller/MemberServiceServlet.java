@@ -339,6 +339,41 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				failureView.forward(req, res);
 			}
 		}
+		if("problemTypeReport".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println(errorMsgs);
+			try {
+				Integer msgID = new Integer(req.getParameter("memberID"));
+				
+				Integer typeID = new Integer(req.getParameter("problemtype1"));
+				
+				String msgRes = req.getParameter("msgRes");
+				
+				Part pic1 =	req.getPart("pic1");
+				InputStream in1 = pic1.getInputStream();
+				byte[] buf1 = new byte[in1.available()];
+				in1.read(buf1);
+				in1.close();
+				System.out.println("buffer lenght:"+ buf1.length);
+				
+				Part pic2 =	req.getPart("pic2");
+				InputStream in2 = pic2.getInputStream();
+				byte[] buf2 = new byte[in2.available()];
+				in2.read(buf2);
+				in2.close();
+				System.out.println("buffer lenght:"+ buf2.length);
+				
+				Part pic3 =	req.getPart("pic3");
+				InputStream in3 = pic3.getInputStream();
+				byte[] buf3 = new byte[in3.available()];
+				in3.read(buf3);
+				in3.close();
+				System.out.println("buffer lenght:"+ buf3.length);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 }
