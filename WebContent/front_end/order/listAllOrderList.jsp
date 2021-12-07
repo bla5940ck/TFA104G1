@@ -137,17 +137,16 @@ th, td {
 			
 			<table id="table-1">
 			<div>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-				<tr>
-					<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部</a></td>
-					<td><button name="ordStatus" value="0">已成立</button></td>	
-					<td><button name="ordStatus" value="1">待歸還</button></td>	
-					<td><button name="ordStatus" value="2">已完成</button></td>	
-					<td><button name="ordStatus" value="9">已取消</button></td>					
-				</tr>
-				<input type="hidden" name="action" value="get_Status_Display">
-				</FORM>
+				<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+						<tr>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><button name="ordStatus" value="0">已成立</button></td>
+							<td><button name="ordStatus" value="1">待歸還</button></td>
+							<td><button name="ordStatus" value="2">已完成</button></td>
+							<td><button name="ordStatus" value="9">已取消</button></td>
+						</tr>
+						<input type="hidden" name="action" value="get_Status_Display">
+					</FORM>
 			</div>
 			</table>	
 			<table id="table-1">
