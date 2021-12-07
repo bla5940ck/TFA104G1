@@ -77,7 +77,7 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header2.file"%>
+	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
@@ -105,7 +105,8 @@ th, td {
 					<tr>
 					<td>反應會員編號</td>
 					<td>
-						<input type="hidden" name="memberID" value="memID"> <%=memID %>
+					<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
+						<input type="hidden" name="memberID" value="memID">${memSVC.getOneMember(memID).name}
 						
 					</td>
 					</tr>
