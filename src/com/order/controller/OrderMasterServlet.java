@@ -430,5 +430,28 @@ public class OrderMasterServlet extends HttpServlet {
 				
 			}
 		}
+		
+		if("get_Status_Display".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println("進來了");
+			
+			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
+			
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
+			
+			if(omVO == null) {
+				errorMsgs.add("查無資料");
+			}
+			
+			for(OrderMasterVO oms : omVO) {
+				req.setAttribute("OrderMasterVO", oms);
+				String url = "/front_end/order/listStatusOrderMaster.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			}
+		}	
 	}
 }

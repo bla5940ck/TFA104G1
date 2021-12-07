@@ -8,6 +8,7 @@ public interface OrderMasterDAO_interface {
 	void addOrderMaster(OrderMasterVO orderMaster);
 	void updateOrderMaster(OrderMasterVO orderMaster);
 	OrderMasterVO findOrderMasterByPK(Integer ordID);
+	List<OrderMasterVO> findOrderMasterByStatus(Integer ordStatus);
 	List<OrderMasterVO> getAllOrderMaster();
 	void insertAllOrder(OrderMasterVO omVO, OrderListVO olVO); //交易控制一版_新增
 	void inesetWithList(OrderMasterVO omVO, List<OrderListVO> list); //交易控制二版_新增

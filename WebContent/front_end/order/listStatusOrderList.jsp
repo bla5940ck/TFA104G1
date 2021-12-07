@@ -144,10 +144,9 @@ th, td {
 			</c:if>
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/OrderListServlet">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部</a></td>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
 							<td><button name="ordStatus" value="1">待歸還</button></td>
 							<td><button name="ordStatus" value="2">已完成</button></td>

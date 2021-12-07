@@ -26,6 +26,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			+ "SHIP_DATE = ?, ARRIVAL_DATE = ?, RETURN_DATE = ?, RENT_RANK = ?, LEASE_RANK = ?, "
 			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String FIND_BY_PK = "SELECT * FROM ORDER_MASTER WHERE ORD_ID = ?";
+	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_MASTER WHERE  ORD_STATUS = ?";
 	private static final String GET_ALL = "SELECT * FROM ORDER_MASTER";
 
 	private static final String INSERT_STMT_ORDERLIST = "INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
@@ -41,6 +42,86 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		}
 	}
 
+	
+	@Override
+	public List<OrderMasterVO> findOrderMasterByStatus(Integer ordStatus) {
+		List<OrderMasterVO> list = new ArrayList<OrderMasterVO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(FIND_BY_STATUS);
+			
+			pstmt.setInt(1, ordStatus);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				OrderMasterVO omVO = new OrderMasterVO();
+				omVO.setOrdID(rs.getInt("ORD_ID"));
+				omVO.setRentID(rs.getInt("RENT_ID"));
+				omVO.setLeaseID(rs.getInt("LEASE_ID"));
+				omVO.setPayID(rs.getInt("PAY_ID"));
+				omVO.setCouponID(rs.getInt("COUPON_ID"));
+				omVO.setShipStatus(rs.getInt("SHIP_STATUS"));
+				omVO.setPayStatus(rs.getInt("PAY_STATUS"));
+				omVO.setOrdStatus(rs.getInt("ORD_STATUS"));
+				omVO.setOrdDate(rs.getTimestamp("ORD_DATE"));
+				omVO.setShipCode(rs.getInt("SHIP_CODE"));
+				omVO.setReturnCode(rs.getInt("RETURN_CODE"));
+				omVO.setStoreCode(rs.getInt("STORE_CODE"));
+				omVO.setEstStart(rs.getDate("EST_START"));
+				omVO.setEstEnd(rs.getDate("EST_END"));
+				omVO.setShipDate(rs.getTimestamp("SHIP_DATE"));
+				omVO.setArrivalDate(rs.getTimestamp("ARRIVAL_DATE"));
+				omVO.setReturnDate(rs.getTimestamp("RETURN_DATE"));
+				omVO.setRentDays(rs.getInt("RENT_DAYS"));
+				omVO.setRentRank(rs.getInt("RENT_RANK"));
+				omVO.setLeaseRank(rs.getInt("LEASE_RANK"));
+				omVO.setRentComt(rs.getString("RENT_COMT"));
+				omVO.setLeaseComt(rs.getString("LEASE_COMT"));
+				omVO.setRentComtdate(rs.getTimestamp("RENT_COMTDATE"));
+				omVO.setLeaseComtdate(rs.getTimestamp("LEASE_COMTDATE"));
+				omVO.setProdPrice(rs.getInt("PROD_PRICE"));
+				omVO.setShipFee(rs.getInt("SHIP_FEE"));
+				omVO.setOrdPrice(rs.getInt("ORD_PRICE"));
+				
+				list.add(omVO);
+			}
+		
+		
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 	@Override
 	public void inesetWithList(OrderMasterVO omVO, List<OrderListVO> list) {
 
