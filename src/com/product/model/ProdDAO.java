@@ -8,7 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import util.Util;
 
@@ -466,6 +469,25 @@ public class ProdDAO implements ProdDAOImpl {
 	
 	public static void main(String[] args) {
 		ProdDAO dao = new ProdDAO();
+		
+		List<ProdVO> prodList = dao.getAll();
+//		List<ProdVO> list1 = new ArrayList();
+//		for(ProdVO p: list) {
+//			if(p.getShelfDate()!=null) {
+//				list1.add(p);
+//			}
+//		}
+//		
+//		List<ProdVO> list1 = prodList.stream()
+//										.filter(p ->p.getShelfDate()!=null)	
+//				.sorted(Comparator.comparing(ProdVO::getShelfDate).reversed()).collect(Collectors.toList());
+//		
+//		list1.forEach(p->System.out.println(p.getShelfDate()));
+//		
+//		for(ProdVO p :list1) {
+//			System.out.println(p.getProdID());
+//		}
+////		
 //		List<ProdVO> list = dao.priceSortAsc();
 //		for(ProdVO p :list) {
 //			System.out.println(p.getProdRent());
@@ -478,6 +500,13 @@ public class ProdDAO implements ProdDAOImpl {
 		
 //		ProdVO findProductByPK = dao.findProductByPK(1);
 //		System.out.println(findProductByPK.getProdPrice());
+	
+	
+		ProdService prodSvc = new ProdService();
+		List<ProdVO> list = prodSvc.getAllByTimeDesc();
+		list.forEach(p->System.out.println(p.getProdID()));
+	
+	
 	}
 
 }
