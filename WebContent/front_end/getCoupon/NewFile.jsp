@@ -17,16 +17,18 @@
 
 <FORM METHOD="post" ACTION="getmemid.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="查看會員的折價券">
+			     <td>會員ID:</td>
 			     <input type="TEXT" name="member_id"  size="1">
+			     
 			     <input type="hidden" name="action"	value="getMemberid"></FORM>
 
 <br>
 
 <FORM METHOD="post" ACTION="getmemid.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="使用折價券">
-			     <input type="TEXT" name="member_id"  size="1">
-			     <input type="TEXT" name="coupon_id"  size="4">
-			     <input type="hidden" name="action"	value="update"></FORM>
+			     <td>會員的折價券編號:</td>
+			     <input type="TEXT" name="mem_coupon_id"  size="5">
+			     <input type="hidden" name="action"	value="findByPrimaryKey"></FORM>
 			     
 			
 

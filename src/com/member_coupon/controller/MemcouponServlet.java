@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.member_coupon.model.*;
+import com.promo.model.PromoService;
 
 @WebServlet("/front_end/getCoupon/getmemid.do")
 
@@ -66,5 +67,34 @@ import com.member_coupon.model.*;
 					failureView.forward(req, res);
 				}
 			}
+
+		if ("findByPrimaryKey".equals(action)) { // 來自listAll_promo.jsp
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ***************************************/
+				Integer mem_coupon_id = new Integer(req.getParameter("mem_coupon_id"));
+				System.out.print(mem_coupon_id);
+
+				/*************************** 2.開始更改資料 ***************************************/
+				MemcouponService memcouponSvc = new MemcouponService();
+				memcouponSvc.findByPrimaryKey(mem_coupon_id);
+
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+//				String url = "/back_end/promo/listAll_promo.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+//				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/listAll_pormo.jsp");
+				failureView.forward(req, res);
+			}
 		}
 	}
+}
