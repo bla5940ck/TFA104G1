@@ -71,4 +71,8 @@ public class OrderMasterService {
 		return dao.getAllOrderMaster();
 
 	}
+	
+	public List<OrderMasterVO> getStatus(Integer ordStatus){
+		return dao.findOrderMasterByStatus(ordStatus);
+	}
 }

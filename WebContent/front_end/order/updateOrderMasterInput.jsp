@@ -5,7 +5,7 @@
 
 <%
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
-	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
+// 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
 // 	out.println(olVO.getListID());
 %>
 
@@ -79,7 +79,7 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -96,7 +96,7 @@ th, td {
 				<nav class="nav">
 					<h2>出租者專區</h2>
 					<ul class="nav_list">
-						<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+						<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
 					</ul>
 				</nav>
 			</aside>
@@ -228,7 +228,11 @@ th, td {
 				</table>
 				<input type="hidden" name="action" value="update"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
+				<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
+				<input type="hidden" name="listID" value="${olVO.listID}">
+				</c:forEach>
+<%-- 				<input type="hidden" name="listID" value="<%=olVO.getListID()%>"> --%>
 				<input type="hidden" name="shipDate" id="shipTimelong" value="<%=omVO.getShipDate()== null ? "" : omVO.getShipDate().getTime()%>">
 				<input type="hidden" name="arrivalDate" id="arrivalTimelong" value="<%=omVO.getArrivalDate()== null ? "" : omVO.getArrivalDate().getTime()%>">
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">

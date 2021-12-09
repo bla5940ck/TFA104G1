@@ -4,7 +4,9 @@
 	pageEncoding="UTF-8"%>
 		
 <!DOCTYPE html>
+ <link href="<%=request.getContextPath()%>/front_end/product/css/modify.css" rel="stylesheet">
 <html lang="en">
+
 <style>
 #preview1 {
 	border: 1px solid lightgray;
@@ -112,16 +114,16 @@
 									<form action="<%=request.getContextPath()%>/prod/ProdServlet"
 										method="post" enctype="multipart/form-data"
 										class="aa-login-form">
-										<label for="">圖片一<span>*</span></label> <input type="file"
+										<label for="">圖片一<span>*</span></label> <input type="file" class="file"
 											id='file_id1' name='file_name1'
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片二<span></span></label>
-											 <input type="file"
+											 <input type="file" class="file"
 											id='file_id2' name='file_name2'
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片三<span></span></label>
 											 <input type="file"
-											id='file_id3' name='file_name3'
+											id='file_id3' name='file_name3' class="file"
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">商品名稱<span>*</span></label>
 											 <input type="text" name="product_name"	id="product_name"
@@ -151,6 +153,17 @@
 										<input
 			type=hidden id="fileCount" name="fileCount"><br> <input
 			type="hidden" name="action" value="upload">
+			<div>
+標籤:&nbsp&nbsp  <label ><input type="checkbox" id="ps4" name="checkbox1" value="ps4">#ps4</label> 
+<label ><input id=""type="checkbox" name="checkbox1" value="ps5">#ps5</label> 
+<label ><input id="" type="checkbox" name="checkbox1" value="OLED">#OLED</label> 
+<label ><input id="" type="checkbox" name="checkbox1" value="瑪利歐">#瑪利歐</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="薩爾達">#薩爾達</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="賽車">#賽車</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="冒險">#冒險</label>
+<label ><input id="" type="checkbox" name="checkbox1" value="動作">#動作</label>
+		
+	</div>
 										<button type="submit" class="aa-browse-btn" id="submit1" >建立商品</button>
 <!-- 										<button type="submit" class="aa-browse-btn" -->
 <!-- 											style="background-color: lightblue; color: #000;">上架商品</button> -->
