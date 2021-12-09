@@ -26,6 +26,7 @@ public class getCouponServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html;charset=UTF-8");
 		String action = req.getParameter("action");
 
 		if ("getAmount".equals(action)) { // 來自select_Promo.jsp的請求
@@ -90,8 +91,8 @@ public class getCouponServlet extends HttpServlet {
 				
 				MemcouponVO memcouponVO = new MemcouponVO();
 				memcouponVO.setMember_id(member_id);
-				memcouponVO.setCategory_id(category_id);
-				memcouponVO.setCoupon_id(coupon_id);
+				memcouponVO.setCategory_id(category_id);			
+				memcouponVO.setCoupon_id(coupon_id);	
 				memcouponVO.setDiscount(discount);
 				memcouponVO.setCoupon_name(coupon_name);
 				memcouponVO.setStatus(status);
@@ -108,18 +109,23 @@ public class getCouponServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				MemcouponService memcouponSvc = new MemcouponService();
-				memcouponVO = memcouponSvc.insert(member_id, category_id, coupon_id, discount, coupon_name, 
+				boolean b = memcouponSvc.insert(member_id, category_id, coupon_id, discount, coupon_name, 
 						status, start_date, end_date);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				req.setAttribute("memcoupoVO", memcouponVO); // 資料庫取出的promoVO物件,存入req
-				String url = "/front_end/getCoupon/getCoupon.jsp";
+				String url = "/front_end/getCoupon/getCoupon.jsp";		
+				res.getWriter().print("<script language='javascript'>alert('ok')</script>");
+				req.setAttribute("b", b);
+				req.setAttribute("ok", "ok");
+				
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOne_promo.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
+				res.getWriter().print("<script language='javascript'>alert('notOk')</script>");
+				req.setAttribute("notOk", "notOk");
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/getCoupon/getCoupon.jsp");
 				failureView.forward(req, res);
 			}

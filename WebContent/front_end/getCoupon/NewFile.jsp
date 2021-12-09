@@ -12,12 +12,21 @@
 			     <input type="submit" value="查看可用折價券">
 			     <input type="hidden" name="amount"  value="0">
 			     <input type="hidden" name="action"	value="getAmount"></FORM>
+<br>
 
 
- <FORM METHOD="post" ACTION="getmemid.do" style="margin-bottom: 0px;">
+<FORM METHOD="post" ACTION="getmemid.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="查看會員的折價券">
 			     <input type="TEXT" name="member_id"  size="1">
 			     <input type="hidden" name="action"	value="getMemberid"></FORM>
+
+<br>
+
+<FORM METHOD="post" ACTION="getmemid.do" style="margin-bottom: 0px;">
+			     <input type="submit" value="使用折價券">
+			     <input type="TEXT" name="member_id"  size="1">
+			     <input type="TEXT" name="coupon_id"  size="4">
+			     <input type="hidden" name="action"	value="update"></FORM>
 			     
 			
 

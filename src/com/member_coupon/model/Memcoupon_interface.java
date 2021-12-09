@@ -9,6 +9,7 @@ import java.util.List;
 		public MemcouponVO findByPrimaryKey(Integer mem_coupon_id);
 		public List<MemcouponVO> getAll();
 		public List<MemcouponVO> getMemberid(Integer member_id);
+//		public MemcouponVO isCouponIdDup(Integer coupon_id);
 		
 	}
 

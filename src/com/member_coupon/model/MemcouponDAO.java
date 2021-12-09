@@ -344,6 +344,12 @@ public class MemcouponDAO implements Memcoupon_interface{
 		}
 		return list;
 	}
-	
+//
+//	@Override
+//	public void isCouponIdDup(Integer coupon_id) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
 
 }

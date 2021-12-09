@@ -4,11 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.promo_list.model.*"%>
 
-<%
-	List<PromolistVO> promolistVO = (List<PromolistVO>) request.getAttribute("promolistVO");
-	List<PromolistVO> list = promolistVO;
-	pageContext.setAttribute("list", list);
-%>
+
 <html>
 <head>
 <title>折價券領取頁面</title>
@@ -78,7 +74,7 @@ th, td {
 	<%
 		session.setAttribute("id", 1);
 	%>
-		<%@ include file="/includeFolder/header2.file"%>
+		<%@ include file="/includeFolder/header.file"%>
 	<!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<!-- 		<aside class="aside"> -->
@@ -90,8 +86,19 @@ th, td {
 		<!-- 			</nav> -->
 		<!-- 		</aside> -->
 		<main class="main">
-
-
+	<c:if test="${b==true }">
+	<c:if test="${ok=='ok'}">
+		<script>
+ 			alert("領取成功");
+		</script>
+	</c:if>
+	</c:if>
+	<c:if test="${b==false}">
+			<script>
+			alert("已領取過");
+		</script>
+	</c:if>
+	
 
 
 			<table id="table-1">
@@ -121,10 +128,12 @@ th, td {
 					<th>折價金額</th>
 <!-- 					<th>數量</th> -->
 					<!-- 					<th>已領取數量</th> -->
-										<th>開始日期</th>
-										<th>結束日期</th>
+<!-- 										<th>開始日期</th> -->
+<!-- 										<th>結束日期</th> -->
 				</tr>
-				<c:forEach var="promolistVO" items="${list}">
+				<jsp:useBean id="promo" class="com.promo_list.model.PromolistService" />
+				
+				<c:forEach var="promolistVO" items="${promo.getAmount(0)}">
 
 					<tr>
 <%-- 						<td>${promolistVO.coupon_id}</td> --%>
@@ -134,13 +143,13 @@ th, td {
 						<td>${promolistVO.discount}</td>
 <%-- 						<td>${promolistVO.amount}</td> --%>
 						<%-- 						<td>${promolistVO.used}</td> --%>
-												<td>${promolistVO.start_date}</td>
-												<td>${promolistVO.end_date}</td>
+<%-- 												<td>${promolistVO.start_date}</td> --%>
+<%-- 												<td>${promolistVO.end_date}</td> --%>
 						<td>
 							<FORM METHOD="post"
 								ACTION="getcoupon.do"
 								style="margin-bottom: 0px;">
-								<input type="submit" value="領取"> 
+								<input class="btn" type="submit" value="領取"> 
 								<input type="hidden" name="member_id" value="1"> 
 								<input type="hidden" name="category_id" value="${promolistVO.category_id}"> 
 								<input type="hidden" name="coupon_id" value="${promolistVO.coupon_id}"> 
@@ -150,9 +159,11 @@ th, td {
 								<input type="hidden" name="start_date" value="${promolistVO.start_date}"> 
 								<input type="hidden" name="end_date" value="${promolistVO.end_date}"> 
 								<input type="hidden" name="action" value="insert">
+								 <input type="hidden" name="amount"  value="0">
 							</FORM>
 						</td>
-						</tr>
+
+		</tr>
 				</c:forEach>
 			</table>
 
