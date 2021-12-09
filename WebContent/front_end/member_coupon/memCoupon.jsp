@@ -2,13 +2,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.promo_list.model.*"%>
+<%@ page import="com.member_coupon.model.*"%>
 
 <%
-	List<PromolistVO> promolistVO = (List<PromolistVO>) request.getAttribute("promolistVO");
-	List<PromolistVO> list = promolistVO;
+	List<MemcouponVO> memcouponVO = (List<MemcouponVO>) request.getAttribute("memcouponVO");
+	List<MemcouponVO> list = memcouponVO;
 	pageContext.setAttribute("list", list);
 %>
+
 <html>
 <head>
 <title>折價券領取頁面</title>
@@ -97,7 +98,7 @@ th, td {
 			<table id="table-1">
 				<tr>
 					<td>
-						<h3>折價券領取專區</h3>
+						<h3>我的折價券</h3>
 					</td>
 				</tr>
 			</table>
@@ -111,47 +112,40 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-			<!-- coupon_id, promo_id, category_id, coupon_name, discount, amount, used, start_date, end_date -->
+			<!-- mem_coupon_id, member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date -->
 			<table>
 				<tr>
-<!-- 					<th>折價券編號</th> -->
-<!-- 					<th>專案編號</th> -->
+<!-- 					<th>會員的折價券編號</th> -->
+<!-- 					<th>會員編號</th> -->
 <!-- 					<th>商品類別編號</th> -->
+<!-- 					<th>折價券編號</th> -->
 					<th>折價券名稱</th>
 					<th>折價金額</th>
-<!-- 					<th>數量</th> -->
-					<!-- 					<th>已領取數量</th> -->
-										<th>開始日期</th>
-										<th>結束日期</th>
+					<th>折價券狀態</th>
+					<th>開始日期</th>
+					<th>結束日期</th>
 				</tr>
-				<c:forEach var="promolistVO" items="${list}">
+				<c:forEach var="memcouponVO" items="${list}">
 
 					<tr>
-<%-- 						<td>${promolistVO.coupon_id}</td> --%>
-<%-- 						<td>${promolistVO.promo_id}</td> --%>
-<%-- 						<td>${promolistVO.category_id}</td> --%>
-						<td>${promolistVO.coupon_name}</td>
-						<td>${promolistVO.discount}</td>
-<%-- 						<td>${promolistVO.amount}</td> --%>
-						<%-- 						<td>${promolistVO.used}</td> --%>
-												<td>${promolistVO.start_date}</td>
-												<td>${promolistVO.end_date}</td>
-						<td>
-							<FORM METHOD="post"
-								ACTION="getcoupon.do"
-								style="margin-bottom: 0px;">
-								<input type="submit" value="領取"> 
-								<input type="hidden" name="member_id" value="1"> 
-								<input type="hidden" name="category_id" value="${promolistVO.category_id}"> 
-								<input type="hidden" name="coupon_id" value="${promolistVO.coupon_id}"> 
-								<input type="hidden" name="coupon_name" value="${promolistVO.coupon_name}"> 
-								<input type="hidden" name="discount" value="${promolistVO.discount}"> 
-								<input type="hidden" name="status" value="0"> 
-								<input type="hidden" name="start_date" value="${promolistVO.start_date}"> 
-								<input type="hidden" name="end_date" value="${promolistVO.end_date}"> 
-								<input type="hidden" name="action" value="insert">
-							</FORM>
-						</td>
+<%-- 						<td>${memcouponVO.mem_coupon_id}</td> --%>
+<%-- 						<td>${memcouponVO.member_id}</td> --%>
+<%-- 						<td>${memcouponVO.category_id}</td> --%>
+<%-- 						<td>${memcouponVO.coupon_id}</td> --%>
+						<td>${memcouponVO.coupon_name}</td>
+						<td>${memcouponVO.discount}</td>
+						<td>${memcouponVO.status}</td>
+						<td>${memcouponVO.start_date}</td>
+						<td>${memcouponVO.end_date}</td>
+<!-- 						<td> -->
+<!-- 							<FORM METHOD="post" -->
+<%-- 								ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" --%>
+<!-- 								style="margin-bottom: 0px;"> -->
+<!-- 								<input type="submit" value="領取"> <input type="hidden" -->
+<%-- 									name="coupon_id" value="${promolistVO.coupon_id}"> <input --%>
+<!-- 									type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 							</FORM> -->
+<!-- 						</td> -->
 						</tr>
 				</c:forEach>
 			</table>

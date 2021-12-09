@@ -53,5 +53,8 @@ public class MemcouponService {
 	public List<MemcouponVO> getAll() {
 		return dao.getAll();
 	}
+	public List<MemcouponVO> getMemberid(Integer member_id) {
+		return dao.getMemberid(member_id);
+	}
 
 }
