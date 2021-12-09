@@ -10,7 +10,7 @@ import java.util.List;
 import java.sql.*;
 import java.sql.Timestamp;
 
-public class ChatroomJDBCDAO implements ChatroomDAOIpml {
+public class ChatroomJDBCDAO implements ChatroomDAOImpl {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
 	String userid = "root";

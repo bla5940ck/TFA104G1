@@ -1,24 +1,349 @@
-package com.pbreply.controller;
+package com.postboard.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-@WebServlet("/PostBroadServlet")
-public class PostBroadServlet extends HttpServlet {
- 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
-			throws ServletException, IOException {
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import java.io.*;
+import java.util.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import com.google.gson.Gson;
+import com.postboard.model.*;
+
+@WebServlet("/back_end/PostBoard/pb.do")
+@MultipartConfig
+public class PostBoardServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doPost(req, res);
+	}
+
+	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+
+		req.setCharacterEncoding("UTF-8");
+		String action = req.getParameter("action");
+
+		if ("getOne_For_Display".equals(action)) { // 來自articleList.jsp的請求
+			System.out.println("1");
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer postId = new Integer(req.getParameter("postId").trim());
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				PostBoardService pbSvc = new PostBoardService();
+				PostBoardVO pbVO = pbSvc.findByPrimaryKey(postId);
+				if (pbVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("pbVO", pbVO); // 資料庫取出的postBoardVO物件,存入req
+				String url = "/back_end/PostBoard/articleList.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 articleList.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("getOne_For_Update".equals(action)) { // 來自articleList.jsp的請求
+			System.out.println("2");
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer postId = new Integer(req.getParameter("postId"));
+				
+				/*************************** 2.開始查詢資料 ****************************************/
+				PostBoardService pbSvc = new PostBoardService();
+				PostBoardVO pbVO = pbSvc.findByPrimaryKey(postId);
+
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("pbVO", pbVO); // 資料庫取出的promoVO物件,存入req
+				String url = "/back_end/PostBoard/updateArticle.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updatearticle.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
+		if ("update".equals(action)) { // 來自updateArticle.jsp的請求
+			System.out.println("3");
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+//postId; categoryId; memberId; postTitle; postCont; postTime; replyCount; pic;
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer postId = new Integer(req.getParameter("postId").trim());
+				System.out.println(postId);
+				
+
+				Integer categoryId = null;
+				
+				try {
+					categoryId = new Integer(req.getParameter("categoryId").trim());
+				} catch (NumberFormatException e) {
+					categoryId = 0;
+					errorMsgs.add("商品類別請選擇");
+				}
+				System.out.println(categoryId);
+
+				Integer memberId = new Integer(req.getParameter("memberId").trim());
+				System.out.println("mid");
+
+				String postTitle = req.getParameter("postTitle");
+				
+				String postTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)($!@#^&*-_+=~<>/?;:)]{1,100}$";
+				if (postTitle == null || postTitle.trim().length() == 0) {
+					errorMsgs.add("徵求標題: 請勿空白");
+				} 
+//				else if (!postTitle.trim().matches(postTitleReg)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("徵求標題: 只能是中、英文及數字");
+//				}
+				System.out.println(postTitle);
+
+				String postCont = req.getParameter("postCont");
+				
+				String postContReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)($!@#^&*-_+=~<>/?;:)]{1,600}$";
+				if (postCont == null || postCont.trim().length() == 0) {
+					errorMsgs.add("徵求內容: 請勿空白");
+				} 
+//				else if (!postCont.trim().matches(postContReg)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("徵求內容: 只能是中、英文及數字");
+//				}
+				System.out.println(postCont);
+
+				String ts = req.getParameter("posttime");
+				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date date = sdf.parse(ts);// date 格式
+
+				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
+				
+				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
+				
+				System.out.println(ts);
+
+				Integer replyCount = null;
+				System.out.println(replyCount);
+
+				byte[] pic = null;
+				System.out.println(pic);
+
+				PostBoardVO pbVO = new PostBoardVO();
+				pbVO.setPostId(postId);
+				pbVO.setCategoryId(categoryId);
+				pbVO.setMemberId(memberId);
+				pbVO.setPostTitle(postTitle);
+				pbVO.setPostCont(postCont);
+				pbVO.setPostTime(postTime);
+				pbVO.setReplyCount(replyCount);
+				pbVO.setPic(pic);
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("pbVO", pbVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				PostBoardService pbSvc = new PostBoardService();
+				pbVO = pbSvc.updatearticle(postId, categoryId, memberId, postTitle, postCont, postTime,
+						replyCount, pic);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("pbVO", pbVO); // 資料庫取出的postBoardVO物件,存入req
+				String url = "/back_end/PostBoard/postAll.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交articleList.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
-		res.getWriter().append("Served at: ").append(req.getContextPath());
-	}
+		//ok
+		if ("insert".equals(action)) { // 來自addarticle.jsp的請求
+			System.out.println("4");
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) 
-			throws ServletException, IOException {
-		doGet(req, res);
-	}
+			try {
+				
+				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+				// Integer postId = new Integer(req.getParameter("postId").trim());
+				Integer categoryId = new Integer(req.getParameter("categoryId").trim());
+				
+				try {
+					categoryId = new Integer(req.getParameter("categoryId").trim());
+				} catch (NumberFormatException e) {
+					categoryId = 0;
+					errorMsgs.add("商品類別請選擇");
+				}
 
+				Integer memberId = new Integer(req.getParameter("memberId").trim());
+				
+
+				String postTitle = req.getParameter("postTitle");
+				
+				String postTitleReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)($!@#^&*-_+=~<>/?;:)]{1,100}$";
+				if (postTitle == null || postTitle.trim().length() == 0) {
+					errorMsgs.add("徵求標題: 請勿空白");
+				} 
+//				else if (!postTitle.trim().matches(postTitleReg)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("徵求標題: 只能是中、英文及數字");
+//				}
+				
+
+				String postCont = req.getParameter("postCont");
+				
+				String postContReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)($!@#^&*-_+=~<>/?;:)]{1,600}$";
+				if (postCont == null || postCont.trim().length() == 0) {
+					errorMsgs.add("徵求內容: 請勿空白");
+				} 
+//				else if (!postCont.trim().matches(postContReg)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("徵求內容: 只能是中、英文及數字");
+//				}
+				
+//				long postTime = System.currentTimeMillis();
+//				Timestamp timestamp = new Timestamp(postTime);
+//				String ts = "2021-12-02 20:20:20" ;
+//				SimpleDateFormat sd = 
+				String ts = req.getParameter("posttime");
+				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date date = sdf.parse(ts);// date 格式
+
+				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
+				
+				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
+
+				//Integer replyCount = null;
+				//Integer replyCount = new Integer(req.getParameter("replyCount").trim());
+
+				byte[] pic = null;
+	
+				PostBoardVO pbVO = new PostBoardVO();
+				// pbVO.setPostId(postId);
+				pbVO.setCategoryId(categoryId);
+				pbVO.setMemberId(memberId);
+				pbVO.setPostTitle(postTitle);
+				pbVO.setPostCont(postCont);
+				pbVO.setPostTime(timeStamp);
+				//pbVO.setReplyCount(replyCount);
+				pbVO.setPic(pic);
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("pbVO", pbVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/addArticle.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/*************************** 2.開始新增資料 ***************************************/
+				PostBoardService pbSvc = new PostBoardService();
+				pbVO = pbSvc.addarticle(categoryId, memberId, postTitle, postCont, postTime, pic);
+
+				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				String url ="/back_end/PostBoard/postSingle.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交articleLsit.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/addArticle.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		
+		//ok
+		if ("delete".equals(action)) { // 來自articleList.jsp
+			System.out.println("5");
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 ***************************************/
+				Integer postId = new Integer(req.getParameter("postId").trim());
+
+				/*************************** 2.開始刪除資料 ***************************************/
+				PostBoardService pbSvc = new PostBoardService();
+				pbSvc.delet(postId);
+
+				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
+				String url = "/back_end/PostBoard/articleList.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("刪除資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+				failureView.forward(req, res);
+			}
+		}
+	}
 }

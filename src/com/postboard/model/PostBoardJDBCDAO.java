@@ -1,4 +1,4 @@
-package com.post_borad.model;
+package com.postboard.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostBoradJDBCDAO implements PostBoradDAOInterface {
+public class PostBoardJDBCDAO implements PostBoardDAOImpl {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
@@ -17,18 +17,18 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 	String passwd = "password";
 
 	private static final String INSERT_STMT = 
-			"INSERT INTO post_borad (post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO post_board (category_id,member_id,post_title,post_cont,post_time,pic) VALUES (?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic FROM post_borad order by post_id";
+			"SELECT post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic FROM post_board order by post_id";
 	private static final String GET_ONE_STMT = 
-			"SELECT post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic FROM post_borad where post_id = ?";
+			"SELECT post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic FROM post_board where post_id = ?";
 	private static final String DELETE = 
-			"DELETE FROM post_borad where post_id = ?";
+			"DELETE FROM post_board where post_id = ?";
 	private static final String UPDATE = 
-			"UPDATE post_borad set post_id=?, category_id=?, member_id=?, post_title=?, post_cont=?, post_time=?,reply_count=?,pic=? where post_id = ?";
+			"UPDATE post_board set category_id=?, member_id=?, post_title=? ,post_cont=? ,post_time=? ,reply_count=? ,pic=? where post_id = ?";
 
 	@Override
-	public void insert(PostBoradVO postboradVO) {
+	public void insert(PostBoardVO postboardVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -38,14 +38,13 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, postboradVO.getPostId());
-			pstmt.setInt(2, postboradVO.getCategoryId());
-			pstmt.setInt(3, postboradVO.getMemberId());
-			pstmt.setString(4, postboradVO.getPostTitle());
-			pstmt.setString(5, postboradVO.getPostCont());
-			pstmt.setTimestamp(6, postboradVO.getPostTime());
-			pstmt.setInt(7, postboradVO.getReplyCount());
-			pstmt.setBytes(8, postboradVO.getPic());
+			
+			pstmt.setInt(1, postboardVO.getCategoryId());
+			pstmt.setInt(2, postboardVO.getMemberId());
+			pstmt.setString(3, postboardVO.getPostTitle());
+			pstmt.setString(4, postboardVO.getPostCont());
+			pstmt.setTimestamp(5, postboardVO.getPostTime());
+			pstmt.setBytes(6, postboardVO.getPic());
 
 			pstmt.executeUpdate();
 
@@ -76,7 +75,7 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 	}
 
 	@Override
-	public void update(PostBoradVO postboradVO) {
+	public void update(PostBoardVO postboardVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -86,14 +85,15 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, postboradVO.getPostId());
-			pstmt.setInt(2, postboradVO.getCategoryId());
-			pstmt.setInt(3, postboradVO.getMemberId());
-			pstmt.setString(4, postboradVO.getPostTitle());
-			pstmt.setString(5, postboradVO.getPostCont());
-			pstmt.setTimestamp(6, postboradVO.getPostTime());
-			pstmt.setInt(7, postboradVO.getReplyCount());
-			pstmt.setBytes(8, postboradVO.getPic());
+			
+			pstmt.setInt(1, postboardVO.getCategoryId());
+			pstmt.setInt(2, postboardVO.getMemberId());
+			pstmt.setString(3, postboardVO.getPostTitle());
+			pstmt.setString(4, postboardVO.getPostCont());
+			pstmt.setTimestamp(5, postboardVO.getPostTime());
+			pstmt.setInt(6, postboardVO.getReplyCount());
+			pstmt.setBytes(7, postboardVO.getPic());
+			pstmt.setInt(8, postboardVO.getPostId());
 
 			pstmt.executeUpdate();
 
@@ -165,8 +165,8 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 	}
 
 	@Override
-	public PostBoradVO findByPrimaryKey(Integer postId) {
-		PostBoradVO postboradVO = null;
+	public PostBoardVO findByPrimaryKey(Integer postId) {
+		PostBoardVO postboardVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -182,15 +182,15 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postboradVO = new PostBoradVO();
-				postboradVO.setPostId(rs.getInt("post_id"));
-				postboradVO.setCategoryId(rs.getInt("category_id"));
-				postboradVO.setMemberId(rs.getInt("member_id"));
-				postboradVO.setPostTitle(rs.getString("post_title"));
-				postboradVO.setPostCont(rs.getString("post_cont"));
-				postboradVO.setPostTime(rs.getTimestamp("post_time"));
-				postboradVO.setReplyCount(rs.getInt("reply_count"));
-				postboradVO.setPic(rs.getBytes("pic"));
+				postboardVO = new PostBoardVO();
+				postboardVO.setPostId(rs.getInt("post_id"));
+				postboardVO.setCategoryId(rs.getInt("category_id"));
+				postboardVO.setMemberId(rs.getInt("member_id"));
+				postboardVO.setPostTitle(rs.getString("post_title"));
+				postboardVO.setPostCont(rs.getString("post_cont"));
+				postboardVO.setPostTime(rs.getTimestamp("post_time"));
+				postboardVO.setReplyCount(rs.getInt("reply_count"));
+				postboardVO.setPic(rs.getBytes("pic"));
 			}
 
 			// Handle any driver errors
@@ -223,13 +223,13 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 				}
 			}
 		}
-		return postboradVO;
+		return postboardVO;
 	}
 
 	@Override
-	public List<PostBoradVO> getAll() {
-		List<PostBoradVO> list = new ArrayList<PostBoradVO>();
-		PostBoradVO postboradVO = null;
+	public List<PostBoardVO> getAll() {
+		List<PostBoardVO> list = new ArrayList<PostBoardVO>();
+		PostBoardVO postboardVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -243,17 +243,16 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				postboradVO = new PostBoradVO();
-				postboradVO.setPostId(rs.getInt("post_id"));
-				postboradVO.setCategoryId(rs.getInt("category_id"));
-				postboradVO.setMemberId(rs.getInt("member_id"));
-				postboradVO.setPostTitle(rs.getString("post_title"));
-				postboradVO.setPostCont(rs.getString("post_cont"));
-				postboradVO.setPostTime(rs.getTimestamp("post_time"));
-				postboradVO.setReplyCount(rs.getInt("reply_count"));
-				postboradVO.setPic(rs.getBytes("pic"));
-				
-				list.add(postboradVO); // Store the row in the list
+				postboardVO = new PostBoardVO();
+				postboardVO.setPostId(rs.getInt("post_id"));
+				postboardVO.setCategoryId(rs.getInt("category_id"));
+				postboardVO.setMemberId(rs.getInt("member_id"));
+				postboardVO.setPostTitle(rs.getString("post_title"));
+				postboardVO.setPostCont(rs.getString("post_cont"));
+				postboardVO.setPostTime(rs.getTimestamp("post_time"));
+				postboardVO.setReplyCount(rs.getInt("reply_count"));
+				postboardVO.setPic(rs.getBytes("pic"));
+				list.add(postboardVO); // Store the row in the list
 
 			}
 
@@ -292,69 +291,68 @@ public class PostBoradJDBCDAO implements PostBoradDAOInterface {
 
 	public static void main(String[] args) {
 
-		PostBoradJDBCDAO dao = new PostBoradJDBCDAO();
+		PostBoardJDBCDAO dao = new PostBoardJDBCDAO();
 		long time = System.currentTimeMillis();
 		Timestamp timestamp = new Timestamp(time);
 
 		// 新增--ok
-//		postboradVO postboradVO1 = new postboradVO();
-//		postboradVO1.setPostId(5);
-//		postboradVO1.setCategoryId(1);
-//		postboradVO1.setMemberId(1);
-//		postboradVO1.setPostTitle("test");
-//		postboradVO1.setPostCont("test");
-//		postboradVO1.setPostTime(timestamp);
-//		postboradVO1.setReplyCount(0);
-//		postboradVO1.setPic(null);
-//		dao.insert(postboradVO1);
+//		PostBoardVO postboardVO1 = new PostBoardVO();
+//		postboardVO1.setCategoryId(6);
+//		postboardVO1.setMemberId(1);
+//		postboardVO1.setPostTitle("test");
+//		postboardVO1.setPostCont("test1206");
+//		postboardVO1.setPostTime(timestamp);
+//		postboardVO1.setReplyCount(0);
+//		postboardVO1.setPic(null);
+//		dao.insert(postboardVO1);
 
 //		// 修改--ok
-//		postboradVO postboradVO2 = new postboradVO();
-//		postboradVO2.setPostId(6);
-//		postboradVO2.setCategoryId(1);
-//		postboradVO2.setMemberId(1);
-//		postboradVO2.setPostTitle("test");
-//		postboradVO2.setPostCont("test2");
-//		postboradVO2.setPostTime(timestamp);
-//		postboradVO2.setReplyCount(0);
-//		postboradVO2.setPic(null);
-//		dao.insert(postboradVO2);
+//		PostBoardVO postboardVO2 = new PostBoardVO();
+//		postboardVO2.setPostId(109);
+//		postboardVO2.setCategoryId(1);
+//		postboardVO2.setMemberId(1);
+//		postboardVO2.setPostTitle("test");
+//		postboardVO2.setPostCont("test1test");
+//		postboardVO2.setPostTime(timestamp);
+//		postboardVO2.setReplyCount(0);
+//		postboardVO2.setPic(null);
+//		dao.update(postboardVO2);
 //
 //		// 刪除--ok
-//		dao.delete(6);
+//		dao.delete(109);
 //
 //		// 查詢--ok
-//		postboradVO postboradVO3 = new postboradVO();
-//		postboradVO3.setPostId(1);
-//		postboradVO3.setCategoryId(1);
-//		postboradVO3.setMemberId(1);
-//		postboradVO3.setPostTitle("test");
-//		postboradVO3.setPostTime(timestamp);
-//		postboradVO3.setReplyCount(1);
-//		postboradVO3.setPic(null);
+//		PostBoardVO postboardVO3 = new PostBoardVO();
+//		postboardVO3.setPostId(113);
+//		postboardVO3.setCategoryId(1);
+//		postboardVO3.setMemberId(1);
+//		postboardVO3.setPostTitle("test");
+//		postboardVO3.setPostTime(timestamp);
+//		postboardVO3.setReplyCount(1);
+//		postboardVO3.setPic(null);
 //		dao.findByPrimaryKey(1);
-//		System.out.print(postboradVO3.getPostId() + ",");
-//		System.out.print(postboradVO3.getCategoryId()+ ",");
-//		System.out.print(postboradVO3.getMemberId()+ ",");
-//		System.out.print(postboradVO3.getPostTitle()+ ",");
-//		System.out.print(postboradVO3.getPostCont()+ ",");
-//		System.out.print(postboradVO3.getPostTime()+ ",");
-//		System.out.print(postboradVO3.getReplyCount()+ ",");
-//		System.out.print(postboradVO3.getPic()+ ",");
+//		System.out.print(postboardVO3.getPostId() + ",");
+//		System.out.print(postboardVO3.getCategoryId()+ ",");
+//		System.out.print(postboardVO3.getMemberId()+ ",");
+//		System.out.print(postboardVO3.getPostTitle()+ ",");
+//		System.out.print(postboardVO3.getPostCont()+ ",");
+//		System.out.print(postboardVO3.getPostTime()+ ",");
+//		System.out.print(postboardVO3.getReplyCount()+ ",");
+//		System.out.print(postboardVO3.getPic()+ ",");
 
 //		// 查詢--ok
-		List<PostBoradVO> list = dao.getAll();
-		for (PostBoradVO pPost : list) {
-			System.out.print(pPost.getPostId() + ",");
-			System.out.print(pPost.getCategoryId() + ",");
-			System.out.print(pPost.getMemberId() + ",");
-			System.out.print(pPost.getPostTitle() + ",");
-			System.out.print(pPost.getPostCont() + ",");
-			System.out.print(pPost.getPostTime() + ",");
-			System.out.print(pPost.getReplyCount() + ",");
-			System.out.print(pPost.getPic()+ ",");
-			System.out.println();
-		}
+//		List<PostBoardVO> list = dao.getAll();
+//		for (PostBoardVO pPost : list) {
+//			System.out.print(pPost.getPostId() + ",");
+//			System.out.print(pPost.getCategoryId() + ",");
+//			System.out.print(pPost.getMemberId() + ",");
+//			System.out.print(pPost.getPostTitle() + ",");
+//			System.out.print(pPost.getPostCont() + ",");
+//			System.out.print(pPost.getPostTime() + ",");
+//			System.out.print(pPost.getReplyCount() + ",");
+//			System.out.print(pPost.getPic()+ ",");
+//			System.out.println();
+//		}
 	}
 
 }

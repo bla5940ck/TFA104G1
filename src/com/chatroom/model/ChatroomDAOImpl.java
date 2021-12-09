@@ -2,7 +2,7 @@ package com.chatroom.model;
 
 import java.util.*;
 
-public interface ChatroomDAOIpml {
+public interface ChatroomDAOImpl {
 	
 	public void insert(ChatroomVO chatroomVO);
     public void update(ChatroomVO chatroomVO);

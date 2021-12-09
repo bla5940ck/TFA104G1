@@ -1,12 +1,12 @@
-package com.post_borad.model;
+package com.postboard.model;
 
 import java.util.List;
 
-public interface PostBoradDAOInterface {
-	 public void insert(PostBoradVO postBoradVO);
-     public void update(PostBoradVO postBoradVO);
+public interface PostBoardDAOImpl {
+	 public void insert(PostBoardVO postBoardVO);
+     public void update(PostBoardVO postBoardVO);
      public void delete(Integer postId);
-     public PostBoradVO findByPrimaryKey(Integer postId);
-     public List<PostBoradVO> getAll();
+     public PostBoardVO findByPrimaryKey(Integer postId);
+     public List<PostBoardVO> getAll();
 
 }
