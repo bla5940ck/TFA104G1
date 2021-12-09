@@ -31,6 +31,9 @@ public class DefAddressService {
 	public void addDefaddress(DefAddressVO defAddressVO) {
 		dao.insert(defAddressVO);
 	}
+	public void deleteDefaddress(Integer def711) {
+		dao.delete(def711);
+	}
 	
 	public DefAddressVO updateDefaddress(Integer def711, Integer memberId, Integer code711, String name711, String add711
 			, Integer status, String recipient,  String recptPhone) {
@@ -55,5 +58,8 @@ public class DefAddressService {
 	
 	public List<DefAddressVO> getAll(){
 		return dao.getAll();
+	}
+	public List<DefAddressVO> getOneMemAll(Integer memberId){
+		return dao.getOneMemAll(memberId);
 	}
 }

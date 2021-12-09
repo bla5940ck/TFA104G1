@@ -6,6 +6,8 @@ public interface MemberDAO_interface {
 	public void insert(MemberVO memberVO);
     public void update(MemberVO memberVO);
     public void updateStatus(MemberVO memberVO);
+    public void updatePw(MemberVO memberVO);
+    public void updateAccount(MemberVO memberVO);
     public void updateOneStatus(MemberVO memberVO);
 //    public void delete( Integer memberId);
     public MemberVO findByPrimaryKey(Integer memberId);

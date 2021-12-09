@@ -42,6 +42,13 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		private static final String UPDATESTATUS = 
 				"UPDATE member set status	=? where (member_id = ?)";
 		
+		private static final String UPDATEPW = 
+				"UPDATE member set password	=? where (login_id = ?)";
+		
+		private static final String UPDATEACCOUNT = 
+				"update JoyLease.member set bank_code = ? ,bank_account=?,account_name=? where member_id=?;";
+		
+		
 		private static final String UPDATEONEMEMBER = 
 				"UPDATE member set member_id = ?"
 				+ ",name=?, email=?,creat_date=?,login_id=?,phone_num=?, ,status	=?where (member_id = ?)";
@@ -225,8 +232,8 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 	
-		System.out.println(memberVO.getCreatDate().toString());
-		System.out.println(UPDATEONEMEMBER.toString());
+//		System.out.println(memberVO.getCreatDate().toString());
+//		System.out.println(UPDATEONEMEMBER.toString());
 		try {
 	
 			Class.forName(driver);
@@ -586,56 +593,64 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		
 
 		// 單一查詢loginid
-		MemberVO memberVO3 = dao.findLoginID("zxcas4d");
-		System.out.print(memberVO3.getMemberId() + ",");
-		System.out.print(memberVO3.getBankCode() + ",");
-		System.out.print(memberVO3.getEmail() + ",");
-		System.out.print(memberVO3.getLoginId() + ",");
-		System.out.print(memberVO3.getIdcn() + ",");
-		System.out.print(memberVO3.getPhoneNum() + ",");
-		System.out.print(memberVO3.getPassword() + ",");
-		System.out.print(memberVO3.getStatus() + ",");
-		System.out.print(memberVO3.getName() + ",");
-		System.out.print(memberVO3.getNickName() + ",");
-		System.out.print(memberVO3.getBirthday() + ",");
-		System.out.print(memberVO3.getAddress() + ",");
-		System.out.print(memberVO3.getBankAccount() + ",");
-		System.out.print(memberVO3.getAccountName() + ",");
-		System.out.print(memberVO3.getRentScore() + ",");
-		System.out.print(memberVO3.getLeaseScore() + ",");
-		System.out.print(memberVO3.getCreatDate() + ",");
-		System.out.print(memberVO3.getPic() + ",");
-		System.out.print(memberVO3.getIdcF() + ",");
-		System.out.print(memberVO3.getIdcB() + ",");
-		System.out.println(memberVO3.getFoul());
-		System.out.println("---------------------");		
+//		MemberVO memberVO3 = dao.findLoginID("zxcas4d");
+//		System.out.print(memberVO3.getMemberId() + ",");
+//		System.out.print(memberVO3.getBankCode() + ",");
+//		System.out.print(memberVO3.getEmail() + ",");
+//		System.out.print(memberVO3.getLoginId() + ",");
+//		System.out.print(memberVO3.getIdcn() + ",");
+//		System.out.print(memberVO3.getPhoneNum() + ",");
+//		System.out.print(memberVO3.getPassword() + ",");
+//		System.out.print(memberVO3.getStatus() + ",");
+//		System.out.print(memberVO3.getName() + ",");
+//		System.out.print(memberVO3.getNickName() + ",");
+//		System.out.print(memberVO3.getBirthday() + ",");
+//		System.out.print(memberVO3.getAddress() + ",");
+//		System.out.print(memberVO3.getBankAccount() + ",");
+//		System.out.print(memberVO3.getAccountName() + ",");
+//		System.out.print(memberVO3.getRentScore() + ",");
+//		System.out.print(memberVO3.getLeaseScore() + ",");
+//		System.out.print(memberVO3.getCreatDate() + ",");
+//		System.out.print(memberVO3.getPic() + ",");
+//		System.out.print(memberVO3.getIdcF() + ",");
+//		System.out.print(memberVO3.getIdcB() + ",");
+//		System.out.println(memberVO3.getFoul());
+//		System.out.println("---------------------");		
 		
 				// 全部查詢
-				List<MemberVO> list = dao.getAll();
-				for (MemberVO aMember : list) {
-					System.out.print(aMember.getMemberId() + ", ");
-					System.out.print(aMember.getBankCode() + ", ");
-					System.out.print(aMember.getEmail() + ", ");
-					System.out.print(aMember.getLoginId() + ", ");
-					System.out.print(aMember.getIdcn() + ", ");
-					System.out.print(aMember.getPhoneNum() + ", ");
-					System.out.print(aMember.getPassword()+ ", ");
-					System.out.print(aMember.getStatus() + ", ");
-					System.out.print(aMember.getName() + ", ");
-					System.out.print(aMember.getNickName() + ", ");
-					System.out.print(aMember.getBirthday() + ", ");
-					System.out.print(aMember.getAddress() + ", ");
-					System.out.print(aMember.getBankAccount()+ ", ");
-					System.out.print(aMember.getAccountName() + ", ");
-					System.out.print(aMember.getRentScore() + ", ");
-					System.out.print(aMember.getLeaseScore() + ", ");
-					System.out.print(aMember.getCreatDate() + ", ");
-					System.out.print(aMember.getPic() + ", ");
-					System.out.print(aMember.getIdcF() + ", ");
-					System.out.print(aMember.getIdcB() + ", ");
-					System.out.print(aMember.getFoul());
-					System.out.println();
-				}
+//				List<MemberVO> list = dao.getAll();
+//				for (MemberVO aMember : list) {
+//					System.out.print(aMember.getMemberId() + ", ");
+//					System.out.print(aMember.getBankCode() + ", ");
+//					System.out.print(aMember.getEmail() + ", ");
+//					System.out.print(aMember.getLoginId() + ", ");
+//					System.out.print(aMember.getIdcn() + ", ");
+//					System.out.print(aMember.getPhoneNum() + ", ");
+//					System.out.print(aMember.getPassword()+ ", ");
+//					System.out.print(aMember.getStatus() + ", ");
+//					System.out.print(aMember.getName() + ", ");
+//					System.out.print(aMember.getNickName() + ", ");
+//					System.out.print(aMember.getBirthday() + ", ");
+//					System.out.print(aMember.getAddress() + ", ");
+//					System.out.print(aMember.getBankAccount()+ ", ");
+//					System.out.print(aMember.getAccountName() + ", ");
+//					System.out.print(aMember.getRentScore() + ", ");
+//					System.out.print(aMember.getLeaseScore() + ", ");
+//					System.out.print(aMember.getCreatDate() + ", ");
+//					System.out.print(aMember.getPic() + ", ");
+//					System.out.print(aMember.getIdcF() + ", ");
+//					System.out.print(aMember.getIdcB() + ", ");
+//					System.out.print(aMember.getFoul());
+//					System.out.println();
+//				}
+		
+		// 修改
+//		MemberVO memberVO2 = new MemberVO();
+//		memberVO2.setBankCode("822");
+//		memberVO2.setBankAccount("52525882");
+//		memberVO2.setAccountName("林大祥");
+//		memberVO2.setMemberId(1);
+//		dao.updateAccount(memberVO2);
 	}
 
 	@Override
@@ -775,6 +790,94 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		}
 		return memberVO;
 	
+	}
+
+	@Override
+	public void updatePw(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+	
+		try {
+	
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATEPW);
+			pstmt.setString(1, memberVO.getPassword());
+			pstmt.setString(2, memberVO.getLoginId());
+			
+			pstmt.executeUpdate();
+	
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void updateAccount(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+//			SQL :"UPDATE member set bank_code =? ,bank_account =?  account_name=? where (member_id = ?)";
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATEACCOUNT);
+			pstmt.setString(1, memberVO.getBankCode());
+			pstmt.setString(2, memberVO.getBankAccount());
+			pstmt.setString(3, memberVO.getAccountName());
+			pstmt.setInt(4, memberVO.getMemberId());
+			
+			pstmt.executeUpdate();
+	
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 		
 	

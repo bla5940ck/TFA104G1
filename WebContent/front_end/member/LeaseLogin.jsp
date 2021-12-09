@@ -16,8 +16,10 @@
                     <input type="password" name="password" value=""  placeholder="請輸入密碼">
                     <input type=submit  value=" Login" class="aa-browse-btn">
                    	<input type="hidden" name="action"	value="LeaseLogin">
-                    <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> 記住我的帳號 </label>
-                    <p class="aa-lost-password"><a href="#">忘記密碼？</a></p>
+                    <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember Me </label>
+                    <div class="attxt"><a href="<%=request.getContextPath()%>/front_end/member/Register.jsp">Register !</a></div>
+					<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/ForgetPW.jsp">Forget Password ?</a></div>
+                    <%--  --><p class="aa-lost-password"><a href="<%=request.getContextPath()%>/front_end/member/ForgetPW.jsp">Forget Password ?</a></p>--%>
                   </form>
                 </div>
 </body>

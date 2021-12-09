@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="BIG5">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>承租專區</title>
 		<style>
 		* {
@@ -162,7 +162,7 @@
 														%>
 														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
 													</td>
-												    <td>${memberVO.memberId}</td>
+												    <td>${memberVO.loginId}</td>
 											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
 										</div>
 									</a>
@@ -191,42 +191,35 @@
 				</aside>
 				<main class="main">
 				
-					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemUpdateServlet" name="form1">
-						<h1>我的帳戶</h1>
-						<div>管理你的檔案以保護你的帳戶</div>
+					<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
+						<h1>我的銀行帳號</h1>
+						<div>如有款項須轉帳匯款給您，您的收款帳戶資訊</div>
+
+						<hr>
 						<table>
 								<tr>
-								<td>帳號 : <font color=red><b>*</b></font></td>
-									<td>${memberVO.loginId}</td>
-									
-									
+								<td>銀行代碼 : <font color=red><b>*</b></font></td>
+									<td><input type="TEXT" name="bankCode" size="45" value="${memberVO.bankCode}" /></td>	
 								</tr>
 								<tr>
-									<td>姓名 : </td>
-									<td>${memberVO.name}" </td>
+									<td>銀行名稱 : </td>
+									<td> </td>
 								</tr>
 								<tr>
-									<td>匿名 : </td>
-									<td><input type="TEXT" name="name" size="45" value="${memberVO.nickName}" /></td>
+									<td>銀行帳號 : </td>
+									<td><input type="TEXT" name="bankAccount" size="45" value="${memberVO.bankAccount}" /></td>
 								</tr>
 								<tr>
-									<td>EMAIL : </td>
-									<td><input type="TEXT" name="email" size="45"	value="${memberVO.email}" /></td>
+									<td>戶名 : </td>
+									<td><input type="TEXT" name="accountName" size="45"	value="${memberVO.accountName}" /></td>
 								</tr>
-								<tr>
-									<td>手機號碼 : </td>
-									<td><input type="TEXT" name="phoneNum" size="45"	value="${memberVO.phoneNum}" /></td>
-								</tr>
-								<tr>
-									<td>生日 : </td>
-									<td>${memberVO.birthday}</td>
-								</tr>
+
+			
 						</table>
 						
-					<input type="hidden" name="action" value="update">
-					<input type="hidden" name="memberId" value="">
-					<input type="file" accept=".jpg.jpeg.png" onchange="showPic(this.value);" value="pic">
-					<img src="http://www2.blogger.com/" />
+					<input type="hidden" name="action" value="updateAccount">
+					<input type="hidden" name="memberId" value="${memberVO.memberId}" >
+				
 					<input type="submit" value="儲存"></FORM>
 					
 				 

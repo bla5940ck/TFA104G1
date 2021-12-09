@@ -162,19 +162,19 @@
 														%>
 														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
 													</td>
-												    <td>${memberVO.memberId}</td>
+												    <td>${memberVO.loginId}</td>
 											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
 										</div>
 									</a>
 								</div>
 								<h1>承租專區</h1>
 								<ul class="nav_list">
-									<li><a href="LeasePage.jsp">我的帳戶</a>
+									<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a>
 										<ul class="nav_list">
-											<li><a href="">個人檔案</a></li>
-											<li><a href="">銀行帳號</a></li>
-											<li><a href="">地址</a></li>
-											<li><a href="">更改密碼</a></li>
+											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">個人檔案</a></li>
+											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp">銀行帳號</a></li>
+											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp">地址</a></li>
+											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp">更改密碼</a></li>
 										</ul>
 									</li>
 									<li><a href="">訂單資訊</a></li>
@@ -203,7 +203,7 @@
 								</tr>
 								<tr>
 									<td>姓名 : </td>
-									<td>${memberVO.name}" </td>
+									<td>${memberVO.name}</td>
 								</tr>
 								<tr>
 									<td>匿名 : </td>

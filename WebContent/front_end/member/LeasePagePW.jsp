@@ -162,7 +162,7 @@
 														%>
 														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
 													</td>
-												    <td>${memberVO.memberId}</td>
+												    <td>${memberVO.loginId}</td>
 											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
 										</div>
 									</a>
@@ -191,56 +191,35 @@
 				</aside>
 				<main class="main">
 				
-					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemUpdateServlet" name="form1">
-						<h1>我的帳戶</h1>
-						<div>管理你的檔案以保護你的帳戶</div>
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemForntServlet" name="form1">
+						<h1>更改密碼</h1>
+						<div>為確保你帳戶的安全</div>
 						<table>
 								<tr>
-								<td>帳號 : <font color=red><b>*</b></font></td>
-									<td>${memberVO.loginId}</td>
-									
-									
+								<td>現在密碼 : <font color=red><b>*</b></font></td>
+									<td><input type="password" name="password"placeholder="請輸入現在密碼"></td>	
 								</tr>
 								<tr>
-									<td>姓名 : </td>
-									<td>${memberVO.name}" </td>
+									<td>新密碼 : </td>
+									<td><input type="password" name="newPW"placeholder="請輸入新密碼"></td>
 								</tr>
 								<tr>
-									<td>匿名 : </td>
-									<td><input type="TEXT" name="name" size="45" value="${memberVO.nickName}" /></td>
+									<td>確認密碼 : </td>
+									<td><input type="password" name="namePW2"placeholder="請確認輸入新密碼"></td>
 								</tr>
-								<tr>
-									<td>EMAIL : </td>
-									<td><input type="TEXT" name="email" size="45"	value="${memberVO.email}" /></td>
-								</tr>
-								<tr>
-									<td>手機號碼 : </td>
-									<td><input type="TEXT" name="phoneNum" size="45"	value="${memberVO.phoneNum}" /></td>
-								</tr>
-								<tr>
-									<td>生日 : </td>
-									<td>${memberVO.birthday}</td>
-								</tr>
+								
 						</table>
 						
-					<input type="hidden" name="action" value="update">
+					<input type="hidden" name="action" value="updatePassword">
 					<input type="hidden" name="memberId" value="">
-					<input type="file" accept=".jpg.jpeg.png" onchange="showPic(this.value);" value="pic">
-					<img src="http://www2.blogger.com/" />
-					<input type="submit" value="儲存"></FORM>
 					
-				 
+					<input type="submit" value="儲存">
+					<p class="aa-lost-password"><a href="<%=request.getContextPath()%>/front_end/member/ForgetPW.jsp">Forget Password ?</a></p>
+				 </FORM>
 				 </main>
 		</div>
 						
 		<footer class="footer"> footer區域 </footer>
 	</body>
-<script>
-	function showPic(picPath){
-		pic = document.getElementById("imgShow");
-		pic.src = "file:///" + picPath;
-		pic.width = 300;
-		pic.style.visibility = "visible";
-		}
-</script>
+
 </html>

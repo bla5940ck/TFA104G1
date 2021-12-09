@@ -4,15 +4,17 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
+
 <%
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
+  
 %>
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="BIG5">
+		<meta charset="UTF-8">
 		<title>承租專區</title>
 		<style>
 		* {
@@ -162,14 +164,14 @@
 														%>
 														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
 													</td>
-												    <td>${memberVO.memberId}</td>
+												    <td>${memberVO.loginId}</td>
 											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
 										</div>
 									</a>
 								</div>
 								<h1>承租專區</h1>
 								<ul class="nav_list">
-									<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a>
+								<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a>
 										<ul class="nav_list">
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">個人檔案</a></li>
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp">銀行帳號</a></li>
@@ -189,45 +191,54 @@
 								</ul>
 						</nav>
 				</aside>
+				
+				<%
+					DefAddressService dfaSvc = new DefAddressService();
+					List<DefAddressVO> list = dfaSvc.getOneMemAll(memberVO.getMemberId());
+					pageContext.setAttribute("list",list);
+				%>
 				<main class="main">
 				
-					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemUpdateServlet" name="form1">
-						<h1>我的帳戶</h1>
-						<div>管理你的檔案以保護你的帳戶</div>
+					<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
+						<h1>地址</h1>
+						<div>管理你的寄送相關資訊</div>
 						<table>
 								<tr>
-								<td>帳號 : <font color=red><b>*</b></font></td>
-									<td>${memberVO.loginId}</td>
-									
-									
+								<td>收件姓名 : <font color=red><b>*</b></font></td>
+									<td><input type="TEXT" name="name" size="45" value="" /></td>
 								</tr>
 								<tr>
-									<td>姓名 : </td>
-									<td>${memberVO.name}" </td>
+									<td>收件電話 : </td>
+									<td><input type="TEXT" name="name" size="45" value="" /></td>
 								</tr>
 								<tr>
-									<td>匿名 : </td>
-									<td><input type="TEXT" name="name" size="45" value="${memberVO.nickName}" /></td>
+									<td>收件超商 : </td>
+									<td><input type="TEXT" name="name" size="45" value="" /></td>
 								</tr>
 								<tr>
-									<td>EMAIL : </td>
-									<td><input type="TEXT" name="email" size="45"	value="${memberVO.email}" /></td>
-								</tr>
-								<tr>
-									<td>手機號碼 : </td>
-									<td><input type="TEXT" name="phoneNum" size="45"	value="${memberVO.phoneNum}" /></td>
-								</tr>
-								<tr>
-									<td>生日 : </td>
-									<td>${memberVO.birthday}</td>
-								</tr>
+									<td>超商地址 : </td>
+									<td>${memberVO.email}</td>
 						</table>
+					<input type="hidden" name="action" value="insert">
+					<input type="hidden" name="memberId" value="${memberVO.memberId}">
+					<input type="submit" value="增加"></FORM>
+						<hr>
+						 <c:forEach var="defAddressVO"  items="${list}" >
+						 <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
+						<ul>
+							<div>${(defAddressVO.status==1)?'預設':' '}</div>
+							<li>姓名 : ${defAddressVO.recipient}</li>
+							<li>電話 : ${defAddressVO.recptPhone}</li>
+							<li>超商 : ${defAddressVO.name711}</li>
+							<li>地址 : ${defAddressVO.add711}</li>
+						</ul>
+						<input type="hidden" name="action" value="delete">
+						<input type="hidden" name="def711" value="${defAddressVO.def711}">
+					<input type="submit" value="刪除"></FORM>
+						<hr>
+						</c:forEach> 
 						
-					<input type="hidden" name="action" value="update">
-					<input type="hidden" name="memberId" value="">
-					<input type="file" accept=".jpg.jpeg.png" onchange="showPic(this.value);" value="pic">
-					<img src="http://www2.blogger.com/" />
-					<input type="submit" value="儲存"></FORM>
+						
 					
 				 
 				 </main>

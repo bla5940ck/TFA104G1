@@ -70,13 +70,33 @@ public class MemberService {
 		dao.update(memberVO);
 		return memberVO;
 	}
-	
+	//會員狀態審核
 	public MemberVO updateStatus(Integer status ,Integer memberId
 			) {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberId(memberId);
 		memberVO.setStatus(status);
 		dao.updateStatus(memberVO);
+		return memberVO;
+	}
+	//前台會員密碼變更
+	public MemberVO updatePw(String password,String loginId
+			) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setPassword(password);
+		dao.updatePw(memberVO);
+		return memberVO;
+	}
+	//前台會員銀行變更
+	public MemberVO updateAccount(Integer memberId,String bankCode,String accountName
+		,String bankAccount	) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemberId(memberId);
+		memberVO.setBankCode(bankCode);
+		memberVO.setAccountName(accountName);
+		memberVO.setBankAccount(bankAccount);
+
+		dao.updateAccount(memberVO);
 		return memberVO;
 	}
 	
