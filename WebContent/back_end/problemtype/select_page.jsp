@@ -123,6 +123,9 @@ background-color:#6495ed;
 		<ul>
 			<li><a href='addProblemType.jsp'>新增問題類型</a></li>
 		</ul>		
+		<ul>
+			<li><a href='listAllproblemmsg.jsp'>投訴問題處理</a></li>
+		</ul>		
 	</main>
 	</div>
 

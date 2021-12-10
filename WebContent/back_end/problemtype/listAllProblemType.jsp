@@ -128,6 +128,7 @@ background-color:#6495ed;
 			</nav>
 		</aside>
 		<main class="main" style="background-color:#C0C0C0;">
+		<br>
 		<table id="table-1">
 				<tr>
 					<td>

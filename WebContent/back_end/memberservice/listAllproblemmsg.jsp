@@ -194,6 +194,7 @@ object-fit: contain;
 				
 				<c:forEach var="msVO" items="${list}" begin="<%=pageIndex%>"
 					end="<%=pageIndex+rowsPerPage-1%>">
+					<br>
 					<tr>					
 						<td>${msVO.msgID}</td>
 						<td>${msVO.prodID}</td>
