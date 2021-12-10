@@ -254,15 +254,27 @@
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
                   <c:if test="${loop.index <=5}">
-                    <span class="aa-badge aa-sale" href="#">新上架</span>
+                    <span  class="aa-badge aa-sale" href="#">新上架</span>
                   </c:if>
-  
+          <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                              
                     
                     
                     
                 </li>
   			</c:if>
-  				<c:if test="${loop.index >=12 and loop.index<=24 and param.page==2}">
+  				<c:if test="${loop.index >=12 and loop.index<24 and param.page==2}">
   			<li>
                   <figure>
                     <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
@@ -278,7 +290,18 @@
                   <div class="aa-product-hvr-content">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
-                
+                 <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  	
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
                     
                     
                 </li>
@@ -303,7 +326,18 @@
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
                 
-                    
+                     <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000;box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
                     
                 </li>
   			
