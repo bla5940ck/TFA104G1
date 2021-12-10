@@ -117,6 +117,7 @@ h2 {
 						</h4>
 					</td>
 				</tr>
+				<br>
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>

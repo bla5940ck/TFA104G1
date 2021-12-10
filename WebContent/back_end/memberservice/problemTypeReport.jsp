@@ -118,7 +118,7 @@ object-fit: contain;
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/MemberServiceServlet"
 				name="form1" enctype="multipart/form-data">
-				
+				<br>
 				<table id="table-1">
 					<tr>
 					<td>反應會員編號</td>

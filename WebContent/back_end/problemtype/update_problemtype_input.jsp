@@ -116,7 +116,7 @@ th, td {
 				<ul class="nav_list" style="background-color:#F0B594;height:100%">
 					<h2>
 						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>管理者專區</a> <br> 
-						<a>問題處理</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>問題處理</a> <br> 
 						<a>商品管理</a> <br>
 						<a>訂單管理</a> <br> 
 						<a>會員管理</a> <br> 
@@ -141,6 +141,7 @@ th, td {
 						</h4>
 					</td>
 				</tr>
+				<br>
 			</table>
 
 			<h3>資料修改:</h3>
