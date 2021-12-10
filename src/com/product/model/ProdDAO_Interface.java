@@ -2,7 +2,7 @@ package com.product.model;
 
 import java.util.List;
 
-public interface ProdDAOImpl {
+public interface ProdDAO_Interface {
 	public Integer add(ProdVO prod);
 	public void update(ProdVO prod);
 	public void deleteProudct(ProdVO prod);

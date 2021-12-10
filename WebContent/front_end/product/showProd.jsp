@@ -92,21 +92,48 @@ img.simpleLens-big-image {
 									</div>
 								</div>
 
-
-
+							        <% 
+											String comt = (product.getComt() == null) ? "" : product.getComt();
+											
+                                        List<String> labelList = jedis.lrange("prod"+product.getProdID(), 0, jedis.llen("prod"+product.getProdID()));
+                                     	pageContext.setAttribute("labelList", labelList);
+                                     	System.out.print("數量  "+  labelList.size());
+                          
+										
+										%>
+	
 
 								<!-- Modal view content -->
 								<div class="col-md-7 col-sm-7 col-xs-12">
 									<div class="aa-product-view-content">
+					
+									
 										<h3>${product.prodName}</h3>
 										<div class="aa-price-block">
-											租金: <span class="aa-product-view-price">$${product.prodRent}</span><br><br>
-											商品損壞賠償金: <span class="aa-product-avilability">$${product.prodPrice}</span><br>
-										</div><br>
-									
-										備註: <span>${empty product.comt ? '' : product.comt}</span><br>
+										<ul>
+											租金:<li><span class="aa-product-view-price">$${product.prodRent}</span></li><br>
+											商品損壞賠償金: <li><span class="aa-product-avilability">$${product.prodPrice}</span></li><br>
 										
-
+									
+										備註: <li><span>${empty product.comt ? '' : product.comt}</span></li><br>
+										
+											<li>
+											標籤:&nbsp
+											<c:forEach var="label" items="${labelList}" varStatus="loop">
+													<c:if test="${loop.index!=0 and loop.index % 5 ==0}">
+													<br>
+													</c:if>
+													<a href="<%=path%>/prod/ProdServlet?action=labelClick&prodID=<%=product.getProdID()%>&labelNo=${loop.index}"><span style="color:#A6A600">#${label}</span></a>&nbsp
+											</c:forEach>
+										</li>
+										
+										
+										
+										</div>
+										
+										
+										
+											</ul>
 										</form>
 										<p class="aa-prod-category">
 											<%--                         分類: <a href="#"><%=product.getCategoryID() %></a> --%>
@@ -119,7 +146,7 @@ img.simpleLens-big-image {
 										<a  class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/prod/ProdServlet?prodID=<%=product.getProdID() %>&cate=<%=product.getCategoryID()%>&action=modify" style="color:yellow; background-color:red;">修改商品</a>
 									</div>
 									<br>
-
+				
 								</div>
 							</div>
 						</div>
