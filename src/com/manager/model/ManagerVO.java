@@ -68,6 +68,4 @@ public class ManagerVO {
 				+ ", managerPassword=" + managerPassword + ", status=" + status + "]";
 	}
 
-	
-
 }

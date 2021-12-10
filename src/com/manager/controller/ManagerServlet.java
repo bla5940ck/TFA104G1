@@ -1,6 +1,7 @@
 package com.manager.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.Manager;
+
 import com.manager.model.ManagerVO;
+import com.mysql.cj.Session;
 import com.manager.model.ManagerDAO;
 import com.manager.model.ManagerService;
 
@@ -25,136 +29,193 @@ public class ManagerServlet extends HttpServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("doget");
+
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println(action);
-if ("getOne_For_Display".equals(action)) { // ¨Ó¦Ûselect_page.jspªº½Ğ¨D
-//			System.out.println("123");
-//			System.out.println(req.getParameter("managerID"));
+
+		if ("getOne_For_Display".equals(action)) { // ä¾†è‡ªselect_page.jspçš„è«‹æ±‚
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-//			// Store this set in the request scope, in case we need to
-//			// send the ErrorPage view.
 
 			try {
-////				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
 				String str = req.getParameter("managerID");
-				System.out.println(str);
-				Integer managerID = new Integer(req.getParameter("managerID"));
 
-//				/*************************** 2.¶}©l¬d¸ß¸ê®Æ *****************************************/
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("è«‹è¼¸å…¥ç®¡ç†å“¡ç·¨è™Ÿ");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/select_page.jsp");
+					failureView.forward(req, res);
+					return;// ç¨‹å¼ä¸­æ–·
+				}
+
+				Integer managerID = null;
+
+				try {
+					managerID = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("æ ¼å¼ä¸æ­£ç¢º");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/select_page.jsp");
+					failureView.forward(req, res);
+					return;// ç¨‹å¼ä¸­æ–·
+				}
+
+				/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ *****************************************/
+				managerID = new Integer(req.getParameter("managerID"));
 				ManagerService msSvc = new ManagerService();
 				ManagerVO managerVO = msSvc.getOneManager(managerID);
 
-//				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("managerVO", managerVO); // ¸ê®Æ®w¨ú¥XªºmanagerVOª«¥ó,¦s¤Jreq
-				String url = "/Manager/listOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ¦¨¥\Âà¥æ listOneEmp.jsp
+				if (managerVO == null) {
+					errorMsgs.add("æŸ¥ç„¡è³‡æ–™");
+				}
+
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/select_page.jsp");
+					failureView.forward(req, res);
+					return;// ç¨‹å¼ä¸­æ–·
+				}
+				/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+				req.setAttribute("managerVO", managerVO); // è³‡æ–™åº«å–å‡ºçš„managerVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/manager/listOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æˆåŠŸè½‰äº¤ listOneEmp.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o¸ê®Æ:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Manager/select_page.jsp");
+				errorMsgs.add("ç„¡æ³•å–å¾—è³‡æ–™:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-if ("getOne_For_Update".equals(action)) { // ¨Ó¦ÛlistAllEmp.jspªº½Ğ¨D
+		if ("getOne_For_Update".equals(action)) { // ä¾†è‡ªlistAllEmp.jspçš„è«‹æ±‚
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ****************************************/
-				Integer managerID = new Integer(req.getParameter("managerID"));
 
-				/*************************** 2.¶}©l¬d¸ß¸ê®Æ ****************************************/
-				ManagerService msSvc = new ManagerService();
-				ManagerVO managerVO = msSvc.getOneManager(managerID);
+			/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ****************************************/
+			System.out.println(req.getParameter("managerID"));
+			Integer managerID = new Integer(req.getParameter("managerID"));
 
-				/*************************** 3.¬d¸ß§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ************/
-				req.setAttribute("managerVO", managerVO); // ¸ê®Æ®w¨ú¥XªºempVOª«¥ó,¦s¤Jreq
-				String url = "/Manager/update_manager_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// ¦¨¥\Âà¥æ update_emp_input.jsp
-				successView.forward(req, res);
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
-			} catch (Exception e) {
-				errorMsgs.add("µLªk¨ú±o­n­×§ïªº¸ê®Æ:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Manager/listAll.jsp");
-				failureView.forward(req, res);
-			}
+			/*************************** 2.é–‹å§‹æŸ¥è©¢è³‡æ–™ ****************************************/
+			ManagerService msSvc = new ManagerService();
+			ManagerVO managerVO = msSvc.getOneManager(managerID);
+
+			/*************************** 3.æŸ¥è©¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ************/
+			req.setAttribute("managerVO", managerVO); // è³‡æ–™åº«å–å‡ºçš„empVOç‰©ä»¶,å­˜å…¥req
+			String url = "/back_end/manager/update_manager_input.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// æˆåŠŸè½‰äº¤ update_emp_input.jsp
+			successView.forward(req, res);
+			/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
+
 		}
 
-if ("update".equals(action)) { // ¨Ó¦Ûupdate_emp_input.jspªº½Ğ¨D
-			
+		if ("update".equals(action)) { // ä¾†è‡ªupdate_emp_input.jspçš„è«‹æ±‚
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z **********************/
-				Integer managerID = new Integer(req.getParameter("managerID").trim());
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† **********************/
+
+				Integer managerID = new Integer(req.getParameter("managerID"));
 
 				String managerUser = req.getParameter("managerUser");
-
+				String managerUserReg = "^[(a-zA-Z0-9_)]{2,10}$";
+				if (managerUser == null || managerUser.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				} else if (!managerUser.trim().matches(managerUserReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
 				String managerName = req.getParameter("managerName");
-
+				String managerNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				if (managerName == null || managerName.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å§“å: è«‹å‹¿ç©ºç™½");
+				} else if (!managerName.trim().matches(managerNameReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("ç®¡ç†å“¡å§“å: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
 				String managerPassword = req.getParameter("managerPassword");
-
-				Integer status = new Integer(req.getParameter("status").trim());
+				String managerPasswordReg = "^[(a-zA-Z0-9_)]{2,10}$";
+				if (managerPassword == null || managerPassword.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				} else if (!managerPassword.trim().matches(managerPasswordReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
+				Integer status = new Integer(req.getParameter("status"));
 
 				ManagerVO managerVO = new ManagerVO();
-			
+
 				managerVO.setManagerID(managerID);
 				managerVO.setManagerUser(managerUser);
 				managerVO.setManagerName(managerName);
 				managerVO.setManagerPassword(managerPassword);
 				managerVO.setStatus(status);
-				System.out.println("managerVO="+managerVO);
+
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("managerVO", managerVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
-					RequestDispatcher failureView = req.getRequestDispatcher("/Manager/update_manager_input.jsp");
+					req.setAttribute("managerVO", managerVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/manager/update_manager_input.jsp");
 					failureView.forward(req, res);
-					return; // µ{¦¡¤¤Â_
+					return; // ç¨‹å¼ä¸­æ–·
 				}
 
-				/*************************** 2.¶}©l­×§ï¸ê®Æ *****************************************/
+				/*************************** 2.é–‹å§‹ä¿®æ”¹è³‡æ–™ *****************************************/
 //				ManagerService msSvc = new ManagerService();
 //				managerVO = msSvc.updateManager(managerID, managerUser, managerName, managerPassword, status);
 				ManagerDAO dao = new ManagerDAO();
 				dao.update(managerVO);
-				
-				/*************************** 3.­×§ï§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) *************/
-				req.setAttribute("managerVO", managerVO); // ¸ê®Æ®wupdate¦¨¥\«á,¥¿½TªºªºempVOª«¥ó,¦s¤Jreq
-				String url = "/Manager/listOne.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ­×§ï¦¨¥\«á,Âà¥ælistOneEmp.jsp
+
+				/*************************** 3.ä¿®æ”¹å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) *************/
+				req.setAttribute("managerVO", managerVO); // è³‡æ–™åº«updateæˆåŠŸå¾Œ,æ­£ç¢ºçš„çš„empVOç‰©ä»¶,å­˜å…¥req
+				String url = "/back_end/manager/listOne.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // ä¿®æ”¹æˆåŠŸå¾Œ,è½‰äº¤listOneEmp.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z *************************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† *************************************/
 			} catch (Exception e) {
-				errorMsgs.add("­×§ï¸ê®Æ¥¢±Ñ:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Manager/update_manager_input.jsp");
+				errorMsgs.add("ä¿®æ”¹è³‡æ–™å¤±æ•—:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/update_manager_input.jsp");
 //				failureView.forward(req, res);
 			}
 		}
 
-if ("insert".equals(action)) { // ¨Ó¦ÛaddEmp.jspªº½Ğ¨D
+		if ("insert".equals(action)) { // ä¾†è‡ªaddEmp.jspçš„è«‹æ±‚
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("1232132131");
+
 			try {
-				/*********************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ - ¿é¤J®æ¦¡ªº¿ù»~³B²z *************************/
+				/*********************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† *************************/
 				String managerUser = req.getParameter("managerUser");
-				System.out.println(managerUser);
+				String managerUserReg = "^[(a-zA-Z0-9_)]{2,10}$";
+				if (managerUser == null || managerUser.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				} else if (!managerUser.trim().matches(managerUserReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
 
 				String managerName = req.getParameter("managerName");
-				System.out.println(managerName);
+				String managerNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				if (managerName == null || managerName.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å§“å: è«‹å‹¿ç©ºç™½");
+				} else if (!managerName.trim().matches(managerNameReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("ç®¡ç†å“¡å§“å: åªèƒ½æ˜¯ä¸­ã€è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
 
 				String managerPassword = req.getParameter("managerPassword");
-				System.out.println(managerPassword);
+				String managerPasswordReg = "^[(a-zA-Z0-9_)]{2,10}$";
+				if (managerPassword == null || managerPassword.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				} else if (!managerPassword.trim().matches(managerPasswordReg)) { // ä»¥ä¸‹ç·´ç¿’æ­£å‰‡(è¦)è¡¨ç¤ºå¼(regular-expression)
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: åªèƒ½æ˜¯è‹±æ–‡å­—æ¯ã€æ•¸å­—å’Œ_ , ä¸”é•·åº¦å¿…éœ€åœ¨2åˆ°10ä¹‹é–“");
+				}
 
-				Integer status = new Integer(req.getParameter("status").trim());
+				Integer status = new Integer(req.getParameter("status"));
 
 				ManagerVO managerVO = new ManagerVO();
-
 				managerVO.setManagerUser(managerUser);
 				managerVO.setManagerName(managerName);
 				managerVO.setManagerPassword(managerPassword);
@@ -162,54 +223,121 @@ if ("insert".equals(action)) { // ¨Ó¦ÛaddEmp.jspªº½Ğ¨D
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("managerVO", managerVO); // §t¦³¿é¤J®æ¦¡¿ù»~ªºempVOª«¥ó,¤]¦s¤Jreq
-					RequestDispatcher failureView = req.getRequestDispatcher("/Manager/update_manager_input.jsp");
+					req.setAttribute("managerVO", managerVO); // å«æœ‰è¼¸å…¥æ ¼å¼éŒ¯èª¤çš„empVOç‰©ä»¶,ä¹Ÿå­˜å…¥req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/back_end/manager/update_manager_input.jsp");
 					failureView.forward(req, res);
-					return; // µ{¦¡¤¤Â_
+					return; // ç¨‹å¼ä¸­æ–·
 				}
 
-				/*************************** 2.¶}©l·s¼W¸ê®Æ ***************************************/
-//					ManagerService msSvc = new ManagerService();
-//					managerVO = msSvc.addManager(managerUser, managerName, managerPassword, status);
+				/*************************** 2.é–‹å§‹æ–°å¢è³‡æ–™ ***************************************/
 
 				ManagerDAO dao = new ManagerDAO();
 				dao.insert(managerVO);
 
-				/*************************** 3.·s¼W§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ***********/
-				String url = "/Manager/listAll.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ·s¼W¦¨¥\«áÂà¥ælistAllEmp.jsp
+				/*************************** 3.æ–°å¢å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ***********/
+				String url = "/back_end/manager/listAll.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // æ–°å¢æˆåŠŸå¾Œè½‰äº¤listAllEmp.jsp
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Manager/addManager.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/addManager.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-if ("delete".equals(action)) { // ¨Ó¦ÛlistAllEmp.jsp
+		if ("delete".equals(action)) { // ä¾†è‡ªlistAllEmp.jsp
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			try {
-				/*************************** 1.±µ¦¬½Ğ¨D°Ñ¼Æ ***************************************/
+				/*************************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ ***************************************/
 				Integer managerID = new Integer(req.getParameter("managerID"));
 
-				/*************************** 2.¶}©l§R°£¸ê®Æ ***************************************/
+				/*************************** 2.é–‹å§‹åˆªé™¤è³‡æ–™ ***************************************/
 				ManagerService msSvc = new ManagerService();
 				msSvc.deleteManager(managerID);
 
-				/*************************** 3.§R°£§¹¦¨,·Ç³ÆÂà¥æ(Send the Success view) ***********/
-				String url = "/Manager/listAll.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// §R°£¦¨¥\«á,Âà¥æ¦^°e¥X§R°£ªº¨Ó·½ºô­¶
+				/*************************** 3.åˆªé™¤å®Œæˆ,æº–å‚™è½‰äº¤(Send the Success view) ***********/
+				String url = "/back_end/manager/listAll.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// åˆªé™¤æˆåŠŸå¾Œ,è½‰äº¤å›é€å‡ºåˆªé™¤çš„ä¾†æºç¶²é 
 				successView.forward(req, res);
 
-				/*************************** ¨ä¥L¥i¯àªº¿ù»~³B²z **********************************/
+				/*************************** å…¶ä»–å¯èƒ½çš„éŒ¯èª¤è™•ç† **********************************/
 			} catch (Exception e) {
-				errorMsgs.add("§R°£¸ê®Æ¥¢±Ñ:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/Manager/listAll.jsp");
+				errorMsgs.add("åˆªé™¤è³‡æ–™å¤±æ•—:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/listAll.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		if ("login".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			ManagerDAO dao = new ManagerDAO();
+			List<ManagerVO> list = dao.getAll();
+			try {
+				/*********************** 1.æ¥æ”¶è«‹æ±‚åƒæ•¸ - è¼¸å…¥æ ¼å¼çš„éŒ¯èª¤è™•ç† *************************/
+				String managerUser = req.getParameter("managerUser");
+				if (managerUser == null || managerUser.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å¸³è™Ÿ: è«‹å‹¿ç©ºç™½");
+				}
+
+				String managerPassword = req.getParameter("managerPassword");
+				if (managerPassword == null || managerPassword.trim().length() == 0) {
+					errorMsgs.add("ç®¡ç†å“¡å§“å: è«‹å‹¿ç©ºç™½");
+				}
+
+				System.out.println(managerUser);
+				System.out.println(managerPassword);
+				System.out.println("å…±æœ‰å¹¾ä½ç®¡ç†å“¡ : " + list.size());
+
+				for (int i = 0; i < list.size(); i++) {
+
+					System.out.println(list.get(i));
+
+					String user = list.get(i).getManagerUser();
+					String password = list.get(i).getManagerPassword();
+					Integer id = list.get(i).getManagerID();
+
+					System.out.println("å¸³è™Ÿ : " + user);
+					System.out.println("å¯†ç¢¼ : " + password);
+
+					if ((managerUser.trim().equals(user)) && (managerPassword.trim().equals(password))) {
+
+						System.out.println(req.getParameter("managerUser") + "ä½ å¥½");
+
+						req.getSession().setAttribute("managerID", id);
+						req.getSession().setAttribute("managerUser", user);
+						req.getSession().setAttribute("managerPassword", password);
+
+						RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/afterLogin.jsp");
+						successView.forward(req, res);
+						return;
+					}
+
+				}
+				errorMsgs.add("å¸³è™Ÿå¯†ç¢¼ä¸ç¬¦åˆ");
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/managerlogin.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+			} catch (Exception e) {
+				errorMsgs.add("ç™»å…¥å¤±æ•—:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/managerlogin.jsp");
+				failureView.forward(req, res);
+			}
+
+		}
+		
+		if("sign_out".equals(action)) {
+			req.getSession().invalidate();
+			RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/managerFrontPage.jsp");
+			successView.forward(req, res);
+			return;
 		}
 	}
 }
