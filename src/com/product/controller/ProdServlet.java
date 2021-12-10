@@ -185,6 +185,7 @@ public class ProdServlet extends HttpServlet {
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("prodVO", prod);
+				
 				jedis.close();
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/uploadProd.jsp");
 				failureView.forward(req, res);
@@ -250,7 +251,7 @@ public class ProdServlet extends HttpServlet {
 				}
 
 			}
-
+			os.close();
 		}
 
 ////////////////////////上架商品更新/////////////////////////////

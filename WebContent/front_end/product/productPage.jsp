@@ -136,15 +136,18 @@
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                   </div>
                   
-                    <c:if test="${(prodEL.prodID %4) ==0 }">
-                    <span class="aa-badge aa-sale" href="#">新上架</span>
-                  </c:if>
-                    <c:if test="${(prodEL.prodID % 4) ==1 }">
-                   <span class="aa-badge aa-sold-out" href="#">超熱門</span>
-                    </c:if>
-                     <c:if test="${(prodEL.prodID % 4) ==2 }">
-                   <span class="aa-badge aa-hot" href="#">很搶手</span>
-                    </c:if>
+                 <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  	
+  					 <c:if test="${loop2.index==0}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
                 </li>	
 					 </c:if>	
 			</c:forEach>
