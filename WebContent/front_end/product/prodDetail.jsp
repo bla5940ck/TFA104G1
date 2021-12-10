@@ -873,6 +873,12 @@ function selflog_show(id){
 		
 		
 		
+		$("input.report-btn").click(function(){
+			location.href="<%=path%>/back_end/memberservice/problemTypeReport.jsp";
+		});
+		
+		
+		
 	
 	</script>
 
