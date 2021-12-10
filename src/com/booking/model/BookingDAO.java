@@ -277,16 +277,16 @@ public class BookingDAO implements BookingDAO_interface {
 //		
 //		bk.forEach(bb->System.out.println(bb.getBkID()));
 		
-		Map<Integer,Integer> map = b.getSortByCount();
-		Set<Integer> keySet = map.keySet();
-		List<Integer> prodIDList = new ArrayList();
-		List<Integer> countList = new ArrayList();
-		for(int i :keySet) {
-			System.out.println("key: " +i + " value: "+ map.get(i));
-			prodIDList.add(i);
-			countList.add(map.get(i));
-		}
-		
+//		Map<Integer,Integer> map = b.getSortByCount();
+//		Set<Integer> keySet = map.keySet();
+//		List<Integer> prodIDList = new ArrayList();
+//		List<Integer> countList = new ArrayList();
+//		for(int i :keySet) {
+//			System.out.println("key: " +i + " value: "+ map.get(i));
+//			prodIDList.add(i);
+//			countList.add(map.get(i));
+//		}
+//		
 //		BookingDAO bk = new BookingDAO();
 //		List<BookingVO> list = bk.getAll();
 //		
