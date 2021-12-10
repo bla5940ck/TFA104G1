@@ -76,7 +76,7 @@
 		<th>專案開始日期</th>
 		<th>專案結束日期</th>
 		<th>專案內容</th>
-<!-- 		<th>專案狀態</th> -->
+		<th>專案狀態</th>
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="promoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -87,7 +87,7 @@
 			<td>${promoVO.promo_start}</td>
 			<td>${promoVO.promo_end}</td>
 			<td>${promoVO.promo_text}</td> 
-<%-- 			<td>${promoVO.status}</td> --%>
+			<td>${(promoVO.status==0)?'進行中':'已結束'}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="專案明細">

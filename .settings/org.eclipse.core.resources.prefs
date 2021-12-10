@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+encoding//WebContent/back_end/manager=UTF-8
+encoding//WebContent/back_end/problemtype/listOneProblemType.jsp=UTF-8
+encoding//src/com/manager/controller=UTF-8
+=======
 encoding//WebContent/front_end/product/homePage.jsp=UTF-8
+>>>>>>> 12f6c7c0378e35744c73be031eb0b247d49bf93c
 encoding/<project>=UTF-8

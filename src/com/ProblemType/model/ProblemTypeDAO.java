@@ -1,4 +1,4 @@
-package com.ProblemType.model;
+package com.problemtype.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,7 +15,7 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 	public static final String PASSWORD = "password";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO problem_type (type_id,type_name) VALUES (?, ?)";
+			"INSERT INTO problem_type (type_name) VALUES (?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT type_id,type_name FROM problem_type order by type_id";
 	private static final String GET_ONE_STMT = 
@@ -36,8 +36,8 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 			con = DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1,problemTypeVO.getTypeID());
-			pstmt.setString(2,problemTypeVO.getTypeName());
+		
+			pstmt.setString(1,problemTypeVO.getTypeName());
 			
 			pstmt.executeUpdate();
 			
@@ -261,34 +261,34 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 		
 		ProblemTypeDAO dao = new ProblemTypeDAO();
 		
-		//∑sºW
+		//Êñ∞Â¢û
 		ProblemTypeVO ptvo1 = new ProblemTypeVO();
 		ptvo1.setTypeID(4);
-		ptvo1.setTypeName("√i™∫≥B≤z");
+		ptvo1.setTypeName("Êá∂ÁöÑËôïÁêÜ");
 //		dao.insert(ptvo1);
 
 		
 		
 		
-		//≠◊ßÔ
+		//‰øÆÊîπ
 		ProblemTypeVO ptvo2 = new ProblemTypeVO();
 		ptvo2.setTypeID(1);
 		ptvo2.setTypeName("123");
 //		dao.update(ptvo2);
 		
 		
-		//ßR∞£
+		//Âà™Èô§
 //		dao.delete(4);
 		
 		
-		//¨d∏ﬂ
+		//Êü•Ë©¢
 		ProblemTypeVO ptvo3 = dao.findByprimaryKey(1);
 		System.out.print(ptvo3.getTypeID() + ",");
 		System.out.println(ptvo3.getTypeName() + ",");
 		System.out.println("--------------------------");
 		
 		
-		//•˛≥°¨d∏ﬂ
+		//ÂÖ®ÈÉ®Êü•Ë©¢
 //		List<ProblemTypeVO> list = dao.getAll();
 //		for (ProblemTypeVO ptvo4 : list) {
 //		System.out.print(ptvo4.getTypeID() + ",");
