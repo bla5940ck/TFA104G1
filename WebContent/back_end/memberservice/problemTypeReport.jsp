@@ -59,10 +59,15 @@ main.main {
 }
 
 table {
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;	
+	width: 80%;
+	margin-top: auto;
+	margin-bottom: auto;	
 	font-size: 12px;
+	margin-left:auto;
+	margin-right:auto;
+	font-size:15px;
+	text-align:center;
+	
 }
 
 table, th, td {
@@ -70,8 +75,21 @@ table, th, td {
 }
 
 th, td {
+width:40px;
+height:
 	padding: 5px;
-	text-align: left;
+	
+}
+
+canvas{
+object-fit: contain;
+	width: 185px;
+	height: 140px;
+}
+
+.problem1{
+	width:90%;
+	height:90%;
 }
 </style>
 </head>
@@ -99,36 +117,31 @@ th, td {
 			
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/MemberServiceServlet"
-				name="form1">
-				<input type="hidden" name="action" value="problemTypeReport" />
+				name="form1" enctype="multipart/form-data">
+				
 				<table id="table-1">
 					<tr>
 					<td>反應會員編號</td>
 					<td>
 					<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
-						<input type="hidden" name="memberID" value="memID">${memSVC.getOneMember(memID).name}
-						
+					<jsp:useBean id="ptSVC" scope="page" class="com.problemtype.model.ProblemTypeService" />
+						<input type="hidden" name="memberID" value="<%=memID%>">${memSVC.getOneMember(id).name}					
 					</td>
 					</tr>
 					<tr>
 						<td>問題類型:</td>
-						<td><select id="sel" name="problemtype1">
-								<option value="0">請選擇</option>
-								<option value="1">訂單</option>
-								<option value="2">會員</option>
-								<option value="3">商品</option>
-								<option value="4">其他</option>
-						</select></td>
-					</tr>
-					<br>
-					<tr>
-						<td>選擇問題:</td>
-						<td><select id="sel2" name="problemtype2"></select></td>
+						<td>					
+							<select size="1" name="typeID">
+								<c:forEach var="problemtypeVO" items="${ptSVC.getAll()}">
+										<option value="${problemtypeVO.typeID}">${problemtypeVO.typeName}
+								</c:forEach>
+							</select>							
+						</td>
 					</tr>
 					<br>
 					<tr>
 						<td>問題描述:</td>
-							<td><textarea class="problem1" name="action" value=""></textarea>
+							<td><textarea class="problem1" name="problemmsg" placeholder="請輸入內容...."></textarea>
 						</td>
 					</tr>
 					<br>
@@ -136,7 +149,7 @@ th, td {
 						<td>上傳圖片一</td>
 						<div>
 						<td><canvas id="canv1"></canvas>								
-									<input type="file" multiple="false" accept="image/*"
+								<input type="file" multiple="false" accept="image/*"
 									 onchange=upload1() id = "finput1" name = "pic1">							
 						</td>
 						</div>
@@ -145,7 +158,7 @@ th, td {
 						<td>上傳圖片二</td>
 						<div>
 						<td><canvas id="canv2"></canvas>								
-									<input type="file" multiple="false" accept="image/*"
+								<input type="file" multiple="false" accept="image/*"
 									 onchange=upload2() id = "finput2" name = "pic2">							
 						</td>
 						</div>
@@ -154,15 +167,16 @@ th, td {
 						<td>上傳圖片三</td>
 						<div>
 						<td><canvas id="canv3"></canvas>								
-									<input type="file" multiple="false" accept="image/*"
+								<input type="file" multiple="false" accept="image/*"
 									 onchange=upload3() id = "finput3" name = "pic3">
 						</td>
 						</div>
 					</tr>
 					</table>
 				<br>
-				<input type="hidden" name="action" value="insert">
-				<input type="submit" value="送出新增">
+				<input type="hidden" name="action" value="insert" >
+				<center><input type="submit" value="送出"></center>
+
 			</FORM>
 		</main>
 	</div>
@@ -193,52 +207,6 @@ th, td {
 						  image.drawTo(imgcanvas);
 						}
 					
-					$("#sel").change(function() {
-							switch (parseInt($(this).val())) {				
-								case 0:
-									$("#sel2 option").remove();
-									break;
-								case 1:
-									$("#sel2 option").remove();
-									
-									var array = [ "未收到商品", "商品毀損", "商品不符合", "收到商品異常",
-										"歸還商品異常", "未歸還商品", "取消訂單", "完成訂單" ];											
-									$.each(array, function(i, val) {
-										$("#sel2").append(
-												$("<option value='" + i + "'>"
-												+ array[i] + "</option>"));
-									});
-									break;
-								case 2:
-									$("#sel2 option").remove();
-										var array = [ "違規", "無違規" ];
-											//利用each遍歷array中的值並將每個值新增到Select中
-									$.each(array, function(i, val) {
-										$("#sel2").append(
-											$("<option value='" + i + "'>"
-												+ array[i] + "</option>"));
-									});
-									break;
-								case 3:
-									$("#sel2 option").remove();
-										var array = [ "盜用圖片", "未依分類", "金額誇張" ];											
-									$.each(array, function(i, val) {
-										$("#sel2").append(
-												$("<option value='" + i + "'>"
-													+ array[i] + "</option>"));
-									});
-									break;
-								case 4:
-									$("#sel2 option").remove();
-										var array = [ "歐洲", "亞洲", "非洲", "大洋洲", "南美洲",
-													"北美洲", "南極洲" ];											
-									$.each(array, function(i, val) {
-										$("#sel2").append(
-												$("<option value='" + i + "'>"
-														+ array[i] + "</option>"));
-									});
-									break;
-								}
-							});
+					
 </script>
 </html>

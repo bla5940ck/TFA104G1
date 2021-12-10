@@ -115,7 +115,7 @@ th, td {
 			<nav class="nav">
 				<ul class="nav_list" style="background-color:#F0B594;height:100%">
 					<h2>
-						<a>管理者專區</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>管理者專區</a> <br> 
 						<a>問題處理</a> <br> 
 						<a>商品管理</a> <br>
 						<a>訂單管理</a> <br> 
@@ -196,6 +196,7 @@ th, td {
 				<input type="hidden" name="status" value=<%=managerVO.getStatus()%>> 
 				<input type="submit" value="送出修改">
 			</FORM>
+			
 		</main>
 	</div>
 	

@@ -39,12 +39,33 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, manberServiceVO.getProdID());
-			pstmt.setInt(2, manberServiceVO.getMemberID());
-			pstmt.setInt(3, manberServiceVO.getManagerID());
-			pstmt.setInt(4, manberServiceVO.getTypeID());
-			pstmt.setInt(5, manberServiceVO.getOrdID());
-			pstmt.setTimestamp(6, manberServiceVO.getMsgDate());
+			Integer tmp1 = manberServiceVO.getProdID();
+			if (tmp1 == null) {
+				pstmt.setObject(1, tmp1);
+			} else {
+				pstmt.setInt(1, tmp1);
+			}
+			
+			pstmt.setInt(2, manberServiceVO.getMemberID());			
+			
+			Integer tmp3 = manberServiceVO.getManagerID();
+			if (tmp3 == null) {
+				pstmt.setObject(3, tmp3);
+			} else {
+				pstmt.setInt(3, tmp3);
+			}
+			
+			pstmt.setInt(4, manberServiceVO.getTypeID());			
+			
+			
+			Integer tmp5 = manberServiceVO.getOrdID();
+			if (tmp5 == null) {
+				pstmt.setObject(5, tmp5);
+			} else {
+				pstmt.setInt(5, tmp5);
+			}
+						
+			pstmt.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 			pstmt.setString(7, manberServiceVO.getProblemMsg());
 			pstmt.setString(8, manberServiceVO.getMsgRes());
 			pstmt.setBytes(9, manberServiceVO.getPic1());
@@ -57,7 +78,8 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured." + se.getMessage());
 		} catch (Exception se) {
-			throw new RuntimeException("A database error occured." + se.getMessage());
+//			throw new RuntimeException("A database error occured." + se.getMessage());
+			se.printStackTrace();
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -257,7 +279,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 				msvo.setMsgDate(rs.getTimestamp("msg_Date"));
 				msvo.setProblemMsg(rs.getString("problem_Msg"));
 				msvo.setMsgRes(rs.getString("msg_Res"));
-//				msvo.setPic1(rs.getBytes("pic_1"));
+				msvo.setPic1(rs.getBytes("pic_1"));
 				msvo.setPic2(rs.getBytes("pic_2"));
 				msvo.setPic3(rs.getBytes("pic_3"));
 				msvo.setProblemStatus(rs.getInt("problem_Status"));
@@ -298,48 +320,54 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 	public static void main(String[] args) throws Exception {
 
 		MemberServiceDAO dao = new MemberServiceDAO();
+		
+		
+//		List<MemberServiceVO> list = dao.getAll();
+//		for(MemberServiceVO m : list) {
+//			System.out.println(m.getPic1());
+//		}
 
 		// 新增
-		MemberServiceVO msvo1 = new MemberServiceVO();
-
-		long datetime = System.currentTimeMillis();
-		Timestamp timestamp = new Timestamp(datetime);
-//		System.out.println(timestamp);
-		
-		msvo1.setMsgID(2);
-		msvo1.setProdID(2);
-		msvo1.setMemberID(1);
-		msvo1.setManagerID(1);
-		msvo1.setTypeID(3);
-		msvo1.setOrdID(2);
-		msvo1.setMsgDate(timestamp);
-		msvo1.setProblemMsg("123");
-		msvo1.setMsgRes("321");
-		msvo1.setPic1(null);
-		msvo1.setPic2(null);
-		msvo1.setPic3(null);
-		msvo1.setProblemStatus(2);
-//		dao.insert(msvo1);
-		
-		
-		
-		
-		// 修改
-		MemberServiceVO msvo2 = new MemberServiceVO();
-		msvo2.setProdID(2);
-		msvo2.setMemberID(1);
-		msvo2.setManagerID(1);
-		msvo2.setTypeID(3);
-		msvo2.setOrdID(2);
-		msvo2.setMsgDate(timestamp);
-		msvo2.setProblemMsg("123");
-		msvo2.setMsgRes("321");
-		msvo2.setPic1(null);
-		msvo2.setPic2(null);
-		msvo2.setPic3(null);
-		msvo2.setProblemStatus(2);
-//		dao.update(msvo2);
-		
+//		MemberServiceVO msvo1 = new MemberServiceVO();
+//
+//		long datetime = System.currentTimeMillis();
+//		Timestamp timestamp = new Timestamp(datetime);
+////		System.out.println(timestamp);
+//		
+//		msvo1.setMsgID(2);
+//		msvo1.setProdID(2);
+//		msvo1.setMemberID(1);
+//		msvo1.setManagerID(1);
+//		msvo1.setTypeID(3);
+//		msvo1.setOrdID(2);
+//		msvo1.setMsgDate(timestamp);
+//		msvo1.setProblemMsg("123");
+//		msvo1.setMsgRes("321");
+//		msvo1.setPic1(null);
+//		msvo1.setPic2(null);
+//		msvo1.setPic3(null);
+//		msvo1.setProblemStatus(2);
+////		dao.insert(msvo1);
+//		
+//		
+//		
+//		
+//		// 修改
+//		MemberServiceVO msvo2 = new MemberServiceVO();
+//		msvo2.setProdID(2);
+//		msvo2.setMemberID(1);
+//		msvo2.setManagerID(1);
+//		msvo2.setTypeID(3);
+//		msvo2.setOrdID(2);
+//		msvo2.setMsgDate(timestamp);
+//		msvo2.setProblemMsg("123");
+//		msvo2.setMsgRes("321");
+//		msvo2.setPic1(null);
+//		msvo2.setPic2(null);
+//		msvo2.setPic3(null);
+//		msvo2.setProblemStatus(2);
+////		dao.update(msvo2);
+//		
 		
 		// 刪除
 //		dao.delete(7017);
@@ -363,26 +391,26 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 //		System.out.println("---------------------");
 	
 		// 全部查詢
-		List<MemberServiceVO> list = dao.getAll();
-		for(MemberServiceVO msvo4:list) {
-			System.out.print(msvo4.getMsgID() + ",");
-			System.out.print(msvo4.getProdID() + ",");
-			System.out.print(msvo4.getMemberID() + ",");
-			System.out.print(msvo4.getTypeID() + ",");
-			System.out.print(msvo4.getOrdID() + ",");
-			System.out.print(msvo4.getMsgDate() + ",");
-			System.out.print(msvo4.getProblemMsg());
-			System.out.print(msvo4.getMsgRes());
-			System.out.print(msvo4.getPic1());
-			System.out.print(msvo4.getPic2());
-			System.out.print(msvo4.getPic3());
-			System.out.print(msvo4.getProblemStatus());
-			System.out.println();
-		}
-
-//		for(int i=0;i<list.size();i++) {
-//			System.out.println(list.get(i));
+//		List<MemberServiceVO> list = dao.getAll();
+//		for(MemberServiceVO msvo4:list) {
+//			System.out.print(msvo4.getMsgID() + ",");
+//			System.out.print(msvo4.getProdID() + ",");
+//			System.out.print(msvo4.getMemberID() + ",");
+//			System.out.print(msvo4.getTypeID() + ",");
+//			System.out.print(msvo4.getOrdID() + ",");
+//			System.out.print(msvo4.getMsgDate() + ",");
+//			System.out.print(msvo4.getProblemMsg());
+//			System.out.print(msvo4.getMsgRes());
+//			System.out.print(msvo4.getPic1());
+//			System.out.print(msvo4.getPic2());
+//			System.out.print(msvo4.getPic3());
+//			System.out.print(msvo4.getProblemStatus());
+//			System.out.println();
 //		}
+//
+////		for(int i=0;i<list.size();i++) {
+////			System.out.println(list.get(i));
+////		}
 	}
 
 }

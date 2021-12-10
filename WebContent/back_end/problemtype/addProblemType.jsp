@@ -1,9 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.problemtype.model.*"%>
+
+<%
+	ProblemTypeVO ptVO = (ProblemTypeVO) request.getAttribute("problemtypeVO");
+%>
 
 <html>
 <head>
-<title>ProblemType</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<title>員工資料新增 - addEmp.jsp</title>
+
 <style>
 body {
 	margin: 0;
@@ -67,22 +74,10 @@ th, td {
 	text-align: center;
 }
 </style>
-<style>
-table#table-1 {
-	width: 80%;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
-	text-align: center;
-}
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
+<style>
+
+
 
 h2 {
 	color: blue;
@@ -90,10 +85,8 @@ h2 {
 }
 
 .signOut{
-background-color:#6495ed;
+	background-color:#6495ed;
 }
-
-
 </style>
 
 </head>
@@ -116,15 +109,33 @@ background-color:#6495ed;
 				</ul>
 			</nav>
 		</aside>
-		<main class="main" style="background-color:#C0C0C0;">
-		<ul>
-			<li><a href='listAllProblemType.jsp'>所有問題類型</a></li>
-		</ul>
-		<ul>
-			<li><a href='addProblemType.jsp'>新增問題類型</a></li>
-		</ul>		
-	</main>
+		<main class="main" style="background-color:#C0C0C0;">		
+				<tr>					
+					<td>
+						<h4>
+							<a href="select_page.jsp">回首頁</a>
+						</h4>
+					</td>
+				</tr>
+			<%-- 錯誤表列 --%>
+			<c:if test="${not empty errorMsgs}">
+				<font style="color: red">請修正以下錯誤:</font>
+				<ul>
+					<c:forEach var="message" items="${errorMsgs}">
+						<li style="color: red">${message}</li>
+					</c:forEach>
+				</ul>
+			</c:if>
+			<FORM METHOD="post"
+				ACTION="<%=request.getContextPath()%>/ProblemTypeServlet" name="form1">
+				<tr>
+					<td>問題類型:</td>
+					<td><input type="TEXT" name="typeName" size="45" /></td>
+						<input type="hidden" name="action" value="insert">
+						<input type="submit" value="送出新增"></FORM>
+				</tr>
+				</FORM>
+		</main>
 	</div>
-
 </body>
 </html>

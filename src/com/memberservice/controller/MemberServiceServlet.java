@@ -2,21 +2,28 @@ package com.memberservice.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import com.memberservice.model.MemberServiceDAO;
 import com.memberservice.model.MemberServiceService;
 import com.memberservice.model.MemberServiceVO;
+import com.product.model.ProdService;
+import com.product.model.ProdVO;
 
 @WebServlet("/MemberServiceServlet")
+@MultipartConfig
 public class MemberServiceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -212,7 +219,7 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				failureView.forward(req, res);
 			}
 		}
-		if ("insert".equals(action)) { // 來自update_emp_input.jsp的請求
+		if ("xxx".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -339,40 +346,149 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				failureView.forward(req, res);
 			}
 		}
-		if("problemTypeReport".equals(action)) {
+		if("insert".equals(action)) {
+//			System.out.println("1234");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println(errorMsgs);
+//			System.out.println(errorMsgs);
 			try {
-				Integer msgID = new Integer(req.getParameter("memberID"));
+				Integer memID = new Integer(req.getParameter("memberID"));
+				System.out.println(memID);
 				
-				Integer typeID = new Integer(req.getParameter("problemtype1"));
+				Integer typeID = new Integer(req.getParameter("typeID"));
+				System.out.println(typeID);
 				
-				String msgRes = req.getParameter("msgRes");
 				
-				Part pic1 =	req.getPart("pic1");
-				InputStream in1 = pic1.getInputStream();
-				byte[] buf1 = new byte[in1.available()];
-				in1.read(buf1);
+//					}		
+				
+				String pm = req.getParameter("problemmsg");
+				System.out.println(pm);				
+				
+				Part img1 =	req.getPart("pic1");
+				InputStream in1 = img1.getInputStream();
+				byte[] pic1 = new byte[in1.available()];
+				in1.read(pic1);
 				in1.close();
-				System.out.println("buffer lenght:"+ buf1.length);
+				System.out.println("buffer lenght:"+ pic1.length);
 				
-				Part pic2 =	req.getPart("pic2");
-				InputStream in2 = pic2.getInputStream();
-				byte[] buf2 = new byte[in2.available()];
-				in2.read(buf2);
+				Part img2 =	req.getPart("pic2");
+				InputStream in2 = img2.getInputStream();
+				byte[] pic2 = new byte[in2.available()];
+				in2.read(pic2);
 				in2.close();
-				System.out.println("buffer lenght:"+ buf2.length);
+				System.out.println("buffer lenght:"+ pic2.length);
 				
-				Part pic3 =	req.getPart("pic3");
-				InputStream in3 = pic3.getInputStream();
-				byte[] buf3 = new byte[in3.available()];
-				in3.read(buf3);
+				Part img3 =	req.getPart("pic3");
+				InputStream in3 = img3.getInputStream();
+				byte[] pic3 = new byte[in3.available()];
+				in3.read(pic3);
 				in3.close();
-				System.out.println("buffer lenght:"+ buf3.length);
+				System.out.println("buffer lenght:"+ pic3.length);
+				
+				MemberServiceVO msVO = new MemberServiceVO();
+				msVO.setMemberID(memID);
+				msVO.setTypeID(typeID);
+				msVO.setProblemMsg(pm);
+				msVO.setPic1(pic1);
+				msVO.setPic2(pic2);
+				msVO.setPic3(pic3);
+				msVO.setProblemStatus(0);
+				//0:未處理 
+				//1:已處理
+				
+				
+				MemberServiceDAO dao = new MemberServiceDAO();
+				dao.insert(msVO);
+				
 			} catch (Exception e) {
 				// TODO: handle exception
+				e.printStackTrace();
 			}
+		}
+if ("detail".equals(req.getParameter("action"))) {
+	
+	System.out.println("121323");
+	
+	String msgID = req.getParameter("msgID");
+
+	MemberServiceService msSvc = new MemberServiceService();
+	
+	MemberServiceVO msVO = msSvc.getOneMemberService(Integer.valueOf(msgID));
+	
+	OutputStream os = res.getOutputStream();
+	String pic = req.getParameter("pic");
+	try {
+		byte[] pic2 = msVO.getPic2();
+		byte[] pic1 = msVO.getPic1();	
+		byte[] pic3 = msVO.getPic3();	
+		
+		
+		
+	switch(pic) {
+	case "1":
+		os.write(pic1);
+		break;
+	case "2":
+		os.write(pic2);
+		break;
+	case "3":
+		os.write(pic3);
+		break;
+	}
+//	System.out.println("pic1:" + pic);
+//
+//		
+//	if(pic1!=null &&pic.equals("1")) {
+//		os.write(pic1);
+//	}
+//		
+//	if(pic2!=null && pic2.equals("2"))
+//		os.write(pic2);
+//	
+	
+//	byte[] pic3 = msVO.getPic3();
+//	if(pic3!=null)
+//		os.write(pic3);
+	} catch (Exception e) {
+		// TODO: handle exception
+		os.close();
+	}
+	
+	
+//			Integer prodID = 0;
+//			ProdService prodSvc = new ProdService();
+//			//讀圖片用
+//			if (req.getParameter("prodID") != null && !req.getParameter("prodID").isEmpty()) {
+//				prodID = Integer.parseInt(req.getParameter("prodID"));
+//			}
+//		
+//			ProdVO prod = prodSvc.findProductByPK(prodID);
+//			
+//			
+//			OutputStream os = res.getOutputStream();
+//			byte[] pic1 = prod.getPic1();
+//			byte[] pic2 = prod.getPic2();
+//			byte[] pic3 = prod.getPic3();
+//
+//			String no = req.getParameter("no");
+//			if (no != null) {
+//				switch (no) {
+//				case "1":
+//					if (pic1 != null)
+//						os.write(pic1);
+//					break;
+//				case "2":
+//					if (pic2 != null)
+//						os.write(pic2);
+//					break;
+//				case "3":
+//					if (pic3 != null)
+//						os.write(pic3);
+//					break;
+//				}
+//
+//			}
+
 		}
 	}
 

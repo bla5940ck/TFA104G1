@@ -2,22 +2,20 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.manager.model.*"%>
-
+<%@ page import="com.memberservice.model.*"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-	ManagerService msSvc = new ManagerService();
-	List<ManagerVO> list = msSvc.getAll();
+	MemberServiceService msSvc = new MemberServiceService();
+	List<MemberServiceVO> list = msSvc.getAll();
 	pageContext.setAttribute("list", list);
-
-	ManagerVO managerVO = (ManagerVO) request.getAttribute("managerVO");
-	// 	for(ManagerVO maVO : list){
-	// 		out.println(maVO.getStatus());
-	// 	};
+	
+	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
+	
 %>
 
 <html>
 <head>
-<title>所有管理者資料-listAllManager.jsp</title>
+<title>所有問題列表</title>
 <style>
 body {
 	margin: 0;
@@ -102,19 +100,27 @@ h4 {
 
 <style>
 table {
-	width: 800px;
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
 table, th, td {
+	font-size:10px;
 	border: 1px solid #CCCCFF;
 }
 
 th, td {
+height:100px
 	padding: 5px;
 	text-align: center;
+}
+
+.pic{
+object-fit: contain;
+	width: 95px;
+	height: 80px;
 }
 </style>
 
@@ -135,7 +141,7 @@ th, td {
 						<a>會員審核</a> <br> 
 						<a>專案專區</a>
 					</h2>
-						<form action="/TFA104G1/ManagerServlet" method="post" >
+						<form action="/TFA104G1/MemberServiceServlet" method="post" >
 						<button class="signOut" type="submit">sign out</button>
 						<input type="hidden" name="action" value="sign_out" />
 						</form>
@@ -150,7 +156,7 @@ th, td {
 						
 						<h4>
 							<a
-								href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a>
+								href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
 						</h4>
 					</td>
 				</tr>
@@ -165,53 +171,56 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-
+	<FORM METHOD="post"
+				ACTION="<%=request.getContextPath()%>/MemberServiceServlet"
+				name="form1" enctype="multipart/form-data">
 			<table>
 				<tr>
-					<th>管理者編號</th>
-					<th>管理者帳號</th>
-					<th>管理者姓名</th>
-					<th>管理者密碼</th>
-					<th>管理者狀態</th>
-					<th>修改</th>
-					<th>刪除</th>
+					<th>問題編號</th>
+					<th>商品編號</th>					
+					<th>會員編號</th>
+					<th>問題類型編號</th>
+					<th>訂單編號</th>
+					<th>訊息時間</th>					
+					<th>問題描述</th>
+					<th>圖片一</th>
+					<th>圖片二</th>
+					<th>圖片三</th>
+					<th>問題狀態</th>					
+									
 				</tr>
+				<jsp:useBean id="ptSVC" scope="page" class="com.problemtype.model.ProblemTypeService" />
 				<%@ include file="page1.file"%>
-				<c:forEach var="managerVO" items="${list}" begin="<%=pageIndex%>"
+				
+				<c:forEach var="msVO" items="${list}" begin="<%=pageIndex%>"
 					end="<%=pageIndex+rowsPerPage-1%>">
-					<tr>
+					<tr>					
+						<td>${msVO.msgID}</td>
+						<td>${msVO.prodID}</td>
+						<td>${msVO.memberID}</td>
+						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
+						<td>${msVO.ordID}</td>
+						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<td>${msVO.problemMsg}</td>
+						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=1&msgID=${msVO.msgID}"></td>
+						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=2&msgID=${msVO.msgID}"></td>
+						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=3&msgID=${msVO.msgID}"></td>
+						<td><select name="problemStatus" size="1" id="s">
+								<option value="0" >未處理</option>
+								<option value="1" >已處理</option>
+						</select></td>
 
-						<td>${managerVO.managerID}</td>
-						<td>${managerVO.managerUser}</td>
-						<td>${managerVO.managerName}</td>
-						<td>${managerVO.managerPassword}</td>
-						<td>${(managerVO.status==0)?'停用中':'使用中'}</td>
 						
-
-						<td>
-							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/ManagerServlet"
-								style="margin-bottom: 0px;">
-								<input type="submit" value="修改"> 
-								<input type="hidden" name="managerID" value="${managerVO.managerID}">
-								<input type="hidden" name="action" value="getOne_For_Update">
-							</FORM>
-						</td>
-						<td>
-							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/ManagerServlet"
-								style="margin-bottom: 0px;">
-								<input type="submit" value="刪除"> <input type="hidden"
-									name="managerID" value="${managerVO.managerID}"> <input
-									type="hidden" name="action" value="delete">
-							</FORM>
-						</td>
 					</tr>
 				</c:forEach>
-		</table>	
+		</table>
+		<input type="hidden" name="action" value="insert" >
+				<center><input type="submit" value="送出"></center>	
 			<%@ include file="page2.file"%>
+			</FORM>
 		</main>
 	</div>
 	
 </body>
+
 </html>
