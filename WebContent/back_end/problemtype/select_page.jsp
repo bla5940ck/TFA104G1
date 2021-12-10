@@ -101,6 +101,7 @@ background-color:#6495ed;
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<aside class="aside">
+			<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list" style="background-color:#F0B594;height:100%">
 					<h2>
@@ -112,7 +113,11 @@ background-color:#6495ed;
 						<a>帳務管理</a> <br>
 						<a>會員審核</a> <br> 
 						<a>專案專區</a>
-					</h2>					
+					</h2>
+					<form action="/TFA104G1/ManagerServlet" method="post" >
+				<button class="signOut" type="submit">sign out</button>
+				<input type="hidden" name="action" value="sign_out" />
+				</form>
 				</ul>
 			</nav>
 		</aside>
