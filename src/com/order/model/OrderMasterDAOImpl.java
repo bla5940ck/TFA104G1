@@ -33,6 +33,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String UPDATE_ORDERLIST = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
 	private static final String UPDATE2 = "UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?";
 
+	private static final String INSERT_RENT_COMMENT= 
+			"UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
+	private static final String INSERT_LEASE_COMMENT=
+			"UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 	
 	static {
 		try {
@@ -618,20 +622,15 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	}
 
 	@Override
-	public void updateWithListStatus(OrderMasterVO omVO, Connection con) {
-//		System.out.println("訂單主檔執行更新");
-		
+	public void updateWithListStatus(OrderMasterVO omVO, Connection con) {		
 		PreparedStatement pstmt = null;
-		
 		try {
 			pstmt = con.prepareStatement(UPDATE2);
 			
 			pstmt.setInt(1, omVO.getOrdStatus());
 			pstmt.setInt(2, omVO.getOrdID());
-			
 			pstmt.executeUpdate();
-			
-			
+				
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
@@ -653,6 +652,74 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			}
 		}
 	}
+	@Override
+	public void addLeaseComment(OrderMasterVO orderMaster) {
+		Connection con = null;
+		PreparedStatement pstmt = null;		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(INSERT_LEASE_COMMENT);
+//			"UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
+			pstmt.setInt(1, orderMaster.getLeaseRank());
+			pstmt.setString(2, orderMaster.getLeaseComt());
+			pstmt.setTimestamp(3, orderMaster.getLeaseComtdate());
+			pstmt.setInt(4, orderMaster.getOrdID());
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+
+	@Override
+	public void addRentComment(OrderMasterVO orderMaster) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(INSERT_RENT_COMMENT);
+//			"UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
+			pstmt.setInt(1, orderMaster.getRentRank());
+			pstmt.setString(2, orderMaster.getRentComt());
+			pstmt.setTimestamp(3, orderMaster.getRentComtdate());
+			pstmt.setInt(4, orderMaster.getOrdID());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 
 	
 	public static void main(String[] args) {
@@ -662,39 +729,53 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		Timestamp timeStamp = new Timestamp(datetime);
 		java.sql.Date date = new java.sql.Date(datetime);
 
+		//新增rent承租者評論
+//		OrderMasterVO rent = new OrderMasterVO();
+//		rent.setRentRank(4);
+//		rent.setRentComt("DAO測試");
+//		rent.setRentComtdate(timeStamp);
+//		rent.setOrdID(171);
+//		omdao.addRentComment(rent);
+		
+		//新增lease出租者評論
+//		OrderMasterVO lease = new OrderMasterVO();
+//		lease.setLeaseRank(3);
+//		lease.setLeaseComt("DAO測試");
+//		lease.setLeaseComtdate(timeStamp);
+//		lease.setOrdID(171);
+//		omdao.addLeaseComment(lease);
+
 		//新增訂單主檔+明細(交易控制2版)
-		OrderMasterVO omVO = new OrderMasterVO();
-		omVO.setRentID(2);
-		omVO.setLeaseID(1);
-		omVO.setPayID(2);
-		omVO.setCouponID(null);
-		omVO.setOrdDate(timeStamp);
-		omVO.setStoreCode(19374);
-		omVO.setEstStart(date);
-		omVO.setEstEnd(date);
-		omVO.setRentDays(1);
-		omVO.setProdPrice(1000);
-		omVO.setShipFee(60);
-		omVO.setOrdPrice(1120);
-		
-		List<OrderListVO> testList = new ArrayList<OrderListVO>();
-		OrderListVO ola = new OrderListVO(); // 第一筆明細a
-		ola.setProdID(6);
-		ola.setProdPrice(400);
-//		ola.setOrdStatus(0);
-		ola.setEstStart(date);
-		ola.setEstEnd(date);
-		
-		OrderListVO olb = new OrderListVO(); // 第二筆明細b
-		olb.setProdID(7);
-		olb.setProdPrice(60);
-//		olb.setOrdStatus(0);
-		olb.setEstStart(date);
-		olb.setEstEnd(date);
-		
-		testList.add(ola);
-		testList.add(olb);
-		omdao.inesetWithList(omVO, testList);
+//		OrderMasterVO omVO = new OrderMasterVO();
+//		omVO.setRentID(2);
+//		omVO.setLeaseID(1);
+//		omVO.setPayID(2);
+//		omVO.setCouponID(null);
+//		omVO.setOrdDate(timeStamp);
+//		omVO.setStoreCode(19374);
+//		omVO.setEstStart(date);
+//		omVO.setEstEnd(date);
+//		omVO.setRentDays(1);
+//		omVO.setProdPrice(1000);
+//		omVO.setShipFee(60);
+//		omVO.setOrdPrice(1120);
+//		
+//		List<OrderListVO> testList = new ArrayList<OrderListVO>();
+//		OrderListVO ola = new OrderListVO(); // 第一筆明細a
+//		ola.setProdID(6);
+//		ola.setProdPrice(400);
+//		ola.setEstStart(date);
+//		ola.setEstEnd(date);
+//		
+//		OrderListVO olb = new OrderListVO(); // 第二筆明細b
+//		olb.setProdID(7);
+//		olb.setProdPrice(60);
+//		olb.setEstStart(date);
+//		olb.setEstEnd(date);
+//		
+//		testList.add(ola);
+//		testList.add(olb);
+//		omdao.inesetWithList(omVO, testList);
 
 		// 更新訂單主檔+明細
 //		OrderMasterVO om2 = new OrderMasterVO();

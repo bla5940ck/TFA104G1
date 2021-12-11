@@ -7,6 +7,8 @@ import java.util.List;
 public interface OrderMasterDAO_interface {
 	void addOrderMaster(OrderMasterVO orderMaster);
 	void updateOrderMaster(OrderMasterVO orderMaster);
+	void addLeaseComment(OrderMasterVO orderMaster);
+	void addRentComment(OrderMasterVO orderMaster);
 	OrderMasterVO findOrderMasterByPK(Integer ordID);
 	List<OrderMasterVO> findOrderMasterByStatus(Integer ordStatus);
 	List<OrderMasterVO> getAllOrderMaster();

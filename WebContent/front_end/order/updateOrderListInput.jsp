@@ -7,6 +7,7 @@
 <%@ page import="com.order.model.*"%>
 
 <%
+	Integer memID = (Integer) session.getAttribute("id");
 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
 	out.println("訂單明細狀態 :" + olVO.getOrdStatus());
 	

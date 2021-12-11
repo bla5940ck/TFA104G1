@@ -17,7 +17,7 @@
 	System.out.println("會員編號 : " + memID);
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 	List<DefAddressVO> daVO = dadao.getAll();
-	List<Integer> list1 = new ArrayList();
+	List<Integer> list1 = new ArrayList<>();
 	OrderMasterService ordserMasterSvc = new OrderMasterService();
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 	List<OrderMasterVO> list = ordserMasterSvc.getAll();
@@ -117,9 +117,8 @@ th, td {
 					會員編號 :
 					<%=memID%></h5>
 				<ul class="nav_list">
-					<h4>
-						<a href="listAllOrderMaster.jsp">全部訂單</a>
-					</h4>
+					<h4><a href="listAllOrderMaster.jsp">全部訂單</a></h4>
+					<h4><a href="listSuccessOrder.jsp">訂單評價</a></h4>
 				</ul>
 			</nav>
 		</aside>

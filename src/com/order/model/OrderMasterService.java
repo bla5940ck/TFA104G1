@@ -75,4 +75,26 @@ public class OrderMasterService {
 	public List<OrderMasterVO> getStatus(Integer ordStatus){
 		return dao.findOrderMasterByStatus(ordStatus);
 	}
+	
+	public OrderMasterVO addRentComment(Integer rentRank, String rentComt, Timestamp rentComtdate, Integer ordID) {
+		OrderMasterVO omVO = new OrderMasterVO();
+		omVO.setRentRank(rentRank);
+		omVO.setRentComt(rentComt);
+		omVO.setRentComtdate(rentComtdate);
+		omVO.setOrdID(ordID);
+		
+		dao.addRentComment(omVO);
+		return omVO;
+	}
+	
+	public OrderMasterVO addLeaseComment(Integer leaseRank, String leaseComt, Timestamp leaseComtdate, Integer ordID) {
+		OrderMasterVO omVO = new OrderMasterVO();
+		omVO.setLeaseRank(leaseRank);
+		omVO.setLeaseComt(leaseComt);
+		omVO.setLeaseComtdate(leaseComtdate);
+		omVO.setOrdID(ordID);
+		
+		dao.addLeaseComment(omVO);
+		return omVO;
+	}
 }

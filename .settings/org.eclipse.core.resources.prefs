@@ -3,9 +3,13 @@
 >>>>>>>=12f6c7c0378e35744c73be031eb0b247d49bf93c
 eclipse.preferences.version=1
 <<<<<<< HEAD
+<<<<<<< HEAD
 encoding//WebContent/back_end/manager=UTF-8
 =======
 >>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
+=======
+encoding//WebContent/back_end/manager=UTF-8
+>>>>>>> bc7dc69f6bdacb45b95bc6a034c726aef5018514
 encoding//WebContent/front_end/product/homePage.jsp=UTF-8
 encoding//src/com/manager/controller=UTF-8
 encoding/<project>=UTF-8
