@@ -92,134 +92,143 @@ a.cart-img>img {
 	height: 140px;
 }
 
-@import
-	url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400)
-	;
+        @import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
 
 /*         * { */
 /*             margin: 0; */
 /*             padding: 0; */
 /*             font-family: roboto; */
 /*         } */
-a.comment:link, a.comment:visited {
-	background-color: #191561;
-	color: yellow;
-	border: 2px solid #191561;
-	padding: 10px 20px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-}
+        
+        a.comment:link,
+        a.comment:visited {
+            background-color: #191561;
+            color: yellow;
+            border: 2px solid #191561;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-a.comment:hover, a.comment:active {
-	background-color: yellow;
-	color: #191561;
-}
+        a.comment:hover,
+        a.comment:active {
+            background-color: yellow;
+            color: #191561;
+        }
 
-.cont {
-	/* width: 93%; */
-	/* max-width: 350px; */
-	text-align: center;
-	margin: 4% auto;
-	/* padding: 30px 0; */
-	color: #EEE;
-	border-radius: 5px;
-	/* border: thin solid #444; */
-	overflow: hidden;
-}
+        .cont {
+            /* width: 93%; */
+            /* max-width: 350px; */
+            text-align: center;
+            margin: 4% auto;
+            /* padding: 30px 0; */
+            color: #EEE;
+            border-radius: 5px;
+            /* border: thin solid #444; */
+            overflow: hidden;
+        }
 
-hr {
-	margin: 20px;
-	border: 1px solid black;
-	border-bottom: thin solid rgba(255, 255, 255, 0.1);
-}
+        hr {
+            margin: 20px;
+            border: 1px solid black;
+            border-bottom: thin solid rgba(255, 255, 255, 0.1);
+        }
 
-div.title {
-	font-size: 2em;
-}
+        div.title {
+            font-size: 2em;
+        }
 
-h1 span {
-	font-weight: 300;
-	color: #Fd4;
-}
+        h1 span {
+            font-weight: 300;
+            color: #Fd4;
+        }
 
-div.stars {
-	width: 270px;
-	display: inline-block;
-}
+        div.stars {
+            width: 270px;
+            display: inline-block;
+        }
 
-input.star {
-	display: none;
-}
+        input.star {
+            display: none;
+            
+        }
 
-label.star {
-	float: right;
-	padding: 10px;
-	font-size: 36px;
-	color: lightyellow;
-	transition: all .2s;
-}
+        label.star {
+            float: right;
+            padding: 10px;
+            font-size: 36px;
+            color: lightyellow;
+            transition: all .2s;
+            
+        }
 
-input.star:checked ~label.star:before {
-	content: '\f005';
-	color: #FD4;
-	transition: all .25s;
-}
+        input.star:checked~label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
 
-input.star-5:checked ~label.star:before {
-	color: #FE7;
-	text-shadow: 0 0 20px #952;
-}
 
-input.star-1:checked ~label.star:before {
-	color: #F62;
-}
+        input.star-5:checked~label.star:before {
+            color: #FE7;
+            text-shadow: 0 0 20px #952;
+        }
 
-label.star:hover {
-	transform: rotate(-15deg) scale(1.3);
-}
+        input.star-1:checked~label.star:before {
+            color: #F62;
+        }
 
-label.star:before {
-	content: '\f006';
-	font-family: FontAwesome;
-}
+        label.star:hover {
+            transform: rotate(-15deg) scale(1.3);
+        }
 
-.rev-box {
-	/* overflow: hidden; */
-	height: 100%;
-	width: 100%;
-	transition: all .25s;
-}
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome;
+        }
 
-textarea.review {
-	border: 1px solid black;
-	width: 100%;
-	max-width: 100%;
-	height: 100px;
-	padding: 10px;
-	box-sizing: border-box;
-}
+        .rev-box {
+            /* overflow: hidden; */
+            height: 100%;
+            width: 100%;
+            transition: all .25s;
+        }
 
-label.review {
-	display: block;
-	transition: opacity .25s;
-}
+        textarea.review {
+            border: 1px solid black;
+            width: 100%;
+            max-width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
 
-input.star:checked ~.rev-box {
-	height: 125px;
-	overflow: visible;
-}
+        label.review {
+            display: block;
+            transition: opacity .25s;
 
-input.cobt {
-	transition-duration: 0.4s;
-	color: black;
-}
+        }
 
-.cobt:hover {
-	background-color: #191561;
-	/* Green */
-	color: yellow;
-}
+        input.star:checked~.rev-box {
+            height: 125px;
+            overflow: visible;
+        }
+
+        input.cobt {
+            transition-duration: 0.4s;
+            color: black;
+        }
+
+        .cobt:hover {
+            background-color: #191561;
+            /* Green */
+            color: yellow;
+        }
+
+
+
+
 </style>
 </head>
 
@@ -329,51 +338,53 @@ input.cobt {
 																	<p><%=omVO.getRentComt() == null ? "尚未評論" : omVO.getRentComt()%></p></td>
 															</tr>
 
-															<tr>
-																<th>出租方評價</th>
-																<td><input type="hidden" name="leaseRank" value="<%=omVO.getLeaseRank() == null ? "" : omVO.getLeaseRank()%>">
-																	<p id="rank"><%=omVO.getLeaseRank() == 0 ? "尚未評分" : omVO.getLeaseRank()%></p>
-																</td>
-															</tr>
-															<tr>
-																<th>出租方評論</th>
-																<td><input type="hidden" id="lc" name="leaseComt" value="<%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%>">
-																	<p><%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%></p></td>
-															</tr>
+															<!-- 																<tr> -->
+															<!-- 																	<th>出租方評價</th> -->
+															<!-- 																	<td><input type="hidden" name="leaseRank" -->
+															<%-- 																		value="<%=omVO.getLeaseRank() == null ? "" : omVO.getLeaseRank()%>"> --%>
+															<%-- 																		<p id="rank"><%=omVO.getLeaseRank() == 0 ? "尚未評分" : omVO.getLeaseRank()%></p> --%>
+															<!-- 																	</td> -->
+															<!-- 																</tr> -->
+															<!-- 																<tr> -->
+															<!-- 																	<th>出租方評論</th> -->
+															<!-- 																	<td><input type="hidden" name="leaseComt" -->
+															<%-- 																		value="<%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%>"> --%>
+															<%-- 																		<p id="lc"><%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%></p></td> --%>
+															<!-- 																</tr> -->
 														</tbody>
 													</table>
 
-													<table id="rev-box">
+													<table>
 														<tr>
 															<th>我的評分</th>
-														</tr>
-														<td bgcolor="#191561">
-															<div class="stars" id="s">
-																<input class="star star-5" id="star-5-2" onchange="test" type="radio" name="star" value="5" <%=omVO.getLeaseRank() == 5 ? "checked" : ""%> /> 
+														</tr>														
+															<td bgcolor="#191561">
+														<div class="stars" id="s">
+															<input class="star star-5" id="star-5-2" onchange="test" type="radio" name="star" value="5" <%=omVO.getLeaseRank()== 5 ? "checked" : ""%>/> 
 																<label class="star star-5" for="star-5-2"></label> 
-																<input class="star star-4" id="star-4-2" onchange="test" type="radio" name="star" value="4" <%=omVO.getLeaseRank() == 4 ? "checked" : ""%> /> 
+															<input class="star star-4" id="star-4-2" onchange="test" type="radio" name="star" value="4" <%=omVO.getLeaseRank()== 4 ? "checked" : ""%>/> 
 																<label class="star star-4" for="star-4-2"></label> 
-																<input class="star star-3" id="star-3-2" onchange="test" type="radio" name="star" value="3" <%=omVO.getLeaseRank() == 3 ? "checked" : ""%> /> 
+															<input class="star star-3" id="star-3-2" onchange="test" type="radio" name="star" value="3" <%=omVO.getLeaseRank()== 3 ? "checked" : ""%>/> 
 																<label class="star star-3" for="star-3-2"></label> 
-																<input class="star star-2" id="star-2-2" onchange="test" type="radio" name="star" value="2" <%=omVO.getLeaseRank() == 2 ? "checked" : ""%> /> 
+															<input class="star star-2" id="star-2-2" onchange="test" type="radio" name="star" value="2" <%=omVO.getLeaseRank()== 2 ? "checked" : ""%>/> 
 																<label class="star star-2" for="star-2-2"></label> 
-																<input class="star star-1" id="star-1-2" onchange="test" type="radio" name="star" value="1" <%=omVO.getLeaseRank() == 1 ? "checked" : ""%> /> 
+															<input class="star star-1" id="star-1-2" onchange="test" type="radio" name="star" value="1" <%=omVO.getLeaseRank()== 1 ? "checked" : ""%>/> 
 																<label class="star star-1" for="star-1-2"></label>
-															</div>
-														</td>
+														</div>	
+															</td>
 														<tr>
 															<th>我的評價</th>
 														</tr>
 														<tr>
 															<td>
 																<div class="rev-box">
-																	<textarea class="review" col="30" name="leaseComt" placeholder="在此填寫您的評價"></textarea>
-																	<input type="hidden" name="leaseRank" id="leaseRank">
+                													<textarea class="review" col="30" name="leaseComt" placeholder="在此填寫您的評價"></textarea>
+              														<input type="hidden" name="leaseRank" id="leaseRank">
 																	<input type="hidden" name="action" value="update_lease_comment"> 
-																	<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>"> 
-																	<input type="submit" value="送出評價 !">
-																</div>
-															</td>
+																	<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
+              														<input type="submit" value="送出評價 !">
+           														</div>
+															</td>													
 														</tr>
 													</table>
 												</div>
@@ -385,6 +396,18 @@ input.cobt {
 						</div>
 					</div>
 				</div>
+<!-- 			<input type="hidden" name="leaseRank" id="leaseRank"> -->
+<!-- 			<input type="hidden" name="action" value="update_lease_comment">  -->
+<%-- 			<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>"> --%>
+<%-- 			<c:forEach var="olVO" items="${olDAO.getAllOrderList()}"> --%>
+<%-- 				<input type="hidden" name="listID" value="${olVO.listID}"> --%>
+<%-- 			</c:forEach> --%>
+			<%-- 				<input type="hidden" name="listID" value="<%=olVO.getListID()%>"> --%>
+<%-- 			<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">  --%>
+<%-- 			<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}"> --%>
+<%-- 			<center> --%>
+<!-- 				<input type="submit" value="確認更新"> -->
+<%-- 			</center> --%>
 			</main>
 		</div>
 		<%@ include file="/includeFolder/footer2.file"%>
@@ -392,23 +415,24 @@ input.cobt {
 </body>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
+var test = $("#s");
+var rank = $("#rank");
+test.change(function () {
+    //     alert($('input[name=star]:checked').val());
+    console.log($('input[name=star]:checked').val());
+    var leaseRank = $('input[name=star]:checked').val();
+    document.getElementById("leaseRank").setAttribute('value', leaseRank);
+    rank.text(leaseRank);
+});
 
-	var lc = $("#lc");
-	console.log((lc).val());
+console.log($("#leaseRank").val());
 
-	var test = $("#s");
-	var rank = $("#rank");
-	test.change(function() {
-		//     alert($('input[name=star]:checked').val());
-		console.log($('input[name=star]:checked').val());
-		var leaseRank = $('input[name=star]:checked').val();
-		document.getElementById("leaseRank").setAttribute('value', leaseRank);
-		rank.text(leaseRank);
-	});
 
-	console.log($("#leaseRank").val());
+
+
 
 	var shipDate = $("#shipDate");
 	var getShipDate = $("#getShipDate");
