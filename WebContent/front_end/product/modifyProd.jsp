@@ -15,7 +15,6 @@
 	
 <%session.setAttribute("id",1); 
 
-
 %>
 
 
@@ -28,6 +27,8 @@
 Integer picAmount = (Integer)request.getAttribute("picAmount");   
 Integer prodID = (Integer)request.getAttribute("prodID");
 ProdVO product = (ProdVO)request.getAttribute("product");
+List listLabel =  jedis.lrange("prod"+prodID, 0, Long.valueOf(jedis.llen("prod"+prodID)));
+pageContext.setAttribute("listLabel", listLabel);
 
   %>
 	
@@ -101,6 +102,26 @@ ProdVO product = (ProdVO)request.getAttribute("product");
 			<input type="hidden" id ="picNo1" name="picNo1">
 			<input type="hidden" id ="picNo2" name="picNo2">
 			<input type="hidden" id ="picNo3" name="picNo3">
+			<div>
+			
+			<input type="text" class="addLabel" style="size:10px; width:100px" >
+<input style="font-family:DFKai-sb;" type="button" class="add-label-btn" value ="自訂標籤"><br>
+標籤:&nbsp&nbsp 
+<c:forEach var="label" items="${listLabel}">
+ <label style="font-family:DFKai-sb;" ><input type="checkbox" id="" checked='checked' name="checkbox1" value="${label}">#${label}</label> 
+
+</c:forEach>
+
+	</div>
+	<script>
+		$('input.add-label-btn').click(function(){
+			if($('input.addLabel').val()!=""){
+				$(this).closest('div').append("<label style='font-family:DFKai-sb;'><input  type='checkbox' checked='checked' name='checkbox1' value="+ $('input.addLabel').val()+ ">#" + $('input.addLabel').val() + "</label>");
+				$('input.addLabel').val("");	
+			}
+		});
+	
+	</script>
 			
 										<button type="submit" class="aa-browse-btn" id="submit1" >修改完成</button>
 <!-- 										<button type="submit" class="aa-browse-btn" -->
@@ -109,6 +130,10 @@ ProdVO product = (ProdVO)request.getAttribute("product");
 
 									</form>
 								</div>
+								
+								
+								
+								
 							</div>
 							<div class="col-md-6">
 								<div class="aa-myaccount-register">

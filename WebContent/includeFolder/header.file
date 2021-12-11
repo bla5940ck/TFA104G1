@@ -76,7 +76,7 @@
           <div class="col-md-12">
             <div class="aa-header-bottom-area">
               <div class="aa-logo">
-                  <a href="<%=request.getContextPath()%>/front_end/product/productPage.jsp">
+                  <a href="<%=request.getContextPath()%>/front_end/product/homePage.jsp">
                   <img src="<%=request.getContextPath()%>/includeFolder/img/logo_org_noframe_191561.png" alt="">
                 </a>
               </div>

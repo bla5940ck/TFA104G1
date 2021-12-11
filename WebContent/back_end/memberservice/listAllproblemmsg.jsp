@@ -194,6 +194,10 @@ object-fit: contain;
 				
 				<c:forEach var="msVO" items="${list}" begin="<%=pageIndex%>"
 					end="<%=pageIndex+rowsPerPage-1%>">
+<<<<<<< HEAD
+=======
+					<br>
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 					<tr>					
 						<td>${msVO.msgID}</td>
 						<td>${msVO.prodID}</td>
@@ -214,10 +218,15 @@ object-fit: contain;
 					</tr>
 				</c:forEach>
 		</table>
+<<<<<<< HEAD
 			<input type="hidden" name="action" value="update" >
 				<center><input type="submit" value="送出"></center>	
 				
 				
+=======
+		<input type="hidden" name="action" value="insert" >
+				<center><input type="submit" value="送出"></center>	
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 			<%@ include file="page2.file"%>
 			</FORM>
 		</main>

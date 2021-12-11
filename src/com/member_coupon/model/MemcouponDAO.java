@@ -1,6 +1,7 @@
 package com.member_coupon.model;
 
 import java.util.*;
+
 import java.sql.*;
 import util.Util;
 
@@ -13,19 +14,88 @@ public class MemcouponDAO implements Memcoupon_interface{
 			e.printStackTrace();
 		}
 	}
+	
+		private static final String GET_ONE_STMT = 
+			"UPDATE member_coupon set status = 1 where mem_coupon_id = ?";
+		
+//		private static final String USE_COUPON = 
+//			"UPDATE member_coupon set status = 1 where mem_coupon_id = ?";
+
+		private static final String FIND_BY_MEMBERID = 
+			"SELECT * FROM member_coupon where member_id = ? and status = 0";
 		
 		private static final String INSERT_STMT = 
 			"INSERT INTO member_coupon (member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 		private static final String GET_ALL_STMT = 
 			"SELECT mem_coupon_id, member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date FROM member_coupon order by mem_coupon_id";
-		private static final String GET_ONE_STMT = 
-			"SELECT mem_coupon_id, member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date FROM member_coupon where mem_coupon_id = ?";
 		private static final String DELETE = 
 			"DELETE FROM member_coupon where mem_coupon_id = ?";
 		private static final String UPDATE = 
 			"UPDATE member_coupon set member_id=?, category_id=?, coupon_id=?, coupon_name=?, discount=?, status=?, start_date=?, end_date=? where mem_coupon_id = ?";
 	
-	
+		@Override
+		public List<MemcouponVO> getMemberid(Integer member_id) {
+			List<MemcouponVO> list = new ArrayList<MemcouponVO>();
+			MemcouponVO memcouponVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			
+			try {
+				
+				con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+				pstmt = con.prepareStatement(FIND_BY_MEMBERID);
+				
+				pstmt.setInt(1, member_id);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					memcouponVO = new MemcouponVO();
+					memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
+					memcouponVO.setMember_id(rs.getInt("member_id"));
+					memcouponVO.setCategory_id(rs.getInt("category_id"));
+					memcouponVO.setCoupon_id(rs.getInt("coupon_id"));
+					memcouponVO.setDiscount(rs.getDouble("discount"));
+					memcouponVO.setCoupon_name(rs.getString("coupon_name"));
+					memcouponVO.setStatus(rs.getInt("status"));
+					memcouponVO.setStart_date(rs.getDate("start_date"));
+					memcouponVO.setEnd_date(rs.getDate("end_date"));
+					list.add(memcouponVO);
+				}
+				
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+		
 	@Override
 	public void insert(MemcouponVO memcouponVO) {
 		Connection con = null;
@@ -158,12 +228,69 @@ public class MemcouponDAO implements Memcoupon_interface{
 		
 	}
 
+//	@Override
+//	public MemcouponVO findByPrimaryKey(Integer mem_coupon_id) {
+//		MemcouponVO memcouponVO = null;
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			
+//			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+//			pstmt = con.prepareStatement(GET_ONE_STMT);
+//			
+//			pstmt.setInt(1, mem_coupon_id);
+//			
+//			rs = pstmt.executeQuery();
+//			
+//			while (rs.next()) {
+//				memcouponVO = new MemcouponVO();
+//				memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
+//				memcouponVO.setMember_id(rs.getInt("member_id"));
+//				memcouponVO.setCategory_id(rs.getInt("category_id"));
+//				memcouponVO.setCoupon_id(rs.getInt("coupon_id"));
+//				memcouponVO.setDiscount(rs.getDouble("discount"));
+//				memcouponVO.setCoupon_name(rs.getString("coupon_name"));
+//				memcouponVO.setStatus(rs.getInt("status"));
+//				memcouponVO.setStart_date(rs.getDate("start_date"));
+//				memcouponVO.setEnd_date(rs.getDate("end_date"));
+//			}
+//			
+//			
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//			
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		return memcouponVO;
+//	}
 	@Override
-	public MemcouponVO findByPrimaryKey(Integer mem_coupon_id) {
-		MemcouponVO memcouponVO = null;
+	public void findByPrimaryKey(Integer mem_coupon_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 
 		try {
 
@@ -172,20 +299,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 
 			pstmt.setInt(1, mem_coupon_id);
 
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				memcouponVO = new MemcouponVO();
-				memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
-				memcouponVO.setMember_id(rs.getInt("member_id"));
-				memcouponVO.setCategory_id(rs.getInt("category_id"));
-				memcouponVO.setCoupon_id(rs.getInt("coupon_id"));
-				memcouponVO.setDiscount(rs.getDouble("discount"));
-				memcouponVO.setCoupon_name(rs.getString("coupon_name"));
-				memcouponVO.setStatus(rs.getInt("status"));
-				memcouponVO.setStart_date(rs.getDate("start_date"));
-				memcouponVO.setEnd_date(rs.getDate("end_date"));
-			}
+			pstmt.executeUpdate();
 
 		
 		} catch (SQLException se) {
@@ -193,13 +307,6 @@ public class MemcouponDAO implements Memcoupon_interface{
 					+ se.getMessage());
 		
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -215,7 +322,8 @@ public class MemcouponDAO implements Memcoupon_interface{
 				}
 			}
 		}
-		return memcouponVO;
+		
+		
 	}
 
 	@Override
@@ -278,6 +386,12 @@ public class MemcouponDAO implements Memcoupon_interface{
 		}
 		return list;
 	}
-	
+//
+//	@Override
+//	public void isCouponIdDup(Integer coupon_id) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+
 
 }
