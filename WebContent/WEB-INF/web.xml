@@ -19,7 +19,7 @@
     <url-pattern>/back_end/manager/listAll.jsp</url-pattern>
     <url-pattern>/back_end/manager/listOne.jsp</url-pattern>
     <url-pattern>/back_end/manager/addManager.jsp</url-pattern>
-    <url-pattern>/back_end/manager/update_manager.jsp</url-pattern>    
+    <url-pattern>/back_end/manager/update_manager_input.jsp</url-pattern>    
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>

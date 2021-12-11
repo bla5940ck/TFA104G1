@@ -42,8 +42,8 @@ public class MemberServiceService {
 		return msVO;
 	}
 
-	public MemberServiceVO updateMemberService(Integer msgID, Integer prodID, Integer memberID, Integer managerID,
-			Integer typeID, Integer ordID, Timestamp msgDate, String problemMsg, String msgRes, byte[] pic1,
+	public MemberServiceVO updateMemberService(Integer msgID, Integer prodID, Integer memberID,
+			Integer typeID, Integer ordID, Timestamp msgDate, String problemMsg, byte[] pic1,
 			byte[] pic2, byte[] pic3, Integer problemStatus) {
 
 		MemberServiceVO msVO = new MemberServiceVO();
@@ -51,12 +51,12 @@ public class MemberServiceService {
 		msVO.setMsgID(msgID);
 		msVO.setProdID(prodID);
 		msVO.setMemberID(memberID);
-		msVO.setManagerID(managerID);
+		
 		msVO.setTypeID(typeID);
 		msVO.setOrdID(ordID);
 		msVO.setMsgDate(msgDate);
 		msVO.setProblemMsg(problemMsg);
-		msVO.setMsgRes(msgRes);
+		
 		msVO.setPic1(pic1);
 		msVO.setPic2(pic2);
 		msVO.setPic3(pic3);

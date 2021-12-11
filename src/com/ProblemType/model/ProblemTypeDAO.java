@@ -15,7 +15,7 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 	public static final String PASSWORD = "password";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO problem_type (type_id,type_name) VALUES (?, ?)";
+			"INSERT INTO problem_type (type_name) VALUES (?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT type_id,type_name FROM problem_type order by type_id";
 	private static final String GET_ONE_STMT = 
@@ -36,8 +36,8 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 			con = DriverManager.getConnection(URL,USER,PASSWORD);
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
-			pstmt.setInt(1,problemTypeVO.getTypeID());
-			pstmt.setString(2,problemTypeVO.getTypeName());
+		
+			pstmt.setString(1,problemTypeVO.getTypeName());
 			
 			pstmt.executeUpdate();
 			

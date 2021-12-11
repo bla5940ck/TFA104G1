@@ -96,27 +96,15 @@ h2 {
 .signOut{
 background-color:#6495ed;
 }
+
+
 </style>
 
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<ul class="nav_list" style="background-color:#F0B594;height:100%">
-					<h2>
-						<a>管理者專區</a> <br> <a>問題處理</a> <br> <a>商品管理</a> <br>
-						<a>訂單管理</a> <br> <a>會員管理</a> <br> <a>帳務管理</a> <br>
-						<a>會員審核</a> <br> <a>專案專區</a>
-					</h2>
-					<form action="/TFA104G1/ManagerServlet" method="post" >
-						<button class="signOut" type="submit">sign out</button>
-						<input type="hidden" name="action" value="sign_out" />
-					</form>
-				</ul>
-			</nav>
-		</aside>
+		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">					
 
 			<h3>管理員查詢:</h3>
@@ -133,17 +121,18 @@ background-color:#6495ed;
 
 			<ul>
 				<li>
-					<a href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'>管理員列表</a><br>
+					<a href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'><h2>管理員列表</h2></a><br>
 				</li>				
 				<li>
-					<a href='<%=request.getContextPath()%>/back_end/manager/addManager.jsp'>新增管理員</a><br>
+					<a href='<%=request.getContextPath()%>/back_end/manager/addManager.jsp'><h2>新增管理員</h2></a><br>
 				</li>
 				<li>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>輸入管理者編號 :</b> <input type="text" name="managerID"> <input
-							type="hidden" name="action" value="getOne_For_Display"> <input
-							type="submit" value="送出">
+						<b>輸入管理者編號 :</b> 
+						<input type="text" name="managerID"> 
+						<input type="hidden" name="action" value="getOne_For_Display"> 
+						<input type="submit" value="送出">
 					</FORM>
 				</li>
 					<jsp:useBean id="msSvc" scope="page" class="com.manager.model.ManagerService" />
