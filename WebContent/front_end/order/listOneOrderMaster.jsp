@@ -134,13 +134,13 @@ th, td {
 			<br>
 			<table>
 				<tr>
-					<th>運送狀態</th>
 					<th>付款狀態</th>
+					<th>運送狀態</th>
 					<th>訂單狀態</th>
 				</tr>
 				<tr>
-					<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
 					<td><p id="payS"><%=omVO.getPayStatus()%></p></td>
+					<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
 					<td><p id="ordS"><%=omVO.getOrdStatus()%></p></td>
 				</tr>
 			</table>

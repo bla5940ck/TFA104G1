@@ -302,6 +302,48 @@ public class OrderListServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-
+//		if ("getComment_For_Display".equals(action)) { // 來自listStatusOrderList.jsp
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			System.out.println("進來了");
+//
+//			try {
+//
+//				String str = req.getParameter("ordID");
+//				Integer ordID = new Integer(str);
+//
+//				/**************** 2.開始查詢資料 ****************/
+//
+//				OrderListDAOImpl oldao = new OrderListDAOImpl();
+//				List<OrderListVO> olVO = oldao.findOrderListByOrdID(ordID);
+//
+//				if (olVO == null) {
+//					errorMsgs.add("查無資料");
+//				}
+//				// Send the use back to the form, if there were errors
+//				if (!errorMsgs.isEmpty()) {
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+//					failureView.forward(req, res);
+//					return;// 程式中斷
+//				}
+//				for (OrderListVO ols : olVO) {
+//
+//					/************** 3.查詢完成,準備轉交 *************/
+//					req.setAttribute("OrderListVO", ols);
+//					String url = "/front_end/order/updateOrderComment.jsp";
+//					RequestDispatcher successView = req.getRequestDispatcher(url);
+//					successView.forward(req, res);
+//					return;
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				errorMsgs.add("無法取得資料:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+//				failureView.forward(req, res);
+//				return;
+//			}
+//		}
 	}
 }
