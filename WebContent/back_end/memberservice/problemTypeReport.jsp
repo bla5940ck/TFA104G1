@@ -118,7 +118,11 @@ object-fit: contain;
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/MemberServiceServlet"
 				name="form1" enctype="multipart/form-data">
+<<<<<<< HEAD:WebContent/back_end/memberservice/problemTypeReport.jsp
 				
+=======
+				<br>
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0:WebContent/back_end/problemtype/problemTypeReport.jsp
 				<table id="table-1">
 					<tr>
 					<td>反應會員編號</td>

@@ -80,7 +80,7 @@ CartVO cartVO1=null;
             	  index++ ; 
               %>
               <div id="lease-div">
-           	<label class="cart-lable" style="color:Navy; font-size:30px; border-color:blue; border-style:dotted;">賣場編號: shop1000<%=leaseID%> </label>
+           	<label class="cart-lable" style="color:Navy; font-size:30px;">賣場編號: shop1000<%=leaseID%> </label>
            
                <div class="table-responsive">
                   <table class="table">
@@ -358,7 +358,7 @@ $("a.remove").click(function(){
 		 
   		
 	    $.ajax({
-	      url: "<%=request.getContextPath()%>/prod/ProdServlet",           // 資料請求的網址
+	      url: "<%=request.getContextPath()%>/cart/CartServlet",           // 資料請求的網址
 	      type: "POST",                
 	      data: {
 	    	  prodID: prodid,

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+=======
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
@@ -28,7 +32,11 @@ div.main_content {
 
 
 
+<<<<<<< HEAD
 /*-------------------asideå€åŸŸ------------------- */
+=======
+/*-------------------aside°Ï°ì------------------- */
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 aside.aside {
 	width: 200px;
 	height: 620px;
@@ -40,7 +48,11 @@ aside.aside {
 	text-align: center;
 }
 
+<<<<<<< HEAD
 /*--------------------mainå€åŸŸ-------------------- */
+=======
+/*--------------------main°Ï°ì-------------------- */
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
@@ -100,6 +112,7 @@ background-color:#6495ed;
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
+<<<<<<< HEAD
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">
 		<ul>
@@ -110,6 +123,38 @@ background-color:#6495ed;
 		</ul>		
 		<ul>
 			<li><a href='<%=request.getContextPath() %>/back_end/memberservice/listAllproblemmsg.jsp'>å®¢æˆ¶å•é¡Œåˆ—è¡¨</a></li>
+=======
+		<aside class="aside">
+			<aside class="aside">
+			<nav class="nav">
+				<ul class="nav_list" style="background-color:#F0B594;height:100%">
+					<h2>
+						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>ºŞ²zªÌ±M°Ï</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>°İÃD³B²z</a> <br> 
+						<a>°Ó«~ºŞ²z</a> <br>
+						<a>­q³æºŞ²z</a> <br> 
+						<a>·|­ûºŞ²z</a> <br> 
+						<a>±b°ÈºŞ²z</a> <br>
+						<a>·|­û¼f®Ö</a> <br> 
+						<a>±M®×±M°Ï</a>
+					</h2>
+					<form action="/TFA104G1/ManagerServlet" method="post" >
+				<button class="signOut" type="submit">sign out</button>
+				<input type="hidden" name="action" value="sign_out" />
+				</form>
+				</ul>
+			</nav>
+		</aside>
+		<main class="main" style="background-color:#C0C0C0;">
+		<ul>
+			<li><a href='listAllProblemType.jsp'>©Ò¦³°İÃDÃş«¬</a></li>
+		</ul>
+		<ul>
+			<li><a href='addProblemType.jsp'>·s¼W°İÃDÃş«¬</a></li>
+		</ul>		
+		<ul>
+			<li><a href='listAllproblemmsg.jsp'>§ë¶D°İÃD³B²z</a></li>
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 		</ul>		
 	</main>
 	</div>

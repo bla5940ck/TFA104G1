@@ -183,8 +183,9 @@
                         <!-- start single product item -->
                         <jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
                      
-                        <c:forEach var = "prodVO" items="${prodSvc1.all}" varStatus="loop">
-                        <c:if test="${loop.index<8 }">
+                        <c:forEach var = "prod" items="${prodSvc1.countGroupbyProdID}" varStatus="loop">
+                      	<c:forEach var="prodVO" items="${prodSvc1.all }">
+                        <c:if test="${loop.index<8 && prodVO.prodID==prod.key && prodVO.prodStatus==1}">
                         <li>
                           <figure>
                             <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodVO.prodID}">
@@ -192,16 +193,30 @@
                             <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodVO.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                              <figcaption>
                               <h4 class="aa-product-title"><a >${prodVO.prodName}</a></h4>
-                              <span class="aa-product-price">$${prodVO.prodRent }</span>
+                              <span class="aa-product-price">$${prodVO.prodRent }</span><br>
+                                已租次數:<span style="color:blue" class="aa-product-price">${prod.value}</span>
                             </figcaption>
                           </figure>                         
                           <div class="aa-product-hvr-content">
                             <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
                           </div>
                           <!-- product badge -->
-                           <span class="aa-badge aa-sold-out" href="#">超熱門</span>
+                          <c:if test="${loop.index==0}">
+                           <span style="background-color:yellow;border-radius:35%;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop.index==1}">
+                         <span style="background-color:	#00AEAE;border-radius:35%; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop.index==2}">
+                         <span	style="background-color:#F75000;border-radius:35%; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                              <c:if test="${loop.index>=3}">
+                           <span style="background-color:blue;"class="aa-badge aa-sale" href="#">很搶手</span>
+                           </c:if>
+                           
                         </li>
                         </c:if>
+                        </c:forEach>
                         </c:forEach>
                      
                       </ul>
@@ -370,8 +385,9 @@
                 <div class="tab-pane fade in active" id="popular">
                   <ul class="aa-product-catg aa-popular-slider">
                     <!-- start single product item -->
-                        <c:forEach var = "prodVO" items="${prodSvc1.all}" varStatus="loop">
-                        <c:if test="${loop.index<8 }">
+                        <c:forEach var = "prodVO" items="${prodSvc1.allByTimeDesc}" varStatus="loop">
+                       
+                        <c:if test="${loop.index<8 &&prodVO.prodStatus==1}">
                     <li>
                       <figure>
                          <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodVO.prodID}">

@@ -127,7 +127,11 @@ th, td {
 				<ul class="nav_list" style="background-color:#F0B594;height:100%">
 					<h2>
 						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>管理者專區</a> <br> 
+<<<<<<< HEAD
 						<a>問題處理</a> <br> 
+=======
+						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>問題處理</a> <br> 
+>>>>>>> 84898b661e8ecb2d4b9102291d2ebf7fbf801ed0
 						<a>商品管理</a> <br>
 						<a>訂單管理</a> <br> 
 						<a>會員管理</a> <br> 
