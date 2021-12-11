@@ -1,7 +1,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Date"%>
 <%@page import="com.product.model.*"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -135,6 +135,11 @@ if (product != null) {
 }
 
 request.setAttribute("product", product);
+
+
+
+
+
 %>
 
 	<!-- wpf loader Two -->
@@ -318,15 +323,19 @@ request.setAttribute("product", product);
 											</div>
 										</div>
 									</div>
+									&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+									上架時間: <span class="aa-product-date" style="color:green"><fmt:formatDate value="<%=product.getShelfDate() %>" pattern="yyyy-MM-dd HH:mm"/></span>
+									
 								</div>
 
 
                                          <% 
 											String comt = (product.getComt() == null) ? "" : product.getComt();
 											
-										
-										
-										
+                                        List<String> labelList = jedis.lrange("prod"+product.getProdID(), 0, jedis.llen("prod"+product.getProdID()));
+                                     	pageContext.setAttribute("labelList", labelList);
+                                     	System.out.print("數量  "+  labelList.size());
+                          
 										
 										%>
 
@@ -356,19 +365,21 @@ request.setAttribute("product", product);
 										</td><br><br>
 										<td> <li style="font-size:20px">金額試算:<label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn"></li>
-<%  List<String> labelList = jedis.lrange("prod"+product.getProdID(), 0, jedis.llen("member"+memberID));
-	pageContext.setAttribute("labelList", labelList);
-	System.out.print("數量  "+  labelList.size());
-	%>
+
 										</td>
 										</br>
 										<li>
 											標籤:&nbsp
-											<c:forEach var="label" items="${labelList}">
-													<span style="color:yellow"><a herf="#">#${label}</a></span>&nbsp
+											<c:forEach var="label" items="${labelList}" varStatus="loop">
+													<c:if test="${loop.index!=0 and loop.index % 5 ==0}">
+													<br>
+													</c:if>
+													<a href="<%=path%>/prod/ProdServlet?action=labelClick&prodID=<%=product.getProdID()%>&labelNo=${loop.index}"><span style="color:#A6A600">#${label}</span></a>&nbsp
 											</c:forEach>
 										</li>
+										
 										</ul>
+										
 											</div>
 										</form>
 										<p class="aa-prod-category">
@@ -486,14 +497,7 @@ request.setAttribute("product", product);
 												<label for="message">你的評價</label>
 												<textarea class="form-control" rows="3" id="message"></textarea>
 											</div>
-											<!-- <div class="form-group">
-                        <label for="name">姓名</label>
-                        <input type="text" class="form-control" id="name" placeholder="請輸入姓名">
-                      </div>   -->
-											<!-- <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
-                      </div> -->
+											
 
 											<button type="submit"
 												class="btn btn-default aa-review-submit">送出</button>
@@ -788,7 +792,7 @@ function selflog_show(id){
 	 
 	  
 	 $.ajax({
-	    	url:"<%=path%>/prod/ProdServlet",
+	    	url:"<%=path%>/cart/CartServlet",
 	    	cache : false,
 	    	type: "POST",
 	    	async: false,
@@ -913,6 +917,7 @@ function selflog_show(id){
 			session.setAttribute("listCookie", listCookie);
 
 		}
+		
 		
 	%>
 

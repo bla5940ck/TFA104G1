@@ -6,11 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import util.Util;
 
-public class BookingDAO implements BookingDAOImpl {
+public class BookingDAO implements BookingDAO_interface {
 
 	static {
 		try {
@@ -213,6 +221,88 @@ public class BookingDAO implements BookingDAOImpl {
 			}
 		}
 		return list;
+	}
+	
+	
+	public Map<Integer,Integer> getSortByCount() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null; 
+		String sql ="SELECT prod_id,count(bk_id) as countBk FROM booking group by prod_id order by count(bk_id) desc";
+		BookingVO bk = null;
+		List<Integer> list = new ArrayList<>();
+		List<Integer> listCount = new ArrayList();
+		Map<Integer,Integer> map = new LinkedHashMap<Integer, Integer>();
+		
+		try {
+			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(rs.getInt("prod_id"));
+				listCount.add(rs.getInt(2));
+				
+				map.put(rs.getInt(1), rs.getInt(2));
+			}
+			
+			 
+			
+		}catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		BookingDAO b = new BookingDAO();
+//		
+//		List<BookingVO> bk = b.getAll();
+//		
+//		bk.forEach(bb->System.out.println(bb.getBkID()));
+		
+//		Map<Integer,Integer> map = b.getSortByCount();
+//		Set<Integer> keySet = map.keySet();
+//		List<Integer> prodIDList = new ArrayList();
+//		List<Integer> countList = new ArrayList();
+//		for(int i :keySet) {
+//			System.out.println("key: " +i + " value: "+ map.get(i));
+//			prodIDList.add(i);
+//			countList.add(map.get(i));
+//		}
+//		
+//		BookingDAO bk = new BookingDAO();
+//		List<BookingVO> list = bk.getAll();
+//		
+//		Map<Integer, Long> collect = list.stream()
+//		        					.collect(Collectors
+//		        						.groupingBy(BookingVO::getProdID,Collectors.counting()));
+//		        							
+//		
+//	Set<Integer> keySet = collect.keySet();
+//		
+//		for(Integer k : keySet) {
+//			System.out.println("key: " + k+ " value: " + collect.get(k));
+//		
+//		
+//		}
+		
 	}
 
 }

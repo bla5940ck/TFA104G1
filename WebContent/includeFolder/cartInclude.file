@@ -102,7 +102,8 @@
 <script>
 //刪除小購物車
 var count = <%=index1%>;
-$("a.aa-remove-product").click(function(){
+$(document).on('click','a.aa-remove-product',function(){
+
   
 	  let r = confirm("確認移除？");
 
@@ -129,7 +130,7 @@ let prodid1 = $(that).closest("li").find("input").eq(0).val();
 	    $("span.aa-cartbox-total-price").text("沒有商品");  
 	    $("a.aa-cartbox-checkout aa-primary-btn").text("");
 	    }
-	    $("span.aa-cart-notify").text(parseInt($("input.dataCount").val())-1);
+	    $("span.aa-cart-notify").text( $("span.aa-cart-notify").text()-1);
 	    $("input.dataCount").val(data);
       $(that).closest("li").animate({
         "opacity": 0
