@@ -29,7 +29,7 @@ import com.member.model.MemberVO;
 @MultipartConfig()
 public class MemFrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String saveDirectory = "/images_uploaded"; // 上傳檔案的目的地目錄;
+//	String saveDirectory = "/images_uploaded"; // 上傳檔案的目的地目錄;
 	public MemFrontServlet() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -48,8 +48,8 @@ public class MemFrontServlet extends HttpServlet {
 
 		String action = req.getParameter("action");
 		PrintWriter out = res.getWriter();
-		String realPath = getServletContext().getRealPath(saveDirectory);
-		File fsaveDirectory = new File(realPath);
+//		String realPath = getServletContext().getRealPath(saveDirectory);
+//		File fsaveDirectory = new File(realPath);
 		
 		// 會員一般資料修改
 				if ("updateBasic".equals(action)) { // 來自update_emp_input.jsp的請求
@@ -78,8 +78,8 @@ public class MemFrontServlet extends HttpServlet {
 						}
 						System.out.println("2222222");
 //						byte[] pic = reg.getBytes();
-						if (!fsaveDirectory.exists())
-							 fsaveDirectory.mkdirs();
+//						if (!fsaveDirectory.exists())
+//							 fsaveDirectory.mkdirs();
 						byte[] pic =null;
 						MemberVO memberVO = new MemberVO();
 						memberVO.setMemberId(memberId);
@@ -87,28 +87,29 @@ public class MemFrontServlet extends HttpServlet {
 						memberVO.setPhoneNum(phoneNum);
 						memberVO.setEmail(email);
 						System.out.println("12133333333");
-						Collection<Part> parts = req.getParts();
-						for (Part part : parts) {
+						Part part = req.getPart("file_name1");
+						
 							String filename = getFileNameFromPart(part);
 							System.out.println("121444444");
-							if (filename!= null && part.getContentType()!=null) {
-								String name = part.getName();
-								String ContentType = part.getContentType();
-								long size = part.getSize();
-								System.out.println("121355555");
-								File f = new File(fsaveDirectory, filename);
-								System.out.println("1213666666");
-								part.write(f.toString());
+							InputStream in = part.getInputStream();
+							pic = new byte[in.available()];
+//							if (filename!= null && part.getContentType()!=null) {
+//								String name = part.getName();
+//								String ContentType = part.getContentType();
+//								long size = part.getSize();
+//								System.out.println("121355555");
+//								File f = new File(fsaveDirectory, filename);
+//								System.out.println("1213666666");
+//								part.write(f.toString());
+//								part.write(fileName);
 								System.out.println("72137777");
-								InputStream in = part.getInputStream();
 								System.out.println("72133333333");
-								pic = new byte[in.available()];
 								System.out.println("82133333333");
 								in.read(pic);
 								in.close();
-							}
 							
-						}
+							
+//						}
 						
 						memberVO.setPic(pic);
 						System.out.println(memberId);
@@ -316,7 +317,9 @@ public class MemFrontServlet extends HttpServlet {
 
 				// checkbox 沒選擇時會回傳null要先做處理
 				Integer status = 0;
-				status = new Integer(req.getParameter("status").trim());
+				if(req.getParameter("status")!=null) {
+					
+					status = new Integer(req.getParameter("status").trim());
 				Enumeration e = req.getParameterNames();
 				while (e.hasMoreElements()) {
 					String name = (String) e.nextElement();
@@ -325,6 +328,7 @@ public class MemFrontServlet extends HttpServlet {
 						status = new Integer(1);
 						DefAddressService addSvc2 = new DefAddressService();
 						DefAddressVO addVO2 = addSvc2.updateAddStatus(memberId);
+					}
 					}
 				}
 

@@ -10,7 +10,7 @@
 						<a>會員管理</a> <br> 
 						<a>帳務管理</a> <br>
 						<a>會員審核</a> <br> 
-						<a>專案專區</a>
+						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'>專案專區</a>
 					</h2>
 					<form action="/TFA104G1/ManagerServlet" method="post" >
 				<button class="signOut" type="submit">sign out</button>

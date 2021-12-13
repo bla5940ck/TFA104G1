@@ -33,10 +33,12 @@ div.main_content {
 	font-size: 0;
 }
 
+
+
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -49,7 +51,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -74,9 +76,12 @@ th, td {
 </style>
 <style>
 table#table-1 {
-width: 80%;
+	width: 80%;
 	background-color: #CCCCFF;
-	border: 2px solid black;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px ridge Gray;
+	height: 80px;
 	text-align: center;
 }
 
@@ -86,27 +91,16 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h4 {
+h2 {
 	color: blue;
 	display: inline;
 }
-</style>
 
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
+.signOut{
+background-color:#6495ed;
 }
 
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
 
-th, td {
-	padding: 1px;
-}
 </style>
 </head>
 <body bgcolor='white'>
@@ -139,7 +133,7 @@ th, td {
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/ManagerServlet" name="form1">
 				<table>
-				<br>
+			
 					<tr>
 						<td>管理員帳號:</td>
 						<td><input type="TEXT" name="managerUser" size="45" /></td>
@@ -163,7 +157,7 @@ th, td {
 
 
 				</table>
-				<br> <input type="hidden" name="action" value="insert">
+				 <input type="hidden" name="action" value="insert">
 
 				<input type="submit" value="送出新增">
 			</FORM>

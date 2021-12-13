@@ -32,10 +32,12 @@ div.main_content {
 	font-size: 0;
 }
 
+
+
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -48,7 +50,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -73,8 +75,12 @@ th, td {
 </style>
 <style>
 table#table-1 {
+	width: 80%;
 	background-color: #CCCCFF;
-	border: 2px solid black;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px ridge Gray;
+	height: 80px;
 	text-align: center;
 }
 
@@ -84,33 +90,22 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h4 {
+h2 {
 	color: blue;
 	display: inline;
 }
-</style>
 
-<style>
-table {
-	width: 500px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
+.signOut{
+background-color:#6495ed;
 }
 
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
 
-th, td {
-	padding: 1px;
-}
 </style>
 
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
-	<br>
+
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">

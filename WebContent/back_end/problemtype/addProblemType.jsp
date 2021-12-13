@@ -10,7 +10,6 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>員工資料新增 - addEmp.jsp</title>
-
 <style>
 body {
 	margin: 0;
@@ -38,7 +37,7 @@ div.main_content {
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -51,7 +50,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -115,7 +114,7 @@ background-color:#6495ed;
 						</h4>
 					</td>
 				</tr>
-				<br>
+			
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
