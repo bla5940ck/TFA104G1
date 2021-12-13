@@ -172,6 +172,7 @@ object-fit: contain;
 						</td>
 						</div>
 					</tr>
+					<br>
 					</table>
 				<br>
 				<input type="hidden" name="action" value="insert" >

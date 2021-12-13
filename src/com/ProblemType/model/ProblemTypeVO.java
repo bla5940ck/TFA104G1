@@ -1,6 +1,6 @@
 package com.problemtype.model;
 
-public class ProblemTypeVO {
+public class ProblemTypeVO implements java.io.Serializable {
 	private Integer typeID;
 	private String typeName;
 	
