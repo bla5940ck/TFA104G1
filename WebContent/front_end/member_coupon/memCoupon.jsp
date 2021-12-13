@@ -115,10 +115,10 @@ th, td {
 			<!-- mem_coupon_id, member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date -->
 			<table>
 				<tr>
-<!-- 					<th>會員的折價券編號</th> -->
+					<th>會員的折價券編號</th>
 <!-- 					<th>會員編號</th> -->
 <!-- 					<th>商品類別編號</th> -->
-<!-- 					<th>折價券編號</th> -->
+					<th>折價券編號</th>
 					<th>折價券名稱</th>
 					<th>折價金額</th>
 					<th>折價券狀態</th>
@@ -128,10 +128,10 @@ th, td {
 				<c:forEach var="memcouponVO" items="${list}">
 
 					<tr>
-<%-- 						<td>${memcouponVO.mem_coupon_id}</td> --%>
+						<td>${memcouponVO.mem_coupon_id}</td>
 <%-- 						<td>${memcouponVO.member_id}</td> --%>
 <%-- 						<td>${memcouponVO.category_id}</td> --%>
-<%-- 						<td>${memcouponVO.coupon_id}</td> --%>
+						<td>${memcouponVO.coupon_id}</td>
 						<td>${memcouponVO.coupon_name}</td>
 						<td>${memcouponVO.discount}</td>
 						<td>${memcouponVO.status}</td>
