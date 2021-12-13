@@ -17,16 +17,24 @@ img {
 	max-width: 100%;
 }
 
+button {
+	font-size: 13px;
+	outline-width: 100%;
+	background-color: white;
+}
+
 div.main_content {
 	width: 100%;
 	margin: 0 auto;
 	font-size: 0;
 }
 
+
+
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -39,7 +47,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -64,8 +72,12 @@ th, td {
 </style>
 <style>
 table#table-1 {
+	width: 80%;
 	background-color: #CCCCFF;
-	border: 2px solid black;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px ridge Gray;
+	height: 80px;
 	text-align: center;
 }
 
@@ -75,86 +87,16 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h4 {
+h2 {
 	color: blue;
 	display: inline;
 }
-</style>
 
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
+.signOut{
+background-color:#6495ed;
 }
 
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
 
-th, td {
-	padding: 1px;
-}
-</style>
-<style>
-@import "bourbon";
-
-body {
-	background: #eee !important;
-}
-
-.wrapper {
-	margin-top: 80px;
-	margin-bottom: 80px;
-}
-
-.form-signin {
-	width: 100%;
-	height: 100%;
-	margin: 0 auto;
-	background-color: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.form-control {
-	position: relative;
-	font-size: 16px;
-	height: auto;
-	padding: 10px;
-	@
-	include
-	box-sizing(border-box);
-	&:
-	focus
-	{
-	z-index
-	:
-	2;
-}
-
-}
-input[type="text"] {
-	width: 50%;
-	margin-bottom: -1px;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	margin-bottom: -1px;
-}
-
-input[type="password"] {
-	width: 50%;
-	margin-bottom: 20px;
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
-
-.login {
-	width: 50%;
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: #6495ed;
-}
 </style>
 </head>
 
@@ -166,7 +108,7 @@ input[type="password"] {
 				
 			</ul>
 		</aside>
-		<br>
+	
 		<main class="main" style="background-color: #C0C0C0;">
 
 			<%-- 錯誤表列 --%>
