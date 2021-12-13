@@ -133,7 +133,7 @@ th, td {
 <%-- 						<td>${memcouponVO.category_id}</td> --%>
 						<td>${memcouponVO.coupon_id}</td>
 						<td>${memcouponVO.coupon_name}</td>
-						<td>${memcouponVO.discount}</td>
+						<td>${Math.round(promolistVO.discount)}</td>
 						<td>${memcouponVO.status}</td>
 						<td>${memcouponVO.start_date}</td>
 						<td>${memcouponVO.end_date}</td>

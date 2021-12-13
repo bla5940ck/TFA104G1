@@ -89,7 +89,7 @@
 			<td>${promolistVO.promo_id}</td>
 			<td>${promolistVO.category_id}</td>
 			<td>${promolistVO.coupon_name}</td>
-			<td>${promolistVO.discount}</td>
+			<td>${Math.round(promolistVO.discount)}</td>
 			<td>${promolistVO.amount}</td>
 			<td>${promolistVO.used}</td> 
 			<td>${promolistVO.start_date}</td>
