@@ -121,13 +121,29 @@ object-fit: contain;
 			
 				<table id="table-1">
 					<tr>
-					<td>反應會員編號</td>
-					<td>
-					<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
-					<jsp:useBean id="ptSVC" scope="page" class="com.problemtype.model.ProblemTypeService" />
-						<input type="hidden" name="memberID" value="<%=memID%>">${memSVC.getOneMember(id).name}					
-					</td>
+						<td>反應會員編號</td>
+						<td>
+						<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
+						<jsp:useBean id="ptSVC" scope="page" class="com.problemtype.model.ProblemTypeService" />
+						<input type="hidden" name="memberID" value="<%=memID%>">${memSVC.getOneMember(id).loginId}					
+						</td>
 					</tr>
+					<tr>
+						<td>反應商品編號</td>
+						<td>						
+						<input type="TEXT" name="prodID" size="45" /></td>
+											
+						</td>
+					</tr>
+					<br>
+					<tr>
+						<td>反應訂單編號</td>
+						<td>						
+						<input type="TEXT" name="ordID" size="45" /></td>
+										
+						</td>
+					</tr>
+					<br>
 					<tr>
 						<td>問題類型:</td>
 						<td>					

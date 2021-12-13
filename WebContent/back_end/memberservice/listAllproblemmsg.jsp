@@ -8,6 +8,10 @@
 	MemberServiceService msSvc = new MemberServiceService();
 	List<MemberServiceVO> list = msSvc.getAll();
 	pageContext.setAttribute("list", list);
+	for(MemberServiceVO mcVO : list){
+		System.out.println("圖1"  + mcVO.getPic1());
+	}
+	
 	
 	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
 	
@@ -161,6 +165,7 @@ object-fit: contain;
 					<th>問題編號</th>
 					<th>商品編號</th>					
 					<th>會員編號</th>
+					<th>管理者編號</th>
 					<th>問題類型編號</th>
 					<th>訂單編號</th>
 					<th>訊息時間</th>					
@@ -179,27 +184,39 @@ object-fit: contain;
 					<br>
 					<tr>					
 						<td>${msVO.msgID}</td>
+						<input type="hidden" name="msgID" value="${msVO.msgID}" >
 						<td>${msVO.prodID}</td>
+						<input type="hidden" name="prodID" value="${msVO.prodID}" >
 						<td>${msVO.memberID}</td>
+						<input type="hidden" name="memberID" value="${msVO.memberID}" >
+						<td>${msVO.managerID}</td>
+						<input type="hidden" name="managerID" value="${msVO.managerID}" >
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
+						<input type="hidden" name="typeID" value="${msVO.typeID}" >
 						<td>${msVO.ordID}</td>
+						<input type="hidden" name="ordID" value="${msVO.ordID}" >
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+						<input type="hidden" name="msgDate" value="${msVO.msgDate}" >
 						<td>${msVO.problemMsg}</td>
+						<input type="hidden" name="problemMsg" value="${msVO.problemMsg}" >
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=1&msgID=${msVO.msgID}"></td>
+						<input type="hidden" name="pic1" value="${msVO.pic1}" >
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=2&msgID=${msVO.msgID}"></td>
+						<input type="hidden" name="pic2" value="${msVO.pic2}" >
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=3&msgID=${msVO.msgID}"></td>
+						<input type="hidden" name="pic3" value="${msVO.pic3}" >
 						<td><select name="problemStatus" size="1" id="s">
 								<option value="0" >未處理</option>
 								<option value="1" >已處理</option>
 						</select></td>
-
+						
 						
 					</tr>
 				</c:forEach>
 		</table>
-			</FORM>
-		<input type="hidden" name="action" value="insert" >
+		<input type="hidden" name="action" value="update" >
 				<center><input type="submit" value="送出"></center>	
+			</FORM>
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
