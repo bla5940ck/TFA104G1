@@ -95,7 +95,7 @@ object-fit: contain;
 </head>
 
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/header2.file"%>
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
