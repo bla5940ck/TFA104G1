@@ -6,6 +6,135 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/front_end/Chatroom/css/friendchat.css" type="text/css" />
 <style type="text/css">
+* {
+	margin: auto;
+	padding: 0px;
+}
+
+html, body {
+	font: 15px verdana, Times New Roman, arial, helvetica, sans-serif,
+		Microsoft JhengHei;
+	width: 90%;
+	height: 90%;
+	background: #ffffff;
+}
+
+.panel {
+	float: right;
+	border: 2px solid #191561;
+	border-radius: 5px;
+	width: 50%;
+}
+
+.message-area {
+	height: 70%;
+	resize: none;
+	box-sizing: border-box;
+	overflow: auto;
+	background-color: #ffffff;
+	padding:20px 0px 10px 0px;
+}
+
+.input-area {
+	background: #191561;
+	box-shadow: inset 0 0 10px #191561;
+/* 	padding: 10px; */
+    border-radius: 5px;
+}
+
+.input-area input {
+	margin: 0.5em 0em 0.5em 0.5em;
+	border:5px;
+	padding:5px;
+	border-radius: 5px;
+}
+
+.text-field {
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+}
+
+h1 {
+	font-size: 1.5em;
+	padding: 5px;
+	margin: 5px;
+}
+
+#message {
+	min-width: 50%;
+	max-width: 60%;
+}
+
+.statusOutput {
+	background: #191561;
+	text-align: center;
+	color: #ffffff;
+	border: 1px solid grey;
+	padding: 0.2em;
+	box-shadow: 0 0 5px #000000;
+	width: 30%;
+	margin-top: 10%;
+	margin-left: 60%;
+	border-radius:5px;
+}
+
+#row {
+	float: left;
+	width: 50%;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  padding: 5%;
+  margin-bottom: 5px;
+  background-color: #d3d3d3;
+  broder:10px;
+  border-radius: 5px
+}
+
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li{
+  display:inline-block;
+  clear: both;
+  padding: 20px;
+  border-radius: 30px;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.friend{
+  background: #d3d3d3;
+  float: left;
+  padding:10px;
+}
+
+.me{
+  float: right;
+  background: #191561;
+  color: #fff;
+  padding:10px;
+}
+
+.friend + .me{
+  border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+  border-bottom-right-radius: 30px;
+}
+
 
 </style>
 <title>JoyLeaseChatroomNow</title>
