@@ -1,6 +1,8 @@
+<%@page import="java.util.stream.Collectors"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 
@@ -11,8 +13,17 @@
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
+	List<OrderMasterVO> list1 = omSVC.getAll();
+// 	for(OrderMasterVO leaseVO : list){
+// 		if()
+// 	}
+	List<OrderMasterVO> list2 =list.
+								stream()
+									.filter(o->o.getLeaseID()==memID)
+										.filter(o->o.getOrdStatus()==2)
+											.collect(Collectors.toList());
 
-	pageContext.setAttribute("list", list);
+	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
 <%-- <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" /> --%>
@@ -102,46 +113,10 @@ th, td {
 			</nav>
 		</aside>
 		<main class="main">
-<!-- 			<div> -->
-<!-- 				<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/OrderListServlet"> --%>
-<!-- 					<h5> -->
-<!-- 						輸入訂單明細編號 (如1):  -->
-<!-- 						<input type="text" name="listID">  -->
-<!-- 						<input type="hidden" name="action" value="getOne_For_Display">  -->
-<!-- 						<input type="submit" value="送出"> -->
-<!-- 					</h5> -->
-<!-- 				</FORM> -->
+
 
 				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
-<!-- 				<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/OrderListServlet"> --%>
-<!-- 					<h5> -->
-<!-- 						選擇訂單明細編號: <select size="1" name="listID"> -->
-<%-- 							<c:forEach var="OrderListVO" items="${OrdserListSvc.all}"> --%>
-<%-- 								<option value="${OrderListVO.listID}">${OrderListVO.listID} --%>
-<%-- 							</c:forEach> --%>
-<!-- 						</select>  -->
-<!-- 						<input type="hidden" name="action" value="getOne_For_Display"> -->
-<!-- 						<input type="submit" value="送出"> -->
-<!-- 					</h5> -->
-<!-- 				</FORM> -->
-
-<!-- 				<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
-<!-- 					<h5> -->
-<!-- 						選擇訂單狀態: <select size="1" name="ordStatus"> -->
-<%-- 							<option value="0" <%=omVO.getOrdStatus() == 0 ? "selected" : ""%>>已成立</option> --%>
-<%-- 							<option value="1" <%=omVO.getOrdStatus() == 1 ? "selected" : ""%>>待歸還</option> --%>
-<%-- 							<option value="2" <%=omVO.getOrdStatus() == 2 ? "selected" : ""%>>已完成</option> --%>
-<%-- 							<option value="9" <%=omVO.getOrdStatus() == 9 ? "selected" : ""%>>已取消</option> --%>
-<!-- 						</select>  -->
-<!-- 						<input type="hidden" name="action" value="get_Status_Display"> -->
-<!-- 						<input type="submit" value="送出"> -->
-<!-- 					</h5> -->
-<!-- 				</FORM> -->
-<!-- 			</div> -->
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
 				<ul>
@@ -150,20 +125,7 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-<!-- 			<table id="table-1"> -->
-<!-- 				<div> -->
-<%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
-<!-- 						<tr> -->
-<%-- 							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td> --%>
-<!-- 							<td><button name="ordStatus" value="0">已成立</button></td> -->
-<!-- 							<td><button name="ordStatus" value="1">待歸還</button></td> -->
-<!-- 							<td><button name="ordStatus" value="2">已完成</button></td> -->
-<!-- 							<td><button name="ordStatus" value="9">已取消</button></td> -->
-<!-- 						</tr> -->
-<!-- 						<input type="hidden" name="action" value="get_Status_Display"> -->
-<!-- 					</FORM> -->
-<!-- 				</div> -->
-<!-- 			</table> -->
+
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
@@ -183,10 +145,10 @@ th, td {
 					<th>承租天數</th>
 					<th>訂單金額</th>
 				</tr>
-				<%@ include file="page1.file"%>
+				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-					<c:choose>
-						<c:when test="${omVO.ordStatus == 2 && omVO.leaseID == id}">
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test="${omVO.ordStatus == 2 && omVO.leaseID == id}"> --%>
 							<tr>
 								<td>${omVO.ordID}</td>
 								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
@@ -274,8 +236,8 @@ th, td {
 									</FORM>
 								</td>
 							</tr>
-						</c:when>
-					</c:choose>
+<%-- 						</c:when> --%>
+<%-- 					</c:choose> --%>
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>
