@@ -93,6 +93,10 @@ h2 {
 background-color:#6495ed;
 }
 
+li>a{
+	font-size:15px;
+	color:red;
+}
 
 </style>
 </head>
