@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.chat_room.jedis.JedisPoolUtil;
+import com.chatroom.jedis.JedisPoolUtil;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
