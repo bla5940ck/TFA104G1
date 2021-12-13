@@ -34,7 +34,7 @@
 }</style>
 
  <%
-  Integer memberID = (Integer)session.getAttribute("id");
+Integer memberID = (Integer)session.getAttribute("id");
   
   JedisPool pool = JedisPoolUtil.getJedisPool(); 
   Jedis jedis = pool.getResource();
