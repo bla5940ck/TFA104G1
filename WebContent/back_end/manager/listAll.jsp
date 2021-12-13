@@ -40,10 +40,12 @@ div.main_content {
 	font-size: 0;
 }
 
+
+
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -56,7 +58,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -81,8 +83,12 @@ th, td {
 </style>
 <style>
 table#table-1 {
+	width: 80%;
 	background-color: #CCCCFF;
-	border: 2px solid black;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px ridge Gray;
+	height: 80px;
 	text-align: center;
 }
 
@@ -92,30 +98,16 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h4 {
-	color: red;
+h2 {
+	color: blue;
 	display: inline;
 }
 
-
-</style>
-
-<style>
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
+.signOut{
+background-color:#6495ed;
 }
 
-table, th, td {
-	border: 1px solid #CCCCFF;
-}
 
-th, td {
-	padding: 5px;
-	text-align: center;
-}
 </style>
 
 </head>
@@ -125,7 +117,7 @@ th, td {
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">
 			<h4>此頁練習採用 EL 的寫法取值:</h4>
-			<br>
+		
 			<table id="table-1">
 				<tr>
 					<td>

@@ -41,7 +41,7 @@ div.main_content {
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -54,7 +54,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -141,7 +141,7 @@ object-fit: contain;
 						</h4>
 					</td>
 				</tr>
-				<br>
+			
 			</table>
 
 			<%--錯誤列表 --%>
@@ -197,10 +197,10 @@ object-fit: contain;
 					</tr>
 				</c:forEach>
 		</table>
+			</FORM>
 		<input type="hidden" name="action" value="insert" >
 				<center><input type="submit" value="送出"></center>	
 			<%@ include file="page2.file"%>
-			</FORM>
 		</main>
 	</div>
 	

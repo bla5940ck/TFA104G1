@@ -35,7 +35,7 @@ div.main_content {
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -48,7 +48,7 @@ aside.aside {
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -96,8 +96,9 @@ h2 {
 .signOut{
 background-color:#6495ed;
 }
-</style>
 
+
+</style>
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
@@ -109,7 +110,7 @@ background-color:#6495ed;
 			<h1>
 				${msSvc.getOneManager(managerID).managerName}你好
 			</h1>
-			<br>		
+				
 		</main>
 	</div>	
 </body>
