@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.member.model.*"%>
+<%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
+<%
+  MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
+  pageContext.setAttribute("memberVO",memberVO);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -132,21 +138,36 @@ table, th, td {
 </head>
 <body bgcolor='white'>
 <header class="header"> header區域 </header>
-
+<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+			</c:if>
 
 <div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 			<div>
 				<a class="" href="<%=request.getContextPath()%>/front_end/member/RentPage.jsp">
-					<div>
-						<img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg">
-					</div>
+					<td>
+														<c:set var="img" value="${memberVO.pic}" />
+														<%
+														byte b[] = (byte[]) pageContext.getAttribute("img");
+															String pic = Base64.encode(b);
+															if (null == pic || "".equals(pic))
+																pic ="123";
+														%>
+														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
+													</td>
+												    <td>${memberVO.loginId}</td>
 				</a>
 			</div>
 				<h1>出租專區</h1>
 				<ul class="nav_list">
-				
+				<!-- 
 					<li><a href="RentPage.jsp">我的帳戶</a>
 						<ul class="nav_list">
 							<li><a href="">個人檔案</a></li>
@@ -154,7 +175,7 @@ table, th, td {
 							<li><a href="">地址</a></li>
 							<li><a href="">更改密碼</a></li>
 						</ul>
-					</li>
+					</li> -->
 					<li><a href="">訂單資訊</a></li>
 					<li><a href="">商品管理</a></li>
 					<li><a href="">通知</a></li>
@@ -169,22 +190,8 @@ table, th, td {
 			</nav>
 		</aside>
 		<main class="main">
-
-
-</BODY>
-</HTML>
-			<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
-			
-
-
 		</main>
+
 	</div>
 
 

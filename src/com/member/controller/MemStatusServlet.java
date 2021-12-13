@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.member.model.MailService;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
 
@@ -91,7 +92,17 @@ public class MemStatusServlet extends HttpServlet {
 //			successView.forward(req, res);
 //			一個是跳轉一個內轉
 			res.sendRedirect(req.getContextPath() + url);
-
+			/**************************** 4.寄送審核通過通知給使用者 *****************************************/
+			memberVO=memSvc.getOneMember(memberId);
+			String to = memberVO.getEmail();
+			String subject = "【JoyLease】帳號審核通過通知";
+			String ch_name =  memberVO.getName();
+			String url2 = "/front_end/member/LeaseLogin.jsp";
+			String indexUrl =  req.getContextPath() + url2;
+			String messageText = "Hello! 親愛的 " + ch_name + "您好~您已通過會員審核，歡迎點選以下連結登入使用 【JoyLease】樂借所平台~ \n"
+					+ indexUrl ;
+			MailService mailService = new MailService();
+			mailService.sendMail(to, subject, messageText);
 			/*************************** 其他可能的錯誤處理 **********************************/
 		} catch (Exception e) {
 			errorMsgs.add("無法取得要修改的資料:" + e.getMessage());

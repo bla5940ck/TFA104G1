@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="BIG5">
+		<meta charset="UTF-8">
 		<title>承租專區</title>
 		<style>
 		* {
@@ -182,7 +182,7 @@
 										<ul class="nav_list">
 											<li><a href="">訂單更新通知</a></li>
 											<li><a href="">評價通知</a></li>
-											<li><a href="">款項通知</a></li>
+											<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li>
 										</ul>
 									<li><a href="">問題回報查詢</a></li>
 									<li><a href="">我的折價券</a></li>
@@ -191,15 +191,14 @@
 				</aside>
 				<main class="main">
 				
-					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemUpdateServlet" name="form1">
+					<%-- <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet"   name="form1">--%>
+					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						<h1>我的帳戶</h1>
 						<div>管理你的檔案以保護你的帳戶</div>
 						<table>
 								<tr>
-								<td>帳號 : <font color=red><b>*</b></font></td>
-									<td>${memberVO.loginId}</td>
-									
-									
+								<td>會員編號 : <font color=red><b>*</b></font></td>
+									<td>${memberVO.memberId}</td>	
 								</tr>
 								<tr>
 									<td>姓名 : </td>
@@ -207,11 +206,11 @@
 								</tr>
 								<tr>
 									<td>匿名 : </td>
-									<td><input type="TEXT" name="name" size="45" value="${memberVO.nickName}" /></td>
+									<td><input type="TEXT" name="nickName" size="45" value="${memberVO.nickName}" /></td>
 								</tr>
 								<tr>
 									<td>EMAIL : </td>
-									<td><input type="TEXT" name="email" size="45"	value="${memberVO.email}" /></td>
+									<td><input type="email" name="email" size="45"	value="${memberVO.email}" /></td>
 								</tr>
 								<tr>
 									<td>手機號碼 : </td>
@@ -223,24 +222,54 @@
 								</tr>
 						</table>
 						
-					<input type="hidden" name="action" value="update">
-					<input type="hidden" name="memberId" value="">
-					<input type="file" accept=".jpg.jpeg.png" onchange="showPic(this.value);" value="pic">
-					<img src="http://www2.blogger.com/" />
-					<input type="submit" value="儲存"></FORM>
+					<input type="hidden" name="action" value="updateBasic">
+					<input type="hidden" name="memberId" value="${memberVO.memberId}">
+					<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="pic"id='file_id1' name='file_name1'>
+					<!--  <img src="http://www2.blogger.com/" />-->
 					
-				 
+					<input type="submit" value="儲存"></FORM>
+					<FORM>
+					<div >
+						<h4>圖片預覽</h4>
+							
+							<div id="preview1"  style="width:300px;height:300px;border:3px #cccccc dashed;">
+									<span class="text">預覽圖</span>
+							</div>
+					</div>
+				 </FORM>
 				 </main>
 		</div>
 						
 		<footer class="footer"> footer區域 </footer>
 	</body>
+	<!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
-	function showPic(picPath){
-		pic = document.getElementById("imgShow");
-		pic.src = "file:///" + picPath;
-		pic.width = 300;
-		pic.style.visibility = "visible";
-		}
+
+$("#file_id1").change(
+		function() {
+			$("#preview1").html(""); // 清除預覽
+			var fileCount = this.files.length;
+			$("#fileCount").val(fileCount);
+			if (this.files.length > 1) {
+				alert("最多只能選一張圖片喔");
+				$("#file_id1").val("");
+				$("#preview1").html("<span class='text'>預覽圖</span>");
+			} else {
+
+				if (this.files && this.files.length >= 0) {
+					for (var i = 0; i < this.files.length; i++) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							var img = $("<img class = 'preview_img' width='280' >")
+									.attr('src', e.target.result);
+							$("#preview1").append(img);
+						}
+						reader.readAsDataURL(this.files[i]);
+					}
+				}
+			}
+
+		});
 </script>
 </html>

@@ -33,7 +33,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
 				+ "FROM member where login_id = ?";
 		private static final String LOGIN = 
-				"SELECT login_id,password FROM member where login_id = ? and password=? ";
+				"SELECT login_id,password FROM member where login_id = ? and password=? and status=1";
 //		private static final String DELETE = 
 //			"DELETE FROM member where member_id = ?";
 		private static final String UPDATE = 
@@ -46,7 +46,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				"UPDATE member set password	=? where (login_id = ?)";
 		
 		private static final String UPDATEACCOUNT = 
-				"update JoyLease.member set bank_code = ? ,bank_account=?,account_name=? where member_id=?;";
+				"UPDATE member set bank_code =? ,bank_account =?  ,account_name=? where (member_id = ?)";
 		
 		
 		private static final String UPDATEONEMEMBER = 
@@ -310,6 +310,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				memberVO.setBirthday(rs.getDate("birthday"));
 				memberVO.setAddress(rs.getString("address"));
 				memberVO.setBankAccount(rs.getString("bank_account"));
+				memberVO.setAccountName(rs.getString("account_name"));
 				memberVO.setRentScore(rs.getDouble("rent_score"));
 				memberVO.setLeaseScore(rs.getDouble("lease_score"));
 				memberVO.setCreatDate(rs.getTimestamp("creat_date"));
@@ -387,6 +388,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				memberVO.setBirthday(rs.getDate("birthday"));
 				memberVO.setAddress(rs.getString("address"));
 				memberVO.setBankAccount(rs.getString("bank_account"));
+				memberVO.setAccountName(rs.getString("account_name"));
 				memberVO.setRentScore(rs.getDouble("rent_score"));
 				memberVO.setLeaseScore(rs.getDouble("lease_score"));
 				memberVO.setCreatDate(rs.getTimestamp("creat_date"));
@@ -465,6 +467,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				memberVO.setBirthday(rs.getDate("birthday"));
 				memberVO.setAddress(rs.getString("address"));
 				memberVO.setBankAccount(rs.getString("bank_account"));
+				memberVO.setAccountName(rs.getString("account_name"));
 				memberVO.setRentScore(rs.getDouble("rent_score"));
 				memberVO.setLeaseScore(rs.getDouble("lease_score"));
 				memberVO.setCreatDate(rs.getTimestamp("creat_date"));
@@ -565,6 +568,15 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 //		memberVO2.setMemberId(8);
 //		dao.update(memberVO2);
 		
+//		//前台會員資料修改
+//		MemberVO memberVO2 = new MemberVO();
+//		memberVO2.setEmail("updateabc@gmail.com");
+//		memberVO2.setPhoneNum("0988567123");
+//		memberVO2.setNickName("xxx");
+//		memberVO2.setPic(null);
+//		memberVO2.setMemberId(3);
+//		dao.updateMemberBasicInformation(memberVO2);
+//		
 		
 		// 單一查詢
 //		MemberVO memberVO3 = dao.findByPrimaryKey(1);
@@ -685,6 +697,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 				memberVO.setBirthday(rs.getDate("birthday"));
 				memberVO.setAddress(rs.getString("address"));
 				memberVO.setBankAccount(rs.getString("bank_account"));
+				memberVO.setAccountName(rs.getString("account_name"));
 				memberVO.setRentScore(rs.getDouble("rent_score"));
 				memberVO.setLeaseScore(rs.getDouble("lease_score"));
 				memberVO.setCreatDate(rs.getTimestamp("creat_date"));
@@ -791,7 +804,7 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 		return memberVO;
 	
 	}
-
+//	UPDATEPW = 			"UPDATE member set password	=? where (login_id = ?)";
 	@Override
 	public void updatePw(MemberVO memberVO) {
 		// TODO Auto-generated method stub
@@ -879,8 +892,124 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			}
 		}
 	}
+
+	
+	private static final String FIND_EMAIL = 
+			"SELECT email ,login_id FROM member where email = ?  and status=1";
+
+	@Override
+	public MemberVO findEmail(String email) {
+		// TODO Auto-generated method stub
+		MemberVO memberVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(FIND_EMAIL);
+
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+
+				
+			if (rs !=null) {
+				while (rs.next()) {
+					memberVO = new MemberVO();
+					memberVO.setLoginId(rs.getString("login_id"));
+					memberVO.setEmail(rs.getString("email"));
+					break;
+				}
+			}
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return memberVO;
+	
+	}
+
+	private static final String UPDATE_ONE_MEM_INF = 
+			"UPDATE member set nickName	=? ,email = ?, phone_num =? , pic = ? where (member_id = ?)";
+	@Override
+	public void updateMemberBasicInformation(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		System.out.println("77777744444444");
+		try {
+			System.out.println("888888844444444");
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE_ONE_MEM_INF);
+			pstmt.setString(1, memberVO.getNickName());
+			pstmt.setString(2, memberVO.getEmail());
+			pstmt.setString(3, memberVO.getPhoneNum());
+			pstmt.setBytes(4, memberVO.getPic());
+			pstmt.setInt(5, memberVO.getMemberId());
+			System.out.println("9999944444444");
+			pstmt.executeUpdate();
+	
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
 		
 	
+
 
 
 }

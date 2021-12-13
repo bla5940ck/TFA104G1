@@ -2,7 +2,10 @@ package com.product.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.category.model.ProdCategoryDAO;
 import com.category.model.ProdCategoryDAOImpl;
@@ -71,6 +74,14 @@ public class ProdService {
 	}
 	public List<ProdVO> getAllByKeyword(String keyword){
 		return dao.getAllByKeyword(keyword);
+	}
+	public List<ProdVO> getAllByTimeDesc(){
+		List<ProdVO> list = dao.getAll();
+		return list.stream()
+				.filter(p ->p.getShelfDate()!=null)	
+					.sorted(Comparator.comparing(ProdVO::getShelfDate)
+							.reversed())
+								.collect(Collectors.toList());
 	}
 //	public String getCateNameByProdID(Integer categoryID) {
 //		

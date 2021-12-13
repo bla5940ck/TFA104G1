@@ -79,22 +79,36 @@ public class MemberService {
 		dao.updateStatus(memberVO);
 		return memberVO;
 	}
+	
+	//前台會員基本資料更改
+	public MemberVO updateMemberBasicInformation(Integer memberId,String nickName,  String email , String phoneNum ,byte[] pic
+			) {
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemberId(memberId);
+		memberVO.setNickName(nickName);
+		memberVO.setEmail(email);
+		memberVO.setPhoneNum(phoneNum);
+		memberVO.setPic(pic);
+		dao.updateMemberBasicInformation(memberVO);
+		return memberVO;
+	}
 	//前台會員密碼變更
 	public MemberVO updatePw(String password,String loginId
 			) {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setPassword(password);
+		memberVO.setLoginId(loginId);
 		dao.updatePw(memberVO);
 		return memberVO;
 	}
 	//前台會員銀行變更
-	public MemberVO updateAccount(Integer memberId,String bankCode,String accountName
-		,String bankAccount	) {
+	public MemberVO updateAccount(Integer memberId,String bankCode,String bankAccount,String accountName
+			) {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemberId(memberId);
 		memberVO.setBankCode(bankCode);
-		memberVO.setAccountName(accountName);
 		memberVO.setBankAccount(bankAccount);
+		memberVO.setAccountName(accountName);
 
 		dao.updateAccount(memberVO);
 		return memberVO;
@@ -126,7 +140,10 @@ public class MemberService {
 	public MemberVO 	login(String loginId,String password) {
 		return dao.login(loginId,password);
 	}
-	
+
+	public MemberVO 	findEmail(String email) {
+		return dao.findEmail(email);
+	}
 	
 	public List<MemberVO> getAll(){
 		return dao.getAll();

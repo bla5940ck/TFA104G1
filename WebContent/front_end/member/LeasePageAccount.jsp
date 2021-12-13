@@ -197,15 +197,24 @@
 
 						<hr>
 						<table>
+						<jsp:useBean id="bankSvc" scope="page" class="com.member.model.BankService" />
 								<tr>
+									<td>金融機構:<font color=red><b>*</b></font></td>
+									<td><select size="1" name="bankCode">
+										<c:forEach var="bankVO" items="${bankSvc.all}">
+											<option value="${bankVO.code}" ${(memberVO.bankCode==bankVO.code)?'selected':'' } >${bankVO.code} ${bankVO.chineseName}
+										</c:forEach>
+									</select></td>
+								</tr>
+								<%-- <tr>
 								<td>銀行代碼 : <font color=red><b>*</b></font></td>
 									<td><input type="TEXT" name="bankCode" size="45" value="${memberVO.bankCode}" /></td>	
 								</tr>
 								<tr>
 									<td>銀行名稱 : </td>
-									<td> </td>
-								</tr>
-								<tr>
+									<td> <input type="TEXT" name="bankCode" size="45" value="${memberVO.bankCode}" /></td>
+								</tr>--%>
+								<tr> 
 									<td>銀行帳號 : </td>
 									<td><input type="TEXT" name="bankAccount" size="45" value="${memberVO.bankAccount}" /></td>
 								</tr>
@@ -219,7 +228,6 @@
 						
 					<input type="hidden" name="action" value="updateAccount">
 					<input type="hidden" name="memberId" value="${memberVO.memberId}" >
-				
 					<input type="submit" value="儲存"></FORM>
 					
 				 

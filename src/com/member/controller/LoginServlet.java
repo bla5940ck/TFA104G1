@@ -31,10 +31,10 @@ public class LoginServlet extends HttpServlet {
 		// 進資料庫開始查詢資料
 		MemberService memSvc = new MemberService();
 		MemberVO memberVO = memSvc.login(loginId, password);
-		if(null == loginId || "".equals(loginId) || null == password || "".equals(password) || null == memberVO)
+		if (null == loginId || "".equals(loginId) || null == password || "".equals(password) || null == memberVO)
 			return false;
 //		if (memberVO.getLoginId().equals(loginId) && memberVO.getPassword().equals(password))
-    	 if (loginId.equals(memberVO.getLoginId()) && password.equals(memberVO.getPassword()))
+		if (loginId.equals(memberVO.getLoginId()) && password.equals(memberVO.getPassword()))
 //     if ("123".equals(loginId) && "123".equals(password))
 			return true;
 		else
@@ -56,26 +56,26 @@ public class LoginServlet extends HttpServlet {
 
 		if (!allowUser(loginId, password)) { // 【帳號 , 密碼無效時】
 			out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-			out.println("<BODY>你的帳號 , 密碼無效!<BR>");
+			out.println("<BODY>你的帳號 , 密碼無效或尚未開通!<BR>");
 			out.println("請按此重新登入 <A HREF=" + req.getContextPath() + "/front_end/member/LeaseLogin.jsp>重新登入</A>");
 			out.println("<BR>或10秒後自動回到登入畫面 ");
 			out.println("</BODY></HTML>");
 //			設定10秒鐘後自動導回登入畫面
-			res.setHeader("Refresh", "10; URL=" +req.getContextPath()+"/front_end/member/LeaseLogin.jsp");
+			res.setHeader("Refresh", "10; URL=" + req.getContextPath() + "/front_end/member/LeaseLogin.jsp");
 //       res.sendRedirect(req.getContextPath()+"/front_end/member/LeaseLogin.jsp");  
 		} else { // 【帳號 , 密碼有效時, 才做以下工作】
-			HttpSession session = req.getSession();	
+			HttpSession session = req.getSession();
 			// *工作1: 才在session內做已經登入過的標識
-			
+
 			session.setAttribute("loginId", loginId);
 			MemberService memSvc = new MemberService();
 			MemberVO memberVO = memSvc.getLoginMember(loginId);
-			session.setAttribute("MemberVO", memberVO);  
-			System.out.print(memberVO.getLoginId());
+			session.setAttribute("MemberVO", memberVO);
+//			System.out.print(memberVO.getLoginId());
 //			session.getAttribute("MemberVO");  
 			try {
 				String location = (String) session.getAttribute("location");
-				
+
 				// *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 				if (location != null) {
 					session.removeAttribute("location");
@@ -86,14 +86,14 @@ public class LoginServlet extends HttpServlet {
 				ignored.printStackTrace(System.err);
 			}
 			// *工作3: (-->如無來源網頁:則導至出租專區或承租專區.jsp)
-			if("LeaseLogin".equals(action)) {
-				/***************************開始查詢資料 ****************************************/
+			if ("LeaseLogin".equals(action)) {
+				/*************************** 開始查詢資料 ****************************************/
 //				System.out.println(memberVO.getLoginId());
 //				MemberService memSvc = new MemberService();
 //				MemberVO memberVO = memSvc.getLoginMember(loginId);
 
-				/***************************查詢完成,準備轉交(Send the Success view)*************/
-				
+				/*************************** 查詢完成,準備轉交(Send the Success view) *************/
+
 //				session.setAttribute("MemberVO", memberVO);    // 資料庫取出的list物件,存入session
 				// Send the Success view
 //				String url = "/front_end/member/LeasePage.jsp";
@@ -101,18 +101,12 @@ public class LoginServlet extends HttpServlet {
 //				successView.forward(req, res);
 //				return;
 				res.sendRedirect(req.getContextPath() + "/front_end/member/LeasePage.jsp");
-				
-				
-			
-			
+
 			}
-			if("RentLogin".equals(action)) {
+			if ("RentLogin".equals(action)) {
 				res.sendRedirect(req.getContextPath() + "/front_end/member/RentPage.jsp");
-			
-			
-			
-			
-			}	
+
 			}
+		}
 	}
 }

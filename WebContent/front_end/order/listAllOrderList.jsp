@@ -80,14 +80,14 @@ th, td {
 </head>
 <body>
 <%session.setAttribute("id",1); %>
-<%@ include file="/includeFolder/header2.file" %>
+	<%@ include file="/includeFolder/header.file"%>
 <!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
 				<ul class="nav_list">
 					<h2>出租者專區</h2>
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -137,17 +137,16 @@ th, td {
 			
 			<table id="table-1">
 			<div>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-				<tr>
-					<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部</a></td>
-					<td><button name="ordStatus" value="0">已成立</button></td>	
-					<td><button name="ordStatus" value="1">待歸還</button></td>	
-					<td><button name="ordStatus" value="2">已完成</button></td>	
-					<td><button name="ordStatus" value="9">已取消</button></td>					
-				</tr>
-				<input type="hidden" name="action" value="get_Status_Display">
-				</FORM>
+				<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+						<tr>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><button name="ordStatus" value="0">已成立</button></td>
+							<td><button name="ordStatus" value="1">待歸還</button></td>
+							<td><button name="ordStatus" value="2">已完成</button></td>
+							<td><button name="ordStatus" value="9">已取消</button></td>
+						</tr>
+						<input type="hidden" name="action" value="get_Status_Display">
+					</FORM>
 			</div>
 			</table>	
 			<table id="table-1">

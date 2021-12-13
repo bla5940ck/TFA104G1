@@ -9,7 +9,7 @@
 <body>
 <div class="aa-myaccount-login">
                   <h4>承租會員Login</h4>
-                  <form METHOD="post" action="<%=request.getContextPath()%>/member/LoginServlet"" class="aa-login-form">
+                  <form METHOD="post" action="<%=request.getContextPath()%>/member/LoginServlet" class="aa-login-form">
                     <label for="">帳號 : <span>*</span></label>
                     <input type="text" name="loginId" value="" placeholder="請輸入帳號">
                     <label for="">密碼 : <span>*</span></label>

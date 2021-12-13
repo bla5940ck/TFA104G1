@@ -8,6 +8,7 @@ import java.util.List;
 		public void delete(Integer mem_coupon_id);
 		public MemcouponVO findByPrimaryKey(Integer mem_coupon_id);
 		public List<MemcouponVO> getAll();
+		public List<MemcouponVO> getMemberid(Integer member_id);
 		
 	}
 

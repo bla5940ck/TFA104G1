@@ -199,32 +199,15 @@
 				%>
 				<main class="main">
 				
-					<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
+					
 						<h1>地址</h1>
 						<div>管理你的寄送相關資訊</div>
-						<table>
-								<tr>
-								<td>收件姓名 : <font color=red><b>*</b></font></td>
-									<td><input type="TEXT" name="name" size="45" value="" /></td>
-								</tr>
-								<tr>
-									<td>收件電話 : </td>
-									<td><input type="TEXT" name="name" size="45" value="" /></td>
-								</tr>
-								<tr>
-									<td>收件超商 : </td>
-									<td><input type="TEXT" name="name" size="45" value="" /></td>
-								</tr>
-								<tr>
-									<td>超商地址 : </td>
-									<td>${memberVO.email}</td>
-						</table>
-					<input type="hidden" name="action" value="insert">
-					<input type="hidden" name="memberId" value="${memberVO.memberId}">
-					<input type="submit" value="增加"></FORM>
+						
+					<a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddAddress.jsp">新增超商地址</a>
 						<hr>
 						 <c:forEach var="defAddressVO"  items="${list}" >
 						 <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
+						
 						<ul>
 							<div>${(defAddressVO.status==1)?'預設':' '}</div>
 							<li>姓名 : ${defAddressVO.recipient}</li>

@@ -17,7 +17,7 @@ public class DefAddressJDBCDAO implements DefAddressDAO_interface {
 	String passwd = "password";
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO def_address ( member_id, code_711, name_711, add_711, status, recipient, recpt_phone) VALUES ( ? , ? , ? , ? , ? ,? ,? )";
+			"INSERT INTO def_address ( member_id, code_711, name_711, add_711 ,status, recipient, recpt_phone) VALUES ( ? , ? , ? , ? , ? ,?,?  )";
 		private static final String GET_ALL_STMT = 
 			"SELECT def_711, member_id, code_711, name_711, add_711, status, recipient, recpt_phone FROM def_address order by def_711";
 		private static final String GET_ONE_STMT = 
@@ -26,6 +26,8 @@ public class DefAddressJDBCDAO implements DefAddressDAO_interface {
 			"DELETE FROM def_address where def_711 = ? ";
 		private static final String UPDATE = 
 			"UPDATE def_address set member_id=?, code_711=?, name_711=?, add_711=?, status=?, recipient=?,recpt_phone=? where def_711  =  ?";
+		private static final String UPDATESTATUS =
+				"update def_address set status=0 where member_id=?";
 	
 	@Override
 	public void insert(DefAddressVO defAddressVO) {
@@ -317,7 +319,7 @@ public class DefAddressJDBCDAO implements DefAddressDAO_interface {
 
 	
 	private static final String GET_ONE_MEM_ALL_STMT = 
-			"SELECT def_711, member_id, code_711, name_711, add_711, status, recipient, recpt_phone FROM def_address WHERE member_id = ? ";
+			"SELECT def_711, member_id, code_711, name_711, add_711, status, recipient, recpt_phone FROM def_address WHERE member_id = ? order by def_711 DESC";
 	@Override
 	public List<DefAddressVO> getOneMemAll(Integer memberId ) {
 		// TODO Auto-generated method stub
@@ -401,6 +403,49 @@ public class DefAddressJDBCDAO implements DefAddressDAO_interface {
 			pstmt.setInt(1, def711);
 			
 
+			pstmt.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void updateStatus(DefAddressVO defAddressVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATESTATUS);
+
+			pstmt.setInt(1, defAddressVO.getMemberId());
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

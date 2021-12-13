@@ -78,13 +78,14 @@
 <!-- 		<th>商品類別編號</th> -->
 		<th>折價券名稱</th>
 		<th>折價金額</th>
-<!-- 		<th>數量</th> -->
-<!-- 		<th>已領取數量</th> -->
+		<th>數量</th>
+		<th>已領取數量</th>
 		<th>開始日期</th>
 		<th>結束日期</th>
 	</tr>
-	<%@ include file="page1.file" %> 
-	<c:forEach var="promolistVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 	<%@ include file="page1.file" %>  --%>
+<%-- 	<c:forEach var="promolistVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
+	<c:forEach var="promolistVO" items="${list}">
 		
 <%-- 			     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;"> --%>
 <!-- 			     <input type="submit" value="新增"> -->
@@ -96,29 +97,41 @@
 <%-- 			<td>${promolistVO.category_id}</td> --%>
 			<td>${promolistVO.coupon_name}</td>
 			<td>${promolistVO.discount}</td>
-<%-- 			<td>${promolistVO.amount}</td> --%>
-<%-- 			<td>${promolistVO.used}</td>  --%>
+			<td>${promolistVO.amount}</td>
+			<td>${promolistVO.used}</td> 
 			<td>${promolistVO.start_date}</td>
 			<td>${promolistVO.end_date}</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="promolist.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="coupon_id"  value="${promolistVO.coupon_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="promolist.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="coupon_id"  value="${promolistVO.coupon_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="修改"> -->
+<%-- 			     <input type="hidden" name="coupon_id"  value="${promolistVO.coupon_id}"> --%>
+<!-- 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM> -->
+<!-- 			</td> -->
+<!-- 			<td> -->
+<%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;"> --%>
+<!-- 			     <input type="submit" value="刪除"> -->
+<%-- 			     <input type="hidden" name="coupon_id"  value="${promolistVO.coupon_id}"> --%>
+<!-- 			     <input type="hidden" name="action" value="delete"></FORM> -->
+<!-- 			</td> -->
 			
 		</tr>
 	
 	</c:forEach>
 
 </table>
-<%@ include file="page2.file" %>
+<%-- <%@ include file="page2.file" %> --%>
 
 <h3>新增專案明細</h3>
 

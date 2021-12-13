@@ -1,6 +1,7 @@
 package com.member_coupon.model;
 
 import java.util.*;
+
 import java.sql.*;
 import util.Util;
 
@@ -13,6 +14,9 @@ public class MemcouponDAO implements Memcoupon_interface{
 			e.printStackTrace();
 		}
 	}
+	
+		private static final String FIND_BY_MEMBERID = 
+			"SELECT * FROM member_coupon where member_id = ? and status = 0";
 		
 		private static final String INSERT_STMT = 
 			"INSERT INTO member_coupon (member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -25,7 +29,69 @@ public class MemcouponDAO implements Memcoupon_interface{
 		private static final String UPDATE = 
 			"UPDATE member_coupon set member_id=?, category_id=?, coupon_id=?, coupon_name=?, discount=?, status=?, start_date=?, end_date=? where mem_coupon_id = ?";
 	
-	
+		@Override
+		public List<MemcouponVO> getMemberid(Integer member_id) {
+			List<MemcouponVO> list = new ArrayList<MemcouponVO>();
+			MemcouponVO memcouponVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			
+			try {
+				
+				con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+				pstmt = con.prepareStatement(FIND_BY_MEMBERID);
+				
+				pstmt.setInt(1, member_id);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					memcouponVO = new MemcouponVO();
+					memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
+					memcouponVO.setMember_id(rs.getInt("member_id"));
+					memcouponVO.setCategory_id(rs.getInt("category_id"));
+					memcouponVO.setCoupon_id(rs.getInt("coupon_id"));
+					memcouponVO.setDiscount(rs.getDouble("discount"));
+					memcouponVO.setCoupon_name(rs.getString("coupon_name"));
+					memcouponVO.setStatus(rs.getInt("status"));
+					memcouponVO.setStart_date(rs.getDate("start_date"));
+					memcouponVO.setEnd_date(rs.getDate("end_date"));
+					list.add(memcouponVO);
+				}
+				
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+		
 	@Override
 	public void insert(MemcouponVO memcouponVO) {
 		Connection con = null;

@@ -5,6 +5,7 @@ import java.util.*;
 public interface DefAddressDAO_interface {
 	public void insert(DefAddressVO defAddressVO);
     public void update(DefAddressVO defAddressVO);
+    public void updateStatus(DefAddressVO defAddressVO);
     public void delete( Integer def711);
     public DefAddressVO findByPrimaryKey(Integer def711);
     public List<DefAddressVO> getAll();

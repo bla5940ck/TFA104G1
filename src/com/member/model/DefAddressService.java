@@ -51,6 +51,18 @@ public class DefAddressService {
 		
 		return dao.findByPrimaryKey(def711);
 	}
+	public DefAddressVO updateAddStatus(Integer memberId) {
+		
+		DefAddressVO defAddressVO = new DefAddressVO();
+		
+		defAddressVO.setMemberId(memberId);
+		
+//		defAddressVO.setStatus(status);
+		
+		dao.updateStatus(defAddressVO);
+		
+		return dao.findByPrimaryKey(memberId);
+	}
 	
 	public  DefAddressVO getOneDefaddress(Integer def711) {
 		return dao.findByPrimaryKey(def711);
