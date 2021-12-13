@@ -113,15 +113,7 @@ pageContext.setAttribute("listLabel", listLabel);
 </c:forEach>
 
 	</div>
-	<script>
-		$('input.add-label-btn').click(function(){
-			if($('input.addLabel').val()!=""){
-				$(this).closest('div').append("<label style='font-family:DFKai-sb;'><input  type='checkbox' checked='checked' name='checkbox1' value="+ $('input.addLabel').val()+ ">#" + $('input.addLabel').val() + "</label>");
-				$('input.addLabel').val("");	
-			}
-		});
 	
-	</script>
 			
 										<button type="submit" class="aa-browse-btn" id="submit1" >修改完成</button>
 <!-- 										<button type="submit" class="aa-browse-btn" -->
@@ -387,6 +379,20 @@ pageContext.setAttribute("listLabel", listLabel);
 	
 			}
 		});
+		
+		//加入自訂標籤
+		$('input.add-label-btn').click(function(){
+			if($('input.addLabel').val()!=""){
+				$(this).closest('div').append("<label style='font-family:DFKai-sb;'><input  type='checkbox' checked='checked' name='checkbox1' value="+ $('input.addLabel').val()+ ">#" + $('input.addLabel').val() + "</label>");
+				$('input.addLabel').val("");	
+			}
+		});
+	
+	
+		
+		
+		
+		
 	</script>
 </body>
 </html>

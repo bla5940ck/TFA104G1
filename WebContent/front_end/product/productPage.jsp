@@ -101,10 +101,10 @@
                 	</c:if>
                 	
                 	
-                   <c:if test= "${fn:length(matchProdList)==0 and matchProdList!=null}">
-                	<label style="color:#FF359A; font-size:20px;">"${searchCot}" </label><label style=" font-size:20px;">查無結果</label>
+                   <c:if test= "${flag=='no'}">
+                	<label style="color:#FF359A; font-size:20px;">"${prodLabel}" </label><label style=" font-size:20px;">查無結果</label>
                 	</c:if>
-            <c:if test= "${fn:length(matchProdList)>0 and matchProdList!=null}">
+            <c:if test= "${flag=='yes'}">
             		<label style=" font-size:20px;">目前標籤:</label>
                 	<label style="color:	#FF359A	; font-size:20px;">"${prodLabel}"  </label>
                 	
@@ -436,13 +436,7 @@
             <div class="aa-sidebar-widget">
               <h3>關鍵字標籤</h3>
               <div class="tag-cloud">
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=ps5">ps5</a>
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=OLED">OLED</a>
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=瑪利歐">瑪利歐</a>
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=薩爾達">薩爾達</a>
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=賽車">賽車</a>
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=冒險">冒險</a>
-                <a href="<%=path%>/prod/ProdServlet?action=labelClick&labelName=動作">動作</a>
+             
               </div>
            
            
@@ -650,11 +644,31 @@
   <script type="text/javascript" src="<%=path%>/front_end/product/js/nouislider.js"></script>
   <!-- Custom js -->
   <script src="<%=path%>/front_end/product/js/custom.js"></script> 
-<script> $("select.aa-select").change(function(){
+<script>
+
+$("select.aa-select").change(function(){
 	$("form.aa-sort-form").submit();
 }) ; 
 
-	
+//動態隨機加入標籤
+$.ajax({
+	type:"post",
+	contentType:"application/x-www-form-urlencoded;charset=utf-8",
+	url:"/TFA104G1/prod/LabelServlet?action=showLabel",
+	dataType:"json",
+	cache:false,
+	success:function(data){
+		console.log(data);
+		for(var i =0;i<8;i++){
+			$('div.tag-cloud').append("<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>")
+		}
+// 		$('div.tag-cloud').append()
+		
+	},
+	error:function(){
+		console.log("失敗");
+	}
+});
 
 
 

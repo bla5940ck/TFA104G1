@@ -29,7 +29,7 @@ import javax.servlet.http.*;
 @WebServlet("/prod/ProdServlet")
 @MultipartConfig()
 public class ProdServlet extends HttpServlet {
-	private static JedisPool pool = JedisPoolUtil.getJedisPool();
+
 //	Timer timer;
 
 	public void destroy() {
@@ -77,6 +77,7 @@ public class ProdServlet extends HttpServlet {
 ////////////////////////商品上架/////////////////////////////
 
 		if ("upload".equals(req.getParameter("action"))) {
+			JedisPool pool = JedisPoolUtil.getJedisPool();
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			ProdVO prod = new ProdVO();
@@ -204,7 +205,7 @@ public class ProdServlet extends HttpServlet {
 				jedis.rpush("prod" + key, labels[k]);
 
 			}
-
+			jedis.close();
 			ProdService prodSvc = new ProdService();
 			ProdVO product = prodSvc.findProductByPK(key);
 
@@ -258,6 +259,7 @@ public class ProdServlet extends HttpServlet {
 
 		if ("update".equals(req.getParameter("action"))) {
 			List<String> errorMsgs = new LinkedList<String>();
+			JedisPool pool = JedisPoolUtil.getJedisPool();
 			req.setAttribute("errorMsgs", errorMsgs);
 			String[] labels = req.getParameterValues("checkbox1");
 			String name = req.getParameter("product_name");
@@ -427,9 +429,9 @@ public class ProdServlet extends HttpServlet {
 			System.out.println("更新後... " + prodID);
 
 			//更新標籤
-			jedis.del("prod"+prodID);
 			
-			if(labels!=null) {
+			if(labels!=null &&labels.length!=0) {
+					jedis.del("prod"+prodID);
 					jedis.rpush("prod"+prodID, labels);
 			}
 			ProdService prodSvc = new ProdService();
@@ -586,75 +588,12 @@ public class ProdServlet extends HttpServlet {
 			res.sendRedirect(req.getContextPath() + "/front_end/product/leaseProdPage.jsp");
 
 		}
-		
-		
-		
-		
-		//////////////標籤點擊//////////////
-		
 
-		if ("labelClick".equals(req.getParameter("action"))) {
-			String prodID = req.getParameter("prodID");
-
-			String labelNo = req.getParameter("labelNo");
-			String prodLabel = "";
-			List<ProdVO> matchProdList = new ArrayList();
-			List<Integer> matchProdList1 = new ArrayList();
-			ProdService prodSvc = new ProdService();
-			Jedis jedis = null;
-			jedis = pool.getResource();
-			String regEx = "[^0-9]";
-			//從詳細圖片
-			if (labelNo != null && prodID != null) {
-				List<String> list = jedis.lrange("prod" + prodID, Long.valueOf(labelNo), Long.valueOf(labelNo));
-				prodLabel = list.get(0);
-
-				// 找到所有prodKey
-				Set<String> set = jedis.keys("prod*");
-				for (String prod : set) {
-//				//用prod裡面的值找到符合我們點擊的值
-					List<String> prodAll = jedis.lrange(prod, 0, jedis.llen(prod));
-					for (String label : prodAll) {
-
-						if (label.equals(prodLabel)) {
-							// 取代redis的prod為我們要的prodID為數字 並加入到陣列
-							matchProdList.add(prodSvc.findProductByPK(Integer.valueOf(prod.replaceAll(regEx, ""))));
-
-						}
-					}
-
-				}
-			}
-			// 從主頁標籤
-			else if (req.getParameter("labelName") != null && !req.getParameter("labelName").isEmpty()) {
-				Set<String> set = jedis.keys("prod*");
-				System.out.println(req.getParameter("labelName"));
-				for (String prod : set) {
-					List<String> prodAll = jedis.lrange(prod, 0, jedis.llen(prod));
-					for (String label : prodAll) {
-						if (req.getParameter("labelName").equals(label)) {
-							prodLabel = label;
-							matchProdList.add(prodSvc.findProductByPK(Integer.valueOf(prod.replaceAll(regEx, ""))));
-						}
-
-					}
-
-				}
-
-
-			}
-			jedis.close();
-			req.setAttribute("prodLabel", prodLabel);
-			req.setAttribute("matchProdList", matchProdList);
-//			
-//			
-			req.getRequestDispatcher("/front_end/product/productPage.jsp").forward(req, res);
-
-		}
 
 		///////////// 結帳////////////////////
 		if ("checkout".equals(req.getParameter("action"))) {
 			System.out.println("點到結帳");
+			JedisPool pool = JedisPoolUtil.getJedisPool();
 			Jedis jedis = null;
 			jedis = pool.getResource();
 			List<String> errorMsgs = new LinkedList<String>();
@@ -688,8 +627,9 @@ public class ProdServlet extends HttpServlet {
 			}
 			// 錯誤返回
 			if (!errorMsgs.isEmpty()) {
+				jedis.close();
 				req.getRequestDispatcher("/front_end/product/cart.jsp").forward(req, res);
-
+				
 				return;
 
 			}
