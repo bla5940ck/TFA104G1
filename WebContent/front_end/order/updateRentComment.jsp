@@ -6,7 +6,7 @@
 <%@ page import="com.order.model.*"%>
 
 <%
-	out.print("出租者評價頁面");
+	out.print("承租者評價頁面");
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 	// 	OrderListVO olVO = new OrderListVO();
@@ -247,18 +247,18 @@ a.cart-img>img {
 		<div class="main_content">
 			<aside class="aside">
 				<nav class="nav">
-					<h3>出租者專區</h3>
+					<h3>承租者專區</h3>
 					<h5>
 						會員編號 :
 						<%=memID%></h5>
 					<ul class="nav_list">
 						<h4>
 							<a
-								href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a>
+								href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">全部訂單</a>
 						</h4>
 						<h4>
 							<a
-								href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">訂單評價</a>
+								href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp">訂單評價</a>
 						</h4>
 					</ul>
 				</nav>
@@ -283,7 +283,7 @@ a.cart-img>img {
 													<tr>
 														<th>商品圖片</th>
 														<th>商品名稱</th>
-														<th>承租者</th>
+														<th>出租者</th>
 														<th>商品租金</th>
 														<th>訂單日期</th>
 														<th>承租天數:</th>
@@ -300,7 +300,7 @@ a.cart-img>img {
 														ProdDAO prodDAO = new ProdDAO();
 														ProdVO prodVO = prodDAO.findProductByPK(olVO.getProdID());
 														MemberJDBCDAO memDAO = new MemberJDBCDAO();
-														MemberVO memVO = memDAO.findByPrimaryKey(omVO.getRentID());
+														MemberVO memVO = memDAO.findByPrimaryKey(omVO.getLeaseID());
 												%>
 												<tbody>
 													<td><a class="cart-img"
@@ -325,26 +325,26 @@ a.cart-img>img {
 													<table class="aa-totals-table">
 														<tbody>
 															<tr>
-																<th>承租方評價</th>
-																<td><input type="hidden" name="rentRank"
-																	value="<%=omVO.getRentRank() == null ? "" : omVO.getRentRank()%>">
-																	<p><%=omVO.getRentRank() == 0 ? "尚未評分" : omVO.getRentRank()+"顆星"%></p>
+																<th>出租者評價</th>
+																<td><input type="hidden" name="leaseRank"
+																	value="<%=omVO.getLeaseRank() == null ? "" : omVO.getLeaseRank()%>">
+																	<p><%=omVO.getLeaseRank() == 0 ? "尚未評分" : omVO.getLeaseRank()+"顆星"%></p>
 																</td>
 															</tr>
 															<tr>
-																<th>承租方評論</th>
-																<td><input type="hidden" name="rentComt"
-																	value="<%=omVO.getRentComt() == null ? "尚未評論" : omVO.getRentComt()%>">
-																	<p><%=omVO.getRentComt() == null ? "尚未評論" : omVO.getRentComt()%></p></td>
+																<th>出租者評論</th>
+																<td><input type="hidden" name="LeaseComt"
+																	value="<%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%>">
+																	<p><%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%></p></td>
 															</tr>
 
 															<tr>
 																<th>我的評價</th>
-																<td><p id="rank"><%=omVO.getLeaseRank() == 0 ? "尚未評分" : omVO.getLeaseRank()+"顆星"%></p></td>
+																<td><p id="rank"><%=omVO.getRentRank() == 0 ? "尚未評分" : omVO.getRentRank()+"顆星"%></p></td>
 															</tr>
 															<tr>
 																<th>我的評論</th>
-																<td><p id="lc"><%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%></p></td>
+																<td><p id="lc"><%=omVO.getRentComt() == null ? "尚未評論" : omVO.getRentComt()%></p></td>
 															</tr>
 														</tbody>
 													</table>
@@ -355,15 +355,15 @@ a.cart-img>img {
 														</tr>														
 															<td bgcolor="#191561">
 														<div class="stars" id="s">
-															<input class="star star-5" id="star-5-2" onchange="test" type="radio" name="star" value="5" <%=omVO.getLeaseRank()== 5 ? "checked" : ""%>/> 
+															<input class="star star-5" id="star-5-2" onchange="test" type="radio" name="star" value="5" <%=omVO.getRentRank()== 5 ? "checked" : ""%>/> 
 																<label class="star star-5" for="star-5-2"></label> 
-															<input class="star star-4" id="star-4-2" onchange="test" type="radio" name="star" value="4" <%=omVO.getLeaseRank()== 4 ? "checked" : ""%>/> 
+															<input class="star star-4" id="star-4-2" onchange="test" type="radio" name="star" value="4" <%=omVO.getRentRank()== 4 ? "checked" : ""%>/> 
 																<label class="star star-4" for="star-4-2"></label> 
-															<input class="star star-3" id="star-3-2" onchange="test" type="radio" name="star" value="3" <%=omVO.getLeaseRank()== 3 ? "checked" : ""%>/> 
+															<input class="star star-3" id="star-3-2" onchange="test" type="radio" name="star" value="3" <%=omVO.getRentRank()== 3 ? "checked" : ""%>/> 
 																<label class="star star-3" for="star-3-2"></label> 
-															<input class="star star-2" id="star-2-2" onchange="test" type="radio" name="star" value="2" <%=omVO.getLeaseRank()== 2 ? "checked" : ""%>/> 
+															<input class="star star-2" id="star-2-2" onchange="test" type="radio" name="star" value="2" <%=omVO.getRentRank()== 2 ? "checked" : ""%>/> 
 																<label class="star star-2" for="star-2-2"></label> 
-															<input class="star star-1" id="star-1-2" onchange="test" type="radio" name="star" value="1" <%=omVO.getLeaseRank()== 1 ? "checked" : ""%>/> 
+															<input class="star star-1" id="star-1-2" onchange="test" type="radio" name="star" value="1" <%=omVO.getRentRank()== 1 ? "checked" : ""%>/> 
 																<label class="star star-1" for="star-1-2"></label>
 														</div>	
 															</td>
@@ -373,16 +373,16 @@ a.cart-img>img {
 														<tr>
 															<td>
 																<div class="rev-box">
-                													<textarea class="review" col="30" name="leaseComt" placeholder="在此填寫您的評價"></textarea>
-              														<input type="hidden" name="leaseRank" id="leaseRank">
-																	<input type="hidden" name="action" value="update_lease_comment"> 
+                													<textarea class="review" col="30" name="rentComt" placeholder="在此填寫您的評價"></textarea>
+              														<input type="hidden" name="rentRank" id="rentRank">
+																	<input type="hidden" name="action" value="update_rent_comment"> 
 																	<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
               														<input type="submit" value="送出評價 !">
            														</div>
 															</td>													
 														</tr>
 													</table>
-													<center><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">回前頁</a></center>
+													<center><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp">回前頁</a></center>
 												</div>
 											</table>
 										</div>
@@ -429,12 +429,12 @@ if((rank).html() != "尚未評分"){
 test.change(function () {
     //     alert($('input[name=star]:checked').val());
     console.log($('input[name=star]:checked').val());
-    var leaseRank = $('input[name=star]:checked').val();
-    document.getElementById("leaseRank").setAttribute('value', leaseRank);
-    rank.text(leaseRank + "顆星");
+    var rentRank = $('input[name=star]:checked').val();
+    document.getElementById("rentRank").setAttribute('value', rentRank);
+    rank.text(rentRank + "顆星");
 });
 
-console.log($("#leaseRank").val());
+console.log($("#rentRank").val());
 
 
 

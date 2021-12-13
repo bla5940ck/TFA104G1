@@ -112,13 +112,13 @@ th, td {
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
-				<h3>出租者專區</h3>
+				<h3>承租者專區</h3>
 				<h5>
 					會員編號 :
 					<%=memID%></h5>
 				<ul class="nav_list">
 					<h4><a href="listAllOrderMaster.jsp">全部訂單</a></h4>
-					<h4><a href="listSuccessOrder.jsp">訂單評價</a></h4>
+					<h4><a href="listSuccessOrderForRent.jsp">訂單評價</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -129,7 +129,7 @@ th, td {
 					<b>選擇訂單編號:</b> 
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.leaseID == id}">
+							<c:if test="${OrderMasterVO.rentID == id}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>
@@ -173,7 +173,7 @@ th, td {
 				<tr>
 					<th>訂單編號</th>
 					<!-- 					<th>承租者編號</th> -->
-					<th>承租者</th>
+					<th>出租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
 					<th>運送狀態</th>
@@ -202,7 +202,7 @@ th, td {
 				<%@ include file="page1.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 				<c:choose>
-						<c:when test="${omVO.leaseID == id}">
+						<c:when test="${omVO.rentID == id}">
 
 							<%-- 					<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}" > --%>
 							<%-- 						<c:if test="${OrderMasterVO.leaseID == id}"> --%>
@@ -210,7 +210,7 @@ th, td {
 								<td>${omVO.ordID}</td>
 								<%-- 						<td>${omVO.rentID}</td> --%>
 
-								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
 
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">

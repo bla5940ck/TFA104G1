@@ -38,6 +38,9 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String INSERT_LEASE_COMMENT=
 			"UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 	
+//	private static final String FIND_SUCCESS_BY_RETURNDATE=
+//			"SELECT * FROM ORDER_MASTER WHERE ORD_STATUS = ? AND (RETURN_DATE BETWEEN ? AND ?) ORDER BY ORD_DATE";
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -728,7 +731,12 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		long datetime = System.currentTimeMillis();
 		Timestamp timeStamp = new Timestamp(datetime);
 		java.sql.Date date = new java.sql.Date(datetime);
-
+		System.out.println(timeStamp);
+		
+		//查詢某期間成功的訂單
+		
+		
+		
 		//新增rent承租者評論
 //		OrderMasterVO rent = new OrderMasterVO();
 //		rent.setRentRank(4);
@@ -875,7 +883,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		omdao.updateOrderMaster(om2);
 //		
 		// 從PK找
-		OrderMasterVO om3 = omdao.findOrderMasterByPK(20);
+		OrderMasterVO om3 = omdao.findOrderMasterByPK(170);
 //		System.out.println(om3);
 //		System.out.println(om3.getPayID() + ",");
 //		System.out.println(om3.getRentID() + ",");
@@ -907,8 +915,27 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		System.out.println("=========================");
 
 		// 找全部
+		
+		String dateTimeStr2 = "2021-12-29 00:00:00";
+		java.sql.Timestamp ts = java.sql.Timestamp.valueOf(dateTimeStr2);
+		if(timeStamp.before(ts)) {
+//			System.out.println(true);
+		}
+		
+		
 		List<OrderMasterVO> list = omdao.getAllOrderMaster();
 		for (OrderMasterVO om4 : list) {
+//			System.out.println(om4.getReturnDate());
+			java.sql.Timestamp rd = om4.getReturnDate();
+			
+			if(om4.getOrdStatus() == 2 && om4.getReturnDate() != null && om4.getReturnDate().before(ts) ) {
+				System.out.println(om4.getOrdID());
+				System.out.println(om4.getReturnDate());
+				System.out.println("=======================");
+			}
+//			System.out.println(om4.getOrdDate().before(ts));
+			
+			
 //			System.out.println(om4);
 //			System.out.println(om4.getPayID() + ",");
 //			System.out.println(om4.getRentID() + ",");
