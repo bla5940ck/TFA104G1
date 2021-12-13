@@ -71,6 +71,7 @@ a.cart-img>img {
 											// 					System.out.println("承租者編號 : " + memID);
 											//會員名稱
 											MemberService memSVC = new MemberService();
+											System.out.println("這裡");
 											System.out.println(cartVO.getLeaseID());
 											MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
 											// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
@@ -199,11 +200,11 @@ a.cart-img>img {
 														<tr>
 															<td>選擇超商:</td>
 															<td><select size="1" name="code711"
-																style="width: 120px">
+																style="width: 230px">
 																	<c:forEach var="daVO" items="${daDAO.getAll()}">
 																		<c:choose>
 																			<c:when test="${daVO.memberId == id}">
-																				<option value="${daVO.code711}">${daVO.name711}
+																				<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
 																			</c:when>
 																		</c:choose>
 																	</c:forEach>
@@ -237,6 +238,7 @@ a.cart-img>img {
 		</div>
 		<input type="hidden" name="action" value="submit_order">
 		<input type="hidden" name="couponID" id="couponID"> 
+		<input type="hidden" name="def711" value="${daVO.def711}">
 		<input type="hidden" name="ordPrice" id="ordPrice">		
 	</FORM>
 	<%@ include file="/includeFolder/footer2.file"%>

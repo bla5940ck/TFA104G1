@@ -22,7 +22,7 @@
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 	List<OrderMasterVO> list = ordserMasterSvc.getAll();
 	for (OrderMasterVO omVO : list) {
-		if (omVO.getLeaseID() == memID) {
+		if (omVO.getRentID() == memID) {
 
 			System.out.println(memID + "的訂單為" + omVO.getOrdID());
 		}
