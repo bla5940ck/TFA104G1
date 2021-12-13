@@ -118,11 +118,10 @@ public class MemberServiceServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+		if ("update".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {

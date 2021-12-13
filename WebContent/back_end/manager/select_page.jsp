@@ -104,26 +104,7 @@ background-color:#6495ed;
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<ul class="nav_list" style="background-color:#F0B594;height:100%">
-					<h2>
-						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>管理者專區</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>問題處理</a> <br> 
-						<a>商品管理</a> <br>
-						<a>訂單管理</a> <br> 
-						<a>會員管理</a> <br> 
-						<a>帳務管理</a> <br>
-						<a>會員審核</a> <br> 
-						<a>專案專區</a>
-					</h2>
-					<form action="/TFA104G1/ManagerServlet" method="post" >
-						<button class="signOut" type="submit">sign out</button>
-						<input type="hidden" name="action" value="sign_out" />
-					</form>
-				</ul>
-			</nav>
-		</aside>
+		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">					
 
 			<h3>管理員查詢:</h3>

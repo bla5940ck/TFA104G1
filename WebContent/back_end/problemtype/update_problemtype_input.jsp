@@ -32,6 +32,8 @@ div.main_content {
 	font-size: 0;
 }
 
+
+
 /*-------------------aside區域------------------- */
 aside.aside {
 	width: 200px;
@@ -73,8 +75,12 @@ th, td {
 </style>
 <style>
 table#table-1 {
+	width: 80%;
 	background-color: #CCCCFF;
-	border: 2px solid black;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px ridge Gray;
+	height: 80px;
 	text-align: center;
 }
 
@@ -84,53 +90,22 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h4 {
+h2 {
 	color: blue;
 	display: inline;
 }
+
+.signOut{
+background-color:#6495ed;
+}
+
+
 </style>
-
-<style>
-table {
-	width: 500px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-</style>
-
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<ul class="nav_list" style="background-color:#F0B594;height:100%">
-					<h2>
-						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>管理者專區</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>問題處理</a> <br> 
-						<a>商品管理</a> <br>
-						<a>訂單管理</a> <br> 
-						<a>會員管理</a> <br> 
-						<a>帳務管理</a> <br>
-						<a>會員審核</a> <br> 
-						<a>專案專區</a>
-					</h2>
-					<form action="/TFA104G1/ManagerServlet" method="post" >
-				<button class="signOut" type="submit">sign out</button>
-				<input type="hidden" name="action" value="sign_out" />
-				</form>
-				</ul>
-			</nav>
-		</aside>
+		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">
 			<table id="table-1">
 				<tr>
@@ -166,8 +141,7 @@ th, td {
 						<td>類型名稱:</td>
 						<td><input type="TEXT" name="typeName" size="45"
 							value="<%=ptVO.getTypeName()%>" /></td>
-					</tr>
-					
+					</tr>		
 					
 					
 
