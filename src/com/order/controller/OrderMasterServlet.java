@@ -25,6 +25,7 @@ import com.order.model.OrderMasterVO;
 import com.member.model.DefAddressVO;
 import com.member.model.MemberVO;
 import com.booking.model.BookingDAO;
+import com.booking.model.BookingService;
 import com.booking.model.BookingVO;
 import com.product.model.ProdDAO;
 import com.product.model.ProdVO;
@@ -395,7 +396,8 @@ public class OrderMasterServlet extends HttpServlet {
 				List<OrderListVO> list =  (List<OrderListVO>)req.getSession().getAttribute("list1");
 				System.out.println(list.size());
 //				for(OrderListVO newol : list) {
-//					
+//				
+				
 //				
 ////				OrderListVO newol = new OrderListVO();
 //				newol.setProdID(prodID);
@@ -408,7 +410,7 @@ public class OrderMasterServlet extends HttpServlet {
 				
 				
 				
-				System.out.println("明細存入");
+						System.out.println("明細存入");
 	
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderMasterVO", omVO); // 含有輸入格式錯誤的VO物件,也存入req
@@ -426,6 +428,10 @@ public class OrderMasterServlet extends HttpServlet {
 //				omdao.insertAllOrder(omVO, olVO);
 				omdao.inesetWithList(omVO, list);
 				System.out.println("訂單+明細新增");
+				
+				BookingService bkSVC = new BookingService();
+				BookingVO bkVO = new BookingVO();
+				bkVO = bkSVC.addBk(prodID, 0, estStart, estEnd);
 				
 				/***********************新增完成準備轉交************************/
 				String url = "/front_end/order/listAllOrderMaster.jsp";
