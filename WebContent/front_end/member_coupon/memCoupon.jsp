@@ -76,9 +76,7 @@ th, td {
 </style>
 </head>
 <body>
-	<%
-		session.setAttribute("id", 1);
-	%>
+
 		<%@ include file="/includeFolder/header2.file"%>
 	<!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
@@ -133,7 +131,7 @@ th, td {
 <%-- 						<td>${memcouponVO.category_id}</td> --%>
 						<td>${memcouponVO.coupon_id}</td>
 						<td>${memcouponVO.coupon_name}</td>
-						<td>${Math.round(promolistVO.discount)}</td>
+						<td>${Math.round(memcouponVO.discount)}</td>
 						<td>${memcouponVO.status}</td>
 						<td>${memcouponVO.start_date}</td>
 						<td>${memcouponVO.end_date}</td>

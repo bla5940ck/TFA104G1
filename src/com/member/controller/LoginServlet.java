@@ -66,10 +66,15 @@ public class LoginServlet extends HttpServlet {
 		} else { // 【帳號 , 密碼有效時, 才做以下工作】
 			HttpSession session = req.getSession();
 			// *工作1: 才在session內做已經登入過的標識
-
+			System.out.println(loginId);
 			session.setAttribute("loginId", loginId);
+			System.out.println("登入會員" + session.getAttribute("loginId"));
 			MemberService memSvc = new MemberService();
 			MemberVO memberVO = memSvc.getLoginMember(loginId);
+			Integer id = memberVO.getMemberId();
+			session.setAttribute("id", id);
+			System.out.println(session.getAttribute("id"));
+			
 			session.setAttribute("MemberVO", memberVO);
 //			System.out.print(memberVO.getLoginId());
 //			session.getAttribute("MemberVO");  
