@@ -26,7 +26,7 @@ public class LogoutServlet extends HttpServlet {
         String path = request.getContextPath();
         String basePath = request.getScheme() + "://" + request.getServerName()  
         + ":" + request.getServerPort() + path + "/";
-        response.sendRedirect(basePath + "index.jsp");
+        response.sendRedirect(basePath + "homePage.jsp");
       }
 
 }

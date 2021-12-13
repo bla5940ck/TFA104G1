@@ -177,15 +177,15 @@
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp">更改密碼</a></li>
 										</ul>
 									</li>
-									<li><a href="">訂單資訊</a></li>
+									<li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">訂單資訊</a></li>
 									<li><a href="">通知</a></li>
 										<ul class="nav_list">
 											<li><a href="">訂單更新通知</a></li>
 											<li><a href="">評價通知</a></li>
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li>
 										</ul>
-									<li><a href="">問題回報查詢</a></li>
-									<li><a href="">我的折價券</a></li>
+									<li><a href="<%=request.getContextPath()%>/back_end/memberservice/problemTypeReport.jsp">問題回報查詢</a></li>
+									<li><a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid">我的折價券</a></li>
 								</ul>
 						</nav>
 				</aside>
@@ -227,7 +227,7 @@
 					<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="pic"id='file_id1' name='file_name1'>
 					<!--  <img src="http://www2.blogger.com/" />-->
 					
-					<input type="submit" value="儲存"></FORM>
+					<input type="submit" value="儲存"></FORM>					
 					<FORM>
 					<div >
 						<h4>圖片預覽</h4>
