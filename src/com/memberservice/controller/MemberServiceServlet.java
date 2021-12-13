@@ -120,16 +120,20 @@ public class MemberServiceServlet extends HttpServlet {
 		}
 		if ("update".equals(action)) { 
 
-			List<String> errorMsgs = new LinkedList<String>();
-			
+			List<String> errorMsgs = new LinkedList<String>();			
 			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
+			
+//			try {
+			
+			String msgRes = null;
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer msgID = new Integer(req.getParameter("msgID").trim());
+				System.out.println(msgID);
 				Integer prodID = new Integer(req.getParameter("prodID").trim());
 				Integer memberID = new Integer(req.getParameter("memberID").trim());
+				
 				Integer managerID = new Integer(req.getParameter("managerID").trim());
+				System.out.println(req.getParameter("typeID"));
 				Integer typeID = new Integer(req.getParameter("typeID").trim());
 				Integer ordID = new Integer(req.getParameter("ordID").trim());
 
@@ -146,11 +150,9 @@ String problemMsg = req.getParameter("problemMsg");
 				} else if (!problemMsg.trim().matches(problemMsgReg)) { // 以下練習正則(規)表示式(regular-expression)
 					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 				}
-String msgRes = req.getParameter("msgRes").trim();
-				if (msgRes == null || msgRes.trim().length() == 0) {
-					errorMsgs.add("職位請勿空白");
+				if(req.getParameter("msgRes")!=null) {
+					msgRes = req.getParameter("msgRes").trim();				
 				}
-
 			Part pic1 =	req.getPart("pic1");
 			InputStream in1 = pic1.getInputStream();
 			byte[] buf1 = new byte[in1.available()];
@@ -207,16 +209,16 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("msVO", msVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/emp/listOneEmp.jsp";
+				String url = "/back_end/memberservice/listAllproblemmsg.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/emp/update_emp_input.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add("修改資料失敗:" + e.getMessage());
+//				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllproblemmsg.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 		if ("xxx".equals(action)) { // 來自update_emp_input.jsp的請求
 			
@@ -357,6 +359,14 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				Integer typeID = new Integer(req.getParameter("typeID"));
 				System.out.println(typeID);
 				
+				Integer prodID = new Integer(req.getParameter("prodID"));
+				System.out.println(prodID);
+				
+				Integer ordID = new Integer(req.getParameter("ordID"));
+				System.out.println(ordID);
+				
+				
+				
 				
 //					}		
 				
@@ -364,30 +374,48 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				System.out.println(pm);				
 				
 				Part img1 =	req.getPart("pic1");
+				img1 =  img1.getSize()==0 ? null :img1;
+				byte[] pic1 = null;
+				System.out.println("part" +img1);
+				if(img1!=null) {
 				InputStream in1 = img1.getInputStream();
-				byte[] pic1 = new byte[in1.available()];
+				pic1 = new byte[in1.available()];
 				in1.read(pic1);
 				in1.close();
 				System.out.println("buffer lenght:"+ pic1.length);
+				}
 				
-				Part img2 =	req.getPart("pic2");
+				
+				Part img2 =	req.getPart("pic2");				
+				img2 =  img2.getSize()==0 ? null :img2;
+				byte[] pic2 =null;
+				if(img2!=null) {
 				InputStream in2 = img2.getInputStream();
-				byte[] pic2 = new byte[in2.available()];
+				pic2 = new byte[in2.available()];
 				in2.read(pic2);
 				in2.close();
 				System.out.println("buffer lenght:"+ pic2.length);
+				}
 				
+				byte[] pic3 =null;
 				Part img3 =	req.getPart("pic3");
+				img3 =  img3.getSize()==0 ? null :img3;
+				if(img3!=null) {
 				InputStream in3 = img3.getInputStream();
-				byte[] pic3 = new byte[in3.available()];
+				pic3 = new byte[in3.available()];
 				in3.read(pic3);
 				in3.close();
 				System.out.println("buffer lenght:"+ pic3.length);
+				}
+				
 				
 				MemberServiceVO msVO = new MemberServiceVO();
+				
 				msVO.setMemberID(memID);
 				msVO.setTypeID(typeID);
 				msVO.setProblemMsg(pm);
+				msVO.setOrdID(ordID);
+				msVO.setProdID(prodID);				
 				msVO.setPic1(pic1);
 				msVO.setPic2(pic2);
 				msVO.setPic3(pic3);
@@ -399,6 +427,10 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				MemberServiceDAO dao = new MemberServiceDAO();
 				dao.insert(msVO);
 				
+				String url = "/back_end/memberservice/listAllmemberProblem.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+				successView.forward(req, res);
+				
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
@@ -406,7 +438,7 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 		}
 if ("detail".equals(req.getParameter("action"))) {
 	
-	System.out.println("121323");
+	
 	
 	String msgID = req.getParameter("msgID");
 
@@ -416,13 +448,15 @@ if ("detail".equals(req.getParameter("action"))) {
 	
 	OutputStream os = res.getOutputStream();
 	String pic = req.getParameter("pic");
+	System.out.println("picno" +pic);
 	try {
 		byte[] pic2 = msVO.getPic2();
 		byte[] pic1 = msVO.getPic1();	
 		byte[] pic3 = msVO.getPic3();	
 		
-		
-		
+		System.out.println(msgID+" : " + pic1);
+		System.out.println(msgID+" : " + pic2);
+		System.out.println(msgID+" : " + pic3);
 	switch(pic) {
 	case "1":
 		os.write(pic1);
