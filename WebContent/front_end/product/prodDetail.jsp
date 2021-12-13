@@ -171,8 +171,13 @@ request.setAttribute("product", product);
 							<!-- </div> -->
 							<!-- / header top left -->
 							<div class="aa-header-top-right">
-								<ul class="aa-head-top-nav-right">
-									<li><a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp">會員中心</a></li>
+                <ul class="nav navbar-nav ">
+                  <li><a href="#">會員中心<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp">出租專區</a></li>
+                      <li><a href="#">承租專區</a></li>
+                    </ul>
+                  </li>
 									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
 									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
 									<!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
@@ -213,13 +218,12 @@ request.setAttribute("product", product);
 							<!-- / cart box -->
 							<!-- search box -->
 							<div class="aa-search-box">
-								<form action="">
-									<input type="text" name="" id="" placeholder="健身環大冒險">
-									<button type="submit">
-										<span class="fa fa-search"></span>
-									</button>
-								</form>
-							</div>
+                 <form action="<%=path %>/prod/ProdServlet" method="post">
+                <input type="text" name="searchCot" id="" placeholder="健身環大冒險">
+                  <input type="hidden" name="action" value="search">
+                  <button type="submit"><span class="fa fa-search"></span></button>
+                </form>
+              </div>
 							<!-- / search box -->
 						</div>
 					</div>
@@ -260,8 +264,9 @@ request.setAttribute("product", product);
 							
 									
 								</ul></li>
-							<li><a href="#">使用教學</a> <!-- <ul class="dropdown-menu">  
-                 
+							<li><a href="#">使用教學</a>   
+                 <li><a href="#">Q&A</a>
+              </li>
 					<!--/.nav-collapse -->
 				</div>
 			</div>
@@ -334,7 +339,6 @@ request.setAttribute("product", product);
 											
                                         List<String> labelList = jedis.lrange("prod"+product.getProdID(), 0, jedis.llen("prod"+product.getProdID()));
                                      	pageContext.setAttribute("labelList", labelList);
-                                     	System.out.print("數量  "+  labelList.size());
                           
 										
 										%>
@@ -368,13 +372,13 @@ request.setAttribute("product", product);
 
 										</td>
 										</br>
-										<li>
-											標籤:&nbsp
+										標籤:&nbsp<li class="label">
+											
 											<c:forEach var="label" items="${labelList}" varStatus="loop">
 													<c:if test="${loop.index!=0 and loop.index % 5 ==0}">
 													<br>
 													</c:if>
-													<a href="<%=path%>/prod/ProdServlet?action=labelClick&prodID=<%=product.getProdID()%>&labelNo=${loop.index}"><span style="color:#A6A600">#${label}</span></a>&nbsp
+													<a href="<%=path%>/prod/LabelServlet?action=labelClick&prodID=<%=product.getProdID()%>&labelName=${label}&labelNo=${loop.index}"><span style="font-size:14px;color:#A6A600">#${label}</span></a>&nbsp
 											</c:forEach>
 										</li>
 										
@@ -926,7 +930,6 @@ function selflog_show(id){
 		
 		
 	%>
-
 
 
 </body>

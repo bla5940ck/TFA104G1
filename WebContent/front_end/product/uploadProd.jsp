@@ -178,8 +178,8 @@
 	<script>
 		$('input.add-label-btn').click(function(){
 			if($('input.addLabel').val()!=""){
-				$(this).closest('div').append("<label style='font-family:DFKai-sb;'><input  type='checkbox' name='checkbox1' value="+ $('input.addLabel').val()+ ">#" + $('input.addLabel').val() + "</label>");
-	
+				$(this).closest('div').append("<label style='font-family:DFKai-sb;'><input  type='checkbox' checked='checked' name='checkbox1' value="+ $('input.addLabel').val()+ ">#" + $('input.addLabel').val() + "</label>");
+				$('input.addLabel').val("");
 			}
 		});
 	
