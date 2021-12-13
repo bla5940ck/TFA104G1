@@ -43,6 +43,7 @@ html, body {
 	top: 50%; 
 	left : 50%;
 	margin: 20px 200px 0 -50px;
+	border:0px;
 }
 </style>
 <title>Join Us</title>
