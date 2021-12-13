@@ -1,9 +1,8 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=235982f071e0f7777c4cf53b318437f11164c6f0
+>>>>>>>=12f6c7c0378e35744c73be031eb0b247d49bf93c
 eclipse.preferences.version=1
-encoding//WebContent/front_end/member/LeaseAccountNotice.jsp=UTF-8
-encoding//WebContent/front_end/member/LeasePagePW.jsp=UTF-8
 encoding//WebContent/front_end/product/homePage.jsp=UTF-8
-encoding//src/com/manager/controller/ManagerServlet.java=UTF-8
+encoding//src/com/manager/controller=UTF-8
 encoding/<project>=UTF-8
+encoding/src=UTF-8
