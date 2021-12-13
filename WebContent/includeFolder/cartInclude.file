@@ -40,7 +40,7 @@
   Jedis jedis = pool.getResource();
   List<String> cart = jedis.lrange("member"+memberID, 0, jedis.llen("member"+memberID));
   request.setAttribute("cart",cart);
-  
+  jedis.close(); 
   Gson gson = new Gson();
   String path = request.getContextPath();
 
@@ -160,5 +160,5 @@ $("input.refresh-cart").click(function(){
 $(window).on('load',function(){
 	   $("span.aa-cart-notify").text(<%=index1%>);
 });
-<%jedis.close(); %>
+
 </script>
