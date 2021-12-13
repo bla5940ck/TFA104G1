@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.chat_room.jedis.JedisPoolUtil;
+import com.chatroom.jedis.JedisPoolUtil;
 import com.product.model.ProdService;
 import com.product.model.ProdVO;
 

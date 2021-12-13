@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.chat_room.jedis.JedisPoolUtil;
+import com.chatroom.jedis.JedisPoolUtil;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
