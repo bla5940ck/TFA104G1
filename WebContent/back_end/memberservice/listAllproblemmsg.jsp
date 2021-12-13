@@ -141,6 +141,7 @@ object-fit: contain;
 						</h4>
 					</td>
 				</tr>
+				<br>
 			</table>
 
 			<%--錯誤列表 --%>

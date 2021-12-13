@@ -102,6 +102,7 @@ background-color:#6495ed;
 
 </head>
 <body bgcolor='white'>
+<br>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>

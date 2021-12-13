@@ -110,6 +110,7 @@ th, td {
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
+	<br>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">

@@ -166,6 +166,7 @@ input[type="password"] {
 				
 			</ul>
 		</aside>
+		<br>
 		<main class="main" style="background-color: #C0C0C0;">
 
 			<%-- 錯誤表列 --%>
