@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.postboard.model.PostBoardVO;
-import com.promo.model.PromoVO;
+
 
 public class PostBoardService {
 	private PostBoardDAOImpl dao;

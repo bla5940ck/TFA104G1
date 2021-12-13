@@ -117,9 +117,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 							e.printStackTrace(System.err);
 						}
 					}
-				}
-
-				
+				}		
 				
 			}
 			@Override

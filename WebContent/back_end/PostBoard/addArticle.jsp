@@ -49,13 +49,13 @@
 								
 									<h4>徵求發文</h4>
 										<form  class="aa-login-form" method="post" name="form1"
-											   action="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" >
+											   action="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" enctype="multipart/form-data">
 											   
 											<label for="">會員編號<span>*</span></label>
-											<input type="TEXT" name="memberId" value="${param.memberId}"/>
+											<input type="Text" name="memberId" value=""/>
 									
 											<label for="">請輸入徵求標題<span>*</span></label> 
-											<input type="TEXT" name="postTitle" value="${param.postTitle}"/>${errorMsgs.postTitle}
+											<input type="Text" name="postTitle" value=""/>
 											
 											
 											<jsp:useBean id="cateSvc" scope="page" class="com.category.model.ProdCategoryService" />
@@ -69,11 +69,13 @@
 											<div>
 											<label for="postCont">請輸入徵求內容<span>*</span></label>
 												 <input type="text" placeholder="請輸入內容" 
-												 		name="postCont" value="${param.postCont}"/>${errorMsgs.postCont}
+												 		name="postCont" value=""/>
 											</div>
 
 											
-											<label for="">上傳圖片</label> <input type="file" name="pic"/>
+											<label for="">上傳圖片</label> 
+												<input type="file" name="pic" value="insert"/>
+												
 
 											<label for="postTime">上傳時間</label>
 											<input name="posttime" id="date" type="text"></input>

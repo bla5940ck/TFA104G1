@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.util.*"%>
 <%@ page import="com.postboard.model.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
 </head>
 
 <style>	
-
+	
 </style>
 
 
@@ -20,39 +20,46 @@
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
-	
 %>
 <body>
 
 <!-- Blog Archive -->
   <section id="aa-blog-archive">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-blog-archive-area aa-blog-archive-2">
+      <div class="row" >
+        <div class="col-md-12" >
+          <div class="aa-blog-archive-area aa-blog-archive-2" >
             <div class="row">
               <div class="col-md-9">
                 <div class="aa-blog-content">
                   <div class="row">
                     <div class="col-md-4 col-sm-4">
-                      <article class="aa-latest-blog-single">
-                        <figure class="aa-blog-img">                    
-                          <a href="#"><img alt="" src=""></a>  
-                            <figcaption class="aa-blog-img-caption">
-<!--                             <span href="#"><i class="fa fa-eye"></i>5K</span> -->
-<!--                             <a href="#"><i class="fa fa-thumbs-o-up"></i>426</a> -->
-                            <a href="#"><i class="fa fa-comment-o"></i>20</a>
-                            <span href="#"><i class="fa fa-clock-o"></i>June 26, 2016</span>
-                          </figcaption>                          
-                        </figure>
-                        
-                        <div class="aa-blog-info">
-                          <h3 class="aa-blog-title"><a href="#">${param.postTitle}</a></h3>
-                          <p>${param.postCont}</p> 
-                            
-                          <a class="aa-read-mor-btn" href="<%=request.getContextPath()%>/back_end/PostBoard/postSigle.jsp" >全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
-                        </div>
-                      </article>
+                  
+                     <jsp:useBean id="pbSvc" scope="page" class="com.postboard.model.PostBoardService" />
+                    		<c:forEach var="pbVO" items="${pbSvc.all}" varStatus="status">
+<%--                     			<c:if test="${(status.count-1)%2==0||status.count==2}" > --%>
+	                      			<article class="aa-latest-blog-single">
+	                        			<figure class="aa-blog-img">                    
+	                          				<a href=""><img alt="" 
+	                          			   	   src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pbVO.postId}&action=writePic"></a>  
+	                        				<figcaption class="aa-blog-img-caption">
+	                            				<a href="#"><i class="fa fa-comment-o"></i>${pbVO.replyCount}</a>
+	                            				<span href="#"><i class="fa fa-clock-o"></i>${pbVO.postTime}</span>
+	                          				</figcaption>                          
+	                        			</figure>
+	                        	<div class="aa-blog-info">
+	                          	<h3 class="aa-blog-title"><a href="#">${pbVO.postTitle}</a></h3>
+	                          	<p>${pbVO.postCont}</p> 
+	                            
+	                          		<a class="aa-read-mor-btn" 
+	                          	 	   href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">
+	                          	 	       全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
+	                        	</div>
+	                           </article>
+	                            
+	                           
+<%-- 	                           </c:if> --%>
+                      	 </c:forEach>
                     </div>                    
                   </div>
                 </div>

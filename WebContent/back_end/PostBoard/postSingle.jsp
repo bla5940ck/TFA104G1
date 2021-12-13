@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.postboard.model.*"%>
+<%@ page import="com.pbreply.model.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
@@ -20,6 +21,12 @@
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
+	PostBoardService pbSvc = new PostBoardService();
+	PostBoardVO  pb = pbSvc.findByPrimaryKey(Integer.valueOf(request.getParameter("postId")));
+	pageContext.setAttribute("pb",pb );
+	
+	pbReplyVO pbrVO = (pbReplyVO) request.getAttribute("pbrVO");
+	pbReplyService pbrSvc = new pbReplyService();
 	
 %>
 
@@ -33,38 +40,35 @@
                 <!-- Blog details -->
                 <div class="aa-blog-content aa-blog-details">
                   <article class="aa-blog-content-single">                        
-                    <h2><a href="#" >${param.postTitle}</a></h2>
+                    <h2><a href="#" >${pb.postTitle}</a></h2>
                      <div class="aa-article-bottom">
-                      <div class="aa-post-author">
-                        Posted By <a href="#">${param.memberId}</a>
-                      </div>
-                      <div class="aa-post-date">
-                        ${param.posttime}
-                      </div>
-                    </div>
+                      <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div>
+                      <div class="aa-post-date">${pb.postTime}</div>
+                     </div>
                     <figure class="aa-blog-img">
-                      <a href="#"><img src="" alt=""></a>
+                      <a href="#"><img 
+                      	 src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pbVO.postId}&action=writePic"/></a>
                     </figure>
-                    <p>${param.postCont}</p>
+                    <p>${pb.postCont}</p>
                    
                     <div class="blog-single-bottom">
                       <div class="row">
                         <div class="col-md-8 col-sm-6 col-xs-12">
                           <div class="blog-single-tag">
-                            <span>關鍵字:</span>
-                            <a href="#">PS5,</a>
-                            <a href="#">SONY,</a>
-                            <a href="#">斷貨</a>
+                            <span></span>
+                            <a href="#"></a>
+                            <a href="#"></a>
+                            <a href="#"></a>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="blog-single-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-google-plus"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                          </div>
+<!--                           <div class="blog-single-social"> -->
+<!--                             <a href="#"><i class="fa fa-facebook"></i></a> -->
+<!--                             <a href="#"><i class="fa fa-twitter"></i></a> -->
+<!--                             <a href="#"><i class="fa fa-linkedin"></i></a> -->
+<!--                             <a href="#"><i class="fa fa-google-plus"></i></a> -->
+<!--                             <a href="#"><i class="fa fa-pinterest"></i></a> -->
+<!--                           </div> -->
                         </div>
                       </div>
                     </div>
@@ -77,7 +81,7 @@
                   </div>
                   <!-- Blog Comment threats -->
                   <div class="aa-blog-comment-threat">
-                    <h3>留言 (4)</h3>
+                    <h3>留言 ( ${pbVo.replyCount} )</h3>
                     <div class="comments">
                       <ul class="commentlist">
                         <li>
@@ -86,13 +90,15 @@
                                 <img class="media-object news-img" src="img/testimonial-img-3.jpg" alt="img">      
                             </div>
                             <div class="media-body">
-                             <h4 class="author-name">Charlie Balley</h4>
-                             <span class="comments-date"> March 26th 2016</span>
-                             <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p>
-                             <a href="#" class="reply-btn">回覆留言</a>
+                             <h4 class="author-name">${pbrVO.memberId}</h4>
+                             <span class="comments-date"></span>
+                             <p>${pbrVO.replyCont}</p>
+<!--                              <a href="#" class="reply-btn">回覆留言</a> -->
                             </div>
                           </div>
                         </li>
+                        
+                        
                         <li>
                           <div class="media">
                             <div class="media-left">    
@@ -101,56 +107,64 @@
                             <div class="media-body">
                              <h4 class="author-name">Charlie Balley</h4>
                              <span class="comments-date"> March 26th 2016</span>
-                             <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p>
-                             <a href="#" class="reply-btn">回覆留言</a>
+                             <p></p>
+<!--                              <a href="#" class="reply-btn">回覆留言</a> -->
                             </div>
                           </div>
                         </li>
-                        <ul class="children">
-                          <li class="author-comments">
-                            <div class="media">
-                              <div class="media-left">    
-                                  <img class="media-object news-img" src="img/testimonial-img-3.jpg" alt="img">      
-                              </div>
-                              <div class="media-body">
-                               <h4 class="author-name">Admin</h4>
-                               <span class="comments-date"> March 26th 2016</span>
-                               <span class="author-tag">Author</span>
-                               <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p>
-                               <a href="#" class="reply-btn">回覆留言</a>
-                              </div>
-                            </div>
-                          </li>
-                          <ul class="children">
-                            <li>
-                              <div class="media">
-                                <div class="media-left">    
-                                    <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">      
-                                </div>
-                                <div class="media-body">
-                                 <h4 class="author-name">Charlie Balley</h4>
-                                 <span class="comments-date"> March 26th 2016</span>
-                                 <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p>
-                                 <a href="#" class="reply-btn">回覆留言</a>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
+                        
+                        
+<!--                         <ul class="children"> -->
+<!--                           <li class="author-comments"> -->
+<!--                             <div class="media"> -->
+<!--                               <div class="media-left">     -->
+<!--                                   <img class="media-object news-img" src="img/testimonial-img-3.jpg" alt="img">       -->
+<!--                               </div> -->
+<!--                               <div class="media-body"> -->
+<!--                                <h4 class="author-name">Admin</h4> -->
+<!--                                <span class="comments-date"> March 26th 2016</span> -->
+<!--                                <span class="author-tag">Author</span> -->
+<!--                                <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p> -->
+<!--                                <a href="#" class="reply-btn">回覆留言</a> -->
+<!--                               </div> -->
+<!--                             </div> -->
+<!--                           </li> -->
+                          
+                          
+<!--                           <ul class="children"> -->
+<!--                             <li> -->
+<!--                               <div class="media"> -->
+<!--                                 <div class="media-left">     -->
+<!--                                     <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">       -->
+<!--                                 </div> -->
+<!--                                 <div class="media-body"> -->
+<!--                                  <h4 class="author-name">Charlie Balley</h4> -->
+<!--                                  <span class="comments-date"> March 26th 2016</span> -->
+<!--                                  <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p> -->
+<!--                                  <a href="#" class="reply-btn">回覆留言</a> -->
+<!--                                 </div> -->
+<!--                               </div> -->
+<!--                             </li> -->
+<!--                           </ul> -->
                         </ul>
-                        <li>
-                          <div class="media">
-                            <div class="media-left">    
-                                <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">      
-                            </div>
-                            <div class="media-body">
-                             <h4 class="author-name">Charlie Balley</h4>
-                             <span class="comments-date"> March 26th 2016</span>
-                             <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p>
-                             <a href="#" class="reply-btn">回覆留言</a>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
+                        
+                        
+                        
+<!--                         <li> -->
+<!--                           <div class="media"> -->
+<!--                             <div class="media-left">     -->
+<!--                                 <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">       -->
+<!--                             </div> -->
+<!--                             <div class="media-body"> -->
+<!--                              <h4 class="author-name">Charlie Balley</h4> -->
+<!--                              <span class="comments-date"> March 26th 2016</span> -->
+<!--                              <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p> -->
+<!--                              <a href="#" class="reply-btn">回覆留言</a> -->
+<!--                             </div> -->
+<!--                           </div> -->
+<!--                         </li> -->
+<!--                       </ul> -->
+                      
                     </div>
                     <div class="aa-blog-archive-pagination">
                       <nav>
@@ -177,20 +191,31 @@
                   <!-- blog comments form -->
                   <div id="respond">
                     <h3 class="reply-title">留言</h3>
-                    <form id="commentform">
+                    <form id="commentform" method="post" name="form1" 
+                    	  action="<%=request.getContextPath()%>/pbReplyServlet?postId=${pbVO.postId}">
                       
                       <p class="comment-form-author">
-                        <label for="author">姓名 <span class="required">*</span></label>
-                        <input type="text" name="author" value="" size="30" required="required">
+<!--                       	<label for="">文章編號<span>*</span></label> -->
+<!-- 						<input type="Text" name="postId" value=""/> -->
+						
+                        <label for="author">會員編號<span class="required">*</span></label>
+                        <input type="text" name="memberId" value="" size="30" required="required">
+                        
+<!--                         <label for="">留言編號<span>*</span></label> -->
+<!-- 						<input type="Text" name="replyId" value=""/> -->
+						
+						<label for="replyTime">上傳時間</label>
+						<input name="replyTime" id="date" type="text"></input>
+                        
                       </p>
                  
                       <p class="comment-form-comment">
-                        <label for="comment">留言</label>
-                        <textarea name="comment" cols="45" rows="8" aria-required="true" required="required"></textarea>
+                        <label for="replyCont">留言</label>
+                        <textarea name="replyCont" cols="45" rows="8" aria-required="true" required="required"></textarea>
                       </p>
                      
                       <p class="form-submit">
-                        <input type="submit" name="submit" class="aa-browse-btn" value="送出留言">
+                        <input type="submit" class="aa-browse-btn" value="insert">
                       </p>        
                     </form>
                   </div>

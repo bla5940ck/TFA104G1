@@ -8,12 +8,12 @@ html, body {
 		Microsoft JhengHei;
 	width: 90%;
 	height: 90%;
-	background: #eeeeda;
+	background: #ffffff;
 }
 
 .panel {
 	float: right;
-	border: 2px solid #0078ae;
+	border: 2px solid #191561;
 	border-radius: 5px;
 	width: 50%;
 }
@@ -24,11 +24,12 @@ html, body {
 	box-sizing: border-box;
 	overflow: auto;
 	background-color: #ffffff;
+	padding: 10px;s
 }
 
 .input-area {
-	background: #0078ae;
-	box-shadow: inset 0 0 10px #00568c;
+	background: #191561;
+	box-shadow: inset 0 0 10px #191561;
 }
 
 .input-area input {
@@ -53,7 +54,7 @@ h1 {
 }
 
 .statusOutput {
-	background: #0078ae;
+	background: #191561;
 	text-align: center;
 	color: #ffffff;
 	border: 1px solid grey;
@@ -62,6 +63,7 @@ h1 {
 	width: 30%;
 	margin-top: 10%;
 	margin-left: 60%;
+	border-radius:5px;
 }
 
 #row {
@@ -93,13 +95,13 @@ ul li{
 }
 
 .friend{
-  background: #eee;
+  background: #d3d3d3;
   float: left;
 }
 
 .me{
   float: right;
-  background: #0084ff;
+  background: #191561;
   color: #fff;
 }
 

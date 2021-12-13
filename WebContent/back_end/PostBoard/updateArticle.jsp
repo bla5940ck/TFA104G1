@@ -68,7 +68,7 @@ input:read-only {
 									<h4>修改發文</h4>
 									<form method="post" 
 										  action="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" 
-										  name="form1" class="aa-login-form">
+										  name="form1" class="aa-login-form" enctype="multipart/form-data">
 										
 										<label for="">發文編號<span>*</span></label>
 										<input type="text" name="postId" value="<%=pbVO.getPostId() %>" readonly="true">

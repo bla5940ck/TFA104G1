@@ -67,7 +67,7 @@ public class PostBoardVO implements java.io.Serializable {
 	public String toString() {
 		return "PostBoardVO [postId=" + postId + ", categoryId=" + categoryId + ", memberId=" + memberId
 				+ ", postTitle=" + postTitle + ", postCont=" + postCont + ", postTime=" + postTime + ", replyCount="
-				+ replyCount + ", pic=" + Arrays.toString(pic) + "]";
+				+ replyCount + "]";
 	}
 	
 	

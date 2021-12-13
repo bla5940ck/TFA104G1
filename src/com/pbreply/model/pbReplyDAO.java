@@ -1,6 +1,7 @@
 package com.pbreply.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,26 +14,20 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class pbReplyDAO implements pbReplyDAOIpml {
-	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/root");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
+	String userid = "root";
+	String passwd = "password";
 	
 	private static final String INSERT_STMT = 
-		"INSERT INTO pb_reply (reply_id,post_id,member_id,reply_cont,reply_time) VALUES (?, ?, ?, ?, ?)";
+		"INSERT INTO pb_reply (post_id,member_id,reply_cont,reply_time) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-		"SELECT reply_id,post_id,member_id,reply_cont,reply_time FROM pb_reply order by reply_id";
+		"SELECT * FROM pb_reply order by reply_id";
 	private static final String GET_ONE_STMT = 
 		"SELECT reply_id,post_id,member_id,reply_cont,reply_time FROM pb_reply where reply_id = ?";
 	private static final String DELETE = 
 		"DELETE FROM pb_reply where reply_id = ?";
 	private static final String UPDATE = 
-		"UPDATE pb_reply set reply_id=?, post_id=?, member_id=?, reply_cont=?  where reply_id = ?";
+		"UPDATE pb_reply set post_id=?, member_id=?, reply_cont=?,reply_time  where reply_id = ?";
 		
 		@Override
 		public void insert(pbReplyVO pbreplyVO) {
@@ -40,15 +35,14 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 			PreparedStatement pstmt = null;
 
 			try {
-
-				con = ds.getConnection();
+				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(INSERT_STMT);
-
-				pstmt.setInt(1, pbreplyVO.getReplyId());
-				pstmt.setInt(2, pbreplyVO.getPostId());
-				pstmt.setInt(3, pbreplyVO.getMemberId());
-				pstmt.setString(4, pbreplyVO.getReplyCont());
-				pstmt.setTimestamp(5, pbreplyVO.getReplyTime());
+				
+				
+				pstmt.setInt(1, pbreplyVO.getPostId());
+				pstmt.setInt(2, pbreplyVO.getMemberId());
+				pstmt.setString(3, pbreplyVO.getReplyCont());
+				pstmt.setTimestamp(4, pbreplyVO.getReplyTime());
 
 				pstmt.executeUpdate();
 
@@ -74,7 +68,6 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 				}
 			}
 
-			
 		}
 		
 		@Override
@@ -84,14 +77,14 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = ds.getConnection();
+				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(UPDATE);
 
-				pstmt.setInt(1, pbreplyVO.getReplyId());
-				pstmt.setInt(2, pbreplyVO.getPostId());
-				pstmt.setInt(3, pbreplyVO.getMemberId());
-				pstmt.setString(4, pbreplyVO.getReplyCont());
 				
+				pstmt.setInt(1, pbreplyVO.getMemberId());
+				pstmt.setString(2, pbreplyVO.getReplyCont());
+				pstmt.setTimestamp(3, pbreplyVO.getReplyTime());
+				pstmt.setInt(4, pbreplyVO.getReplyId());
 
 				pstmt.executeUpdate();
 
@@ -117,7 +110,6 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 				}
 			}
 
-			
 		}
 		
 		@Override
@@ -127,7 +119,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = ds.getConnection();
+				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(DELETE);
 
 				pstmt.setInt(1, replyId);
@@ -168,8 +160,9 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = ds.getConnection();
+				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(GET_ONE_STMT);
+
 
 				pstmt.setInt(1, replyId);
 
@@ -226,7 +219,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = ds.getConnection();
+				con = DriverManager.getConnection(url, userid, passwd);
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
 
