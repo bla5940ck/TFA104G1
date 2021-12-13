@@ -109,7 +109,8 @@ background-color:#6495ed;
 		</ul>		
 		<ul>
 			<li><a href='<%=request.getContextPath()%>/back_end/memberservice/listAllproblemmsg.jsp'>投訴問題處理</a></li>
-		</ul>		
+		</ul>
+		<br>		
 	</main>
 	</div>
 

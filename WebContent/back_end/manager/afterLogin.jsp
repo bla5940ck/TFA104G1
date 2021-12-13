@@ -108,7 +108,8 @@ background-color:#6495ed;
 			<jsp:useBean id="msSvc" scope="page" class="com.manager.model.ManagerService" />
 			<h1>
 				${msSvc.getOneManager(managerID).managerName}你好
-			</h1>		
+			</h1>
+			<br>		
 		</main>
 	</div>	
 </body>

@@ -139,6 +139,7 @@ th, td {
 			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/ManagerServlet" name="form1">
 				<table>
+				<br>
 					<tr>
 						<td>管理員帳號:</td>
 						<td><input type="TEXT" name="managerUser" size="45" /></td>

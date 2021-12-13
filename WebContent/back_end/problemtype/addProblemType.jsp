@@ -133,6 +133,7 @@ background-color:#6495ed;
 						<input type="hidden" name="action" value="insert">
 						<input type="submit" value="送出新增"></FORM>
 				</tr>
+				<br>
 				</FORM>
 		</main>
 	</div>

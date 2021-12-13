@@ -124,6 +124,7 @@ background-color:#6495ed;
 					</td>
 				</tr>
 			</table>
+			<br>
 			<table>
 				<tr>
 					<th>問題類型編號</th>

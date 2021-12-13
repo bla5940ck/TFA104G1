@@ -107,6 +107,7 @@ background-color:#6495ed;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">
+		<br>
 			<table id="table-1">
 				<tr>
 					<td>

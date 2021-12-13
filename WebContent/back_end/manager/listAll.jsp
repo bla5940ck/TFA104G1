@@ -125,6 +125,7 @@ th, td {
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">
 			<h4>此頁練習採用 EL 的寫法取值:</h4>
+			<br>
 			<table id="table-1">
 				<tr>
 					<td>
