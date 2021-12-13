@@ -1,0 +1,246 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<meta content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=" utf-8">
+    <meta name="author" content="http://www.softwhy.com/" />
+    <title>彈窗</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <style type="text/css">
+        #fade {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            /* background-color: black; */
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=80);
+        }
+
+        #light {
+            display: none;
+            position: absolute;
+            margin: 0;
+            top: 90%;
+            left: 30%;
+            width: 50%;
+           <!-- height: 70%; -->
+            padding: 0;
+            border: 3px solid darkgray;
+            background-color: darkslategrey;
+            -moz-opacity: 0.85;
+            opacity: .90;
+            filter: alpha(opacity=80);
+            z-index: 1002;
+            overflow: auto;
+        }
+
+        @import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: roboto;
+        }
+
+        body {}
+
+        a.comment:link,
+        a.comment:visited {
+            background-color: #191561;
+            color: yellow;
+            border: 2px solid #191561;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        a.comment:hover,
+        a.comment:active {
+            background-color: yellow;
+            color: #191561;
+        }
+
+        .cont {
+            width: 93%;
+            max-width: 350px;
+            text-align: center;
+            margin: 4% auto;
+            <!--padding: 30px 0;-->
+            color: black;
+            border-radius: 5px;
+            /* border: thin solid #444; */
+            overflow: hidden;
+        }
+
+        hr {
+            margin: 20px;
+            border: 1px solid black;
+            border-bottom: thin solid rgba(255, 255, 255, .1);
+        }
+
+        div.title {
+            font-size: 2em;
+        }
+
+        h1 span {
+            font-weight: 300;
+            color: #Fd4;
+        }
+
+        div.stars {
+            width: 270px;
+            display: inline-block;
+        }
+
+        input.star {
+            display: none;
+        }
+
+        label.star {
+            float: right;
+            padding: 10px;
+            font-size: 30px;
+            color: lightyellow;
+            transition: all .2s;
+        }
+
+        input.star:checked~label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
+
+
+        input.star-5:checked~label.star:before {
+            color: #FE7;
+            text-shadow: 0 0 20px #952;
+        }
+
+        input.star-1:checked~label.star:before {
+            color: #F62;
+        }
+
+        label.star:hover {
+            transform: rotate(-15deg) scale(1.3);
+        }
+
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome;
+        }
+
+        .rev-box {
+            /* overflow: hidden; */
+            height: 100%;
+            width: 100%;
+            transition: all .25s;
+        }
+
+        textarea.review {
+            border: 1px solid black;
+            width: 100%;
+            max-width: 100%;
+            height: 100px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        label.review {
+            display: block;
+            transition: opacity .25s;
+
+        }
+
+        input.star:checked~.rev-box {
+            height: 125px;
+            overflow: visible;
+        }
+        
+        input.cobt {
+            transition-duration: 0.4s;
+            color: black;
+        }
+
+        .cobt:hover {
+            background-color: #191561;
+            /* Green */
+            color: yellow;
+        }
+    </style>
+
+</head>
+
+<body>
+      <a class="comment" href="javascript:void(0)" id="linkbt"> 我要評價</a>
+    <div id="light">
+        <a class="comment" href="javascript:void(0)" id="closebt">關閉視窗</a>
+        <div class="cont">
+            <form action="">
+                <div class="stars" id="s">
+                    <input class="star star-5" id="star-5-2" onchange="test" type="radio" value="5" name="star" />
+                    <label class="star star-5" for="star-5-2"></label>
+                    <input class="star star-4" id="star-4-2" onchange="test" type="radio" value="4" name="star" />
+                    <label class="star star-4" for="star-4-2"></label>
+                    <input class="star star-3" id="star-3-2" onchange="test" type="radio" value="3" name="star" />
+                    <label class="star star-3" for="star-3-2"></label>
+                    <input class="star star-2" id="star-2-2" onchange="test" type="radio" value="2" name="star" />
+                    <label class="star star-2" for="star-2-2"></label>
+                    <input class="star star-1" id="star-1-2" onchange="test" type="radio" value="1" name="star" />
+                    <label class="star star-1" for="star-1-2"></label>
+                </div>
+                <div class="rev-box">
+                    <textarea class="review" col="30" name="review" placeholder="在此填寫您的評價"></textarea>
+                    <input type="submit" class="cobt" value="送出評價 !">
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div id="fade""></div>
+    <input type="hidden" name="leaseRank" id="leaseRank">
+        <!--<h4>評價<p id="rank"></p>-->
+        </h4>
+        </td>
+</body>
+<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script></script>
+<script type="text/javascript">
+    var test = $("#s");
+    var rank = $("#rank");
+    test.change(function () {
+ //     alert($('input[name=star]:checked').val());
+        console.log($('input[name=star]:checked').val());
+        var leaseRank = $('input[name=star]:checked').val();
+        document.getElementById("leaseRank").setAttribute('value', leaseRank);
+        rank.text(leaseRank);
+    });
+
+    console.log($("#leaseRank").val());
+      	
+      	
+    window.onload = function () {
+      	var linkbt = document.getElementById("linkbt");
+        var light = document.getElementById('light');
+        var fade = document.getElementById('fade');
+        var closebt = document.getElementById("closebt");
+        linkbt.onclick = function () {
+          light.style.display = 'block';
+          fade.style.display = 'block';
+       }
+          closebt.onclick = function () {
+          	light.style.display = 'none';
+            fade.style.display = 'none';
+          }
+ 	}
+</script>
+
+</html>

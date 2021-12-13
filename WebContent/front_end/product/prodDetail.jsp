@@ -1,7 +1,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.Date"%>
 <%@page import="com.product.model.*"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -323,6 +323,9 @@ request.setAttribute("product", product);
 											</div>
 										</div>
 									</div>
+									&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+									上架時間: <span class="aa-product-date" style="color:green"><fmt:formatDate value="<%=product.getShelfDate() %>" pattern="yyyy-MM-dd HH:mm"/></span>
+									
 								</div>
 
 
@@ -332,9 +335,7 @@ request.setAttribute("product", product);
                                         List<String> labelList = jedis.lrange("prod"+product.getProdID(), 0, jedis.llen("prod"+product.getProdID()));
                                      	pageContext.setAttribute("labelList", labelList);
                                      	System.out.print("數量  "+  labelList.size());
-                                     
-										
-										
+                          
 										
 										%>
 
@@ -370,10 +371,15 @@ request.setAttribute("product", product);
 										<li>
 											標籤:&nbsp
 											<c:forEach var="label" items="${labelList}" varStatus="loop">
+													<c:if test="${loop.index!=0 and loop.index % 5 ==0}">
+													<br>
+													</c:if>
 													<a href="<%=path%>/prod/ProdServlet?action=labelClick&prodID=<%=product.getProdID()%>&labelNo=${loop.index}"><span style="color:#A6A600">#${label}</span></a>&nbsp
 											</c:forEach>
 										</li>
+										
 										</ul>
+										
 											</div>
 										</form>
 										<p class="aa-prod-category">
@@ -786,7 +792,7 @@ function selflog_show(id){
 	 
 	  
 	 $.ajax({
-	    	url:"<%=path%>/prod/ProdServlet",
+	    	url:"<%=path%>/cart/CartServlet",
 	    	cache : false,
 	    	type: "POST",
 	    	async: false,
@@ -911,6 +917,7 @@ function selflog_show(id){
 			session.setAttribute("listCookie", listCookie);
 
 		}
+		
 		
 	%>
 

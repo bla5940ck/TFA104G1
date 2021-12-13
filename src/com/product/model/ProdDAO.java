@@ -13,9 +13,13 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.chat_room.jedis.JedisPoolUtil;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import util.Util;
 
-public class ProdDAO implements ProdDAOImpl {
+public class ProdDAO implements ProdDAO_Interface {
 
 	static {
 		try {
@@ -85,7 +89,8 @@ public class ProdDAO implements ProdDAOImpl {
 		return key;
 	}
 
-	private static String UPDATE= "update product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
+	private static String UPDATE= "up"
+			+ "date product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
 	public void update(ProdVO prod) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -145,7 +150,7 @@ public class ProdDAO implements ProdDAOImpl {
 	}
 
 
-	private static String findProductByPK = "select * from product where prod_id = ?";
+	private static String FINDPRODUCTBYPK = "select * from product where prod_id = ?";
 	public ProdVO findProductByPK(Integer prodId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -154,7 +159,7 @@ public class ProdDAO implements ProdDAOImpl {
 
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(findProductByPK);
+			pstmt = con.prepareStatement(FINDPRODUCTBYPK);
 			pstmt.setInt(1, prodId);
 
 			rs = pstmt.executeQuery();
@@ -468,9 +473,9 @@ public class ProdDAO implements ProdDAOImpl {
 	
 	
 	public static void main(String[] args) {
-		ProdDAO dao = new ProdDAO();
-		
-		List<ProdVO> prodList = dao.getAll();
+//		ProdDAO dao = new ProdDAO();
+//		
+//		List<ProdVO> prodList = dao.getAll();
 //		List<ProdVO> list1 = new ArrayList();
 //		for(ProdVO p: list) {
 //			if(p.getShelfDate()!=null) {
@@ -502,10 +507,24 @@ public class ProdDAO implements ProdDAOImpl {
 //		System.out.println(findProductByPK.getProdPrice());
 	
 	
-		ProdService prodSvc = new ProdService();
-		List<ProdVO> list = prodSvc.getAllByTimeDesc();
-		list.forEach(p->System.out.println(p.getProdID()));
+//		ProdService prodSvc = new ProdService();
+//		List<ProdVO> list = prodSvc.getAllByTimeDesc();
+//		list.forEach(p->System.out.println(p.getProdID()));
 	
+	
+		
+//	JedisPool pool = JedisPoolUtil.getJedisPool();
+//	Jedis jedis = pool.getResource();
+////	
+////	Boolean b = jedis.exists("prod124");
+//////	jedis.lrem("prod124", Long.valueOf(jedis.llen("prod124")),"10" );
+//	jedis.del("prod123");
+//	jedis.rpush("prod123", "333q3");	
+		
+		
+		
+		
+		
 	
 	}
 

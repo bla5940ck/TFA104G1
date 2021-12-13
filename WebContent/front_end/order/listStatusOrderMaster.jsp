@@ -10,7 +10,7 @@
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
 	OrderMasterService omSVC = new OrderMasterService();
-	List<OrderMasterVO> list = omSVC.getStatus(omVO.getOrdStatus());
+	List<OrderMasterVO> list = omSVC.getStatus(2);
 
 	pageContext.setAttribute("list", list);
 %>
@@ -96,9 +96,8 @@ th, td {
 				<h3>出租者專區</h3>
 				<h5>會員編號 : <%=memID%></h5>
 				<ul class="nav_list">
-					<h4>
-						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a>
-					</h4>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
+					<h4><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">訂單評價</a></h4>
 				</ul>
 			</nav>
 		</aside>
@@ -266,12 +265,12 @@ th, td {
 								<td>${omVO.ordPrice}</td>
 								<td>
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
+										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
-										<input type="hidden" name="ordID" value="${olVO.ordID}"> 
-										<input type="hidden" name="listID" value="${olVO.listID}"> 
-										<input type="hidden" name="action" value="getOne_For_Display">
+										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
+<%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
+										<input type="hidden" name="action" value="getlist_For_Display">
 									</FORM>
 								</td>
 							</tr>

@@ -86,11 +86,12 @@ public class ProdServlet extends HttpServlet {
 			jedis = pool.getResource();
 
 			List<String> list = new ArrayList();
-
+			
 			// 驗證商品
 			String[] labels = req.getParameterValues("checkbox1");
 
 			String name = req.getParameter("product_name");
+			prod.setProdName(name);
 //			System.out.println(name.trim().length() == 0);
 			if (name == null || (name.trim().length() == 0))
 				errorMsgs.add("商品名稱不能空白");
@@ -98,7 +99,7 @@ public class ProdServlet extends HttpServlet {
 			int rent = 0;
 			try {
 				rent = Integer.parseInt(req.getParameter("product_rent"));
-
+				prod.setProdRent(rent);
 			} catch (Exception e) {
 				errorMsgs.add("租金只能填寫數字");
 			}
@@ -108,6 +109,7 @@ public class ProdServlet extends HttpServlet {
 			int price = 0;
 			try {
 				price = Integer.parseInt(req.getParameter("product_price"));
+				prod.setProdPrice(price);
 			} catch (Exception e) {
 				errorMsgs.add("價錢只能填寫數字");
 			}
@@ -116,14 +118,17 @@ public class ProdServlet extends HttpServlet {
 				errorMsgs.add("價錢不能小於0元");
 
 			String cot = req.getParameter("product_cot");
+			prod.setProdCot(cot);
 
 			if (cot == null || (cot.trim().length() == 0))
 				errorMsgs.add("商品內容不能為空白");
 
 			String comt = req.getParameter("comt");
+			prod.setComt(comt);
 			int cate = 0;
 			try {
 				cate = Integer.parseInt(req.getParameter("categorySelect"));
+				prod.setCategoryID(cate);
 			} catch (NumberFormatException e) {
 				errorMsgs.add("商品類別沒有選擇");
 			}
@@ -180,6 +185,8 @@ public class ProdServlet extends HttpServlet {
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("prodVO", prod);
+				
+				jedis.close();
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/uploadProd.jsp");
 				failureView.forward(req, res);
 				return;
@@ -244,7 +251,7 @@ public class ProdServlet extends HttpServlet {
 				}
 
 			}
-
+			os.close();
 		}
 
 ////////////////////////上架商品更新/////////////////////////////
@@ -252,8 +259,9 @@ public class ProdServlet extends HttpServlet {
 		if ("update".equals(req.getParameter("action"))) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			String[] labels = req.getParameterValues("checkbox1");
 			String name = req.getParameter("product_name");
+			
 
 			if (name == null || (name.trim().length() == 0)) {
 				errorMsgs.add("商品名稱不能空白");
@@ -300,6 +308,11 @@ public class ProdServlet extends HttpServlet {
 			long date = System.currentTimeMillis();
 			Timestamp shelfTime = null;
 
+			Jedis jedis = pool.getResource();
+			
+			
+			
+			
 			ProdVO prodVO = new ProdVO();
 			prodVO.setProdName(name);
 			prodVO.setProdRent(rent);
@@ -391,9 +404,9 @@ public class ProdServlet extends HttpServlet {
 						req.setAttribute("prodID", prodID);
 						req.setAttribute("product", prodVO);
 						req.setAttribute("picAmount", picAmount);
+						jedis.close();
 
 						req.getRequestDispatcher("/front_end/product/modifyProd.jsp").forward(req, res);
-
 						return;
 
 					}
@@ -413,6 +426,12 @@ public class ProdServlet extends HttpServlet {
 
 			System.out.println("更新後... " + prodID);
 
+			//更新標籤
+			jedis.del("prod"+prodID);
+			
+			if(labels!=null) {
+					jedis.rpush("prod"+prodID, labels);
+			}
 			ProdService prodSvc = new ProdService();
 			ProdVO prod_original = prodSvc.findProductByPK(prodID);
 
@@ -443,7 +462,7 @@ public class ProdServlet extends HttpServlet {
 			req.setAttribute("picAmount", picAmount);
 			req.setAttribute("product", product);
 			req.setAttribute("prodID", prodID);
-
+			jedis.close();
 //			res.sendRedirect(req.getContextPath()+"/front_end/product/showProd.jsp");
 			req.getRequestDispatcher("/front_end/product/showProd.jsp").forward(req, res);
 		}
@@ -470,102 +489,6 @@ public class ProdServlet extends HttpServlet {
 			req.setAttribute("product", product);
 
 			req.getRequestDispatcher("/front_end/product/modifyProd.jsp").forward(req, res);
-		}
-
-		////////////// 加入購物車/////////////////////////////
-		if ("cart".equals(req.getParameter("action"))) {
-
-			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
-			String estStart = req.getParameter("startDate");
-			String estEnd = req.getParameter("endDate");
-			String prodName = req.getParameter("prodName");
-			Integer rent = Integer.valueOf(req.getParameter("rent"));
-			Integer leaseID = Integer.valueOf(req.getParameter("leaseID"));
-			Integer tatolPrice = null;
-			System.out.println(req.getParameter("tatolPrice"));
-			if (req.getParameter("tatolPrice") != null && !req.getParameter("tatolPrice").equals("NaN")) {
-
-				tatolPrice = Integer.valueOf(req.getParameter("tatolPrice"));
-			} else {
-				res.getWriter().print(404);
-				return;
-			}
-			Integer index = Integer.valueOf(req.getParameter("index"));
-//				Integer status = 0;
-			java.sql.Date sdate = null;
-			java.sql.Date edate = null;
-			Integer memberID = (Integer) req.getSession().getAttribute("id");
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				sdate = new java.sql.Date(df.parse(estStart).getTime());
-				edate = new java.sql.Date(df.parse(estEnd).getTime());
-			} catch (ParseException e) {
-				System.out.println("日期格式錯誤");
-			}
-			CartVO cartVO = new CartVO();
-//				BookingVO bk = new BookingVO();
-			cartVO.setProdID(prodID);
-//				bk.setStatus(status);
-			cartVO.setEstStart(sdate);
-			cartVO.setEstEnd(edate);
-			cartVO.setProdName(prodName);
-			cartVO.setRent(rent);
-			cartVO.setTotalPrice(tatolPrice);
-			cartVO.setLeaseID(leaseID);
-//				JedisPool pool = JedisPoolUtil.getJedisPool();
-			Jedis jedis = null;
-			jedis = pool.getResource();
-
-			String jsonString = gson.toJson(cartVO);
-
-//				jedis.set("prod"+req.getParameter("prodID"),jsonString);
-			if (memberID != null) {
-				List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
-				boolean flag = true;
-				for (String item : cart) {
-					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
-					if (prodID == cartVO1.getProdID()) {
-						flag = false;
-					}
-				}
-				// 購物車不重複的話 就加入進去redis
-				if (flag) {
-					jedis.rpush("member" + memberID, jsonString);
-					System.out.println("加入購物車: " + jsonString);
-					res.getWriter().print(index + 1);
-				} else {
-					res.getWriter().print(index);
-				}
-
-			}
-
-			jedis.close();
-
-		}
-
-		////////////////// 購物車刪除///////////////////////
-		if ("delete".equals(req.getParameter("action"))) {
-
-			Integer memberID = (Integer) req.getSession().getAttribute("id");
-			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
-			Integer index = Integer.valueOf(req.getParameter("index")) - 1;
-			res.getWriter().print(index);
-//				JedisPool pool = JedisPoolUtil.getJedisPool();
-			Jedis jedis = null;
-			jedis = pool.getResource();
-
-			if (memberID != null) {
-				List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
-				for (String item : cart) {
-					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
-					if (cartVO1.getProdID() == prodID) {
-						jedis.lrem("member" + memberID, 1, item);
-					}
-				}
-
-				jedis.close();
-			}
-
 		}
 
 		/////////////// 商品篩選///////////////////////
@@ -718,11 +641,6 @@ public class ProdServlet extends HttpServlet {
 
 				}
 
-//				String jsonStr = gson.toJson(matchProdList1);
-//				System.out.println(jsonStr);
-//			       res.getWriter().print(jsonStr);
-//			       res.getWriter().flush();
-//			       res.getWriter().close();
 
 			}
 			jedis.close();

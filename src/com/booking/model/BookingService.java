@@ -2,12 +2,19 @@ package com.booking.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
+
+import com.product.model.ProdDAO;
+import com.product.model.ProdDAO_Interface;
+import com.product.model.ProdVO;
 
 public class BookingService {
 	
-	public BookingDAOImpl dao;
+	public BookingDAO_interface dao;
+	public ProdDAO_Interface dao2;
 	public BookingService() {
 		dao = new BookingDAO();
+		dao2 = new ProdDAO();
 	}
 	
 	
@@ -49,5 +56,5 @@ public class BookingService {
 		return dao.getAll();
 	}
 	
-	
+
 }

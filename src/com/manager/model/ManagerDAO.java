@@ -25,6 +25,8 @@ public class ManagerDAO implements ManagerDAO_interface {
 			"DELETE FROM Manager where manager_id =? ";
 	private static final String UPDATE = 
 			"UPDATE Manager set manager_user=?,manager_name=?,manager_password=?,status=? where manager_id=?";
+	private static final String LOGIN =
+			"SELECT * FROM Manager where manager_user =?,manager_password =?";
 
 	@Override
 	public void insert(ManagerVO managerVO) {
@@ -270,11 +272,68 @@ public class ManagerDAO implements ManagerDAO_interface {
 		return li;
 	}
 
+	
+	
+	@Override
+	public ManagerVO login(String managerUser, String managerPassword) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ManagerVO vo = new ManagerVO();
+		
+		try {
+			
+			Class.forName(DRIVER);
+			con = DriverManager.getConnection(URL,USER,PASSWORD);
+			ps = con.prepareStatement(LOGIN);
+			
+			ps.setString(1, managerUser);
+			ps.setString(2, managerPassword);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				vo = new ManagerVO();
+				vo.setManagerUser(rs.getString("manager_user"));
+				vo.setManagerUser(rs.getString("manager_password"));
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured." + se.getMessage());
+		} catch (Exception se) {
+			throw new RuntimeException("A database error occured." + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception se) {
+					se.printStackTrace(System.err);
+				}
+			}
+
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return vo;
+	}
+
 	public static void main(String[] args) {
 
 		ManagerDAO dao = new ManagerDAO();
 
-		//·s¼W
+		//æ–°å¢ž
 		ManagerVO mvo1 = new ManagerVO();
 		mvo1.setManagerUser("xxxxxxxxx");
 		mvo1.setManagerName("hawer");
@@ -283,7 +342,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		dao.insert(mvo1);
 	
 
-		//­×§ï
+		//ä¿®æ”¹
 		ManagerVO mvo2 = new ManagerVO();
 //		mvo2.setManagerID(3);
 //		mvo2.setManagerUser("loveme");
@@ -293,11 +352,11 @@ public class ManagerDAO implements ManagerDAO_interface {
 		dao.update(mvo2);
 
 		
-		//§R°£
+		//åˆªé™¤
 		dao.delete(5);
 		
 		
-		//¬d¸ß
+		//æŸ¥è©¢
 		ManagerVO vo3 = dao.findByprimaryKey(3);
 		System.out.print(vo3.getManagerID() + ",");
 		System.out.print(vo3.getManagerUser() + ",");
@@ -306,7 +365,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		System.out.print(vo3.getStatus() + ",");
 		System.out.println("----------------");
 		
-		//¥þ³¡¬d¸ß		
+		//å…¨éƒ¨æŸ¥è©¢		
 		List<ManagerVO> list = dao.getAll();
 		for (ManagerVO vo4 : list) {
 		System.out.print(vo4.getManagerID() + ",");
