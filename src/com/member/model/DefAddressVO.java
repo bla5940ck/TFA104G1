@@ -2,7 +2,7 @@ package com.member.model;
 
 import java.sql.Timestamp;
 
-public class DefAddressVO {
+public class DefAddressVO  implements java.io.Serializable{
 	
 	private Integer def711;
 	private Integer memberId;
