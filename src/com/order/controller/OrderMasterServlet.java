@@ -553,7 +553,99 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println("失敗");
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/updateOrderMasterInput.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/updateLeaseComment.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getRentComment_For_Display".equals(action)) { // 來自listAllOrderMaster.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 *****************************/
+				Integer ordID = new Integer(req.getParameter("ordID"));
+//				Integer listID = new Integer(req.getParameter("listID"));
+//				System.out.println("明細編號"+listID);
+				
+				
+				/*************************** 2.開始查詢資料 *****************************/
+				OrderMasterService omSVC = new OrderMasterService();
+				OrderMasterVO omVO = omSVC.getOneOrderMaster(ordID);
+				
+				OrderListService olSVC = new OrderListService();
+//				OrderListVO olVO = olSVC.getOneOrderList(listID);
+
+				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
+//				req.setAttribute("OrderListVO", olVO);
+				String url = "/front_end/order/updateRentComment.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/updateRentComment.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if("update_rent_comment".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				
+				String strrr = req.getParameter("rentRank");
+				System.out.println("承租者評分 : " + strrr);
+				Integer rentRank = null;
+				if(strrr != null && strrr.length() != 0) {
+					rentRank = new Integer(strrr);
+					System.out.println(rentRank);
+				}
+									
+				String rentComt = req.getParameter("rentComt").trim();
+				System.out.println("承租者評論內容 : " + rentComt);
+				
+				Date date = new Date();
+
+				long strrc = (date.getTime());
+				Timestamp rentComtdate = new Timestamp(strrc);
+				System.out.println("評價日期 :" + rentComtdate);
+				
+				Integer ordID = new Integer(req.getParameter("ordID"));
+				System.out.println("訂單編號 : " + ordID);
+				
+				OrderMasterVO omVO = new OrderMasterVO();
+				omVO.setRentRank(rentRank);
+				omVO.setRentComt(rentComt);
+				omVO.setRentComtdate(rentComtdate);
+				omVO.setOrdID(ordID);
+				 
+				System.out.println("這邊");
+				
+				OrderMasterService omSVC = new OrderMasterService();
+				OrderMasterVO rentCom = omSVC.addRentComment(rentRank, rentComt, rentComtdate, ordID);
+				
+				System.out.println("這邊2");
+				
+				/******************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("OrderMasterVO", rentCom); // 資料庫update成功後,正確的的ordermasterVO物件,存入req
+				String url = "/front_end/order/listSuccessOrderForRent.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); //  修改成功後,轉交listOneOrderMaster.jsp
+				successView.forward(req, res);
+				System.out.println("完成");
+				return;		
+			}catch(Exception e) {
+				System.out.println("失敗");
+				e.printStackTrace();
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/updateRentComment.jsp");
 				failureView.forward(req, res);
 			}
 		}

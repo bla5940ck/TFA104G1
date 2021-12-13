@@ -54,7 +54,7 @@
                   <li><a href="#">會員中心<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                       <li><a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp">出租專區</a></li>
-                      <li><a href="#">承租專區</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">承租專區</a></li>
                     </ul>
                   </li>
                   <li class="hidden-xs"><a

@@ -93,7 +93,7 @@ th, td {
 	<div class="main_content">
 		<aside class="aside">
 			<nav class="nav">
-				<h3>出租者專區</h3>
+				<h3>承租者專區</h3>
 				<h5>會員編號 : <%=memID%></h5>
 				<ul class="nav_list">
 					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
@@ -167,7 +167,7 @@ th, td {
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
-					<th>承租者</th>
+					<th>出租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
 <!-- 					<th>運送狀態</th> -->
@@ -186,10 +186,10 @@ th, td {
 				<%@ include file="page1.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 					<c:choose>
-						<c:when test="${omVO.ordStatus == 2 && omVO.leaseID == id}">
+						<c:when test="${omVO.ordStatus == 2 && omVO.rentID == id}">
 							<tr>
 								<td>${omVO.ordID}</td>
-								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
 										<td>信用卡</td>
@@ -270,7 +270,7 @@ th, td {
 										<input type="submit" value="評價"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 <%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
-										<input type="hidden" name="action" value="getComment_For_Display">
+										<input type="hidden" name="action" value="getRentComment_For_Display">
 									</FORM>
 								</td>
 							</tr>
