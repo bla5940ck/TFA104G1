@@ -5,7 +5,7 @@
 <%
   PromolistVO promolistVO = (PromolistVO) request.getAttribute("promolistVO");
 %>
-
+<jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -110,14 +110,9 @@ background-color:#6495ed;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
 
-<table id="table-1">
-	<tr><td>
-		 <h3>專案資料修改 - update_promo.jsp</h3>
-<!-- 		 <h4><a href="http://localhost:8081/TFA104G1/back_end/promo_list/select_promolist.jsp"><img src="http://localhost:8081/TFA104G1/back_end/promo_list/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4> -->
-	</td></tr>
-</table>
 
-<h3>資料修改:</h3>
+		 <h3>專案資料修改 - update_promolist.jsp</h3>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -132,51 +127,70 @@ background-color:#6495ed;
 <FORM METHOD="post" ACTION="promolist.do" name="form1">
 <table>
 	<tr>
-		<td>折價券編號:<font color=red><b>*</b></font></td>
+		<td>折價券編號:</td>
 		<td><%=promolistVO.getCoupon_id()%></td>
 	</tr>
+	
 	<tr>
-		<td>專案編號:<font color=red><b>*</b></font></td>
-		<td><%=promolistVO.getPromo_id()%></td>
+		<td>專案名稱:</td>
+		<td>
+		<c:forEach var="promoVO" items="${promoSvc.all}">
+				<c:if test="${promolistVO.promo_id==promoVO.promo_id}">
+				<label>${promoVO.promo_name}</label>
+			</c:if>
+		</c:forEach>	
+		</td>
 	</tr>
+<!-- 		<td>專案名稱:</td> -->
+<!-- 		<td> -->
+<!-- 		<select size="1" name="promo_id"> -->
+<%-- 			<c:forEach var="promoVO" items="${promoSvc.all}"> --%>
+<%-- 				<option value="${promoVO.promo_id}" ${(promolistVO.promo_id==promoVO.promo_id)? 'selected':'' } >${promoVO.promo_name} --%>
+<%-- 			</c:forEach> --%>
+<!-- 		</select> -->
+<!-- 		</td> -->
 <!-- 	<tr> -->
 <!-- 		<td>專案編號:</td> -->
 <%-- 		<td><input type="TEXT" name="promo_id" size="45" value="<%=promolistVO.getPromo_id()%>" /></td> --%>
 <!-- 	</tr> -->
-	<tr>
-		<td>商品類別編號:</td>
-		<td><input type="TEXT" name="category_id" size="45" value="<%=promolistVO.getCategory_id()%>" /></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>商品類別編號:</td> -->
+<!-- 		<td> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
 	<tr>
 		<td>折價券名稱:</td>
-		<td><input type="TEXT" name="coupon_name" size="45"	value="<%=promolistVO.getCoupon_name()%>" /></td>
+		<td>
+		<input type="TEXT" name="coupon_name" size="10"	value="<%=promolistVO.getCoupon_name()%>" /></td>
 	</tr>
 	<tr>
 		<td>折扣金額:</td>
-		<td><input type="TEXT" name="discount" size="45" value="<%=promolistVO.getDiscount()%>" /></td>
+		<td><input type="TEXT" name="discount" size="2" value="<%=Math.round(promolistVO.getDiscount())%>" /></td>
 	</tr>
 	<tr>
 		<td>數量:</td>
-		<td><input type="TEXT" name="amount" size="45" value="<%=promolistVO.getAmount()%>" /></td>
+		<td><input type="TEXT" name="amount" size="3" value="<%=promolistVO.getAmount()%>" /></td>
 	</tr>
 	<tr>
 		<td>已領取數量:</td>
-		<td><input type="TEXT" name="used" size="45" value="<%=promolistVO.getUsed()%>" /></td>
+		<td><input type="TEXT" name="used" size="3" value="<%=promolistVO.getUsed()%>" /></td>
 	</tr>
 <tr>
 		<td>開始日期:</td>
-		<td><input name="start_date" id="f_date1" type="text"></td>
+		<td><input name="start_date" id="f_date1" type="text" size="10"></td>
 	</tr>
 	<tr>
 		<td>結束日期:</td>
-		<td><input name="end_date" id="f_date2" type="text"></td>
+		<td><input name="end_date" id="f_date2" type="text" size="10"></td>
 	</tr>
 
 
 </table>
 <br>
+		<input type="hidden" name="category_id" size="1" value="<%=promolistVO.getCategory_id()%>" />
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="coupon_id" value="<%=promolistVO.getCoupon_id()%>">
+<input type="hidden" name="promo_id" value="<%=promolistVO.getPromo_id()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->

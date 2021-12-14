@@ -17,7 +17,7 @@ public class PromoDAO implements Promo_interface{
 		private static final String INSERT_STMT = 
 			"INSERT INTO promo (promo_name, promo_start, promo_end, promo_text, status) VALUES (?, ?, ?, ?, ?);";
 		private static final String GET_ALL_STMT = 
-			"SELECT promo_id, promo_name, promo_start, promo_end, promo_text, status FROM promo order by promo_id";
+			"SELECT promo_id, promo_name, promo_start, promo_end, promo_text, status FROM promo order by promo_id desc";
 		private static final String GET_ONE_STMT = 
 			"SELECT promo_id, promo_name, promo_start, promo_end, promo_text, status FROM promo where promo_id = ?";
 		private static final String DELETE = 

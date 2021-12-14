@@ -111,14 +111,11 @@ background-color:#6495ed;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
 
-<table id="table-1">
-	<tr><td>
-		 <h3>專案資料修改 - update_promo.jsp</h3>
-		 <h4><a href="http://localhost:8081/TFA104G1/back_end/promo/select_promo.jsp"><img src="http://localhost:8081/TFA104G1/back_end/promo/images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
-	</td></tr>
-</table>
 
-<h3>資料修改:</h3>
+
+		 <h3>專案資料修改 - update_promo.jsp</h3>
+
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -133,25 +130,25 @@ background-color:#6495ed;
 <FORM METHOD="post" ACTION="promo.do" name="form1">
 <table>
 	<tr>
-		<td>專案編號:<font color=red><b>*</b></font></td>
+		<td>專案編號:</td>
 		<td><%=promoVO.getPromo_id()%></td>
 	</tr>
 	<tr>
 		<td>專案名稱:</td>
-		<td><input type="TEXT" name="promo_name" value="<%=promoVO.getPromo_name()%>" /></td>
-	</tr>
-	
-	<tr>
-		<td>開始日期:</td>
-		<td><input name="promo_start" id="f_date1" type="text"></td>
-	</tr>
-	<tr>
-		<td>結束日期:</td>
-		<td><input name="promo_end" id="f_date2" type="text"></td>
+		<td><%=promoVO.getPromo_name()%></td>
 	</tr>
 	<tr>
 		<td>專案內容:</td>
 		<td><input type="TEXT" name="promo_text" size="45"	value="<%=promoVO.getPromo_text()%>" /></td>
+	</tr>
+	
+	<tr>
+		<td>開始日期:</td>
+		<td><input name="promo_start" id="f_date1" type="text" size="10"></td>
+	</tr>
+	<tr>
+		<td>結束日期:</td>
+		<td><input name="promo_end" id="f_date2" type="text" size="10"></td>
 	</tr>
 	<tr>
 		<td>專案狀態:</td>
@@ -163,6 +160,7 @@ background-color:#6495ed;
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="promo_id" value="<%=promoVO.getPromo_id()%>">
+<input type="hidden" name="promo_name" value="<%=promoVO.getPromo_name()%>">
 <input type="submit" value="送出修改"></FORM>
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
