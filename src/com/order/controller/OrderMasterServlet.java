@@ -284,7 +284,8 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 ****************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 				OrderListDAOImpl oldao = new OrderListDAOImpl();
-				omdao.updateAllOrder(omVO, olVO);
+//				omdao.updateAllOrder(omVO, olVO);
+				omdao.updateWithListStatus(omVO, olVO);
 				
 				/**************************** NEW修改後的VO ****************************/
 				OrderMasterVO omVO1 = omdao.findOrderMasterByPK(ordID);
@@ -456,21 +457,16 @@ public class OrderMasterServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 *****************************/
-				Integer ordID = new Integer(req.getParameter("ordID"));
-//				Integer listID = new Integer(req.getParameter("listID"));
-//				System.out.println("明細編號"+listID);
-				
+				Integer ordID = new Integer(req.getParameter("ordID"));		
 				
 				/*************************** 2.開始查詢資料 *****************************/
 				OrderMasterService omSVC = new OrderMasterService();
 				OrderMasterVO omVO = omSVC.getOneOrderMaster(ordID);
 				
 				OrderListService olSVC = new OrderListService();
-//				OrderListVO olVO = olSVC.getOneOrderList(listID);
 
 				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
-//				req.setAttribute("OrderListVO", olVO);
 				String url = "/front_end/order/updateLeaseComment.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
 				successView.forward(req, res);
@@ -551,20 +547,15 @@ public class OrderMasterServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 *****************************/
 				Integer ordID = new Integer(req.getParameter("ordID"));
-//				Integer listID = new Integer(req.getParameter("listID"));
-//				System.out.println("明細編號"+listID);
-				
 				
 				/*************************** 2.開始查詢資料 *****************************/
 				OrderMasterService omSVC = new OrderMasterService();
 				OrderMasterVO omVO = omSVC.getOneOrderMaster(ordID);
 				
 				OrderListService olSVC = new OrderListService();
-//				OrderListVO olVO = olSVC.getOneOrderList(listID);
 
 				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
-//				req.setAttribute("OrderListVO", olVO);
 				String url = "/front_end/order/updateRentComment.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
 				successView.forward(req, res);

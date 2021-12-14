@@ -41,8 +41,6 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String INSERT_LEASE_COMMENT=
 			"UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 	
-//	private static final String FIND_SUCCESS_BY_RETURNDATE=
-//			"SELECT * FROM ORDER_MASTER WHERE ORD_STATUS = ? AND (RETURN_DATE BETWEEN ? AND ?) ORDER BY ORD_DATE";
 	
 	static {
 		try {
@@ -630,18 +628,35 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	}
 
 	@Override
-	public void updateWithListStatus(OrderMasterVO omVO, Connection con) {		
-		PreparedStatement pstmt = null;
+	public void updateWithListStatus(OrderMasterVO omVO, OrderListVO olVO) {		
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;		
 		try {
-			pstmt = con.prepareStatement(UPDATE2);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con.setAutoCommit(false);
 			
+			pstmt = con.prepareStatement(UPDATE2);
+//			UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?
+			//先更新訂單主檔
 			pstmt.setInt(1, omVO.getOrdStatus());
 			pstmt.setInt(2, omVO.getOrdID());
 			pstmt.executeUpdate();
-				
+			
+			//在更新訂單明細
+			OrderListDAOImpl oldao = new OrderListDAOImpl();
+			olVO.setOrdID(omVO.getOrdID());
+			olVO.setOrdStatus(omVO.getOrdStatus());
+			
+			oldao.updateWithOrder(olVO, con);
+			
+			con.commit();
+			con.setAutoCommit(true);
+			
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
+					se.printStackTrace();
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-orderMaster");
 					con.rollback();
@@ -660,6 +675,8 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			}
 		}
 	}
+				
+		
 	@Override
 	public void addLeaseComment(OrderMasterVO orderMaster) {
 		Connection con = null;
@@ -759,36 +776,36 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		omdao.addLeaseComment(lease);
 
 		//新增訂單主檔+明細(交易控制2版)
-		OrderMasterVO omVO = new OrderMasterVO();
-		omVO.setRentID(2);
-		omVO.setLeaseID(1);
-		omVO.setPayID(2);
-		omVO.setCouponID(null);
-		omVO.setOrdDate(timeStamp);
-		omVO.setStoreCode(19374);
-		omVO.setEstStart(date);
-		omVO.setEstEnd(date);
-		omVO.setRentDays(1);
-		omVO.setProdPrice(1000);
-		omVO.setShipFee(60);
-		omVO.setOrdPrice(1120);
-		
-		List<OrderListVO> testList = new ArrayList<OrderListVO>();
-		OrderListVO ola = new OrderListVO(); // 第一筆明細a
-		ola.setProdID(6);
-		ola.setProdPrice(400);
-		ola.setEstStart(date);
-		ola.setEstEnd(date);
-		
-		OrderListVO olb = new OrderListVO(); // 第二筆明細b
-		olb.setProdID(7);
-		olb.setProdPrice(60);
-		olb.setEstStart(date);
-		olb.setEstEnd(date);
-		
-		testList.add(ola);
-		testList.add(olb);
-		omdao.inesetWithList(omVO, testList);
+//		OrderMasterVO omVO = new OrderMasterVO();
+//		omVO.setRentID(2);
+//		omVO.setLeaseID(1);
+//		omVO.setPayID(2);
+//		omVO.setCouponID(null);
+//		omVO.setOrdDate(timeStamp);
+//		omVO.setStoreCode(19374);
+//		omVO.setEstStart(date);
+//		omVO.setEstEnd(date);
+//		omVO.setRentDays(1);
+//		omVO.setProdPrice(1000);
+//		omVO.setShipFee(60);
+//		omVO.setOrdPrice(1120);
+//		
+//		List<OrderListVO> testList = new ArrayList<OrderListVO>();
+//		OrderListVO ola = new OrderListVO(); // 第一筆明細a
+//		ola.setProdID(6);
+//		ola.setProdPrice(400);
+//		ola.setEstStart(date);
+//		ola.setEstEnd(date);
+//		
+//		OrderListVO olb = new OrderListVO(); // 第二筆明細b
+//		olb.setProdID(7);
+//		olb.setProdPrice(60);
+//		olb.setEstStart(date);
+//		olb.setEstEnd(date);
+//		
+//		testList.add(ola);
+//		testList.add(olb);
+//		omdao.inesetWithList(omVO, testList);
 
 		// 更新訂單主檔+明細
 //		OrderMasterVO om2 = new OrderMasterVO();
@@ -806,15 +823,15 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		om2.setLeaseComt("gg");
 //		om2.setRentComtdate(timeStamp);
 //		om2.setLeaseComtdate(timeStamp);
-//		om2.setOrdID(114);
+//		om2.setOrdID(190);
 //
 //		OrderListVO olVO = new OrderListVO();
 //		olVO.setListID(6);
-//		olVO.setOrdID(114);
+//		olVO.setOrdID(190);
 //		olVO.setOrdStatus(1);
-
+//
 //		OrderListDAOImpl oldao = new OrderListDAOImpl();
-
+//
 //		olVO = oldao.findOrderListByPK(6);
 //		System.out.println("更新前" + olVO.getOrdStatus());		
 //		omdao.updateAllOrder(om2, olVO);
