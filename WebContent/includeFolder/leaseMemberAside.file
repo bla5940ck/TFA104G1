@@ -8,6 +8,19 @@
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
 %>
+<style>
+aside.aside {
+	width: 150px;
+	height: 620px;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;
+	margin-right: 10px;
+	border: 1px solid #999;
+	text-align: left;
+}
+
+</style>
 <aside class="aside">
 			<nav class="nav">
 			<div>
@@ -25,7 +38,7 @@
 												    <td>${memberVO.loginId}</td>
 				</a>
 			</div>
-				<h1>出租專區</h1>
+				<h3>出租專區</h3>
 				<ul class="nav_list">
 				<!-- 
 					<li><a href="RentPage.jsp">我的帳戶</a>
@@ -36,15 +49,15 @@
 							<li><a href="">更改密碼</a></li>
 						</ul>
 					</li> -->
-					<li><a href="">訂單資訊</a></li>
-					<li><a href="">商品管理</a></li>
-					<li><a href="">通知</a></li>
+					<h4><li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">訂單資訊</a></li></h4>
+					<h4><li><a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp">商品管理</a></li></h4>
+					<h4><li><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">通知</a></li></h4>
 						<ul class="nav_list">
-							<li><a href="">訂單更新通知</a></li>
-							<li><a href="">評價通知</a></li>
-							<li><a href="">款項通知</a></li>
+							<!-- <li><a href="">訂單更新通知</a></li> -->
+							<h4><li><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">評價通知</a></li></h4>
+							<h4><li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li></h4>
 						</ul>
-					<li><a href="">問題回報查詢</a></li>
+					<h4><li><a href="<%=request.getContextPath()%>/front_end/memberservice/listOne.jsp">問題回報查詢</a></li></h4>
 					
 				</ul>
 			</nav>

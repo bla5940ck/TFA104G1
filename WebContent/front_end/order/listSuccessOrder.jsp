@@ -125,7 +125,7 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-
+			<input type="date">
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
