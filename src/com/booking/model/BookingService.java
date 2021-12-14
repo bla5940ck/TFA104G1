@@ -18,26 +18,28 @@ public class BookingService {
 	}
 	
 	
-	public BookingVO addBk(Integer prodID,Integer status ,Date estStart ,Date estEnd) {
+	public BookingVO addBk(Integer prodID,Integer status ,Date estStart ,Date estEnd ,Integer ordID) {
 		BookingVO bk = new BookingVO();
 		
 		bk.setProdID(prodID);
 		bk.setStatus(status);
 		bk.setEstStart(estStart);
 		bk.setEstEnd(estEnd);
+		bk.setOrdID(ordID);
 		
 		dao.add(bk);
 		
 		return bk;
 	}
 	
-	public BookingVO updateBk(Integer bkID,Integer prodID,Integer status ,Date estStart ,Date estEnd) {
+	public BookingVO updateBk(Integer bkID,Integer prodID,Integer status ,Date estStart ,Date estEnd , Integer ordID) {
 		BookingVO bk = new BookingVO();
 		bk.setBkID(bkID);
 		bk.setProdID(prodID);
 		bk.setStatus(status);
 		bk.setEstStart(estStart);
 		bk.setEstEnd(estEnd);
+		bk.setOrdID(ordID);
 		
 		dao.update(bk);
 		return bk;

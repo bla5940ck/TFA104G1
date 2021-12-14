@@ -115,7 +115,7 @@ let prodid1 = $(that).closest("li").find("input").eq(0).val();
 		 
 		
 	    $.ajax({
-	      url: "<%=request.getContextPath()%>/prod/ProdServlet",           // 資料請求的網址
+	      url: "<%=request.getContextPath()%>/cart/CartServlet",           // 資料請求的網址
 	      type: "POST",                
 	      data: {
 	    	  prodID: prodid1,
