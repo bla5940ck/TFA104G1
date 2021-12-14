@@ -105,17 +105,6 @@ th, td {
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 	<%@ include file="/includeFolder/leaseMemberAside.file"%>
-	
-<!-- 		<aside class="aside"> -->
-<!-- 			<nav class="nav"> -->
-<!-- 				<h3>出租者專區</h3> -->
-<%-- 				<h5>會員編號 : <%=memID%></h5> --%>
-<!-- 				<ul class="nav_list"> -->
-<%-- 					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4> --%>
-<!-- 					<h4><a href="listSuccessOrder.jsp">訂單評價</a></h4> -->
-<!-- 				</ul> -->
-<!-- 			</nav> -->
-<!-- 		</aside> -->
 		<main class="main">
 				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
@@ -129,8 +118,11 @@ th, td {
 			</c:if>
 			<div>
 			 <h5>依日期查詢訂單</h5>
-			 起始日期: <input name="statrDate" id="f_date1" type="text" style="width: 75px;">
+<%-- 			 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
+			 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
 			 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
+<!-- 			 <input type="hidden" name="action" value="get_Date_Order"> -->
+<!-- 			 </FORM> -->
 			</div>
 			<table id="table-1">
 				<tr>
@@ -227,28 +219,43 @@ th, td {
 </style>
 
 <script>
+$("#f_date1").blur(function(){
+// 	alert(1);
+	console.log($("#f_date1").val());
+	if($("#f_date1").val() != null && $("#f_date1") != ''){		
+		$("#f_date2").blur(function(){
+			console.log($("#f_date2").val());
+			if($("#f_date2").val != null && $("#f_date2") != ''){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/OrderMasterServlet",
+					type:"POST",
+					data:{
+						startDate:($("#f_date1").val()),
+						endDate:($("#f_date2").val()),
+						action:"get_Date_Order",
+			
+					},
+						dataType:"json",
+				});
+			}		
+		})	
+	}	
+});
+
         $.datetimepicker.setLocale('zh'); // kr ko ja en
         $("#f_date1").datetimepicker({
            theme: '',          //theme: 'dark',
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format: 'Y-m-d',
-	       // value: new Date(),
-           //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	        '2017/07/10',  // 起始日
-           //minDate:           '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+	       value:'',
         });
         $("#f_date2").datetimepicker({
            theme: '',          //theme: 'dark',
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format: 'Y-m-d',
-	       // value: new Date(),
-           //disabledDates:    ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	        '2017/07/10',  // 起始日
-           //minDate:           '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:           '+1970-01-01'  // 去除今日(不含)之後
+	       value:'',
         });
 
 </script>

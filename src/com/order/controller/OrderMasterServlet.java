@@ -655,5 +655,13 @@ public class OrderMasterServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if("get_Date_Order".equals(action)) {
+			String startDate = (String)req.getParameter("startDate");
+			String endDate = (String)req.getParameter("endDate");
+			System.out.println(startDate);
+			System.out.println(endDate);
+		}
+		
 	}
 }

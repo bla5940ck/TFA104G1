@@ -43,8 +43,8 @@ jQuery(function($){
   /* ----------------------------------------------------------- */
   /*  2. TOOLTIP
   /* ----------------------------------------------------------- */    
-    jQuery('[data-toggle="tooltip"]').tooltip();
-    jQuery('[data-toggle2="tooltip"]').tooltip();
+/*    jQuery('[data-toggle="tooltip"]').tooltip();*/
+//    jQuery('[data-toggle2="tooltip"]').tooltip();
 
   /* ----------------------------------------------------------- */
   /*  3. PRODUCT VIEW SLIDER 
