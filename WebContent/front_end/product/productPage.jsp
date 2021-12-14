@@ -2,323 +2,31 @@
 <%@page import="com.product.model.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 		
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title>JoyLease |Product</title>
-    
-    <!-- Font awesome -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">   
-    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-    <link href="css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
-    <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="css/jquery.simpleLens.css">    
-    <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="css/slick.css">
-    <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="css/nouislider.css">
-    <!-- Theme color -->
-    <link id="switcher" href="css/theme-color/dark-navy-theme.css" rel="stylesheet">
-    <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
-    <!-- Top Slider CSS -->
-    <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
-
-    <!-- Main style sheet -->
-    <link href="css/style copy.css" rel="stylesheet">    
-
-    <!-- Google Font -->
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-	<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script>
-  </head>
-                 <style>
+   <style>
        .aa-product-img img {
   object-fit: contain;
   width: 250px;
   height: 300px;
 }</style> 
   <body> 
-   <%session.setAttribute("id", 1); %>
-   <!-- wpf loader Two -->
-    <div id="wpf-loader-two">          
-      <div class="wpf-loader-two-inner">
-        <span>Loading</span>
-      </div>
-    </div> 
-    <!-- / wpf loader Two -->       
-  <!-- SCROLL TOP BUTTON -->
-    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
-  <!-- END SCROLL TOP BUTTON -->
+   <%session.setAttribute("id", 1);
+   response.setHeader("Cache-Control","no-store"); 
+   response.setHeader("Pragma","no-cache");        
+   response.setDateHeader ("Expires", 0);
+   
 
-
-  <!-- Start header section -->
-  <header id="aa-header">
-    <!-- start header top  -->
-    <div class="aa-header-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="aa-header-top-area">
-              <!-- start header top left -->
-              <div class="aa-header-top-left">
-                <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
-              </div>
-                
-                <!-- start language -->
-                <!-- <div class="aa-language">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <img src="img/flag/english.jpg" alt="english flag">ENGLISH
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                      <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
-                    </ul>
-                  </div>
-                </div> -->
-                <!-- / language -->
-
-                <!-- start currency -->
-                <!-- <div class="aa-currency">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <i class="fa fa-usd"></i>USD
-                      <span class="caret"></span>
-                    </a> -->
-                    <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> -->
-                      <!-- <li><a href="#"><i class="fa fa-euro"></i>EURO</a></li>
-                      <li><a href="#"><i class="fa fa-jpy"></i>YEN</a></li> -->
-                    <!-- </ul>
-                  </div>
-                </div> 
-                < / currency -->
-                <!-- start cellphone -->
-                <!-- <div class="cellphone hidden-xs">
-                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
-                </div> -->
-                <!-- / cellphone -->
-              <!-- </div> -->
-              <!-- / header top left -->
-              <div class="aa-header-top-right">
-                <ul class="aa-head-top-nav-right">
-                  <li><a href="account copy.html">會員帳戶</a></li>
-                  <li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
-                  <li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
-                  <!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / header top  -->
-
-    <!-- start header bottom  -->
-    <div class="aa-header-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="aa-header-bottom-area">
-              <!-- logo  -->
-              <div class="aa-logo">
-                <!-- Text based logo -->
-                <a href="index copy.html">
-                  
-                  <img src="img\logo_org_noframe_191561.png" alt="">
-                  <!-- <p>JoyLease</p> -->
-                  <!-- <span class="fa fa-shopping-cart"></span> --> 
-                  
-                </a>
-                <!-- img based logo -->
-                <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
-              </div>
-              <!-- / logo  -->
-               <!-- cart box -->
-             <%@ include file="/includeFolder/cartInclude.file" %> 
-              <!-- / cart box -->
-              <!-- search box -->
-              <div class="aa-search-box">
-                <form action="">
-                  <input type="text" name="" id="" placeholder="健身環大冒險">
-                  <button type="submit"><span class="fa fa-search"></span></button>
-                </form>
-              </div>
-              <!-- / search box -->             
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / header bottom  -->
-  </header>
-  <!-- / header section -->
-  <!-- menu -->
-  <section id="menu">
-    <div class="container">
-      <div class="menu-area">
-        <!-- Navbar -->
-        <div class="navbar navbar-default" role="navigation">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>          
-          </div>
-          <div class="navbar-collapse collapse">
-            <!-- Left nav -->
-            <ul class="nav navbar-nav ">
-              <!-- <li><a href="index.html">Home</a></li> -->
-              <li><a href="#">全部分類 <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Nintendo</a></li>
-                  <li><a href="#">PlayStation</a></li>
-                  <li><a href="#">XBOX</a></li>
-                  <li><a href="#">其他遊戲主機</a></li>                                                
-                  <li><a href="#">電腦遊戲</a></li>
-                  <li><a href="#">桌遊</a></li>
-                  <li><a href="#">拼圖</a></li>
-                  <li><a href="#">其他</a></li>
-                  <!-- <li><a href="#">And more.. <span class="caret"></span></a> -->
-                    <!-- <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul> -->
-                  <!-- </li> -->
-                </ul>
-              </li>
-              <li><a href="#">使用教學</a>
-                <!-- <ul class="dropdown-menu">  
-                  <li><a href="#">Kurta & Kurti</a></li>                                                                
-                  <li><a href="#">Trousers</a></li>              
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>                
-                  <li><a href="#">Sarees</a></li>
-                  <li><a href="#">Shoes</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>
-                      <li><a href="#">And more.. <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Rings</a></li>
-                          <li><a href="#">Earrings</a></li>
-                          <li><a href="#">Jewellery Sets</a></li>
-                          <li><a href="#">Lockets</a></li>
-                          <li class="disabled"><a class="disabled" href="#">Disabled item</a></li>                       
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Polo T-Shirts</a></li>
-                          <li><a href="#">SKirts</a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Make Up</a></li>
-                          <li><a href="#">Hair Care</a></li>
-                          <li><a href="#">Perfumes</a></li>
-                          <li><a href="#">Skin Care</a></li>
-                          <li><a href="#">Hand Bags</a></li>
-                          <li><a href="#">Single Bags</a></li>
-                          <li><a href="#">Travel Bags</a></li>
-                          <li><a href="#">Wallets & Belts</a></li>                        
-                          <li><a href="#">Sunglases</a></li>
-                          <li><a href="#">Nail</a></li>                       
-                        </ul>
-                      </li>                   
-                    </ul>
-                  </li>
-                </ul> -->
-              </li>
-              <li><a href="#">Q&A</a>
-                <!-- <ul class="dropdown-menu">                
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>
-                  <li><a href="#">Standard</a></li>                                                
-                  <li><a href="#">T-Shirts</a></li>
-                  <li><a href="#">Shirts</a></li>
-                  <li><a href="#">Jeans</a></li>
-                  <li><a href="#">Trousers</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul>
-                  </li>
-                </ul> -->
-              </li>
-              <!-- <li><a href="#">Sports</a></li>
-             <li><a href="#">Digital <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Camera</a></li>
-                  <li><a href="#">Mobile</a></li>
-                  <li><a href="#">Tablet</a></li>
-                  <li><a href="#">Laptop</a></li>                                                
-                  <li><a href="#">Accesories</a></li>                
-                </ul>
-              </li>
-              <li><a href="#">Furniture</a></li>            
-              <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="blog-archive.html">Blog Style 1</a></li>
-                  <li><a href="blog-archive-2.html">Blog Style 2</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>                
-                </ul>
-              </li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Pages <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="product.html">Shop Page</a></li>
-                  <li><a href="product-detail.html">Shop Single</a></li>                
-                  <li><a href="404.html">404 Page</a></li>                 -->
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>       
-    </div>
-  </section>
-  <!-- / menu -->  
- 
-  <!-- catg header banner section -->
-  <!-- <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
-   <div class="aa-catg-head-banner-area">
-     <div class="container">
-      <div class="aa-catg-head-banner-content">
-        <h2>Fashion</h2>
-        <ol class="breadcrumb">
-          <li><a href="index.html">Home</a></li>         
-          <li class="active">Women</li>
-        </ol>
-      </div>
-     </div>
-   </div>
-  </section> -->
+   
+   %>
+ <%@ include file="/includeFolder/header.file"%>
   <!-- / catg header banner section -->
 
   <!-- product category -->
@@ -329,70 +37,336 @@
           <div class="aa-product-catg-content">
             <div class="aa-product-catg-head">
               <div class="aa-product-catg-head-left">
-                <form action="" class="aa-sort-form">
+                <form action="<%=path%>/prod/ProdServlet" class="aa-sort-form">
                   <label for="">篩選</label>
-                  <select name="">
-                    <option value="1" selected="Default">最相關</option>
-                    <option value="2">價格</option>
-                    <option value="3">最新款</option>
+                  
+                  
+                  
+                  
+                  <select name="prodSelect" class="aa-select" value="">
+                       <c:if test="${'asc'==flag}">             
+                    <option value="1"  >上架時間</option>
+                    <option value="2" selected="Default">價格-低到高</option>
+                    <option value="3">價格-高到低</option>
                     <!-- <option value="4"></option> -->
+                    
+                   </c:if>
+                  
+                   <c:if test="${'desc'==flag}">             
+                    <option value="1"  >上架時間</option>
+                    <option value="2" >價格-低到高</option>
+                    <option value="3" selected="Default">價格-高到低</option>
+                    <!-- <option value="4"></option> -->
+                  
+                   </c:if >
+                    <c:if test="${empty flag or 'time'==flag}">
+                    <option value="1" selected="Default" >上架時間</option>
+                    <option value="2" >價格-低到高</option>
+                    <option value="3" >價格-高到低</option>
+                     </c:if>
+                    <input type="hidden" name = "action" value="select">
+                    <input type="hidden" name = "cateNo" value="<c:out value="${cateNo}"/>">
+					
+<!--                     <input type="submit"> -->
+
                   </select>
-                </form>
-                <form action="" class="aa-show-form">
-                  <label for="">顯示筆數</label>
-                  <select name="">
-                    <option value="1" selected="12">12</option>
-                    <option value="2">24</option>
-                    <option value="3">36</option>
-                  </select>
-                </form>
+                  	
+<!--                 </form> -->
+<!--                 <form action="" class="aa-show-form"> -->
+<!--                   <label for="">顯示筆數</label> -->
+<!--                   <select name=""> -->
+                   
+<!--                     <option value="1" selected="12">12</option> -->
+<!--                     <option value="2">24</option> -->
+<!--                     <option value="3">36</option> -->
+                
+<!--                   </select> -->
+<!--                 </form> -->
               </div>
+              <jsp:useBean id="prodSvc1" scope="page" class="com.product.model.ProdService" />
               <div class="aa-product-catg-head-right">
+              
+                現在分類:<label style="color: orange; font-size:20px;">${empty categoryName ? '所有分類' : categoryName}</label>
                 <a id="grid-catg" href="#"><span class="fa fa-th"></span></a>
                 <a id="list-catg" href="#"><span class="fa fa-list"></span></a>
               </div>
             </div>
             <div class="aa-product-catg-body">
+<!--             如果搜尋陣列長度為0代表 搜尋不到物品 印出查無-->
+            <c:if test= "${fn:length(listSearch)==0 and listSearch!=null}">
+                	<label style="color:blue; font-size:20px;">"${searchCot}" </label><label style=" font-size:20px;">查無結果</label>
+                	</c:if>
+            <c:if test= "${fn:length(listSearch)>0 and listSearch!=null}">
+                	<label style=" font-size:20px;">目前搜尋:</label><label style="color:blue	; font-size:20px;">"${searchCot}"  </label>
+                	</c:if>
+                	
+                	
+                   <c:if test= "${flag=='no'}">
+                	<label style="color:#FF359A; font-size:20px;">"${prodLabel}" </label><label style=" font-size:20px;">查無結果</label>
+                	</c:if>
+            <c:if test= "${flag=='yes'}">
+            		<label style=" font-size:20px;">目前標籤:</label>
+                	<label style="color:	#FF359A	; font-size:20px;">"${prodLabel}"  </label>
+                	
+                	</c:if>
+                	
+                	
+                	
               <ul class="aa-product-catg">
                 <!-- start single product item -->
-                 <% 
-               ProdService prodDao = new ProdService(); 
-               List<ProdVO> list1 = new ArrayList<ProdVO>();
-      		    list1 = prodDao.getAll();
-
-               if(list1!=null&&list1.size()>0){
-              for(int i=0;i<list1.size();i++){
-                 ProdVO product1 = list1.get(i);
-                 
-                
-                 //狀態 為1時才可以顯示在上架頁面
-                 if(product1.getProdStatus()==1){
-        
-           %>   
-                <li>
+               
+<!--                 /遞增排列 -->
+                <c:if test="${'asc'==flag}">
+                			
+                	<c:forEach var="prodEL" items="${listSearch==null ?prodList : listSearch}">
+<!--                 		假如狀態為1代表上架 如果沒有選擇類別 則按照原來執行 如果有 按照類別執行 -->
+					    <c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
+					   
+					    <li>
                   <figure>
-                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?picno=<%=product1.getProdID()%>">
-                    <img src="<%=request.getContextPath()%>/prod/ProdServlet?picNo=<%=product1.getProdID()%>&no=1&action=detail"></a>
-                    <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>加入購物車</a>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
                     <figcaption>
-                      <h4 class="aa-product-title"><a href="#"><%=product1.getProdName() %></a></h4>
-                      <span class="aa-product-price">$<%=product1.getProdRent() %></span><span class="aa-product-price"><del>$65.50</del></span>
-                       <p class="aa-product-descrip"><%=product1.getProdCot() %></p>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span><br>
+                       上架時間:&nbsp
+                       <span class="aa-product-date" style="color:green"><fmt:formatDate value="${prodEL.shelfDate}" pattern="yyyy-MM-dd HH:mm"/></span>
                     </figcaption>
                   </figure>                         
                   <div class="aa-product-hvr-content">
                     <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
-                    <span class="aa-badge aa-hot" href="#">很搶手</span>
+                  
+                <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  	
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                </li>	
+					 </c:if>	
+			</c:forEach>
+                 </c:if>	
+                 
+                 
+<!--                  	/遞減排列 -->
+                 	<c:if test="${'desc'==flag}">
+                	<c:forEach var="prodEL" items="${listSearch==null ?prodList : listSearch}">
+        
+					    <c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
+					    <li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span><br>
+                       上架時間:&nbsp
+                       <span class="aa-product-date" style="color:green"><fmt:formatDate value="${prodEL.shelfDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  	
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                </li>	
+					 </c:if>	
+			</c:forEach>
+                 </c:if>
+                 
+                 
+                 
+                 
+                 
+<!--                  //標籤排列 -->
+
+<c:if test="${matchProdList!=null}">
+
+                	<c:forEach var="prodEL" items="${matchProdList==null ?prodList : matchProdList}">
+        
+					    <c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
+					    <li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span><br>
+                        上架時間:&nbsp
+                       <span class="aa-product-date" style="color:green"><fmt:formatDate value="${prodEL.shelfDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                     <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  	
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                </li>	
+					 </c:if>	
+			</c:forEach>
+                 </c:if>
+
+                 
+                 
+                 
+                 
+                 	
+<c:if test="${matchProdList==null}">           	
+<!--                  上架時間排列(新至舊) -->
+	<c:if test="${empty flag or flag=='time'}">
+	
+                	
+                	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.allByTimeDesc : listSearch}" varStatus="loop">
+                	<c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
+                	<c:if test="${loop.index <12 and (param.page==null or param.page==1)}">
+                	<li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span><br>
+                       上架時間:&nbsp
+                       <span class="aa-product-date" style="color:green"><fmt:formatDate value="${prodEL.shelfDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                  <c:if test="${loop.index <=5}">
+                    <span  class="aa-badge aa-sale" href="#">新上架</span>
+                  </c:if>
+          <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                              
+                    
+                    
+                    
                 </li>
+  			</c:if>
+  				<c:if test="${loop.index >=12 and loop.index<24 and param.page==2}">
+  			<li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <span class="aa-product-price">$${prodEL.prodRent}</span><br>
+                     上架時間:&nbsp
+                       <span class="aa-product-date" style="color:green"><fmt:formatDate value="${prodEL.shelfDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
+                 <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  	
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000; box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                    
+                    
+                </li>
+  			
+  			</c:if>
+  			
+  			
+  			<c:if test="${loop.index >=24 and loop.index<=36 and param.page==3}">
+  			<li>
+                  <figure>
+                    <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
+                    <img src="<%=path%>/prod/ProdServlet?prodID=${prodEL.prodID}&no=1&action=detail"></a>
+                    <a class="aa-add-card-btn"href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}"><span class="fa fa-shopping-cart"></span>看商品細圖</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">${prodEL.prodName}</a></h4>
+                      <br><span class="aa-product-price">$${prodEL.prodRent}</span><br>
+                        上架時間:&nbsp
+                       <span class="aa-product-date" style="color:green"><fmt:formatDate value="${prodEL.shelfDate}" pattern="yyyy-MM-dd HH:mm"/></span>
+                    </figcaption>
+                  </figure>                         
+                  <div class="aa-product-hvr-content">
+                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                  </div>
                 
-                <%
-                   }
-              } 
-               }
-          %>
+                     <c:forEach var="prodCount" items="${prodSvc1.countGroupbyProdID }" varStatus="loop2">
+                  
+  					 <c:if test="${loop2.index==0 and prodCount.key==prodEL.prodID}">
+                           <span style="background-color:yellow;box-shadow:0px 0px 15px red;color:red"class="aa-badge aa-sale" href="#">天下第一租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==1 and prodCount.key==prodEL.prodID}">
+                         <span style="background-color:	#00AEAE; box-shadow:0px 0px 15px yellow;color:white" class="aa-badge aa-sale" href="#">天下第二租</span>
+                           </c:if>
+                           <c:if test="${loop2.index==2 and prodCount.key==prodEL.prodID}">
+                         <span	style="background-color:#F75000;box-shadow:0px 0px 15px yellow; color:white"  class="aa-badge aa-sale" href="#">天下第三租</span>
+                           </c:if>
+                	</c:forEach>
+                    
+                </li>
+  			
+  			</c:if>
+  			
+  			
+  			
+  			
+  			
+  			
+  			
+  			
+  			
+                	</c:if>
+		</c:forEach>
+	
+		</c:if>
+        </c:if>
                  
                     
               </ul>
@@ -403,76 +377,11 @@
                     <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                       <div class="row">
-                        <!-- Modal view slider -->
-                        <div class="col-md-6 col-sm-6 col-xs-12">                              
-                          <div class="aa-product-view-slider">                                
-                            <div class="simpleLens-gallery-container" id="demo-1">
-                              <div class="simpleLens-container">
-                                  <div class="simpleLens-big-image-container">
-                                      <a class="simpleLens-lens-image" data-lens-image="img/view-slider/large/polo-shirt-1.png">
-                                          <img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
-                                      </a>
-                                  </div>
-                              </div>
-                              <div class="simpleLens-thumbnails-container">
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-1.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-1.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-1.png">
-                                  </a>                                    
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-3.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-3.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-3.png">
-                                  </a>
-
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-4.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-4.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-4.png">
-                                  </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Modal view content -->
+                       
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <div class="aa-product-view-content">
-                            <h3>SwitchOLED</h3>
-                            <div class="aa-price-block">
-                              <span class="aa-product-view-price">$34.99</span>
-                              <p class="aa-product-avilability">庫存狀況: <span>有現貨</span></p>
-                            </div>
-                            <p>最新OLED新機 紅藍色主機款<br>
-                              Switch熱門遊戲任選一款<br>
-                              送任天堂原廠飲料提袋+耀西捲線器<br>
-                              推薦(可選配)瑪利歐派對超級巨星 寶可夢鑽石珍珠<br>
-                            </p>
-                            <h4>數量</h4>
-                            <!-- <div class="aa-prod-view-size">
-                              <a href="#">S</a>
-                              <a href="#">M</a>
-                              <a href="#">L</a>
-                              <a href="#">XL</a>
-                            </div> -->
-                            <div class="aa-prod-quantity">
-                              <form action="">
-                                <select name="" id="">
-                                  <option value="0" selected="1">1</option>
-                                  <option value="1">2</option>
-                                  <option value="2">3</option>
-                                  <option value="3">4</option>
-                                  <option value="4">5</option>
-                                  <option value="5">6</option>
-                                </select>
-                              </form>
-                              <p class="aa-prod-category">
-                                分類: <a href="#">Nintendo</a>
-                              </p>
-                            </div>
+  
                             <div class="aa-prod-view-bottom">
-                              <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>加入購物車</a>
-                              <a href="#" class="aa-add-to-cart-btn">點我看商品</a>
                             </div>
                           </div>
                         </div>
@@ -487,17 +396,17 @@
               <nav>
                 <ul class="pagination">
                   <li>
-                    <a href="#" aria-label="Previous">
+                    <a href="<%=request.getRequestURI()%>?page=${param.page>1 ? param.page-1 : 1}" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
-                  <li><a href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                  <li><a href="#">4</a></li>
-                  <li><a href="#">5</a></li>
+                  <li><a href="<%=request.getRequestURI()%>">1</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=2">2</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=3">3</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=4">4</a></li>
+                  <li><a href="<%=request.getRequestURI()%>?page=5">5</a></li>
                   <li>
-                    <a href="#" aria-label="Next">
+                    <a href="<%=request.getRequestURI()%>?page=${param.page!=null? 1+param.page :2}" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                     </a>
                   </li>
@@ -512,146 +421,87 @@
             <div class="aa-sidebar-widget">
               <h3>分類</h3>
               <ul class="aa-catg-nav">
-                <li><a href="#">Nintendo</a></li>
-                <li><a href="#">PlayStation</a></li>
-                <li><a href="#">XBOX</a></li>
-                <li><a href="#">其他遊戲主機</a></li>                                                
-                <li><a href="#">電腦遊戲</a></li>
-                <li><a href="#">桌遊</a></li>
-                <li><a href="#">拼圖</a></li>
-                <li><a href="#">其他</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&prodSelect=<c:out value="${prodSelect}"/>">所有商品</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=1&prodSelect=<c:out value="${prodSelect}"/>">Nintendo</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=2&prodSelect=<c:out value="${prodSelect}"/>">PlayStation</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=3&prodSelect=<c:out value="${prodSelect}"/>">XBOX</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=4&prodSelect=<c:out value="${prodSelect}"/>">其他遊戲主機</a></li>                                                
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=5&prodSelect=<c:out value="${prodSelect}"/>">電腦遊戲</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=6&prodSelect=<c:out value="${prodSelect}"/>">桌遊</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=7&prodSelect=<c:out value="${prodSelect}"/>">拼圖</a></li>
+                <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
               </ul>
             </div>
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
-              <h3>關鍵字</h3>
+              <h3>關鍵字標籤</h3>
               <div class="tag-cloud">
-                <a href="#">PS5</a>
-                <a href="#">動物森友會</a>
-                <a href="#">健身環</a>
-                <a href="#">瑪莉歐</a>
-                <a href="#">寶可夢</a>
-                <a href="#">SwitchOLED</a>
-                <a href="#">金馬58麻將組</a>
+             
               </div>
-            <!-- single sidebar -->
-            <!-- <div class="aa-sidebar-widget">
-              <h3>Shop By Price</h3>               -->
-              <!-- price range -->
-              <!-- <div class="aa-sidebar-price-range">
-               <form action="">
-                  <div id="skipstep" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
-                  </div>
-                  <span id="skip-value-lower" class="example-val">30.00</span>
-                 <span id="skip-value-upper" class="example-val">100.00</span>
-                 <button class="aa-filter-btn" type="submit">Filter</button>
-               </form>
-              </div>              
-
-            </div> -->
-            <!-- single sidebar -->
-            <!-- <div class="aa-sidebar-widget">
-              <h3>Shop By Color</h3>
-              <div class="aa-color-tag">
-                <a class="aa-color-green" href="#"></a>
-                <a class="aa-color-yellow" href="#"></a>
-                <a class="aa-color-pink" href="#"></a>
-                <a class="aa-color-purple" href="#"></a>
-                <a class="aa-color-blue" href="#"></a>
-                <a class="aa-color-orange" href="#"></a>
-                <a class="aa-color-gray" href="#"></a>
-                <a class="aa-color-black" href="#"></a>
-                <a class="aa-color-white" href="#"></a>
-                <a class="aa-color-cyan" href="#"></a>
-                <a class="aa-color-olive" href="#"></a>
-                <a class="aa-color-orchid" href="#"></a>
-              </div>                            
-            </div> -->
-            <!-- single sidebar -->
+           
+           
+           <script>
+           
+//            $("div.tag-cloud > a").click(function(){
+//         	   var label_name = $(this).text();
+//         	   console.log(label_name)
+//         	   $.ajax({
+<%--         		   url:"<%=request.getContextPath()%>/prod/ProdServlet", --%>
+//         		   type:"POST",
+        		  
+//         		   data:{
+//         			   labelName:label_name,
+//         			   action:'labelClick'
+//         		   },
+//         		   success:function(data){
+//         			   console.log(data);
+        			   
+        			   
+//         		   },error:function(){
+//         			   alert("傳送失敗");
+//         		   }
+        		   
+        		   
+//         	   });
+//         	   return false;
+        	   
+//            });   
+           </script>
+           
+           
+            
             <div class="aa-sidebar-widget">
               <h3>最近瀏覽</h3>
               <div class="aa-recently-views">
                 <ul>
+                
+                <c:if test="${not empty listCookie}">
+                <c:forEach var="prodCookie" items="${listCookie}">
+                
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="<%=path%>/front_end/product/prodDetail.jsp?prodID=${prodCookie.prodID}" class="aa-cartbox-img"><img alt="img" src="<%=path%>/prod/ProdServlet?action=detail&prodID=${prodCookie.prodID}&no=1"></a>
+                    
                     <div class="aa-cartbox-info">
-                      <h4><a href="#">PS5</a></h4>
-                      <p>1 x $250</p>
+                      <p>${prodCookie.prodName}</p>
+                      
+                      <p>$${prodCookie.prodRent}</p>
                     </div>                    
                   </li>
-                  <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-1.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">動物森友會</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>
-                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">寶可夢</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>                                      
+              
+                   </c:forEach>   
+                   </c:if>                           
                 </ul>
               </div>                            
             </div>
             <!-- single sidebar -->
-            <div class="aa-sidebar-widget">
-              <h3>熱門瀏覽</h3>
-              <div class="aa-recently-views">
-                <ul>
-                  <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">PS5</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>
-                  <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-1.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">動物森友會</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>
-                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
-                    <div class="aa-cartbox-info">
-                      <h4><a href="#">健身環大冒險</a></h4>
-                      <p>1 x $250</p>
-                    </div>                    
-                  </li>                                      
-                </ul>
-              </div>                            
-            </div>
+     
           </aside>
         </div>
        
       </div>
     </div>
   </section>
-  <!-- / product category -->
 
-
-  <!-- Subscribe section -->
-  <!-- <section id="aa-subscribe">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-subscribe-area">
-            <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  <!-- / Subscribe section -->
 
    <!-- footer -->  
    <footer id="aa-footer">
@@ -777,23 +627,51 @@
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.js"></script>  
+  <script src="<%=path%>/front_end/product/js/bootstrap.js"></script>  
   <!-- SmartMenus jQuery plugin -->
-  <script type="text/javascript" src="js/jquery.smartmenus.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.smartmenus.js"></script>
   <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>  
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.smartmenus.bootstrap.js"></script>  
   <!-- To Slider JS -->
-  <script src="js/sequence.js"></script>
+  <script src="<%=path%>/front_end/product/js/sequence.js"></script>
 <!--   <script src="js/sequence-theme.modern-slide-in.js"></script>   -->
   <!-- Product view slider -->
-  <script type="text/javascript" src="js/jquery.simpleGallery.js"></script>
-  <script type="text/javascript" src="js/jquery.simpleLens.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.simpleGallery.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/jquery.simpleLens.js"></script>
   <!-- slick slider -->
-  <script type="text/javascript" src="js/slick.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/slick.js"></script>
   <!-- Price picker slider -->
-  <script type="text/javascript" src="js/nouislider.js"></script>
+  <script type="text/javascript" src="<%=path%>/front_end/product/js/nouislider.js"></script>
   <!-- Custom js -->
-  <script src="js/custom.js"></script> 
+  <script src="<%=path%>/front_end/product/js/custom.js"></script> 
+<script>
 
+$("select.aa-select").change(function(){
+	$("form.aa-sort-form").submit();
+}) ; 
+
+//動態隨機加入標籤
+$.ajax({
+	type:"post",
+	contentType:"application/x-www-form-urlencoded;charset=utf-8",
+	url:"/TFA104G1/prod/LabelServlet?action=showLabel",
+	dataType:"json",
+	cache:false,
+	success:function(data){
+		console.log(data);
+		for(var i =0;i<8;i++){
+			$('div.tag-cloud').append("<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>")
+		}
+// 		$('div.tag-cloud').append()
+		
+	},
+	error:function(){
+		console.log("失敗");
+	}
+});
+
+
+
+</script>
   </body>
 </html>

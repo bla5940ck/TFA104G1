@@ -8,11 +8,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import com.chatroom.jedis.JedisPoolUtil;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import util.Util;
 
-public class ProdDAO implements ProdDAOImpl {
+public class ProdDAO implements ProdDAO_Interface {
 
 	static {
 		try {
@@ -23,15 +30,18 @@ public class ProdDAO implements ProdDAOImpl {
 		}
 	}
 
-	public void add(ProdVO prod) {
+	private static String INSERT  = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+	public Integer add(ProdVO prod) {
 		
-		String sql = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+		
+		String[] cols = {"prod_id"};
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		ResultSet rs =null;
+		Integer key = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(INSERT,cols);
 
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
@@ -49,10 +59,18 @@ public class ProdDAO implements ProdDAOImpl {
 			
 			pstmt.executeUpdate();
 			
+			rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				key = rs.getInt(1); // 只支援欄位索引值取得自增主鍵值
+				System.out.println("自增主鍵值 = " + key + "(剛新增成功的員工編號)");
+			}
+			
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}finally {
 		if (pstmt != null) {
 			try {
 				pstmt.close();
@@ -67,19 +85,19 @@ public class ProdDAO implements ProdDAOImpl {
 				e.printStackTrace(System.err);
 			}
 		}
-	
-
+	}
+		return key;
 	}
 
-	@Override
+	private static String UPDATE= "up"
+			+ "date product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
 	public void update(ProdVO prod) {
-		String sql = "update product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
 			pstmt.setString(3, prod.getProdName());
@@ -100,11 +118,26 @@ public class ProdDAO implements ProdDAOImpl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
 		
@@ -116,9 +149,9 @@ public class ProdDAO implements ProdDAOImpl {
 
 	}
 
-	@Override
+
+	private static String FINDPRODUCTBYPK = "select * from product where prod_id = ?";
 	public ProdVO findProductByPK(Integer prodId) {
-		String sql = "select * from product where prod_id = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -126,7 +159,7 @@ public class ProdDAO implements ProdDAOImpl {
 
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(FINDPRODUCTBYPK);
 			pstmt.setInt(1, prodId);
 
 			rs = pstmt.executeQuery();
@@ -153,29 +186,43 @@ public class ProdDAO implements ProdDAOImpl {
 		
 			e.printStackTrace();
 		} finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
 			}
-
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 
 		return prod;
 	}
+	
 
-	@Override
+	private static String ALL = "select * from product group by prod_id order by shelf_date desc";
 	public List<ProdVO> getAll() {
 		List<ProdVO> prodList = new ArrayList<ProdVO>();
-		String sql = "select * from product";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(ALL);
 
 			rs = pstmt.executeQuery();
 
@@ -229,32 +276,256 @@ public class ProdDAO implements ProdDAOImpl {
 		return prodList;
 	}
 	
-	public Integer getLastKey() {
-		String sql = "select * from product";
+	
+	private static String ASC = "select * from product group by prod_id order by prod_rent;";
+	public List<ProdVO> priceSortAsc(){
+		List<ProdVO> list = new ArrayList();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		int lastKey = 0 ;
-		
 		
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
-			
+			pstmt = con.prepareStatement(ASC);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				lastKey = rs.getInt("prod_id");
+				ProdVO prod = new ProdVO();
+				prod.setProdID(rs.getInt("prod_id"));
+				prod.setCategoryID(rs.getInt("category_id"));
+				prod.setMemberID(rs.getInt("member_id"));
+				prod.setProdStatus(rs.getInt("prod_status"));
+				prod.setProdName(rs.getString("prod_name"));
+				prod.setProdCot(rs.getString("prod_cot"));
+				prod.setShelfDate(rs.getTimestamp("shelf_date"));
+				prod.setCreationDate(rs.getTimestamp("creation_date"));
+				prod.setProdRent(rs.getInt("prod_rent"));
+				prod.setProdPrice(rs.getInt("prod_price"));
+				prod.setPic1(rs.getBytes("pic_1"));
+				prod.setPic2(rs.getBytes("pic_2"));
+				prod.setPic3(rs.getBytes("pic_3"));
+				prod.setComt(rs.getString("comt"));
+
+				list.add(prod);
+				
 			}
-			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
-		
-		return lastKey;
+
+		return list;
 	}
 	
+	
+	private static String DESC = "select * from product group by prod_id order by prod_rent desc;";
+	public List<ProdVO> priceSortDesc(){
+		List<ProdVO> list = new ArrayList();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(DESC);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProdVO prod = new ProdVO();
+				prod.setProdID(rs.getInt("prod_id"));
+				prod.setCategoryID(rs.getInt("category_id"));
+				prod.setMemberID(rs.getInt("member_id"));
+				prod.setProdStatus(rs.getInt("prod_status"));
+				prod.setProdName(rs.getString("prod_name"));
+				prod.setProdCot(rs.getString("prod_cot"));
+				prod.setShelfDate(rs.getTimestamp("shelf_date"));
+				prod.setCreationDate(rs.getTimestamp("creation_date"));
+				prod.setProdRent(rs.getInt("prod_rent"));
+				prod.setProdPrice(rs.getInt("prod_price"));
+				prod.setPic1(rs.getBytes("pic_1"));
+				prod.setPic2(rs.getBytes("pic_2"));
+				prod.setPic3(rs.getBytes("pic_3"));
+				prod.setComt(rs.getString("comt"));
+
+				list.add(prod);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	private static String SEARCH = "SELECT * FROM product where prod_name like \"%\"?\"%\" or prod_cot like \"%\"?\"%\"";
+	public List<ProdVO> getAllByKeyword(String keyword){
+		
+		List<ProdVO> list = new ArrayList();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(SEARCH);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProdVO prod = new ProdVO();
+				prod.setProdID(rs.getInt("prod_id"));
+				prod.setCategoryID(rs.getInt("category_id"));
+				prod.setMemberID(rs.getInt("member_id"));
+				prod.setProdStatus(rs.getInt("prod_status"));
+				prod.setProdName(rs.getString("prod_name"));
+				prod.setProdCot(rs.getString("prod_cot"));
+				prod.setShelfDate(rs.getTimestamp("shelf_date"));
+				prod.setCreationDate(rs.getTimestamp("creation_date"));
+				prod.setProdRent(rs.getInt("prod_rent"));
+				prod.setProdPrice(rs.getInt("prod_price"));
+				prod.setPic1(rs.getBytes("pic_1"));
+				prod.setPic2(rs.getBytes("pic_2"));
+				prod.setPic3(rs.getBytes("pic_3"));
+				prod.setComt(rs.getString("comt"));
+
+				list.add(prod);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return list;
+	}
+	
+	
+	
+	public static void main(String[] args) {
+//		ProdDAO dao = new ProdDAO();
+//		
+//		List<ProdVO> prodList = dao.getAll();
+//		List<ProdVO> list1 = new ArrayList();
+//		for(ProdVO p: list) {
+//			if(p.getShelfDate()!=null) {
+//				list1.add(p);
+//			}
+//		}
+//		
+//		List<ProdVO> list1 = prodList.stream()
+//										.filter(p ->p.getShelfDate()!=null)	
+//				.sorted(Comparator.comparing(ProdVO::getShelfDate).reversed()).collect(Collectors.toList());
+//		
+//		list1.forEach(p->System.out.println(p.getShelfDate()));
+//		
+//		for(ProdVO p :list1) {
+//			System.out.println(p.getProdID());
+//		}
+////		
+//		List<ProdVO> list = dao.priceSortAsc();
+//		for(ProdVO p :list) {
+//			System.out.println(p.getProdRent());
+//		}
+//		List<ProdVO> allByKeyword = dao.getAllByKeyword("試試看");
+//		System.out.println(allByKeyword.size());
+//		for(ProdVO p : allByKeyword) {
+//			System.out.println();
+//		}
+		
+//		ProdVO findProductByPK = dao.findProductByPK(1);
+//		System.out.println(findProductByPK.getProdPrice());
+	
+	
+//		ProdService prodSvc = new ProdService();
+//		List<ProdVO> list = prodSvc.getAllByTimeDesc();
+//		list.forEach(p->System.out.println(p.getProdID()));
+	
+	
+		
+//	JedisPool pool = JedisPoolUtil.getJedisPool();
+//	Jedis jedis = pool.getResource();
+////	
+////	Boolean b = jedis.exists("prod124");
+//////	jedis.lrem("prod124", Long.valueOf(jedis.llen("prod124")),"10" );
+//	jedis.del("prod123");
+//	jedis.rpush("prod123", "333q3");	
+		
+		
+		
+		
+		
+	
+	}
 
 }

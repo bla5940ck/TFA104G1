@@ -2,6 +2,8 @@ package com.member.model;
 
 import java.util.*;
 
+
+
 public interface BankDAO_interface {
 	public void insert(BankVO bankVO);
     public void update(BankVO bankVO);
@@ -10,4 +12,6 @@ public interface BankDAO_interface {
     public List<BankVO> getAll();
     // //萬用複合查詢(傳入參數型態Map)(回傳 List)
 //  public List<BankVO> getAll(Map<String, String[]> map); 
+  //查詢某部門的員工(一對多)(回傳 Set)
+    public Set<MemberVO> getMemberByBankCode(String bankCode);
 }

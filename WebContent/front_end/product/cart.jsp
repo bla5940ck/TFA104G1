@@ -12,385 +12,163 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+ <style>
+  a.cart-img > img{
+	object-fit: contain;
+	width: 185px;
+	height: 140px;
+}
+ </style>
 <head>
-<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script>
-<meta content="text/html; charset=UTF-8">
- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">    
     <title>JoyLease | Cart</title>
     
-    <!-- Font awesome -->
-    <link href="css/font-awesome.css" rel="stylesheet">
-    <!-- Bootstrap -->
-    <link href="css/bootstrap copy.css" rel="stylesheet">   
-    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-<!--     <link href="css/jquery.smartmenus.bootstrap.css" rel="stylesheet"> -->
-    <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="css/jquery.simpleLens.css">    
-    <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="css/slick.css">
-    <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="css/nouislider.css">
-    <!-- Theme color -->
-    <link id="switcher" href="css/theme-color/dark-navy-theme.css" rel="stylesheet">
-    <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
-    <!-- Top Slider CSS -->
-<!--     <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all"> -->
-
-    <!-- Main style sheet -->
-    <link href="css/style copy.css" rel="stylesheet">    
-
-    <!-- Google Font -->
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  
-
-  </head>
-  <body> 
-  
+   	<%@ include file="/includeFolder/header.file"%>
+   
 
   
-  
-  
-  
-   <!-- wpf loader Two -->
-    <div id="wpf-loader-two">          
-      <div class="wpf-loader-two-inner">
-        <span>Loading</span>
-      </div>
-    </div> 
-    <!-- / wpf loader Two -->       
-  <!-- SCROLL TOP BUTTON -->
-    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
-  <!-- END SCROLL TOP BUTTON -->
 
 
-  <!-- Start header section -->
-  <header id="aa-header">
-    <!-- start header top  -->
-    <div class="aa-header-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="aa-header-top-area">
-              <!-- start header top left -->
-              <div class="aa-header-top-left">
-                <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
-              </div>
-                
-                <!-- start language -->
-                <!-- <div class="aa-language">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <img src="img/flag/english.jpg" alt="english flag">ENGLISH
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                      <li><a href="#"><img src="img/flag/french.jpg" alt="">FRENCH</a></li>
-                      <li><a href="#"><img src="img/flag/english.jpg" alt="">ENGLISH</a></li>
-                    </ul>
-                  </div>
-                </div> -->
-                <!-- / language -->
 
-                <!-- start currency -->
-                <!-- <div class="aa-currency">
-                  <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                      <i class="fa fa-usd"></i>USD
-                      <span class="caret"></span>
-                    </a> -->
-                    <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1"> -->
-                      <!-- <li><a href="#"><i class="fa fa-euro"></i>EURO</a></li>
-                      <li><a href="#"><i class="fa fa-jpy"></i>YEN</a></li> -->
-                    <!-- </ul>
-                  </div>
-                </div> 
-                < / currency -->
-                <!-- start cellphone -->
-                <!-- <div class="cellphone hidden-xs">
-                  <p><span class="fa fa-phone"></span>00-62-658-658</p>
-                </div> -->
-                <!-- / cellphone -->
-              <!-- </div> -->
-              <!-- / header top left -->
-              <div class="aa-header-top-right">
-                <ul class="aa-head-top-nav-right">
-                  <li><a href="account copy.html">會員帳戶</a></li>
-                  <li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
-                  <li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
-                  <!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / header top  -->
+<%
+;
+// List<Integer> leaseList = new ArrayList();
+Set<Integer> leaseSet  =new HashSet();
+List<CartVO> checkoutList = new ArrayList();
+CartVO checkoutCart = new CartVO();
 
-    <!-- start header bottom  -->
-    <div class="aa-header-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="aa-header-bottom-area">
-              <!-- logo  -->
-              <div class="aa-logo">
-                <!-- Text based logo -->
-                <a href="index copy.html">
-                  
-                  <img src="img\logo_org_noframe_191561.png" alt="">
-                  <!-- <p>JoyLease</p> -->
-<!--                   <span class="fa fa-shopping-cart"></span>  -->
+for(String cartStr :cart){
+	
+	leaseSet.add(gson.fromJson(cartStr, CartVO.class).getLeaseID());
+}
+
+pageContext.setAttribute("leaseSet", leaseSet);
+int total=0;
+int index=0;
+int checkbox=0;
+CartVO cartVO1=null;
+
+%>
 
 
-<!--                 小購物車   -->
-
-
-                </a>
-                <!-- img based logo -->
-                <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
-              </div>
-              <!-- / logo  -->
-                 <!-- cart box -->
-         
-              
-                  <%@ include file="/includeFolder/cartInclude.file" %> 
-              
-              
-              
-              <!-- / cart box -->
-              <!-- search box -->
-              <div class="aa-search-box">
-                <form action="">
-                  <input type="text" name="" id="" placeholder="健身環大冒險">
-                  <button type="submit"><span class="fa fa-search"></span></button>
-                </form>
-              </div>
-              <!-- / search box -->             
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- / header bottom  -->
-  </header>
-  <!-- / header section -->
-  <!-- menu -->
-  <section id="menu">
-    <div class="container">
-      <div class="menu-area">
-        <!-- Navbar -->
-        <div class="navbar navbar-default" role="navigation">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>          
-          </div>
-          <div class="navbar-collapse collapse">
-            <!-- Left nav -->
-            <ul class="nav navbar-nav ">
-              <!-- <li><a href="index.html">Home</a></li> -->
-              <li><a href="#">全部分類 <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Nintendo</a></li>
-                  <li><a href="#">PlayStation</a></li>
-                  <li><a href="#">XBOX</a></li>
-                  <li><a href="#">其他遊戲主機</a></li>                                                
-                  <li><a href="#">電腦遊戲</a></li>
-                  <li><a href="#">桌遊</a></li>
-                  <li><a href="#">拼圖</a></li>
-                  <li><a href="#">其他</a></li>
-                  <!-- <li><a href="#">And more.. <span class="caret"></span></a> -->
-                    <!-- <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul> -->
-                  <!-- </li> -->
-                </ul>
-              </li>
-              <li><a href="#">使用教學</a>
-                <!-- <ul class="dropdown-menu">  
-                  <li><a href="#">Kurta & Kurti</a></li>                                                                
-                  <li><a href="#">Trousers</a></li>              
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>                
-                  <li><a href="#">Sarees</a></li>
-                  <li><a href="#">Shoes</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>
-                      <li><a href="#">And more.. <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Rings</a></li>
-                          <li><a href="#">Earrings</a></li>
-                          <li><a href="#">Jewellery Sets</a></li>
-                          <li><a href="#">Lockets</a></li>
-                          <li class="disabled"><a class="disabled" href="#">Disabled item</a></li>                       
-                          <li><a href="#">Jeans</a></li>
-                          <li><a href="#">Polo T-Shirts</a></li>
-                          <li><a href="#">SKirts</a></li>
-                          <li><a href="#">Jackets</a></li>
-                          <li><a href="#">Tops</a></li>
-                          <li><a href="#">Make Up</a></li>
-                          <li><a href="#">Hair Care</a></li>
-                          <li><a href="#">Perfumes</a></li>
-                          <li><a href="#">Skin Care</a></li>
-                          <li><a href="#">Hand Bags</a></li>
-                          <li><a href="#">Single Bags</a></li>
-                          <li><a href="#">Travel Bags</a></li>
-                          <li><a href="#">Wallets & Belts</a></li>                        
-                          <li><a href="#">Sunglases</a></li>
-                          <li><a href="#">Nail</a></li>                       
-                        </ul>
-                      </li>                   
-                    </ul>
-                  </li>
-                </ul> -->
-              </li>
-              <li><a href="#">Q&A</a>
-                <!-- <ul class="dropdown-menu">                
-                  <li><a href="#">Casual</a></li>
-                  <li><a href="#">Sports</a></li>
-                  <li><a href="#">Formal</a></li>
-                  <li><a href="#">Standard</a></li>                                                
-                  <li><a href="#">T-Shirts</a></li>
-                  <li><a href="#">Shirts</a></li>
-                  <li><a href="#">Jeans</a></li>
-                  <li><a href="#">Trousers</a></li>
-                  <li><a href="#">And more.. <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sleep Wear</a></li>
-                      <li><a href="#">Sandals</a></li>
-                      <li><a href="#">Loafers</a></li>                                      
-                    </ul>
-                  </li>
-                </ul> -->
-              </li>
-              <!-- <li><a href="#">Sports</a></li>
-             <li><a href="#">Digital <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="#">Camera</a></li>
-                  <li><a href="#">Mobile</a></li>
-                  <li><a href="#">Tablet</a></li>
-                  <li><a href="#">Laptop</a></li>                                                
-                  <li><a href="#">Accesories</a></li>                
-                </ul>
-              </li>
-              <li><a href="#">Furniture</a></li>            
-              <li><a href="blog-archive.html">Blog <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="blog-archive.html">Blog Style 1</a></li>
-                  <li><a href="blog-archive-2.html">Blog Style 2</a></li>
-                  <li><a href="blog-single.html">Blog Single</a></li>                
-                </ul>
-              </li>
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="#">Pages <span class="caret"></span></a>
-                <ul class="dropdown-menu">                
-                  <li><a href="product.html">Shop Page</a></li>
-                  <li><a href="product-detail.html">Shop Single</a></li>                
-                  <li><a href="404.html">404 Page</a></li>                 -->
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>       
-    </div>
-  </section>
-  <!-- / menu -->  
- 
-  <!-- catg header banner section -->
-  <!-- <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
-   <div class="aa-catg-head-banner-area">
-     <div class="container">
-      <div class="aa-catg-head-banner-content">
-        <h2>Cart Page</h2>
-        <ol class="breadcrumb">
-          <li><a href="index.html">Home</a></li>                   
-          <li class="active">Cart</li>
-        </ol>
-      </div>
-     </div>
-   </div>
-  </section> -->
-  <!-- / catg header banner section -->
 
  <!-- Cart view section -->
+ 	<c:if test="${not empty errorMsgs}">
+ 
+<font style="color:red"> </font>
+	<ul>
+	    <c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red; font-size:30px;">${message}!!!</li>
+		</c:forEach>
+	</ul> 
+</c:if>
  <section id="cart-view">
    <div class="container">
      <div class="row">
        <div class="col-md-12">
          <div class="cart-view-area">
            <div class="cart-view-table">
-             <form action="">
+             <form id ="cart-form" action="<%=path %>/prod/ProdServlet?action=checkout" method = "post">
+             
+             
+     	
+<!--      		不重複的會員(出租) 找有多少商品 -->
+             
+              <%for(Integer leaseID :leaseSet){
+            	  //會員總數量
+            	  index++ ; 
+              %>
+              <div id="lease-div">
+           	<label class="cart-lable" style="color:Navy; font-size:30px;">賣場編號: shop1000<%=leaseID%> </label>
+           
                <div class="table-responsive">
                   <table class="table">
+                  
                     <thead>
+                    
                       <tr>
-                          <th></th>
+                        <th>選取商品</th> 
                         <th>商品圖片</th>
                         <th>商品名稱</th>
                         <th>租金</th>
                         <th>預計租借日</th>
                         <th>預計歸還日</th>
                         <th>總計</th>
+                         <th>刪除商品</th>
                       </tr>
                     </thead>
                     <tbody>
-                    <% int tatol=0;
-                       int index=0;
+ 
+                  
+                    <% 
+                    int leaseProd=0;
                     for(String item : cart) {
-                    	index++ ;
-                    CartVO cartVO1 = gson.fromJson(item, CartVO.class);%>
+                    	
+                    	cartVO1 = gson.fromJson(item, CartVO.class);
+                    	request.setAttribute("cartVO1",cartVO1);
+                    	if(cartVO1.getLeaseID()==leaseID ){
+                    		
+                    		//出租者商品數量
+                    		leaseProd++;
+                    		//商品總數量
+                    		checkbox++;
+                    	
+                    		
+                    	%>
+                    	
+                    	
                       <tr>
-                      	<input type="hidden" value="<%=cartVO1.getProdID() %>">
-                        <td><a class="remove" ><fa class="fa fa-close"></fa></a></td>
-                        <td><a ><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO1.getProdID()%>" alt="img"></a></td>
+                      	<input  type="hidden" value="<%=cartVO1.getProdID()%>">
+                      	<input  type="hidden" value="<%=cartVO1.getTotalPrice()%>">
+<%--                       	<c:if test="${cartVO1.prodID == param.prodID}"> --%>
+<%--                       	<td><input class="cart-checkbox" checked="checked" name="cartCheckbox" type="checkbox" value="<%=cartVO1.getProdID()%>" style= "width:25px;height:25px;"></td> --%>
+<%--                         </c:if> --%>
+<%--                         <c:if test="${cartVO1.prodID != param.prodID}"> --%>
+                        <td><input class="cart-checkbox" name="cartCheckbox" type="checkbox" value="<%=cartVO1.getProdID()%>" style= "width:25px;height:25px;"></td>
+<%--                         </c:if> --%>
+                        <td><a class="cart-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=<%=cartVO1.getProdID()%>"><img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO1.getProdID()%>" alt="img"></a></td>
                         <td><a class="aa-cart-title" href="#"><%=cartVO1.getProdName() %></a></td>
                         <td><%=cartVO1.getRent() %></td>
                         <td><%=cartVO1.getEstStart()%></td>
                          <td><%=cartVO1.getEstEnd()%></td>
-                        <td><%=cartVO1.getTatolPrice()%></td>
-                       
+                        <td><%=cartVO1.getTotalPrice()%></td>
+                       	
+                        <td><a class="remove" ><fa class="fa fa-close"></fa></a></td>
+                      	
                       </tr>
+                     
                          <%
-                         tatol +=cartVO1.getTatolPrice();
-                    } 
+						
+			
+                    } }
                          
                          %>
-                     
+                 
+                  
                       <tr>
-                        <td colspan="6" class="aa-cart-view-bottom">
-                          <div class="aa-cart-coupon">
-                            <input class="aa-coupon-code" type="text" placeholder="請輸入折扣碼">
-                            <input class="aa-cart-view-btn" type="submit" value="使用折扣碼">
-                          </div>
-                          <input class="aa-cart-view-btn" type="submit" value="更新購物車">
-                        </td>
+                    	<input class = "leaseProd" type = "hidden" value="<%=leaseProd %>">
+                    	
                       </tr>
+                         &nbsp;&nbsp;&nbsp;&nbsp;共 <label id="prodCount_label" style="color:green;"><%=leaseProd %></label> 件商品
                       </tbody>
                   </table>
                 </div>
+                </div>
+            <%} %>   
+                
+                    <td colspan="6" class="aa-cart-view-bottom">
+                          <input class="aa-cart-view-btn" type="button" value="更新購物車">
+                        </td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
              </form>
              <!-- Cart Total view -->
              <div class="cart-view-total">
@@ -398,16 +176,19 @@
                <table class="aa-totals-table">
                  <tbody>
                    <tr>
-                     <th>小計</th>
-                     <td>$<%=tatol %></td>
+                     <th>已選擇的商品</th>
+                     <td id="prod-select"></td>
                    </tr>
                    <tr>
-                     <th>總計</th>
-                     <td>$<%=tatol %></td>
-                   </tr>
+                     <th>小計</th>
+                     <td id="td-total"></td>
+                     </tr>
+                   
                  </tbody>
                </table>
-               <a href="#" class="aa-cart-view-btn">購物車結帳</a>
+               <c:if test="${not empty cartVO1}">
+               <a href="#" class="aa-cart-view-btn" >購物車結帳</a>
+            	</c:if>
              </div>
            </div>
          </div>
@@ -415,27 +196,7 @@
      </div>
    </div>
  </section>
- <!-- / Cart view section -->
 
-
-  <!-- Subscribe section -->
-  <!-- <section id="aa-subscribe">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-subscribe-area">
-            <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  <!-- / Subscribe section -->
 
   <!-- footer -->  
   <footer id="aa-footer">
@@ -561,23 +322,23 @@
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.js"></script>  
+  <script src="<%=request.getContextPath()%>/front_end/product/js/bootstrap.js"></script>  
   <!-- SmartMenus jQuery plugin -->
-  <script type="text/javascript" src="js/jquery.smartmenus.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/front_end/product/js/jquery.smartmenus.js"></script>
   <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>  
+  <script type="text/javascript" src="<%=request.getContextPath()%>/front_end/product/js/jquery.smartmenus.bootstrap.js"></script>  
   <!-- To Slider JS -->
-  <script src="js/sequence.js"></script>
+  <script src="<%=request.getContextPath()%>/front_end/product/js/sequence.js"></script>
 <!--   <script src="js/sequence-theme.modern-slide-in.js"></script>   -->
   <!-- Product view slider -->
-  <script type="text/javascript" src="js/jquery.simpleGallery.js"></script>
-  <script type="text/javascript" src="js/jquery.simpleLens.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/front_end/product/js/jquery.simpleGallery.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/front_end/product/js/jquery.simpleLens.js"></script>
   <!-- slick slider -->
-  <script type="text/javascript" src="js/slick.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/front_end/product/js/slick.js"></script>
   <!-- Price picker slider -->
-  <script type="text/javascript" src="js/nouislider.js"></script>
+  <script type="text/javascript" src="<%=request.getContextPath()%>/front_end/product/js/nouislider.js"></script>
   <!-- Custom js -->
-  <script src="js/custom.js"></script> 
+  <script src="<%=request.getContextPath()%>/front_end/product/js/custom.js"></script> 
 
 
 <script>
@@ -590,29 +351,64 @@ $("a.remove").click(function(){
 	  let r = confirm("確認移除？");
   
   let that = this;
-
+ 
   let prodid = $(that).closest("tr").find("input").eq(0).val();
+  
 	  if (r){
 		 
   		
 	    $.ajax({
-	      url: "<%=request.getContextPath()%>/prod/ProdServlet",           // 資料請求的網址
+	      url: "<%=request.getContextPath()%>/cart/CartServlet",           // 資料請求的網址
 	      type: "POST",                
 	      data: {
 	    	  prodID: prodid,
 	    	  action: "delete",
-	    	  index :<%=index%>
+	    	  index :<%=checkbox%>
 	      },                  // 傳送資料到指定的 url
 	      beforeSend: function(){       // 在 request 發送之前執行
 	      }  
 	    	  ,success: function(data){ 
-	    		 console.log(data);
-	    $("span.aa-cart-notify").text(data);
-        $(that).closest("tr").animate({
-          "opacity": 0
-        }, 1000, "swing", function(){
-          $(this).remove();
-        });
+	    		  $("table.aa-totals-table").load(
+location.href + " table.aa-totals-table");
+	    	//小購物車顯示數量-1	 
+	    $("span.aa-cart-notify").text($("span.aa-cart-notify").text()-1);
+	  
+	    var leaseProd = $(that).closest('tbody').find('tr:last').find('input').val();
+	   leaseProd = $(that).closest('tbody').find('tr:last').find('input').val(leaseProd-1);
+	   console.log($(that).closest('tbody').find('tr:last').find('input').val());
+	   $("div.aa-cartbox-summary").load(location.href + " div.aa-cartbox-summary");
+	   
+	   //大購物車 數量-1
+	  $(that).closest("div.table-responsive").find('label').eq(0).text($(that).closest("div.table-responsive").find('label').eq(0).text()-1);
+	    //假如出租者在購物車商品刪到剩下0個 那麼整個欄位包含賣家資訊也要刪除
+	   if($(that).closest('tbody').find('tr:last').find('input').val()==0){
+	    	console.log("此出租者全部沒商品");
+	    	$(that).closest("#lease-div").animate({
+	    	          "opacity": 0
+	    	        }, 1000, "swing", function(){
+	    	        	$(this).remove(); 
+	    	        	
+	    	        });
+	    	
+	    	
+	    }else{
+	    	
+	    	console.log("執行2")
+	    	   $(that).closest("tr").animate({
+	    	          "opacity": 0
+	    	        }, 1000, "swing", function(){
+	    	        	$(this).remove();
+
+	    	        });
+	    	
+	    }
+	    
+// 	    console.log($(that).closest("#lease-div"));
+//       	console.log($(that).closest('div').find('input').eq(0).val())
+        	
+//         	<input class = "leaseProd
+	    
+	 
        
       }
 
@@ -622,6 +418,62 @@ $("a.remove").click(function(){
   });
   
   
+  //選單計算
+
+var total =0;
+var prodSelect=0;
+
+
+
+
+
+
+
+$("input.cart-checkbox").click(function(){
+    var isChecked = $(this).is(":checked");
+    console.log( $(this));
+    //被選到的計算總金額
+    if($(this).is(":checked")){
+    	
+    	$("#prod-select").text(++prodSelect);
+   let prodID = $(this).closest("tr").find("input").eq(0);
+  total +=  parseInt($(this).closest("tr").find("input").eq(1).val());
+    	$("#td-total").text(total);
+    }else{
+    	//沒被選到的扣掉金額
+    	total -=  parseInt($(this).closest("tr").find("input").eq(1).val());
+    	$("#td-total").text(total);
+    	$("#prod-select").text(--prodSelect);
+
+    }
+  
+  });
+  
+  
+  
+  
+
+  
+  $("a.aa-cart-view-btn").click(function(){
+	 
+	  $("#cart-form").submit();
+  });
+  
+  
+//   $("input.cart-checkbox")
+  
+  $("input.aa-cart-view-btn").click(function(){
+	  history.go(0);
+  });
+  
+  
+window.onload = function () {
+	
+	
+
+}
+	
+
   </script> 
  
   </body>

@@ -1,0 +1,140 @@
+#preview1 {
+	border: 1px solid lightgray;
+	display: inline-block;
+	width: 350px;
+	min-height: 257px;
+	position: relative;
+}
+
+#preview1 span.text {
+	position: absolute;
+	display: inlinse-block;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+	color: lightgray;
+}
+
+#preview1 img.preview_img {
+	width: 100%;
+}
+
+
+
+#preview2 {
+	border: 1px solid lightgray;
+	display: inline-block;
+	width: 350px;
+	min-height: 257px;
+	position: relative;
+}
+
+#preview2 span.text {
+	position: absolute;
+	display: inlinse-block;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+	color: lightgray;
+}
+
+#preview2 img.preview_img {
+	width: 100%;
+}
+
+
+
+#preview3 {
+	border: 1px solid lightgray;
+	display: inline-block;
+	width: 350px;
+	min-height: 257px;
+	position: relative;
+}
+
+#preview3 span.text {
+	position: absolute;
+	display: inlinse-block;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+	color: lightgray;
+}
+
+#preview3 img.preview_img {
+	width: 100%;
+}
+
+
+
+ button[type="submit"]{padding:5px 15px; background:#000093; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+color:white;
+}
+
+ input[type="button"]{padding:5px 15px; background:#ccc; border:0 none;
+cursor:pointer;
+-webkit-border-radius: 5px;
+border-radius: 5px; 
+}
+select {
+            text-align: center;
+            height: 50px;
+            overflow: hidden;
+            outline: none;
+             background: #ECF5FF;
+			border-collapse:collapse;
+            border-radius: 9px; 
+        }
+        option{
+            width: 150px;
+            height: 40px;
+            font-size: 20px;
+            display: inline-block;
+            border-radius: 9px; 
+            padding-top: 10px;
+        }
+
+form.aa-login-form > input[type="text"]{
+text-align: center;
+padding:5px 15px;
+border-style:solid;
+ background: #ECF5FF;
+ border-color:black;
+border-collapse:collapse;
+-webkit-border-radius: 9px;
+border-radius: 9px; 
+}
+
+.file {
+    position: relative;
+    display: inline-block;
+    background: #ECF5FF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}
+

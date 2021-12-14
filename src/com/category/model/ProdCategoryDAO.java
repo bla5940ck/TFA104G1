@@ -84,7 +84,6 @@ public class ProdCategoryDAO implements ProdCategoryDAOImpl{
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
-			prodCategory = new ProdCategoryVO();
 			while(rs.next()) {
 				prodCategory = new ProdCategoryVO(rs.getInt(1),rs.getString(2));
 				

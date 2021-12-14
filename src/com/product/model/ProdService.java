@@ -1,17 +1,32 @@
 package com.product.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import com.booking.model.BookingDAO;
+import com.category.model.ProdCategoryDAO;
+import com.category.model.ProdCategoryDAOImpl;
+import com.category.model.ProdCategory_Interface;
 
 
 
 public class ProdService {
-	private ProdDAOImpl dao;
+	private ProdDAO_Interface dao;
+	private ProdCategoryDAOImpl dao2;
+	private BookingDAO dao3;
 	public ProdService() {
 		dao = new ProdDAO();
+		dao2 = new ProdCategoryDAO();
+		dao3 = new BookingDAO();
 	}
 
-	public ProdVO AddProd( Integer cate, String name, String cot, Integer rent,
+	public Integer AddProd( Integer cate, String name, String cot, Integer rent,
 			Integer price, String comt, byte[] pic1, byte[] pic2, byte[] pic3,Timestamp shelfDate) {
 		ProdVO prod = new ProdVO();
 		
@@ -21,15 +36,15 @@ public class ProdService {
 		prod.setProdPrice(price);
 		prod.setComt(comt);
 		prod.setProdCot(cot);
-		prod.setProdStatus(0);// «Ý¤W¬[¥N½X
+		prod.setProdStatus(0);// ï¿½Ý¤Wï¿½[ï¿½Nï¿½X
 		prod.setPic1(pic1);
 		prod.setPic2(pic2);
 		prod.setPic3(pic3);
 		prod.setShelfDate(shelfDate);
 	
-			dao.add(prod);
+			Integer key =dao.add(prod);
  			
-		return prod;
+		return key;
 	}
 	public ProdVO updateProd(Integer prodID, Integer cate, String name, String cot, Integer rent,
 			Integer price, String comt, byte[] pic1, byte[] pic2, byte[] pic3,Timestamp shelfDate,Integer status) {
@@ -56,6 +71,28 @@ public class ProdService {
 	public ProdVO findProductByPK(Integer prodId) {
 		return dao.findProductByPK(prodId);
 	}
+	public List<ProdVO> getSortAsc(){
+		return dao.priceSortAsc();
+	}
+	public List<ProdVO> getSortDesc(){
+		return dao.priceSortDesc();
+	}
+	public List<ProdVO> getAllByKeyword(String keyword){
+		return dao.getAllByKeyword(keyword);
+	}
+	public List<ProdVO> getAllByTimeDesc(){
+		List<ProdVO> list = dao.getAll();
+		return list.stream()
+				.filter(p ->p.getShelfDate()!=null)	
+					.sorted(Comparator.comparing(ProdVO::getShelfDate)
+							.reversed())
+								.collect(Collectors.toList());
+	}
+	public Map<Integer, Integer> getCountGroupbyProdID(){
 
+		
+		return  dao3.getSortByCount();
+				
+	}
 	
 }
