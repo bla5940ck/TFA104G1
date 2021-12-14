@@ -14,7 +14,7 @@
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
-	System.out.println("會員編號 : " + memID);
+// 	System.out.println("會員編號 : " + memID);
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 	List<DefAddressVO> daVO = dadao.getAll();
 	List<Integer> list1 = new ArrayList<>();
@@ -24,7 +24,7 @@
 	for (OrderMasterVO omVO : list) {
 		if (omVO.getRentID() == memID) {
 
-			System.out.println(memID + "的訂單為" + omVO.getOrdID());
+// 			System.out.println(memID + "的訂單為" + omVO.getOrdID());
 		}
 	}
 	for (int i : list1) {
