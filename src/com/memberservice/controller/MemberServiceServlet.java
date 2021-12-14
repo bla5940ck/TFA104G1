@@ -209,14 +209,14 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("msVO", msVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/back_end/memberservice/listAllproblemmsg.jsp";
+				String url = "/back_end/memberservice/listAllProbleMmsg.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 //			} catch (Exception e) {
 //				errorMsgs.add("修改資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllproblemmsg.jsp");
+//				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp");
 //				failureView.forward(req, res);
 //			}
 		}
@@ -427,7 +427,7 @@ Integer problemStatus = new Integer(req.getParameter("problemStatus").trim());
 				MemberServiceDAO dao = new MemberServiceDAO();
 				dao.insert(msVO);
 				
-				String url = "/back_end/memberservice/listAllmemberProblem.jsp";
+				String url = "/back_end/memberservice/listAllMemberProblem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				

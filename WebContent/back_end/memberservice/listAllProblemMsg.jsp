@@ -10,11 +10,8 @@
 	pageContext.setAttribute("list", list);
 	for(MemberServiceVO mcVO : list){
 		System.out.println("圖1"  + mcVO.getPic1());
-	}
-	
-	
-	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
-	
+	}	
+	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");	
 %>
 
 <html>
@@ -184,27 +181,27 @@ object-fit: contain;
 					<br>
 					<tr>					
 						<td>${msVO.msgID}</td>
-						<input type="hidden" name="msgID" value="${msVO.msgID}" >
+						
 						<td>${msVO.prodID}</td>
-						<input type="hidden" name="prodID" value="${msVO.prodID}" >
+				
 						<td>${msVO.memberID}</td>
-						<input type="hidden" name="memberID" value="${msVO.memberID}" >
+						
 						<td>${msVO.managerID}</td>
-						<input type="hidden" name="managerID" value="${msVO.managerID}" >
+						
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
-						<input type="hidden" name="typeID" value="${msVO.typeID}" >
+						
 						<td>${msVO.ordID}</td>
-						<input type="hidden" name="ordID" value="${msVO.ordID}" >
+						
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-						<input type="hidden" name="msgDate" value="${msVO.msgDate}" >
+						
 						<td>${msVO.problemMsg}</td>
-						<input type="hidden" name="problemMsg" value="${msVO.problemMsg}" >
+						
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=1&msgID=${msVO.msgID}"></td>
-						<input type="hidden" name="pic1" value="${msVO.pic1}" >
+						
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=2&msgID=${msVO.msgID}"></td>
-						<input type="hidden" name="pic2" value="${msVO.pic2}" >
+						
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=3&msgID=${msVO.msgID}"></td>
-						<input type="hidden" name="pic3" value="${msVO.pic3}" >
+						
 						<td><select name="problemStatus" size="1" id="s">
 								<option value="0" >未處理</option>
 								<option value="1" >已處理</option>

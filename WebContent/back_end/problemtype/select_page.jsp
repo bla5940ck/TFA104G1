@@ -112,7 +112,7 @@ li>a{
 			<li><a href='addProblemType.jsp'>新增問題類型</a></li>
 		</ul>		
 		<ul>
-			<li><a href='<%=request.getContextPath()%>/back_end/memberservice/listAllproblemmsg.jsp'>投訴問題處理</a></li>
+			<li><a href="/TFA104G1/back_end/memberservice/listAllProblemMsg.jsp">投訴問題處理</a></li>
 		</ul>
 			
 	</main>
