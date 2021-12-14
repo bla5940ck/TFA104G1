@@ -223,7 +223,10 @@ request.setAttribute("product", product);
                   <input type="hidden" name="action" value="search">
                   <button type="submit"><span class="fa fa-search"></span></button>
                 </form>
+                	               
               </div>
+                   
+            
 							<!-- / search box -->
 						</div>
 					</div>
@@ -364,8 +367,8 @@ request.setAttribute("product", product);
 
 										<li> <span style="font-size:20px">備註: <%=comt%></span></li>
 										<td class="start" style="font-size:20px">
-										<li><span style="font-size:20px">預計租借日期: <input id="startDate" type="text" ></span></li>
-										 <span style="font-size:20px">預計歸還日期: <input id="endDate" type="text"></span></li>
+										<li><span style="font-size:20px;">預計租借日期: <input id="startDate" type="text"  style="width:150px"></span></li>
+										 <span style="font-size:20px">預計歸還日期: <input id="endDate" type="text"  style="width:150px"></span></li>
 										</td><br><br>
 										<td> <li style="font-size:20px">金額試算:<label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn"></li>
@@ -850,9 +853,9 @@ function selflog_show(id){
 	<%for (int i = 0; i < list.size(); i++) {
 				long k = (list.get(i).getEstEnd().getTime() - list.get(i).getEstStart().getTime()) / 86400000;
 
-				for (long j = 0; j <= k + 6; j++) {
+				for (long j = 0; j <= k ; j++) {
 					//儲存所有的區間日期
-					long d = list.get(i).getEstStart().getTime() + 86400000 * (j - 3);//前3後3緩衝計算
+					long d = list.get(i).getEstStart().getTime() + 86400000 * (j);
 					%>
 		disableddates.push(
 	<%=d%>
@@ -880,6 +883,29 @@ function selflog_show(id){
 		$("input.report-btn").click(function(){
 			location.href="<%=path%>/back_end/memberservice/problemTypeReport.jsp";
 		});
+		
+		
+		
+		
+		$.ajax({
+			type:"post",
+			contentType:"application/x-www-form-urlencoded;charset=utf-8",
+			url:"/TFA104G1/prod/LabelServlet?action=showLabel",
+			dataType:"json",
+			cache:false,
+			success:function(data){
+				console.log(data);
+				for(var i =0;i<7;i++){
+					$('label.searchLabel').append("#"+ "<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>&nbsp&nbsp")
+				}
+//		 		$('div.tag-cloud').append()
+				
+			},
+			error:function(){
+				console.log("失敗");
+			}
+		});
+		
 		
 		
 		
