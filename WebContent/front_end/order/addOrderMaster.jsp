@@ -58,6 +58,7 @@ a.cart-img>img {
 										boolean flag = true;
 
 										List<CartVO> checkoutList = (List<CartVO>) request.getAttribute("checkoutList");
+											System.out.println(checkoutList.size());
 										// 				Set<CartVO> treeSet = new TreeSet();
 										List<OrderListVO> orderList = new ArrayList();
 										for (CartVO cartVO : checkoutList) {
@@ -216,8 +217,7 @@ a.cart-img>img {
 														</tr>
 														<tr>
 															<td>運費:</td>
-															<td><input type="hidden" id="shipFee" name="shipFee"
-																value="60">60 元</td>
+															<td><input type="hidden" id="shipFee" name="shipFee" value="60">60 元</td>
 														</tr>
 														<tr>
 															<td>訂單金額:</td>

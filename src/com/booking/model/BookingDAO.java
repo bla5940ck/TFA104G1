@@ -308,4 +308,49 @@ public class BookingDAO implements BookingDAO_interface {
 		
 	}
 
+	@Override
+	public void add2(BookingVO bk, Connection con) {
+		String sql = "INSERT INTO booking(`prod_id`, `status`, `est_start`, `est_end` ,`ord_id`) VALUES (?, ?, ?, ?,?);";
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,bk.getProdID());
+			System.out.println("進到bookingDAO");
+			System.out.println(bk.getProdID());
+			pstmt.setInt(2,bk.getStatus());
+			System.out.println(bk.getStatus());
+			pstmt.setDate(3, bk.getEstStart());
+			System.out.println(bk.getEstStart());
+			pstmt.setDate(4, bk.getEstEnd());
+			System.out.println(bk.getEstEnd());
+			pstmt.setInt(5, bk.getOrdID());
+			System.out.println(bk.getOrdID());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					se.printStackTrace();
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-bookingDAO");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+		
+	
+
 }

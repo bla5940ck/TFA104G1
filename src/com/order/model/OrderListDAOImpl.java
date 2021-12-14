@@ -12,6 +12,10 @@ import java.util.List;
 
 import org.apache.tomcat.dbcp.dbcp2.SQLExceptionList;
 
+import com.booking.model.BookingDAO;
+import com.booking.model.BookingService;
+import com.booking.model.BookingVO;
+
 import util.Util;
 
 public class OrderListDAOImpl implements OrderListDAO_interface {
@@ -104,17 +108,40 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, olVO.getProdID());
+		System.out.println(olVO.getProdID());
 			pstmt.setInt(2, olVO.getOrdID());
+		System.out.println(olVO.getOrdID());
 			pstmt.setInt(3, olVO.getProdPrice());
+		System.out.println(olVO.getProdPrice());
 			pstmt.setDate(4, olVO.getEstStart());
+		System.out.println(olVO.getEstStart());
 			pstmt.setDate(5, olVO.getEstEnd());
-
+		System.out.println(olVO.getEstEnd());
+			
+		pstmt.executeUpdate();
+		BookingDAO bkdao = new BookingDAO();
+		BookingVO bkVO = new BookingVO();
+		bkVO.setProdID(olVO.getProdID());
+		bkVO.setStatus(0);
+		bkVO.setEstStart(olVO.getEstStart());
+		bkVO.setEstEnd(olVO.getEstEnd());
+		bkVO.setOrdID(olVO.getOrdID());
+		System.out.println("由ListDAO至BKDAO");
+		bkdao.add2(bkVO, con);
+		
+		
+//			BookingService bkSVC = new BookingService();
+//			System.out.println("進入list");
+//			bkSVC.insertWithList(olVO.getProdID(), 0, olVO.getEstStart(), olVO.getEstEnd(), olVO.getOrdID(), con);
+//			System.out.println("進入list2");
+			
+			
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("set auto_increment_increment=1;");
-			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
+					se.printStackTrace();
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-orderList");
 					con.rollback();

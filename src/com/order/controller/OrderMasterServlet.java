@@ -311,64 +311,62 @@ public class OrderMasterServlet extends HttpServlet {
 
 		if ("submit_order".equals(action)) { // 來自addOrderMaster.jsp的請求
 			
-			System.out.println("進來servlet");
+//			System.out.println("進來servlet");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			Integer rentID = new Integer(req.getParameter("rentID"));
-			System.out.println("承租者會員編號 : " + rentID);
+//			System.out.println("承租者會員編號 : " + rentID);
 			
 				Integer leaseID = new Integer(req.getParameter("leaseID"));
-			System.out.println("出租者會員編號 : " + leaseID);
+//			System.out.println("出租者會員編號 : " + leaseID);
 			
 			try {
 				String prodName = req.getParameter("prodName");
 				
-			System.out.println("商品名稱 : " + prodName);	
+//			System.out.println("商品名稱 : " + prodName);	
 				Integer prodID = new Integer(req.getParameter("prodID"));
-			System.out.println("商品編號 :" + prodID);
+//			System.out.println("商品編號 :" + prodID);
 			
 			/***************************日期部分******************************/
 				Date date = new Date();
 				long ord = date.getTime();
 				Timestamp ordDate = new Timestamp(ord);
 			
-			System.out.println("訂單日期 : " + ordDate);
-					System.out.println("日期下例外");
+//			System.out.println("訂單日期 : " + ordDate);
 			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
 				java.sql.Date estStart = java.sql.Date.valueOf(req.getParameter("estStart"));
-			System.out.println("預定租借起日 : "+ estStart);
+//			System.out.println("預定租借起日 : "+ estStart);
 				
 				java.sql.Date estEnd = java.sql.Date.valueOf(req.getParameter("estEnd"));
-			System.out.println("預定租借訖日 : "+estEnd);		
+//			System.out.println("預定租借訖日 : "+estEnd);		
 						
 				Integer rentDays = new Integer(req.getParameter("rentDays"));
-			System.out.println("承租天數 : " + rentDays);	
+//			System.out.println("承租天數 : " + rentDays);	
 				
 			/********************付款資訊******************/
 				Integer payID = new Integer (req.getParameter("payID"));
-			System.out.println("付款方式編碼 : " + payID);
+//			System.out.println("付款方式編碼 : " + payID);
 			
 			String strcp = req.getParameter("couponID").trim();
-			System.out.println(strcp);
 			Integer couponID = null;
 			if(strcp != null && strcp.length() != 0) {
 				couponID = new Integer(strcp);
-				System.out.println("折價券編碼 : " + couponID);	
+//				System.out.println("折價券編碼 : " + couponID);	
 			}
 			
 				Integer storeCode = new Integer(req.getParameter("code711"));
-			System.out.println("預設物流 : " + storeCode);
+//			System.out.println("預設物流 : " + storeCode);
 			
 				Integer prodPrice = new Integer(req.getParameter("prodPrice"));
-			System.out.println("商品小計 :" + prodPrice);	
+//			System.out.println("商品小計 :" + prodPrice);	
 			
 				Integer shipFee = new Integer(req.getParameter("shipFee"));	
-			System.out.println("運費 : " + shipFee);
+//			System.out.println("運費 : " + shipFee);
 			
 				Integer ordPrice = new Integer(req.getParameter("ordPrice"));
-			System.out.println("訂單金額 :" + ordPrice);	
+//			System.out.println("訂單金額 :" + ordPrice);	
 			
 				/*************存入VO**************/
 				OrderMasterVO omVO = new OrderMasterVO();
@@ -391,26 +389,11 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println("訂單存入");
 				
 				/*************存入訂單明細VO***********/
-//				List<OrderListVO> list = new ArrayList<OrderListVO>();
 				System.out.println(req.getSession().getAttribute("list1"));
 				List<OrderListVO> list =  (List<OrderListVO>)req.getSession().getAttribute("list1");
 				System.out.println(list.size());
-//				for(OrderListVO newol : list) {
-//				
 				
-//				
-////				OrderListVO newol = new OrderListVO();
-//				newol.setProdID(prodID);
-//				newol.setProdPrice(prodPrice);
-//				newol.setEstStart(estStart);
-//				newol.setEstEnd(estEnd);
-//				list.add(newol);
-//				
-//				}
-				
-				
-				
-						System.out.println("明細存入");
+				System.out.println("明細存入");
 	
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderMasterVO", omVO); // 含有輸入格式錯誤的VO物件,也存入req
@@ -424,14 +407,8 @@ public class OrderMasterServlet extends HttpServlet {
 			
 				/***********************開始新增************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-
-//				omdao.insertAllOrder(omVO, olVO);
 				omdao.inesetWithList(omVO, list);
 				System.out.println("訂單+明細新增");
-				
-				BookingService bkSVC = new BookingService();
-				BookingVO bkVO = new BookingVO();
-				bkVO = bkSVC.addBk(prodID, 0, estStart, estEnd);
 				
 				/***********************新增完成準備轉交************************/
 				String url = "/front_end/order/listAllOrderForRent.jsp";

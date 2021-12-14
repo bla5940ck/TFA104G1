@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.booking.model.BookingDAO;
+import com.booking.model.BookingVO;
+
 import util.Util;
 
 public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
@@ -180,7 +183,8 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			System.out.println("新增前有 : " + list.size());
 			for (OrderListVO olVO : list) {
 				olVO.setOrdID(new Integer(next_ordID));
-				oldao.insertOrder(olVO, con);
+				oldao.insertOrder(olVO, con);							
+				
 			}
 
 			// 設定autoCommit(true)於pstmt.executeUpdate()之後
@@ -192,6 +196,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
+					se.printStackTrace();
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-orderMaster");
 					con.rollback();
@@ -754,36 +759,36 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		omdao.addLeaseComment(lease);
 
 		//新增訂單主檔+明細(交易控制2版)
-//		OrderMasterVO omVO = new OrderMasterVO();
-//		omVO.setRentID(2);
-//		omVO.setLeaseID(1);
-//		omVO.setPayID(2);
-//		omVO.setCouponID(null);
-//		omVO.setOrdDate(timeStamp);
-//		omVO.setStoreCode(19374);
-//		omVO.setEstStart(date);
-//		omVO.setEstEnd(date);
-//		omVO.setRentDays(1);
-//		omVO.setProdPrice(1000);
-//		omVO.setShipFee(60);
-//		omVO.setOrdPrice(1120);
-//		
-//		List<OrderListVO> testList = new ArrayList<OrderListVO>();
-//		OrderListVO ola = new OrderListVO(); // 第一筆明細a
-//		ola.setProdID(6);
-//		ola.setProdPrice(400);
-//		ola.setEstStart(date);
-//		ola.setEstEnd(date);
-//		
-//		OrderListVO olb = new OrderListVO(); // 第二筆明細b
-//		olb.setProdID(7);
-//		olb.setProdPrice(60);
-//		olb.setEstStart(date);
-//		olb.setEstEnd(date);
-//		
-//		testList.add(ola);
-//		testList.add(olb);
-//		omdao.inesetWithList(omVO, testList);
+		OrderMasterVO omVO = new OrderMasterVO();
+		omVO.setRentID(2);
+		omVO.setLeaseID(1);
+		omVO.setPayID(2);
+		omVO.setCouponID(null);
+		omVO.setOrdDate(timeStamp);
+		omVO.setStoreCode(19374);
+		omVO.setEstStart(date);
+		omVO.setEstEnd(date);
+		omVO.setRentDays(1);
+		omVO.setProdPrice(1000);
+		omVO.setShipFee(60);
+		omVO.setOrdPrice(1120);
+		
+		List<OrderListVO> testList = new ArrayList<OrderListVO>();
+		OrderListVO ola = new OrderListVO(); // 第一筆明細a
+		ola.setProdID(6);
+		ola.setProdPrice(400);
+		ola.setEstStart(date);
+		ola.setEstEnd(date);
+		
+		OrderListVO olb = new OrderListVO(); // 第二筆明細b
+		olb.setProdID(7);
+		olb.setProdPrice(60);
+		olb.setEstStart(date);
+		olb.setEstEnd(date);
+		
+		testList.add(ola);
+		testList.add(olb);
+		omdao.inesetWithList(omVO, testList);
 
 		// 更新訂單主檔+明細
 //		OrderMasterVO om2 = new OrderMasterVO();
