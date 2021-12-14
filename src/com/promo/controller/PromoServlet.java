@@ -187,7 +187,7 @@ public class PromoServlet extends HttpServlet {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("promoVO", promoVO); // 資料庫update成功後,正確的的promoVO物件,存入req
-				String url = "/back_end/promo/listOne_promo.jsp";
+				String url = "/back_end/promo/listAll_promo.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOne_promo.jsp
 				successView.forward(req, res);
 
@@ -262,10 +262,11 @@ public class PromoServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				PromoService promoSvc = new PromoService();
-				promoVO = promoSvc.insert(promo_name, promo_start, promo_end, promo_text, status);
+				boolean b =  promoSvc.insert(promo_name, promo_start, promo_end, promo_text, status) != null;
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/promo/listAll_promo.jsp";
+				String url = "/back_end/promo/add_promo.jsp";
+				req.setAttribute("b", b);
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAll_promo.jsp
 				successView.forward(req, res);
 

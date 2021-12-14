@@ -53,7 +53,7 @@ public class MailService {
 	
 //	 public static void main (String args[]){
 //
-//      String to = "ian0724@hotmail.com";
+//      String to = "joylease2021@gmail.com";
 //      
 //      String subject = "密碼通知";
 //      

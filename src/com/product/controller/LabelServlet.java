@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.chatroom.jedis.JedisPoolUtil;
@@ -51,7 +52,12 @@ public class LabelServlet extends HttpServlet {
 		//進行洗牌 隨機產生標籤
 		Collections.shuffle(list);
 		
-		jsonObj.put("all_label", list);
+		try {
+			jsonObj.put("all_label", list);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		res.getWriter().print(jsonObj);

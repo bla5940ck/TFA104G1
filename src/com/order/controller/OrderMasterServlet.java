@@ -434,7 +434,7 @@ public class OrderMasterServlet extends HttpServlet {
 				bkVO = bkSVC.addBk(prodID, 0, estStart, estEnd);
 				
 				/***********************新增完成準備轉交************************/
-				String url = "/front_end/order/listAllOrderMaster.jsp";
+				String url = "/front_end/order/listAllOrderForRent.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);				
 				
