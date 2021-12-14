@@ -373,7 +373,7 @@
 																				type="hidden" class="prodStatus" name="prodStatus">
 																		</form></td>
 																</c:if>
-																<c:if test="${prodVO.prodStatus==2}">
+																<c:if test="${prodVO.prodStatus==9}">
 																	<td><label style="color: red; font-size: 20px;">停用中</label></td>
 																</c:if>
 
