@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.chatroom.jedis.JedisPoolUtil;
@@ -32,7 +33,12 @@ public class Test {
 			}
 		}
 		  
-		jsonObj.put("all_label", all_label);
+		try {
+			jsonObj.put("all_label", all_label);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(jsonObj);
 		
 		
