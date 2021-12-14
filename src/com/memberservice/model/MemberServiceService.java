@@ -1,6 +1,7 @@
 package com.memberservice.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.Part;
@@ -77,6 +78,21 @@ public class MemberServiceService {
 
 	public List<MemberServiceVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<MemberServiceVO> getByProdID(Integer prodID) {
+		List<MemberServiceVO> list = new ArrayList<MemberServiceVO>();
+		for(MemberServiceVO msVO:dao.getAll()) {
+			if(msVO.getProdID() == prodID) {
+				
+				list.add(msVO);
+			}
+		}
+		if(list.size() == 0) {
+			return null;
+		}
+		
+		return list;
 	}
 
 }
