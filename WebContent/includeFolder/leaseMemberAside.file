@@ -57,7 +57,7 @@ aside.aside {
 							<h4><li><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">評價通知</a></li></h4>
 							<h4><li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li></h4>
 						</ul>
-					<h4><li><a href="<%=request.getContextPath()%>/front_end/memberservice/listOne.jsp">問題回報查詢</a></li></h4>
+					<h4><li><a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp">問題回報查詢</a></li></h4>
 					
 				</ul>
 			</nav>
