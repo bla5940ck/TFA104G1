@@ -11,7 +11,7 @@
  	pageContext.setAttribute("list",list);
 %>
 
-
+<jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
 
 <html>
 <head>
@@ -115,12 +115,17 @@ background-color:#6495ed;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
-<table id="table-1">
-	<tr><td>
+
+
 		 <h3>所有專案明細資料 - promolistAll.jsp</h3>
-<!-- 		 <h4><a href="select_promolist.jsp"><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4> -->
-	</td></tr>
-</table>
+
+
+	<h4>  
+<a href='add_promolist.jsp'>新增專案明細</a>
+	</h4>
+
+
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -136,7 +141,7 @@ background-color:#6495ed;
 <table>
 	<tr>
 		<th>專案編號</th>
-		<th>折價券編號</th>
+		<th>專案名稱</th>
 <!-- 		<th>商品類別編號</th> -->
 		<th>折價券名稱</th>
 		<th>折價金額</th>
@@ -155,7 +160,13 @@ background-color:#6495ed;
 <!-- 			     <input type="hidden" name="action" value="getOne_For_Insert"></FORM> -->
 		<tr>
 			<td>${promolistVO.promo_id}</td>
-			<td>${promolistVO.coupon_id}</td>
+			<td>
+		<c:forEach var="promoVO" items="${promoSvc.all}">
+				<c:if test="${promolistVO.promo_id==promoVO.promo_id}">
+				<label>${promoVO.promo_name}</label>
+			</c:if>
+		</c:forEach>	
+		</td>
 <%-- 			<td>${promolistVO.category_id}</td> --%>
 			<td>${promolistVO.coupon_name}</td>
 			<td>${Math.round(promolistVO.discount)}</td>
@@ -189,17 +200,19 @@ background-color:#6495ed;
 <!-- 			</td> -->
 			
 		</tr>
-	
+<!-- 		<td> -->
+<!-- 	<FORM METHOD="post" ACTION="promolist.do" style="margin-bottom: 0px;"> -->
+<!-- <input type="submit" value="新增"> -->
+<%-- <input type="hidden" name="promo_id"  value="${promolistVO.promo_id}"> --%>
+<!-- <input type="hidden" name="action"	value="getOne_For_Insert"></FORM> -->
+<!-- </td> -->
 	</c:forEach>
 
 </table>
 <%-- <%@ include file="page2.file" %> --%>
 
-<h3>新增專案明細</h3>
+<!-- <h3>新增專案明細</h3> -->
 
-<ul>
-  <li><a href='add_promolist.jsp'>新增專案明細</li>
-</ul>
 
 </body>
 </html>

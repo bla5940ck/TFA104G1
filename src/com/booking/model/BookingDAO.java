@@ -29,7 +29,7 @@ public class BookingDAO implements BookingDAO_interface {
 		}
 	}
 	public void add(BookingVO bk) {
-		String sql = "INSERT INTO booking(`prod_id`, `status`, `est_start`, `est_end`) VALUES (?, ?, ?, ?);";
+		String sql = "INSERT INTO booking(`prod_id`, `status`, `est_start`, `est_end` ,`ord_id`) VALUES (?, ?, ?, ?,?);";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
@@ -40,6 +40,7 @@ public class BookingDAO implements BookingDAO_interface {
 			pstmt.setInt(2,bk.getStatus());
 			pstmt.setDate(3, bk.getEstStart());
 			pstmt.setDate(4, bk.getEstEnd());
+			pstmt.setInt(5, bk.getOrdID());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -164,6 +165,7 @@ public class BookingDAO implements BookingDAO_interface {
 				bk.setStatus(rs.getInt("status"));
 				bk.setEstStart(rs.getDate("est_start"));
 				bk.setEstEnd(rs.getDate("est_end"));
+				bk.setOrdID(rs.getInt("ord_id"));
 				
 				
 				
@@ -206,6 +208,7 @@ public class BookingDAO implements BookingDAO_interface {
 				bk.setStatus(rs.getInt("status"));
 				bk.setEstStart(rs.getDate("est_start"));
 				bk.setEstEnd(rs.getDate("est_end"));
+				bk.setOrdID(rs.getInt("ord_id"));
 				list.add(bk);
 				
 			}

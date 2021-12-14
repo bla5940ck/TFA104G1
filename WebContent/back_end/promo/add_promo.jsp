@@ -109,13 +109,11 @@ background-color:#6495ed;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
-<table id="table-1">
-	<tr><td>
-		 <h3>專案資料新增 - add_promo.jsp</h3></td><td>
-		 	</td></tr>
-</table>
 
-<h3>資料新增:</h3>
+
+
+		 <h3>專案資料新增 - add_promo.jsp</h3>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -131,28 +129,30 @@ background-color:#6495ed;
 <table>
 	<tr>
 		<td>專案名稱:</td>
-		<td><input type="TEXT" name="promo_name" size="45"></td>
+		<td><input type="TEXT" name="promo_name" size="20"></td>
 	</tr>
 
-	<tr>
-		<td>開始日期:</td>
-		<td><input name="promo_start" id="f_date1" type="text"></td>
-	</tr>
-	<tr>
-		<td>結束日期:</td>
-		<td><input name="promo_end" id="f_date2" type="text"></td>
-	</tr>
 	<tr>
 		<td>專案內容:</td>
 		<td><input type="TEXT" name="promo_text" size="45"/></td>
 	</tr>
 	<tr>
-		<td>專案狀態:</td>
-		<td><input type="TEXT" name="status" size="1"></td>
+		<td>開始日期:</td>
+		<td><input name="promo_start" id="f_date1" type="text" size="10"></td>
 	</tr>
+	<tr>
+		<td>結束日期:</td>
+		<td><input name="promo_end" id="f_date2" type="text" size="10"></td>
+	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>專案狀態:</td> -->
+<!-- 		<td> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
 	
 </table>
 <br>
+		<input type="hidden" name="status" value=0>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
 </body>

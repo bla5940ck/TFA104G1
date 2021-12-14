@@ -116,11 +116,12 @@ background-color:#6495ed;
 		<main class="main" style="background-color:#C0C0C0;">	
 
 
-<table id="table-1">
-	<tr><td>
 		 <h3>所有專案資料 - listall_promo.jsp</h3>
-			</td></tr>
-</table>
+
+	<h4>
+  <a href='add_promo.jsp'>新增專案</a>
+	</h4>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -136,9 +137,9 @@ background-color:#6495ed;
 	<tr>
 		<th>專案編號</th>
 		<th>專案名稱</th>
+		<th>專案內容</th>
 		<th>專案開始日期</th>
 		<th>專案結束日期</th>
-		<th>專案內容</th>
 		<th>專案狀態</th>
 	</tr>
 	<%@ include file="page1.file" %> 
@@ -147,9 +148,9 @@ background-color:#6495ed;
 		<tr>
 			<td>${promoVO.promo_id}</td>
 			<td>${promoVO.promo_name}</td>
+			<td>${promoVO.promo_text}</td> 
 			<td>${promoVO.promo_start}</td>
 			<td>${promoVO.promo_end}</td>
-			<td>${promoVO.promo_text}</td> 
 			<td>${(promoVO.status==0)?'進行中':'已結束'}</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
@@ -173,8 +174,6 @@ background-color:#6495ed;
 	</c:forEach>
 </table>
 <%@ include file="page2.file" %>
-<ul>
-  <li><a href='add_promo.jsp'>新增專案</li>
-</ul>
+
 </body>
 </html>
