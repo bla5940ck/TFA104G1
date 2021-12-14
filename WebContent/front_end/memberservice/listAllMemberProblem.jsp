@@ -104,17 +104,7 @@ object-fit: contain;
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<ul class="nav_list">
-					<h2>出租者專區</h2>
-					<h4>
-						<a
-							href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a>
-					</h4>
-				</ul>
-			</nav>
-		</aside>
+		<%@ include file="/includeFolder/problemAside.file"%>
 		<main class="main">
 			
 
@@ -172,7 +162,12 @@ object-fit: contain;
 						
 						<td class="pic"><img alt="" src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=3&msgID=${msVO.msgID}"></td>
 						
-						<td>${(msVO.problemStatus==0)?'未處理':'已處理'}</td>
+						<c:if test="${msVO.problemStatus==0}">
+						<td style="color:red;">未處理</td>
+						</c:if>
+						<c:if test="${msVO.problemStatus==1}">
+						<td >已處理</td>
+						</c:if>
 						
 						
 					</tr>
