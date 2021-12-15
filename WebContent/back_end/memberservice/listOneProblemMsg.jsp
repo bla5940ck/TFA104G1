@@ -5,6 +5,8 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.memberservice.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <%
 	MemberServiceService msSvc = new MemberServiceService();
 	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
@@ -192,10 +194,17 @@ background-color:#6495ed;
 			</c:forEach>
 		</table>
 			<%@ include file="page2.file"%>
+			<button class="back_btn">返回上一頁</button>
 			
 			
 		</main>
 	</div>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
 
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>
