@@ -10,6 +10,7 @@
 	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
 	Integer id = Integer.valueOf(request.getParameter("prodID"));
 	List<MemberServiceVO> list = msSvc.getByProdID(id);
+	System.out.println(list.size());
 	pageContext.setAttribute("list", list);
 %>
 

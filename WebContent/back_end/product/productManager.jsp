@@ -217,7 +217,7 @@ object-fit: contain;
 							
 						</select></td>
 						
-						<td><a class="findmsg" href="#"><img style="height:40px" src="https://i.pinimg.com/originals/0c/50/95/0c509522f742e45c2c505033458a4791.png"></a></td>
+						<td><a class="" href="<%=request.getContextPath()%>/back_end/memberservice/listOneProblemMsg.jsp?prodID=${prodVO.prodID}"><img style="height:40px" src="https://i.pinimg.com/originals/0c/50/95/0c509522f742e45c2c505033458a4791.png"></a></td>
 
 							
 					</tr>
