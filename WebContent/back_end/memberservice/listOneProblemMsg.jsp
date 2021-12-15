@@ -7,15 +7,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	MemberServiceService msSvc = new MemberServiceService();
-// 	List<MemberServiceVO> list = msSvc.getAll();
-// 	pageContext.setAttribute("list", list);
-// 	for(MemberServiceVO mcVO : list){
-// 		System.out.println("圖1"  + mcVO.getPic1());
-// 	}	
-	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");	
-	List<MemberServiceVO> list = msSvc.getByProdID(2);
+	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
+	Integer id = Integer.valueOf(request.getParameter("prodID"));
+	List<MemberServiceVO> list = msSvc.getByProdID(id);
 	pageContext.setAttribute("list", list);
-// 	System.out.print(msVO.getMsgID());
 %>
 
 <html>
