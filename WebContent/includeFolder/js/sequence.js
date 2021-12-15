@@ -27,7 +27,7 @@ function defineSequence(imagesLoaded, Hammer) {
    */
   var Sequence = (function (element, options) {
 
-    var instanceId = element.getAttribute("data-seq-enabled");
+    /*var instanceId = element.getAttribute("data-seq-enabled");*/
 
     // Prevent multiple instances on the same element. Return the object instead
     if (instanceId !== null) {
