@@ -113,7 +113,7 @@ th, td {
 background-color:#6495ed;
 }
 </style>
-</style>
+
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
