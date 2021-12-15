@@ -12,8 +12,11 @@
 <link href="https://www.itxst.com/package/artDialog/skins/default.css" rel="stylesheet" />
 <% 
 	ProdService prodSvc = new ProdService();
-	
 	List<ProdVO> list =  prodSvc.getAll();
+	if(request.getAttribute("list")!=null){
+		list=(List<ProdVO>)request.getAttribute("list");
+	}
+
 	pageContext.setAttribute("list",list);
 %>
 
@@ -127,6 +130,21 @@ object-fit: contain;
 	width: 95px;
 	height: 80px;
 }
+
+#table2{
+	background-color:	white; 
+	color:white;
+	font-weight:bold;
+
+}
+#table2 a.aa-add-to-cart-btn{
+	color:#003060; 
+	width:100%;
+	height:100%; 
+	border:none;
+	background-color:#82D900;
+	margin:0px
+}
 </style>
 
 </head>
@@ -147,7 +165,25 @@ object-fit: contain;
 				</tr>
 			
 			</table>
-
+			
+		
+			
+			<table id="table2" >
+				<div>
+					
+						<tr>
+							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/back_end/product/productManager.jsp">全部商品</a></td>
+							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=2">被檢舉商品</a></td>
+							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=1">上架中</a></td>
+							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=0">下架中</a></td>
+							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=9">停用中</a></td>
+						</tr>
+					
+					
+				</div>
+			</table>
+			
+			
 			
 	<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/prod/SuspensionServlet"
@@ -176,9 +212,7 @@ object-fit: contain;
 						<td>${prodVO.prodRent}</td>
 						<td>${prodVO.prodPrice}</td>
 						<td>${cateSvc.findCategoryByPK(prodVO.categoryID).categoryName}</td>
-<%-- 						<td>${msVO.ordID}</td> --%>
-<%-- 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
-<%-- 						<td>${msVO.problemMsg}</td> --%>
+			
 						
 						<td>
 						<span class="span_status">
@@ -214,11 +248,23 @@ object-fit: contain;
 								<option value="0" >下架</option>
 								<option value="1" >上架</option>
 						</c:if>
-							
+					
 						</select></td>
 						
+					<jsp:useBean id="msSvc" scope="page" class="com.memberservice.model.MemberServiceService" />
+						<c:set var ="count" value="0"/>
+						<c:forEach var="msVO" items="${msSvc.all}">
+						<c:if test="${msVO.prodID==prodVO.prodID  }">
+						
+						
+						
+						<c:if test="${count== 0}">
 						<td><a class="" href="<%=request.getContextPath()%>/back_end/memberservice/listOneProblemMsg.jsp?prodID=${prodVO.prodID}"><img style="height:40px" src="https://i.pinimg.com/originals/0c/50/95/0c509522f742e45c2c505033458a4791.png"></a></td>
-
+						<c:set var ="count" value="1"/>
+						</c:if>
+						</c:if>
+						</c:forEach>
+						<td style="height:40px"></td>
 							
 					</tr>
 		

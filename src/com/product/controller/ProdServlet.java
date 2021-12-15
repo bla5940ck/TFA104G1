@@ -29,7 +29,7 @@ import javax.servlet.http.*;
 @WebServlet("/prod/ProdServlet")
 @MultipartConfig()
 public class ProdServlet extends HttpServlet {
-
+	
 //	Timer timer;
 
 	public void destroy() {
@@ -82,7 +82,7 @@ public class ProdServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			ProdVO prod = new ProdVO();
 			System.out.println(ServletFileUpload.isMultipartContent(req));
-
+			
 			Jedis jedis = null;
 			jedis = pool.getResource();
 
