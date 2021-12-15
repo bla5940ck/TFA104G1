@@ -289,12 +289,12 @@ public class ProblemTypeDAO implements ProblemTypeDAO_interface {
 		
 		
 		//全部查詢
-//		List<ProblemTypeVO> list = dao.getAll();
-//		for (ProblemTypeVO ptvo4 : list) {
-//		System.out.print(ptvo4.getTypeID() + ",");
-//		System.out.print(ptvo4.getTypeName() + ",");
-//		System.out.println();
-//		}
+		List<ProblemTypeVO> list = dao.getAll();
+		for (ProblemTypeVO ptvo4 : list) {
+		System.out.print(ptvo4.getTypeID() + ",");
+		System.out.print(ptvo4.getTypeName() + ",");
+		System.out.println();
+		}
 		
 		
 		

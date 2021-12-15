@@ -200,12 +200,12 @@ background-color:#6495ed;
 			
 		</main>
 	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	$("button.back_btn").click(function(){
 		history.go(-1);
 	});
 
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>
