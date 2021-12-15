@@ -169,10 +169,10 @@ public class PostBoardServlet extends HttpServlet {
 				String ts = req.getParameter("posttime");
 				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				Date date = sdf.parse(ts);// date 格式
-
 				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
-
 				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
+				
+				
 
 				//System.out.println(ts);
 
@@ -279,10 +279,9 @@ public class PostBoardServlet extends HttpServlet {
 				String ts = req.getParameter("posttime");
 				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				Date date = sdf.parse(ts);// date 格式
-
 				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
-
 				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
+				
 
 				// Integer replyCount = null;
 				// Integer replyCount = new Integer(req.getParameter("replyCount").trim());
@@ -294,6 +293,10 @@ public class PostBoardServlet extends HttpServlet {
 				byte[] buf = new byte[in.available()];
 				in.read(buf);
 				in.close();
+				
+				if(part == null) {
+					
+				}
 				//System.out.println("buffer length: " + buf.length);
 
 				PostBoardVO pbVO = new PostBoardVO();

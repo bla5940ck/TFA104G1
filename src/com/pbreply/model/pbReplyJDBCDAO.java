@@ -24,7 +24,7 @@ public class pbReplyJDBCDAO implements pbReplyDAOIpml {
 	private static final String DELETE = 
 		"DELETE FROM pb_reply where reply_id = ?";
 	private static final String UPDATE = 
-		"UPDATE pb_reply set post_id=?, member_id=?, reply_cont=?,reply_time  where reply_id = ?";
+		"UPDATE pb_reply  set post_id=?, member_id=?, reply_cont=?,reply_time  where reply_id = ?";
 	
 	
 	
@@ -303,13 +303,13 @@ public class pbReplyJDBCDAO implements pbReplyDAOIpml {
 //		dao.insert(pbreplyVO1);
 
 //		// 修改--ok
-//		pbReplyVO pbreplyVO2 = new pb_replyVO();
-//		pbreplyVO2.setReplyId(4);
-//		pbreplyVO2.setPostId(1);
-//		pbreplyVO2.setMemberId(5);
-//		pbreplyVO2.setReplyCont("test2");
-//		pbreplyVO2.setReplyTime(timestamp);
-//		dao.insert(pbreplyVO2);
+		pbReplyVO pbreplyVO2 = new pbReplyVO();
+		pbreplyVO2.setReplyId(14);
+		pbreplyVO2.setPostId(1);
+		pbreplyVO2.setMemberId(4);
+		pbreplyVO2.setReplyCont("test2");
+		pbreplyVO2.setReplyTime(timestamp);
+		dao.update(pbreplyVO2);
 	
 //
 //		// 刪除--ok
@@ -331,15 +331,15 @@ public class pbReplyJDBCDAO implements pbReplyDAOIpml {
 
 //
 //		// 查詢--ok
-		List<pbReplyVO> list = dao.getAll();
-		for (pbReplyVO pbReply : list) {
-			System.out.print(pbReply.getReplyId() + ",");
-			System.out.print(pbReply.getPostId() + ",");
-			System.out.print(pbReply.getMemberId() + ",");
-			System.out.print(pbReply.getReplyCont() + ",");
-			System.out.print(pbReply.getReplyTime() + ",");
-			System.out.println();
-		}
+//		List<pbReplyVO> list = dao.getAll();
+//		for (pbReplyVO pbReply : list) {
+//			System.out.print(pbReply.getReplyId() + ",");
+//			System.out.print(pbReply.getPostId() + ",");
+//			System.out.print(pbReply.getMemberId() + ",");
+//			System.out.print(pbReply.getReplyCont() + ",");
+//			System.out.print(pbReply.getReplyTime() + ",");
+//			System.out.println();
+//		}
 	}
 	
 	

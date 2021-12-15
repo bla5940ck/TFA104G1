@@ -24,7 +24,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 		private static final String INSERT_STMT = 
 				"INSERT INTO post_board (category_id,member_id,post_title,post_cont,post_time,pic) VALUES (?, ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-				"SELECT * FROM post_board order by post_id";
+				"SELECT * FROM post_board order by post_id desc";
 		private static final String GET_ONE_STMT = 
 				"SELECT post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic FROM post_board where post_id = ?";
 		private static final String DELETE = 
