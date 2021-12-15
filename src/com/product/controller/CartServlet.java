@@ -130,6 +130,24 @@ public class CartServlet extends HttpServlet {
 					if (cartVO1.getProdID() == prodID) {
 						jedis.lrem("member" + memberID, 1, item);
 					}
+//					Timer timer;
+//					timer = new Timer();
+////		        Calendar cal = new GregorianCalendar(2021, Calendar.MARCH, 0, 0, 0, 0);  
+//	
+//			TimerTask task = new TimerTask() {
+//	
+//				public void run() {
+//					
+//						if ((cartVO1.getEstStart().getTime() + 24 * 60 * 60 * 1000) < System.currentTimeMillis()) {
+//							
+//						
+//					}
+//	
+//					System.out.println(new Date(scheduledExecutionTime()));
+//				}
+//			};
+//	
+//			timer.scheduleAtFixedRate(task, 1000, 30 * 1000);
 				}
 
 				jedis.close();
