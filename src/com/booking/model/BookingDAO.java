@@ -231,7 +231,7 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
-		String sql ="SELECT prod_id,count(bk_id) as countBk FROM booking group by prod_id order by count(bk_id) desc";
+		String sql ="SELECT B.PROD_ID ,COUNT(B.PROD_ID) AS COUNT FROM BOOKING B JOIN PRODUCT P  ON B.PROD_ID= P.PROD_ID WHERE P.PROD_STATUS=1 GROUP BY B.PROD_ID ORDER BY COUNT(B.PROD_ID) DESC;";
 		BookingVO bk = null;
 		List<Integer> list = new ArrayList<>();
 		List<Integer> listCount = new ArrayList();
@@ -243,7 +243,7 @@ public class BookingDAO implements BookingDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				list.add(rs.getInt("prod_id"));
+				list.add(rs.getInt(1));
 				listCount.add(rs.getInt(2));
 				
 				map.put(rs.getInt(1), rs.getInt(2));
