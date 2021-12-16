@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import util.Util;
 
 public class BookingDAO implements BookingDAO_interface {
-
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -83,7 +83,7 @@ public class BookingDAO implements BookingDAO_interface {
 
 	@Override
 	public void delete(Integer bkID) {
-
+	
 	String sql = "DELETE FROM booking WHERE `bk_id` = ?;";
 	Connection con = null;
 	PreparedStatement pstmt = null;
