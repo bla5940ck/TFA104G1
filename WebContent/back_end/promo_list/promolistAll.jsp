@@ -139,7 +139,6 @@ background-color:#6495ed;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
 
-
 		 <h3>所有專案明細資料 - promolistAll.jsp</h3>
 
 
