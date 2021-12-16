@@ -103,7 +103,7 @@ th, td {
 				</ul>
 			</c:if>
 			
-		<FORM METHOD="post" ACTION="/TFA104G1/OrderListServlet" name="form1">
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/memberservice/problemTypeReport.jsp" name="form1">
 			<table id="table-1">
 				<tr>
 					<th>訂單明細編號</th>
@@ -155,7 +155,7 @@ th, td {
 					<tr>
 				</c:forEach>
 				</table>
-<!-- 				<input type="submit" value="更新"> -->
+				<input type="submit" value="提出問題">
 				<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">回上頁</a>
 			</FORM>
 			<%@ include file="page2.file"%>
