@@ -1,5 +1,6 @@
 package com.order.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface OrderListDAO_interface {
@@ -13,4 +14,5 @@ public interface OrderListDAO_interface {
 	void insertOrder(OrderListVO olVO, java.sql.Connection con);
 	void update2(OrderListVO olVO, OrderMasterVO omVO);
 	
+	void updateWithOrder(OrderListVO olVO, Connection con);
 }
