@@ -72,8 +72,8 @@ a.cart-img>img {
 											// 					System.out.println("承租者編號 : " + memID);
 											//會員名稱
 											MemberService memSVC = new MemberService();
-											System.out.println("這裡");
-											System.out.println(cartVO.getLeaseID());
+// 											System.out.println("這裡");
+// 											System.out.println(cartVO.getLeaseID());
 											MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
 											// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
 											String leaseName = memVO.getName();
@@ -184,7 +184,7 @@ a.cart-img>img {
 																	<option value="0">請選擇折價券
 																		<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 																			<c:choose>
-																				<c:when test="${mcVO.member_id == id}">
+																				<c:when test="${mcVO.member_id == id && mcVO.status == 0}">
 																					<option data-id="${mcVO.coupon_id}"
 																						value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 																				</c:when>

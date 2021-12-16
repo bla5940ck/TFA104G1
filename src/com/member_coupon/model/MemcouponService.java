@@ -8,19 +8,6 @@ public class MemcouponService {
 	public MemcouponService() {
 		dao = new MemcouponDAO();
 	}
-//	public boolean isCouponIdDup(Integer coupon_id) {
-//		List<MemcouponVO> list = dao.getAll();
-//		boolean flag = false;
-//		//假如是false 代表沒有重複
-//		//true 代表重複
-//		for(MemcouponVO memcouponVO:list) {
-//			if(memcouponVO.getMember_id()==1) {
-//				flag = flag || (coupon_id == memcouponVO.getCoupon_id());
-//			}
-//		}
-//		
-//		return flag;
-//	}
 	
 	public boolean insert(Integer member_id, Integer category_id, Integer coupon_id, Double discount, String coupon_name, 
 			Integer status, java.sql.Date start_date, java.sql.Date end_date) {

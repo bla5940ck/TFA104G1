@@ -5,8 +5,6 @@
 <%@ page import="com.order.model.*"%>
 
 <%
-	Integer memID = (Integer) session.getAttribute("id");
-
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
 	OrderListVO olVO = (OrderListVO) request.getAttribute("OrderListVO");
 	
@@ -88,10 +86,9 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-	<%@ include file="/includeFolder/leaseMemberAside.file"%>
-		
+		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main">
 			
 			<c:if test="${not empty errorMsgs}">
@@ -102,8 +99,7 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-			
-		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/memberservice/problemTypeReport.jsp" name="form1">
+		<FORM METHOD="post" ACTION="/TFA104G1/OrderListServlet" name="form1">
 			<table id="table-1">
 				<tr>
 					<th>訂單明細編號</th>
@@ -114,7 +110,6 @@ th, td {
 					<th>預計開始日期</th>
 					<th>預計結束日期</th>
 					<th>訂單狀態</th>
-<!-- 					<th>更新狀態</th> -->
 				</tr>
 				<%@ include file="page1.file"%>
 				<c:forEach var="olVO" items="${list}" begin="<%=pageIndex%>"
@@ -141,12 +136,7 @@ th, td {
 						</td>
 						
 						<td>
-<!-- 								<select size="1" name="ordStatus" id="ordStatus" class="ordStatus"> -->
-<%-- 									<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option> --%>
-<%-- 									<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option> --%>
-<%-- 									<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option> --%>
-<%-- 									<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option> --%>
-<!-- 								</select> -->
+								
 								<input type="hidden" id="ordID" name="ordID" value="${olVO.ordID}">
 								<input type="hidden" id="listID" name="listID" value="${olVO.listID}">
 								<input type="hidden" id="proID" name="prodID" value="${olVO.prodID}">
@@ -155,8 +145,8 @@ th, td {
 					<tr>
 				</c:forEach>
 				</table>
-				<input type="submit" value="提出問題">
-				<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">回上頁</a>
+<!-- 				<input type="submit" value="更新"> -->
+				<button type="button" id="btn">更新</button>
 			</FORM>
 			<%@ include file="page2.file"%>
 		</main>

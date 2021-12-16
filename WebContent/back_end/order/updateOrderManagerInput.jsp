@@ -94,7 +94,7 @@ a.cart-img > img{
 </head>
 
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/managerHeader.file"%>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
@@ -107,7 +107,7 @@ a.cart-img > img{
 	<FORM METHOD="post" ACTION="/TFA104G1/OrderMasterServlet" name="form1">
 
 		<div class="main_content">
-			<%@ include file="/includeFolder/leaseMemberAside.file"%>
+			<%@ include file="/includeFolder/managerAside.file"%>
 			<main class="main">
 			
 			
@@ -257,7 +257,7 @@ a.cart-img > img{
 <!-- 						</select></td> -->
 					</tr>
 				</table>
-				<input type="hidden" name="action" value="update"> 
+				<input type="hidden" name="action" value="update_for_manager"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
 				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
 				<input type="hidden" name="listID" value="${olVO.listID}">
@@ -268,11 +268,10 @@ a.cart-img > img{
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">
 				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
 				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
-<%-- 				<center><%@ include file="/includeFolder/comment.file" %></center> --%>
 				<center><input type="submit" value="確認更新"></center>
 			</main>
 		</div>
-	<%@ include file="/includeFolder/footer2.file" %>
+	<%@ include file="/includeFolder/managerFooter.file" %>
 	</FORM>
 </body>
 

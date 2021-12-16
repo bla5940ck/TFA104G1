@@ -6,21 +6,17 @@
 <%@page import="java.util.stream.Collectors"%>
 
 <%
-	Integer memID = (Integer) session.getAttribute("id");
+
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getStatus(omVO.getOrdStatus());
 
-// 	pageContext.setAttribute("list", list);
-
-// 	List<OrderMasterVO> list = omSVC.getAll();
 	List<OrderMasterVO> list1 = omSVC.getAll();
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getLeaseID()==memID)
 										.filter(o -> o.getOrdStatus() == omVO.getOrdStatus())
 											.collect(Collectors.toList());
 
@@ -101,9 +97,9 @@ th, td {
 </head>
 
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-	<%@ include file="/includeFolder/leaseMemberAside.file"%>
+	<%@ include file="/includeFolder/managerAside.file"%>
 
 		<main class="main">
 			<div>
@@ -130,21 +126,7 @@ th, td {
 						<input type="hidden" name="action" value="getOne_For_Display">
 						<input type="submit" value="送出">
 					</h5>
-				</FORM>
-
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					<h5>
-						選擇訂單狀態: <select size="1" name="ordStatus">
-							<option value="0" <%=omVO.getOrdStatus() == 0 ? "selected" : ""%>>已成立</option>
-							<option value="1" <%=omVO.getOrdStatus() == 1 ? "selected" : ""%>>待歸還</option>
-							<option value="2" <%=omVO.getOrdStatus() == 2 ? "selected" : ""%>>已完成</option>
-							<option value="9" <%=omVO.getOrdStatus() == 9 ? "selected" : ""%>>已取消</option>
-						</select> 
-						<input type="hidden" name="action" value="get_Status_Display">
-						<input type="submit" value="送出">
-					</h5>
-				</FORM>
+				</FORM>	
 			</div>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -158,19 +140,20 @@ th, td {
 				<div>
 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
 							<td><button name="ordStatus" value="1">待歸還</button></td>
 							<td><button name="ordStatus" value="2">已完成</button></td>
 							<td><button name="ordStatus" value="9">已取消</button></td>
 						</tr>
-						<input type="hidden" name="action" value="get_Status_Display">
+						<input type="hidden" name="action" value="get_Status_Display_Manager">
 					</FORM>
 				</div>
 			</table>
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
+					<th>出租者</th>
 					<th>承租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
@@ -189,10 +172,9 @@ th, td {
 				</tr>
 				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-					<c:choose>
-						<c:when test="${omVO.leaseID == id}">
 							<tr>
 								<td>${omVO.ordID}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
 								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
@@ -280,13 +262,11 @@ th, td {
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
-<%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
-										<input type="hidden" name="action" value="getlist_For_Display">
+										<input type="hidden" name="action" value="getlist_For_Manager">
 									</FORM>
 								</td>
 							</tr>
-						</c:when>
-					</c:choose>
+
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>

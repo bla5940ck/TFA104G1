@@ -17,9 +17,6 @@ public class MemcouponDAO implements Memcoupon_interface{
 	
 		private static final String GET_ONE_STMT = 
 			"UPDATE member_coupon set status = 1 where mem_coupon_id = ?";
-		
-//		private static final String USE_COUPON = 
-//			"UPDATE member_coupon set status = 1 where mem_coupon_id = ?";
 
 		private static final String FIND_BY_MEMBERID = 
 			"SELECT * FROM member_coupon where member_id = ? and status = 0";

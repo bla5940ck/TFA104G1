@@ -20,7 +20,7 @@
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getLeaseID()==memID)
+									.filter(o->o.getRentID()==memID)
 										.filter(o -> o.getOrdStatus() == omVO.getOrdStatus())
 											.collect(Collectors.toList());
 
@@ -103,7 +103,7 @@ th, td {
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-	<%@ include file="/includeFolder/leaseMemberAside.file"%>
+	<%@ include file="/includeFolder/rentMemberAside.file"%>
 
 		<main class="main">
 			<div>
@@ -158,20 +158,20 @@ th, td {
 				<div>
 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
 							<td><button name="ordStatus" value="1">待歸還</button></td>
 							<td><button name="ordStatus" value="2">已完成</button></td>
 							<td><button name="ordStatus" value="9">已取消</button></td>
 						</tr>
-						<input type="hidden" name="action" value="get_Status_Display">
+						<input type="hidden" name="action" value="get_Status_Display_ForRent">
 					</FORM>
 				</div>
 			</table>
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
-					<th>承租者</th>
+					<th>出租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
 					<th>運送狀態</th>
@@ -190,10 +190,10 @@ th, td {
 				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 					<c:choose>
-						<c:when test="${omVO.leaseID == id}">
+						<c:when test="${omVO.rentID == id}">
 							<tr>
 								<td>${omVO.ordID}</td>
-								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
 										<td>信用卡</td>

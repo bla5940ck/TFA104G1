@@ -17,6 +17,12 @@
 <html>
 <head>
 <title>所有問題列表</title>
+<!-- 載入sweet alert -->
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="http://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="/jquery-3.4.1.min.js"></script>
+
 <style>
 body {
 	margin: 0;
@@ -174,6 +180,7 @@ background-color:#6495ed;
 				</tr>
 				<jsp:useBean id="ptSVC" scope="page"
 					class="com.problemtype.model.ProblemTypeService" />
+					
 				<%@ include file="page1.file"%>
 
 				<c:forEach var="msVO" items="${list}" begin="<%=pageIndex%>"
@@ -183,13 +190,14 @@ background-color:#6495ed;
 
 					<tr>
 						<td>${msVO.msgID}</td>
-						<td>${msVO.prodID}</td>
-						<td>${msVO.memberID}</td>
+						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?pordID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
+						<td><a>${msVO.memberID}</a></td>
 						<td>${msVO.managerID}</td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
-						<td>${msVO.ordID}</td>
+						
+						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderManager2.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-						<td>${msVO.problemMsg}</td>
+						<td><button id = "class1" class="class1" value="${msVO.problemMsg}">查詢</button></td>
 						<td class="pic"><img alt=""
 							src="<%=request.getContextPath()%>/MemberServiceServlet?action=detail&pic=1&msgID=${msVO.msgID}">
 						</td>
@@ -236,5 +244,24 @@ background-color:#6495ed;
 	</div>
 
 </body>
+<script >
+var problemMsg = $(".class1");
+$(function(){	
+    $(".class1").on("click",function(){
+
+console.log($(this).val());
+var val = $(this).val();
+        Swal.fire({
+            position: 'center',
+            title: '檢舉內容',
+            html: val,
+            confirmButtonText: '確認',
+            focusConfirm: false
+        });            
+
+    });
+
+});
+</script>
 
 </html>
