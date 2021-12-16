@@ -90,13 +90,16 @@
                   
                   <!-- Blog Comment threats -->
                   <div class="aa-blog-comment-threat">
-                    <h3>留言 ( ${pb.replyCount} )</h3><!--留言數 -->
+                  <jsp:useBean id="pb1" class="com.postboard.model.PostBoardService"/>
+                  
+                    <h3>留言 ( ${pb1.findByPrimaryKey(pb.postId).replyCount} )</h3><!--留言數 -->
                     <div class="comments">
                       <ul class="commentlist">
                       
                      <jsp:useBean id="pbrSvc" scope="page" class="com.pbreply.model.pbReplyService"/>
                		  <c:forEach var="pbrVO" items="${pbrSvc.all}" varStatus="status">
                		  	<c:if test="${pbrVO.postId == pb.postId}">
+               		  	
 <!--              SELECT reply_id,post_id,member_id,reply_cont,reply_time FROM pb_reply where post_id=1; -->
                         <li>
                           <div class="media">
@@ -153,8 +156,8 @@
 <!--                         <label for="">留言編號<span>*</span></label> -->
 <!-- 						<input type="Text" name="replyId" value=""/> -->
 						
-						<label for="replyTime">上傳時間</label>
-						<input name="replyTime" id="date" type="text"></input>
+<!-- 						<label for="replyTime">上傳時間</label> -->
+<!-- 						<input name="replyTime" id="date" type="text"></input> -->
 						
                         
                       </p>
@@ -220,17 +223,17 @@
                     <div class="aa-recently-views">
                       <ul>
                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                          <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId}&action=writePic" alt="img"></a>
                           <div class="aa-cartbox-info">
-                            <h4><a href="#">徵求PS5一台</a></h4>
-                            <p>March 26th 2016</p>
+                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId}">${pb.postTitle}</a></h4>
+                            <p>${pb.postTime}</p>
                           </div>                    
                         </li>
                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
+                          <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId-1}&action=writePic" alt="img" alt="img"></a>
                           <div class="aa-cartbox-info">
-                            <h4><a href="#">動物森友會</a></h4>
-                            <p>March 26th 2016</p>
+                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId-1}"></a></h4>
+                            <p>${pb.postTime}</p>
                           </div>                    
                         </li>
                          <li>
