@@ -1,11 +1,19 @@
+<%@page import="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.order.model.*"%>
 
 <%
-	Integer memID = (Integer) session.getAttribute("id");
-	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+// 	Integer memID = (Integer) session.getAttribute("id");
+	Integer ordID = Integer.valueOf(request.getParameter("ordID"));
+	System.out.println(ordID);
+	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+	OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
+	Integer getOrdID = omVO.getOrdID();
+	System.out.println(omVO.getPayStatus());
+	
+// 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 	OrderListVO olVO = new OrderListVO();
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
 %>
@@ -16,6 +24,7 @@
 //     out.println(formatDate);
 %>
 <jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+<jsp:useBean id="omDAO"	class="com.order.model.OrderMasterDAOImpl" /> 
 
 
 <html>
@@ -119,7 +128,7 @@ a.cart-img > img{
 				<tr>
 					<th>商品照片</th>
 				
-					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
+					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(param.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
 							<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
 					</c:forEach>
@@ -181,17 +190,17 @@ a.cart-img > img{
 					<tr>
 						<th>出貨日期</th>
 						<td><input type="hidden"  id="getShipDate">
-						<p id="shipDate">${OrderMasterVO.shipDate}</p></td>
+						<p id="shipDate">${omVO.shipDate}</p></td>
 					</tr>
 					<tr>
 						<th>實際到貨日期</th>
 						<td><input type="hidden" id="getArrivalDate">
-						<p id="arrivalDate">${OrderMasterVO.arrivalDate}</p></td>																	
+						<p id="arrivalDate">${omVO.arrivalDate}</p></td>																	
 					</tr>
 					<tr>
 						<th>實際歸還日期</th>
 						<td><input type="hidden" id="getReturnDate">
-						<p id="returnDate">${OrderMasterVO.returnDate}</p></td>
+						<p id="returnDate">${omVO.returnDate}</p></td>
 					</tr>
 				</table>
 				<table>
@@ -266,8 +275,8 @@ a.cart-img > img{
 				<input type="hidden" name="shipDate" id="shipTimelong" value="<%=omVO.getShipDate()== null ? "" : omVO.getShipDate().getTime()%>">
 				<input type="hidden" name="arrivalDate" id="arrivalTimelong" value="<%=omVO.getArrivalDate()== null ? "" : omVO.getArrivalDate().getTime()%>">
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">
-				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
-				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
+				<input type="hidden" name="rentComtdate" value="${omVO.rentComtdate}">
+				<input type="hidden" name="leaseComtdate" value="${omVO.leaseComtdate}">
 				<center><input type="submit" value="確認更新"></center>
 			</main>
 		</div>

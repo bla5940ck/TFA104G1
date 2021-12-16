@@ -6,6 +6,13 @@
 	MemberServiceVO memberserviceVO = (MemberServiceVO) request.getAttribute("memberserviceVO");
 	Integer memID = (Integer)session.getAttribute("id");
 	out.print(memID);
+	String ordID = request.getParameter("ordID");
+	
+// 	if(request.getParameter("ordID")!=null){
+// 	Integer ordID = Integer.valueOf(request.getParameter("ordID"));
+// 		System.out.println("訂單編號" + ordID);
+// 	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -139,7 +146,7 @@ object-fit: contain;
 					<tr>
 						<td>反應訂單編號</td>
 						<td>						
-						<input type="TEXT" name="ordID" size="45" /></td>
+						<input type="TEXT" name="ordID" size="45" value=<%=ordID %>></td>
 										
 						</td>
 					</tr>
