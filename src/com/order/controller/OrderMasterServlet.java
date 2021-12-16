@@ -188,6 +188,41 @@ public class OrderMasterServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("getOne_For_Manager_Update".equals(action)) { 
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/*************************** 1.接收請求參數 *****************************/
+				Integer ordID = new Integer(req.getParameter("ordID"));
+//				Integer listID = new Integer(req.getParameter("listID"));
+//				System.out.println("明細編號"+listID);
+				
+				
+				/*************************** 2.開始查詢資料 *****************************/
+				OrderMasterService omSVC = new OrderMasterService();
+				OrderMasterVO omVO = omSVC.getOneOrderMaster(ordID);
+				
+				OrderListService olSVC = new OrderListService();
+				
+				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
+				String url = "/back_end/order/updateOrderManagerInput.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
+				successView.forward(req, res);
+				
+				/*************************** 其他可能的錯誤處理 **************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
+				failureView.forward(req, res);
+			}
+		}
 
 		if ("update".equals(action)) { // 來自updateOrderMasterInput.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
@@ -350,6 +385,177 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println("完成");
 				return;
 
+				/*************************** 其他可能的錯誤處理 ***************************/
+			} catch (Exception e) {
+				System.out.println("失敗");
+				e.printStackTrace();
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/updateOrderMasterInput.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("update_for_manager".equals(action)) { // 來自updateOrderMasterInput.jsp的請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer ordID = new Integer(req.getParameter("ordID").trim());
+				
+				Integer shipStatus = new Integer(req.getParameter("shipStatus").trim());
+				
+				Integer ordStatus = new Integer(req.getParameter("ordStatus").trim());
+				Integer payStatus = new Integer(req.getParameter("payStatus").trim());
+				
+				String sc = (req.getParameter("shipCode").trim());				
+				Integer shipCode = 0;				
+				if(sc != null) {
+					try {
+						shipCode = new Integer(sc);
+					} catch (Exception e) {
+						errorMsgs.add("格式不正確" + e.getMessage());
+					}
+				};
+				
+				String rc = (req.getParameter("returnCode").trim());
+				Integer returnCode = 0;
+				if(rc != null) {
+					try {
+						returnCode = new Integer(rc);
+					} catch (Exception e) {
+						errorMsgs.add("格式不正確");
+					}
+				};				
+				
+				String strsd = req.getParameter("shipDate");
+				Timestamp shipDate = null;
+				if(strsd != null && strsd.length() != 0) {
+					System.out.println("運送時間 : " + strsd);
+					shipDate = new Timestamp(Long.valueOf(strsd));
+					System.out.println(shipDate);				
+				};
+				
+				String strad = req.getParameter("arrivalDate");
+				Timestamp arrivalDate = null;
+				if(strad != null && strad.length()!=0) {
+					System.out.println(strad);
+					System.out.println("到貨時間:" + strad);
+					arrivalDate = new Timestamp(Long.valueOf(strad));
+					System.out.println(arrivalDate);
+				} ;
+				
+				String strrd = req.getParameter("returnDate");
+				Timestamp returnDate = null;
+				if(strrd != null && strrd.length()!=0) {
+					System.out.println("歸還時間:" + strrd);
+					returnDate = new Timestamp(Long.valueOf(strrd));
+					System.out.println(returnDate);
+				};
+				
+				String strrr = req.getParameter("rentRank");
+				System.out.println(strrr);
+				Integer rentRank = null;
+				if(strrr != null && strrr.length() != 0) {
+					rentRank = new Integer(strrr);
+					System.out.println(rentRank);
+				}
+				
+				String strlr = req.getParameter("leaseRank");
+				System.out.println(strlr);
+				Integer leaseRank = null;
+				if(strlr != null && strlr.length() != 0) {
+					leaseRank = new Integer(strlr);
+					System.out.println(leaseRank);
+				}
+				
+				String rentComt = req.getParameter("rentComt").trim();
+				
+				String leaseComt = req.getParameter("leaseComt").trim();
+				
+				Date date = new Date();
+				
+				long strrc = (date.getTime());
+				Timestamp rentComtdate = new Timestamp(strrc);
+//				System.out.println(rentComtdate);
+				
+				long strlc = (date.getTime());
+				Timestamp leaseComtdate = new Timestamp(strlc);
+//				System.out.println(leaseComtdate);	
+				
+				//存入訂單VO
+				OrderMasterVO omVO = new OrderMasterVO();
+				omVO.setOrdID(ordID);
+				omVO.setShipStatus(shipStatus);
+				omVO.setOrdStatus(ordStatus);
+				omVO.setPayStatus(payStatus);
+				omVO.setShipCode(shipCode);
+				omVO.setReturnCode(returnCode);
+				omVO.setShipDate(shipDate);
+				omVO.setArrivalDate(arrivalDate);
+				omVO.setReturnDate(returnDate);
+				omVO.setRentRank(rentRank);
+				omVO.setLeaseRank(leaseRank);
+				omVO.setRentComt(rentComt);
+				omVO.setLeaseComt(leaseComt);
+				omVO.setRentComtdate(rentComtdate);
+				omVO.setLeaseComtdate(leaseComtdate);
+				
+				//接收VO參數
+				
+				Integer listID = new Integer(req.getParameter("listID"));
+				//存入明細VO
+				OrderListVO olVO = new OrderListVO();
+				olVO.setOrdStatus(ordStatus);
+				olVO.setListID(listID);
+				olVO.setOrdID(ordID);
+				
+//				System.out.println(omVO.getOrdStatus());
+//				System.out.println(olVO.getOrdStatus());
+				if (!errorMsgs.isEmpty()) {
+					
+					try{
+						req.setAttribute("OrderMasterVO", omVO); //含有輸入格式錯誤的omVO物件,也存入req
+					} catch(Exception e) {
+						e.printStackTrace();
+//						System.out.println("錯了嗎?????????????");
+						RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
+						failureView.forward(req, res);
+						return; // 程式中斷
+					}
+				}
+				
+				/*************************** 2.開始修改資料 ****************************/
+				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				omdao.updateAllOrder(omVO, olVO);
+				omdao.updateWithListStatus(omVO, olVO);
+				
+				/*************************** 3.預約單判斷 ****************************/
+				BookingService bkSVC = new BookingService();
+				List<BookingVO> bkVO = bkSVC.getAll();
+				for(BookingVO bkVOUpdate : bkVO) {
+					if(bkVOUpdate.getOrdID().equals(ordID) && ordStatus == 9) {
+						bkSVC.deleteBk(bkVOUpdate.getBkID());
+						System.out.println("因為訂單狀態修改為已取消，故刪除該預約單");
+					}
+				}
+				/**************************** NEW修改後的VO ****************************/
+				OrderMasterVO omVO1 = omdao.findOrderMasterByPK(ordID);
+				OrderListVO olVO1 = oldao.findOrderListByPK(listID);
+				
+				/******************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("OrderMasterVO", omVO1); // 資料庫update成功後,正確的的ordermasterVO物件,存入req
+				req.setAttribute("OrderListVO", olVO1);
+				
+				String url = "/back_end/order/listAllOrderMaster.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); //  修改成功後,轉交listOneOrderMaster.jsp
+				successView.forward(req, res);
+				System.out.println("完成");
+				return;
+				
 				/*************************** 其他可能的錯誤處理 ***************************/
 			} catch (Exception e) {
 				System.out.println("失敗");
