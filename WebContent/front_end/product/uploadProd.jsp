@@ -115,29 +115,29 @@
 										method="post" enctype="multipart/form-data"
 										class="aa-login-form">
 										<label for="">圖片一<span>*</span></label> <input type="file" class="file"
-											id='file_id1' name='file_name1' style="font-family:DFKai-sb;"
+											id='file_id1' name='file_name1'  
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片二<span></span></label>
-											 <input type="file" class="file" style="font-family:DFKai-sb;"
+											 <input type="file" class="file"  
 											id='file_id2' name='file_name2'
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">圖片三<span></span></label>
-											 <input type="file" style="font-family:DFKai-sb;"
+											 <input type="file"  
 											id='file_id3' name='file_name3' class="file"
 											accept="image/gif, image/jpeg, image/png"><br> <label
 											for="">商品名稱<span>*</span></label>
-											 <input type="text" name="product_name"	id="product_name" style="font-family:DFKai-sb;"
+											 <input type="text" name="product_name"	id="product_name"  
 											placeholder="請商品名稱" value ="${prodVO.prodName }"> <label for="">商品類別<span>*</span></label>
 										<jsp:useBean id="cateSvc" scope="page"
 											class="com.category.model.ProdCategoryService" />
 										<select id="cate_select" name="categorySelect"
-											style="display: inline ;font-family:DFKai-sb;	 float: left; width: 100%; height: 30px;">
+											style="display: inline ;float: left; width: 100%; height: 30px;">
 											<c:choose>
 												<c:when test="${prodVO.categoryID==null}">
-													<option value="" style="font-family:DFKai-sb;">請選擇商品類別</option>
+													<option value=""  >請選擇商品類別</option>
 												</c:when>
 												<c:otherwise>
-													<option value="${prodVO.categoryID}" style="font-family:DFKai-sb;">${cateSvc.findCategoryByPK(prodVO.categoryID).categoryName}</option>
+													<option value="${prodVO.categoryID}"  >${cateSvc.findCategoryByPK(prodVO.categoryID).categoryName}</option>
 												</c:otherwise>
 										
 											</c:choose>
@@ -152,26 +152,26 @@
 									
 										
 <%-- 										<jsp:useBean id="prodSvc" scope="page" class="com.product.model.ProdService" /> --%>
-										<label for="">商品租金<span>*</span></label> <input style="font-family:DFKai-sb;"
+										<label for="">商品租金<span>*</span></label> <input  
 											type="text" placeholder="請輸入商品租金" name="product_rent" id="product_rent" value="${prodVO.prodRent}"> <label for="">商品損壞賠償金<span>*</span></label>
-										<input type="text" style="font-family:DFKai-sb;" placeholder="請輸入商品損壞賠償金" name="product_price" id="product_price" value="${prodVO.prodPrice}"> <label
+										<input type="text"   placeholder="請輸入商品損壞賠償金" name="product_price" id="product_price" value="${prodVO.prodPrice}"> <label
 											for="">備註<span></span></label>
-											 <input type="text" style="font-family:DFKai-sb;" placeholder="請輸入備註" name="comt" id="comt" value="${prodVO.comt}"> <label for="">商品內容<span>*</span></label>
+											 <input type="text"   placeholder="請輸入備註" name="comt" id="comt" value="${prodVO.comt}"> <label for="">商品內容<span>*</span></label>
 										<input type="text" style="height: 150px;padding:5px;" name="product_cot" value="${prodVO.prodCot}">
 										<input
 			type=hidden id="fileCount" name="fileCount"><br> <input
 			type="hidden" name="action" value="upload">
 			<div>
 			<input type="text" class="addLabel" style="size:10px; width:100px" >
-<input style="font-family:DFKai-sb;" type="button" class="add-label-btn" value ="自訂標籤"><br>
-標籤:&nbsp&nbsp  <label style="font-family:DFKai-sb;" ><input type="checkbox" id="ps4" name="checkbox1" value="ps4">#ps4</label> 
-<label style="font-family:DFKai-sb;"><input id=""type="checkbox" name="checkbox1" value="ps5" >#ps5</label> 
-<label style="font-family:DFKai-sb;"><input id="" type="checkbox" name="checkbox1" value="OLED">#OLED</label> 
-<label style="font-family:DFKai-sb;"><input id="" type="checkbox" name="checkbox1" value="瑪利歐">#瑪利歐</label>
-<label style="font-family:DFKai-sb;"><input id="" type="checkbox" name="checkbox1" value="薩爾達">#薩爾達</label>
-<label style="font-family:DFKai-sb;"><input id="" type="checkbox" name="checkbox1" value="賽車">#賽車</label>
-<label style="font-family:DFKai-sb;"><input id="" type="checkbox" name="checkbox1" value="冒險">#冒險</label>
-<label style="font-family:DFKai-sb;"><input id="" type="checkbox" name="checkbox1" value="動作">#動作</label><br>
+<input   type="button" class="add-label-btn" value ="自訂標籤"><br>
+標籤:&nbsp&nbsp  <label   ><input type="checkbox" id="ps4" name="checkbox1" value="ps4">#ps4</label> 
+<label  ><input id=""type="checkbox" name="checkbox1" value="ps5" >#ps5</label> 
+<label  ><input id="" type="checkbox" name="checkbox1" value="OLED">#OLED</label> 
+<label  ><input id="" type="checkbox" name="checkbox1" value="瑪利歐">#瑪利歐</label>
+<label  ><input id="" type="checkbox" name="checkbox1" value="薩爾達">#薩爾達</label>
+<label  ><input id="" type="checkbox" name="checkbox1" value="賽車">#賽車</label>
+<label  ><input id="" type="checkbox" name="checkbox1" value="冒險">#冒險</label>
+<label  ><input id="" type="checkbox" name="checkbox1" value="動作">#動作</label><br>
 
 		
 	</div>
