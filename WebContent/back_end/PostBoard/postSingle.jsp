@@ -47,6 +47,7 @@
                       <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div><!--會員ID -->
                       <div class="aa-post-date">${pb.postTime}</div><!--徵求標題 -->
                      </div>
+                     
                     <figure class="aa-blog-img"><!--內文照片 -->
                       <a href="#"><img 
                       	 src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId}&action=writePic"/></a>
@@ -83,7 +84,7 @@
                        
                     <a class="aa-blog-next" 
                        href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId-1}">下一篇<span class="fa fa-arrow-right"></span></a>
-                      
+                       
                   </div>
                   
                   
@@ -107,8 +108,6 @@
                              <span class="comments-date"></span>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
 
-                             <a href="#" class="reply-btn">修改留言</a>
-                            
                             </div>
                           </div>
                         </li>
@@ -166,8 +165,11 @@
                       </p>
                      
                       <p class="form-submit">
-                        <input type="submit" class="aa-browse-btn" name="action" value="insert">
-                      </p>        
+                      <input type="submit" class="aa-browse-btn" value="送出留言"/>
+                      <input type="hidden"  class="aa-browse-btn" name="action" value="insert"/>
+                      
+                        
+                   	  </p>        
                     </form>
                   </div>
                 </div>

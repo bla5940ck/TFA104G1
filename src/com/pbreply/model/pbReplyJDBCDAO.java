@@ -295,21 +295,21 @@ public class pbReplyJDBCDAO implements pbReplyDAOIpml {
 
 		// 新增--ok
 //		pbReplyVO pbreplyVO1 = new pbReplyVO();
-//		pbreplyVO1.setReplyId(505);
+//		pbreplyVO1.setReplyId(15);
 //		pbreplyVO1.setPostId(3);
 //		pbreplyVO1.setMemberId(5);
 //		pbreplyVO1.setReplyCont("test2");
 //		pbreplyVO1.setReplyTime(timestamp);
 //		dao.insert(pbreplyVO1);
 
-//		// 修改--ok
-		pbReplyVO pbreplyVO2 = new pbReplyVO();
-		pbreplyVO2.setReplyId(14);
-		pbreplyVO2.setPostId(1);
-		pbreplyVO2.setMemberId(4);
-		pbreplyVO2.setReplyCont("test2");
-		pbreplyVO2.setReplyTime(timestamp);
-		dao.update(pbreplyVO2);
+//		// 修改
+//		pbReplyVO pbreplyVO2 = new pbReplyVO();
+//		pbreplyVO2.setReplyId(14);
+//		pbreplyVO2.setPostId(1);
+//		pbreplyVO2.setMemberId(4);
+//		pbreplyVO2.setReplyCont("test2");
+//		pbreplyVO2.setReplyTime(timestamp);
+//		dao.update(pbreplyVO2);
 	
 //
 //		// 刪除--ok

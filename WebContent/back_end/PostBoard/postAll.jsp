@@ -35,6 +35,7 @@
                   <div class="row">
 	                    <jsp:useBean id="pbSvc" scope="page" class="com.postboard.model.PostBoardService" />
 	                    	<c:forEach var="pbVO" items="${pbSvc.all}" varStatus="status">
+
 	                    	 <div class="col-md-4 col-sm-4">
 		                      	<article class="aa-latest-blog-single">
 		                        	<figure class="aa-blog-img">                    
@@ -43,7 +44,7 @@
 		                        		   <figcaption class="aa-blog-img-caption">
 		                            		   <a href="#"><i class="fa fa-comment-o"></i>${pbVO.replyCount}</a>
 		                            			 <span href="#"><i class="fa fa-clock-o"></i>${pbVO.postTime}</span>
-		                          				</figcaption>                          
+		                          		   </figcaption>                          
 		                        	</figure>
 		                        	
 		                        	<div class="aa-blog-info">
@@ -55,9 +56,10 @@
 	                        		</div>
 	                           </article>
 	                          </div>
-                      	 </c:forEach>
-                                       
+	                          
+	                          </c:forEach>               
                   </div>
+                  
                 </div>
                 
                 <!-- Blog Pagination -->
