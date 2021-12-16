@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.booking.model.BookingService;
 import com.booking.model.BookingVO;
 import com.google.gson.Gson;
+import com.member_coupon.model.MemcouponDAO;
+import com.member_coupon.model.MemcouponVO;
 import com.order.model.OrderListDAOImpl;
 import com.order.model.OrderListService;
 import com.order.model.OrderListVO;
@@ -459,6 +461,21 @@ public class OrderMasterServlet extends HttpServlet {
 				omdao.inesetWithList(omVO, list);
 //				System.out.println("訂單+明細新增");
 				
+				/***********************修改會員折價券狀態************************/
+
+				MemcouponDAO mcdao = new MemcouponDAO();
+				List<MemcouponVO> mclist = mcdao.getMemberid(rentID);
+				System.out.println("接收的折價券編號" + couponID);
+				for(MemcouponVO mcVO : mclist) {
+					if(mcVO.getCoupon_id().equals(couponID)) {
+						mcVO.getMem_coupon_id();
+						Integer mem_coupon_id = mcVO.getMem_coupon_id();
+						System.out.println("找該會員的折價券" + mem_coupon_id);
+						
+						mcdao.findByPrimaryKey(mem_coupon_id);
+					}
+				}
+
 				/***********************刪除購物車************************/
 				Integer memberID = (Integer)req.getSession().getAttribute("id");
 				System.out.println("memberID" + memberID);
