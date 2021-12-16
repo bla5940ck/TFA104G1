@@ -1,41 +1,55 @@
+<%@page import="com.member_coupon.model.MemcouponVO"%>
+<%@page import="com.member_coupon.model.MemcouponDAO"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="com.member.model.DefAddressJDBCDAO"%>
+<%@page import="com.member.model.DefAddressVO"%>
+<%@page import="com.member.model.MemberVO"%>
+<%@page import="com.member.model.MemberService"%>
+<%@page import="com.member.model.MemberDAO_interface"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
+<%@page import="com.product.model.*"%>
 <%@page import="java.util.stream.Collectors"%>
 
+
 <%
-	Integer memID = (Integer) session.getAttribute("id");
-	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+	MemcouponDAO memDAO = new MemcouponDAO();
+	List <MemcouponVO> memVO = memDAO.getAll();
+	for(MemcouponVO name : memVO){
+// 		System.out.println(name.getCoupon_name());
+	}
+
+// 	Integer memID = (Integer) session.getAttribute("id");
+// 	System.out.println("會員編號 : " + memID);
+	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
+	List<DefAddressVO> daVO = dadao.getAll();
 
 	OrderMasterService omSVC = new OrderMasterService();
-	List<OrderMasterVO> list = omSVC.getStatus(omVO.getOrdStatus());
-
-// 	pageContext.setAttribute("list", list);
-
-// 	List<OrderMasterVO> list = omSVC.getAll();
+	
+	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+	List<OrderMasterVO> list = omSVC.getAll();
 	List<OrderMasterVO> list1 = omSVC.getAll();
 	
-	List<OrderMasterVO> list2 =list.
-								stream()
-									.filter(o->o.getLeaseID()==memID)
-										.filter(o -> o.getOrdStatus() == omVO.getOrdStatus())
-											.collect(Collectors.toList());
+// 	List<OrderMasterVO> list2 =list.
+// 								stream()
+// 									.filter(o->o.getLeaseID()==memID)
+// 										.collect(Collectors.toList());
 
-	pageContext.setAttribute("list", list2);
+	pageContext.setAttribute("list", list);
 %>
-<jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
-<%-- <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" /> --%>
-<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
-<jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
-<jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
+<jsp:useBean id="memSVC" scope="page"
+	class="com.member.model.MemberService" />
+<jsp:useBean id="mcoSVC" scope="page"
+	class="com.member_coupon.model.MemcouponService" />
+<jsp:useBean id="daSVC" scope="page"
+	class="com.member.model.DefAddressService" />
 
 <html>
 <head>
-<meta charset="UTF-8">
-<title>訂單狀態查詢</title>
+<title>所有訂單資料 - listAllOrderMaster.jsp</title>
 <style>
 body {
 	margin: 0;
@@ -98,52 +112,33 @@ th, td {
 	text-align: left;
 }
 </style>
+
 </head>
-
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-	<%@ include file="/includeFolder/leaseMemberAside.file"%>
-
+	<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main">
 			<div>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>
-						輸入訂單明細編號 (如1): 
-						<input type="text" name="listID"> 
-						<input type="hidden" name="action" value="getOne_For_Display"> 
-						<input type="submit" value="送出">
-					</h5>
+				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<b>選擇訂單編號:</b> 
+					<select size="1" name="ordID">
+						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
+<%-- 							<c:if test="${OrderMasterVO.leaseID == id}"> --%>
+								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
+<%-- 							</c:if> --%>
+						</c:forEach>
+					</select> 
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="submit" value="送出">
 				</FORM>
 
-				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
-
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>
-						選擇訂單明細編號: <select size="1" name="listID">
-							<c:forEach var="OrderListVO" items="${OrdserListSvc.all}">
-								<option value="${OrderListVO.listID}">${OrderListVO.listID}
-							</c:forEach>
-						</select> 
-						<input type="hidden" name="action" value="getOne_For_Display">
-						<input type="submit" value="送出">
-					</h5>
-				</FORM>
-
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					<h5>
-						選擇訂單狀態: <select size="1" name="ordStatus">
-							<option value="0" <%=omVO.getOrdStatus() == 0 ? "selected" : ""%>>已成立</option>
-							<option value="1" <%=omVO.getOrdStatus() == 1 ? "selected" : ""%>>待歸還</option>
-							<option value="2" <%=omVO.getOrdStatus() == 2 ? "selected" : ""%>>已完成</option>
-							<option value="9" <%=omVO.getOrdStatus() == 9 ? "selected" : ""%>>已取消</option>
-						</select> 
-						<input type="hidden" name="action" value="get_Status_Display">
-						<input type="submit" value="送出">
-					</h5>
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<b>輸入訂單編號 (如1):</b> 
+					<input type="text" name="ordID"> 
+					<input type="hidden" name="action" value="getOne_For_Display"> 
+					<input type="submit" value="送出">
 				</FORM>
 			</div>
 			<c:if test="${not empty errorMsgs}">
@@ -154,23 +149,27 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
+
 			<table id="table-1">
 				<div>
 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
 							<td><button name="ordStatus" value="1">待歸還</button></td>
 							<td><button name="ordStatus" value="2">已完成</button></td>
 							<td><button name="ordStatus" value="9">已取消</button></td>
 						</tr>
-						<input type="hidden" name="action" value="get_Status_Display">
+						<input type="hidden" name="action" value="get_Status_Display_Manager">
 					</FORM>
 				</div>
 			</table>
+
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
+					
+					<th>出租者</th>
 					<th>承租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
@@ -181,19 +180,23 @@ th, td {
 					<th>出貨碼</th>
 					<th>歸還碼</th>
 					<th>超商碼</th>
+	
 					<th>出貨日期</th>
 					<th>到貨日期</th>
 					<th>歸還日期</th>
 					<th>承租天數</th>
+
 					<th>訂單金額</th>
 				</tr>
-				<%@ include file="pageForLease.file"%>
+				<%@ include file="page1.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-					<c:choose>
-						<c:when test="${omVO.leaseID == id}">
 							<tr>
 								<td>${omVO.ordID}</td>
+
+
+								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
 								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
+
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
 										<td>信用卡</td>
@@ -203,7 +206,7 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 
-								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+							<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
 							<c:set var="count" value="0"/>
 								<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
 									<c:if test="${count==0}">
@@ -218,7 +221,7 @@ th, td {
 										<c:set var="count" value="1"/>
 									</c:if>
 								</c:forEach>
-
+								
 								<c:choose>
 									<c:when test="${omVO.shipStatus == '0'}">
 										<td>待出貨</td>
@@ -263,9 +266,13 @@ th, td {
 
 								<td><fmt:formatDate value="${omVO.ordDate}"
 										pattern="yyyy-MM-dd" /></td>
+
 								<td>${omVO.shipCode}</td>
 								<td>${omVO.returnCode}</td>
 								<td>${omVO.storeCode}</td>
+
+								<%-- 						<td>${omVO.estStart}</td> --%>
+								<%-- 						<td>${omVO.estEnd}</td> --%>
 								<td><fmt:formatDate value="${omVO.shipDate}"
 										pattern="yyyy-MM-dd" /></td>
 								<td><fmt:formatDate value="${omVO.arrivalDate}"
@@ -275,25 +282,29 @@ th, td {
 								<td>${omVO.rentDays}</td>
 								<td>${omVO.ordPrice}</td>
 								<td>
+									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
+										style="margin-bottom: 0px;">
+										<input type="submit" value="狀態修改"> 
+										<input type="hidden" name="ordID" value="${omVO.ordID}">
+										<%-- 								<input type="hidden" name="listID" value="${omVO.ordID}">  --%>
+										<input type="hidden" name="action" value="getOne_For_Update">
+									</FORM>
+								</td>
+								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
-<%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
-										<input type="hidden" name="action" value="getlist_For_Display">
+										<input type="hidden" name="action" value="getlist_For_Manager">
 									</FORM>
 								</td>
 							</tr>
-						</c:when>
-					</c:choose>
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
-	<%@ include file="/includeFolder/footer2.file"%>
+	<%@ include file="/includeFolder/managerFooter.file"%>
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </html>

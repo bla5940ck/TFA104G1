@@ -228,6 +228,138 @@ public class OrderListServlet extends HttpServlet {
 				return;
 			}
 		}
+		
+		if ("getlist_For_Rent".equals(action)) { // 來自listStatusOrderList.jsp
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println("進來了");
+			
+			try {
+				
+				String str = req.getParameter("ordID");
+				System.out.println(str);
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入訂單編號");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				Integer ordID = null;
+				try {
+					ordID = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("編號格式不正確");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				/**************** 2.開始查詢資料 ****************/
+				
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				List<OrderListVO> olVO = oldao.findOrderListByOrdID(ordID);
+				
+				if (olVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				for (OrderListVO ols : olVO) {
+					
+					/************** 3.查詢完成,準備轉交 *************/
+					req.setAttribute("OrderListVO", ols);
+					String url = "/front_end/order/listOrdIDForRent.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+		}
+		
+		if ("getlist_For_Manager".equals(action)) { // 來自listStatusOrderList.jsp
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println("進來了");
+			
+			try {
+				
+				String str = req.getParameter("ordID");
+				System.out.println(str);
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入訂單編號");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				Integer ordID = null;
+				try {
+					ordID = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("編號格式不正確");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/back_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				/**************** 2.開始查詢資料 ****************/
+				
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				List<OrderListVO> olVO = oldao.findOrderListByOrdID(ordID);
+				
+				if (olVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/back_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				for (OrderListVO ols : olVO) {
+					
+					/************** 3.查詢完成,準備轉交 *************/
+					req.setAttribute("OrderListVO", ols);
+					String url = "/back_end/order/listOrdIDOrderListManager.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+		}
 
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();

@@ -1,34 +1,30 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.stream.Collectors"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-// 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
-	List<OrderMasterVO> list1 = new ArrayList();
-	for(OrderMasterVO rentVO : list){
-		if(rentVO.getRentID() == memID && rentVO.getOrdStatus() == 2){
-		System.out.println(rentVO.getOrdID());
-		System.out.println(rentVO.getOrdStatus());
-			
-		OrderMasterVO omVO1 = new OrderMasterVO();		
-		
-		list1.add(omVO1);
-	
-		
-// 		}
-// 	}
+	List<OrderMasterVO> list1 = omSVC.getAll();
 
-	pageContext.setAttribute("list", list);
+	List<OrderMasterVO> list2 =list.
+								stream()
+									.filter(o->o.getRentID()==memID)
+										.filter(o->o.getOrdStatus()==2)
+											.collect(Collectors.toList());
+
+	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
-<%-- <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" /> --%>
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -104,16 +100,8 @@ th, td {
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<h3>承租者專區</h3>
-				<h5>會員編號 : <%=memID%></h5>
-				<ul class="nav_list">
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
-					<h4><a href="listSuccessOrder.jsp">訂單評價</a></h4>
-				</ul>
-			</nav>
-		</aside>
+		<%@ include file="/includeFolder/rentMemberAside.file"%>
+		
 		<main class="main">
 
 				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
@@ -126,7 +114,11 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-
+			<div>
+				 <h5>依日期查詢訂單</h5>
+				 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
+				 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
+			</div>
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
@@ -143,7 +135,7 @@ th, td {
 					<th>承租天數</th>
 					<th>訂單金額</th>
 				</tr>
-				<%@ include file="page1.file"%>
+				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 					<c:choose>
 						<c:when test="${omVO.ordStatus == 2 && omVO.rentID == id}">
@@ -159,14 +151,21 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 
-								<c:choose>
-									<c:when test="${omVO.couponID == ''}">
-										<td>無</td>
-									</c:when>
-									<c:otherwise>
-										<td>${mcoSVC.findByPrimaryKey(omVO.couponID).coupon_name}</td>
-									</c:otherwise>
-								</c:choose>
+								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+								<c:set var="count" value="0"/>
+									<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+										<c:if test="${count==0}">
+											<c:choose>
+												<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+													<td>無</td>
+												</c:when>
+												<c:when test="${true}">
+													<td>${mcVO.coupon_name}</td>
+												</c:when>
+											</c:choose>
+												<c:set var="count" value="1"/>
+										</c:if>
+									</c:forEach>
 
 								<c:choose>
 									<c:when test="${omVO.ordStatus == '0'}">
@@ -208,11 +207,61 @@ th, td {
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>
-			<%}} %>
 		</main>
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link   rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
+</style>
+
+<script>
+$("#f_date1").blur(function(){
+// 	alert(1);
+	console.log($("#f_date1").val());
+	if($("#f_date1").val() != null && $("#f_date1") != ''){		
+		$("#f_date2").blur(function(){
+			console.log($("#f_date2").val());
+			if($("#f_date2").val != null && $("#f_date2") != ''){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/OrderMasterServlet",
+					type:"POST",
+					data:{
+						startDate:($("#f_date1").val()),
+						endDate:($("#f_date2").val()),
+						action:"get_Date_Order",
+			
+					},
+						dataType:"json",
+				});
+			}		
+		})	
+	}	
+});
+
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date1").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d',
+	       value:'',
+        });
+        $("#f_date2").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d',
+	       value:'',
+        });
+</script> 
 </html>

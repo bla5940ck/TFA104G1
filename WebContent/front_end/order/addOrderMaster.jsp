@@ -72,8 +72,8 @@ a.cart-img>img {
 											// 					System.out.println("承租者編號 : " + memID);
 											//會員名稱
 											MemberService memSVC = new MemberService();
-											System.out.println("這裡");
-											System.out.println(cartVO.getLeaseID());
+// 											System.out.println("這裡");
+// 											System.out.println(cartVO.getLeaseID());
 											MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
 											// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
 											String leaseName = memVO.getName();

@@ -1,24 +1,21 @@
-<%@page import="java.util.stream.Collectors"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.stream.Collectors"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-// 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
 	List<OrderMasterVO> list1 = omSVC.getAll();
-// 	for(OrderMasterVO leaseVO : list){
-// 		if()
-// 	}
+
 	List<OrderMasterVO> list2 =list.
 								stream()
 									.filter(o->o.getLeaseID()==memID)
@@ -28,7 +25,6 @@
 	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
-<%-- <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" /> --%>
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -106,7 +102,7 @@ th, td {
 	<div class="main_content">
 	<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">
-				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
+		<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -117,12 +113,9 @@ th, td {
 				</ul>
 			</c:if>
 			<div>
-			 <h5>依日期查詢訂單</h5>
-<%-- 			 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
-			 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
-			 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
-<!-- 			 <input type="hidden" name="action" value="get_Date_Order"> -->
-<!-- 			 </FORM> -->
+				 <h5>依日期查詢訂單</h5>
+				 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
+			  	 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
 			</div>
 			<table id="table-1">
 				<tr>
@@ -154,14 +147,22 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 
-								<c:choose>
-									<c:when test="${omVO.couponID == ''}">
-										<td>無</td>
-									</c:when>
-									<c:otherwise>
-										<td>${mcoSVC.findByPrimaryKey(omVO.couponID).coupon_name}</td>
-									</c:otherwise>
-								</c:choose>
+								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+								<c:set var="count" value="0"/>
+									<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+										<c:if test="${count==0}">
+											<c:choose>
+												<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+													<td>無</td>
+												</c:when>
+												<c:when test="${true}">
+													<td>${mcVO.coupon_name}</td>
+												</c:when>
+											</c:choose>
+												<c:set var="count" value="1"/>
+										</c:if>
+									</c:forEach>
+
 
 								<c:choose>
 									<c:when test="${omVO.ordStatus == '0'}">
