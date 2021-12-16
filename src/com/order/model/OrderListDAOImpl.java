@@ -108,15 +108,15 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, olVO.getProdID());
-			System.out.println(olVO.getProdID());
+//			System.out.println(olVO.getProdID());
 			pstmt.setInt(2, olVO.getOrdID());
-			System.out.println(olVO.getOrdID());
+//			System.out.println(olVO.getOrdID());
 			pstmt.setInt(3, olVO.getProdPrice());
-			System.out.println(olVO.getProdPrice());
+//			System.out.println(olVO.getProdPrice());
 			pstmt.setDate(4, olVO.getEstStart());
-			System.out.println(olVO.getEstStart());
+//			System.out.println(olVO.getEstStart());
 			pstmt.setDate(5, olVO.getEstEnd());
-			System.out.println(olVO.getEstEnd());
+//			System.out.println(olVO.getEstEnd());
 
 			pstmt.executeUpdate();
 			BookingDAO bkdao = new BookingDAO();
@@ -126,7 +126,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			bkVO.setEstStart(olVO.getEstStart());
 			bkVO.setEstEnd(olVO.getEstEnd());
 			bkVO.setOrdID(olVO.getOrdID());
-			System.out.println("由ListDAO至BKDAO");
+//			System.out.println("由ListDAO至BKDAO");
 			bkdao.add2(bkVO, con);
 
 //			BookingService bkSVC = new BookingService();

@@ -171,14 +171,14 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				next_ordID = rs.getString(1);
-				System.out.println("自增主鍵值 = " + next_ordID + "剛新增成功的訂單編號");
+//				System.out.println("自增主鍵值 = " + next_ordID + "剛新增成功的訂單編號");
 			} else {
-				System.out.println("未取得自增主鍵直");
+//				System.out.println("未取得自增主鍵直");
 			}
 			rs.close();
 			// 同時再新增訂單明細
 			OrderListDAOImpl oldao = new OrderListDAOImpl();
-			System.out.println("新增前有 : " + list.size());
+//			System.out.println("新增前有 : " + list.size());
 			for (OrderListVO olVO : list) {
 				olVO.setOrdID(new Integer(next_ordID));
 				oldao.insertOrder(olVO, con);							
@@ -188,8 +188,8 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			// 設定autoCommit(true)於pstmt.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("新增後有 : " + list.size());
-			System.out.println("新增訂單編號" + next_ordID + "時,共有明細" + list.size() + "筆,同時被新增");
+//			System.out.println("新增後有 : " + list.size());
+//			System.out.println("新增訂單編號" + next_ordID + "時,共有明細" + list.size() + "筆,同時被新增");
 
 		} catch (SQLException se) {
 			if (con != null) {

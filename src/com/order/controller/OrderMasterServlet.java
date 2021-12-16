@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,25 +15,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.booking.model.BookingService;
+import com.booking.model.BookingVO;
+import com.google.gson.Gson;
 import com.order.model.OrderListDAOImpl;
 import com.order.model.OrderListService;
 import com.order.model.OrderListVO;
 import com.order.model.OrderMasterDAOImpl;
 import com.order.model.OrderMasterService;
 import com.order.model.OrderMasterVO;
+import com.product.jedis.JedisPoolUtil;
+import com.product.model.CartVO;
 
-import com.member.model.DefAddressVO;
-import com.member.model.MemberVO;
-import com.booking.model.BookingDAO;
-import com.booking.model.BookingService;
-import com.booking.model.BookingVO;
-import com.product.model.ProdDAO;
-import com.product.model.ProdVO;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 
 @WebServlet("/OrderMasterServlet")
 public class OrderMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static JedisPool pool = JedisPoolUtil.getJedisPool();
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -140,6 +141,43 @@ public class OrderMasterServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
 				successView.forward(req, res);
 
+				/*************************** 其他可能的錯誤處理 **************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("getOne_Rent_Update".equals(action)) { // 來自listAllOrderMaster.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/*************************** 1.接收請求參數 *****************************/
+				Integer ordID = new Integer(req.getParameter("ordID"));
+//				Integer listID = new Integer(req.getParameter("listID"));
+//				System.out.println("明細編號"+listID);
+				
+				
+				/*************************** 2.開始查詢資料 *****************************/
+				OrderMasterService omSVC = new OrderMasterService();
+				OrderMasterVO omVO = omSVC.getOneOrderMaster(ordID);
+				
+				OrderListService olSVC = new OrderListService();
+//				OrderListVO olVO = olSVC.getOneOrderList(listID);
+				
+				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
+				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
+//				req.setAttribute("OrderListVO", olVO);
+				String url = "/front_end/order/updateOrderRentInput.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
+				successView.forward(req, res);
+				
 				/*************************** 其他可能的錯誤處理 **************************/
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -284,16 +322,26 @@ public class OrderMasterServlet extends HttpServlet {
 				/*************************** 2.開始修改資料 ****************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 				OrderListDAOImpl oldao = new OrderListDAOImpl();
-//				omdao.updateAllOrder(omVO, olVO);
+				omdao.updateAllOrder(omVO, olVO);
 				omdao.updateWithListStatus(omVO, olVO);
 				
+				/*************************** 3.預約單判斷 ****************************/
+				BookingService bkSVC = new BookingService();
+				List<BookingVO> bkVO = bkSVC.getAll();
+				for(BookingVO bkVOUpdate : bkVO) {
+					if(bkVOUpdate.getOrdID().equals(ordID) && ordStatus == 9) {
+						bkSVC.deleteBk(bkVOUpdate.getBkID());
+						System.out.println("因為訂單狀態修改為已取消，故刪除該預約單");
+					}
+				}
 				/**************************** NEW修改後的VO ****************************/
 				OrderMasterVO omVO1 = omdao.findOrderMasterByPK(ordID);
 				OrderListVO olVO1 = oldao.findOrderListByPK(listID);
-
+	
 				/******************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("OrderMasterVO", omVO1); // 資料庫update成功後,正確的的ordermasterVO物件,存入req
 				req.setAttribute("OrderListVO", olVO1);
+	
 				String url = "/front_end/order/listOneOrderMaster.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); //  修改成功後,轉交listOneOrderMaster.jsp
 				successView.forward(req, res);
@@ -387,19 +435,19 @@ public class OrderMasterServlet extends HttpServlet {
 				omVO.setShipFee(shipFee);	//運費
 				omVO.setOrdPrice(ordPrice);		//訂單金額		
 				
-				System.out.println("訂單存入");
+//				System.out.println("訂單存入");
 				
 				/*************存入訂單明細VO***********/
 				System.out.println(req.getSession().getAttribute("list1"));
 				List<OrderListVO> list =  (List<OrderListVO>)req.getSession().getAttribute("list1");
-				System.out.println(list.size());
+//				System.out.println(list.size());
 				
 				System.out.println("明細存入");
 	
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderMasterVO", omVO); // 含有輸入格式錯誤的VO物件,也存入req
 					req.setAttribute("OrderListVO", olVO);
-					System.out.println("這裡");
+//					System.out.println("這裡");
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
 					failureView.forward(req, res);
@@ -409,7 +457,27 @@ public class OrderMasterServlet extends HttpServlet {
 				/***********************開始新增************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 				omdao.inesetWithList(omVO, list);
-				System.out.println("訂單+明細新增");
+//				System.out.println("訂單+明細新增");
+				
+				/***********************刪除購物車************************/
+				Integer memberID = (Integer)req.getSession().getAttribute("id");
+				System.out.println("memberID" + memberID);
+				Jedis jedis = null;
+				jedis = pool.getResource();
+				Gson gson = new Gson();
+				
+				if(memberID != null) {
+					List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
+					for(String item : cart) {
+						CartVO cartVO = gson.fromJson(item, CartVO.class);
+						System.out.println("ProdID" + cartVO.getProdID());
+						if(cartVO.getProdID().equals(prodID)) {
+							jedis.lrem("member" + memberID, 1, item);
+							System.out.println("購物車刪除成功");
+						}
+					}
+					jedis.close();
+				}		
 				
 				/***********************新增完成準備轉交************************/
 				String url = "/front_end/order/listAllOrderForRent.jsp";
@@ -429,7 +497,7 @@ public class OrderMasterServlet extends HttpServlet {
 		if("get_Status_Display".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("進來了");
+//			System.out.println("進來了");
 			
 			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
 			
@@ -448,6 +516,53 @@ public class OrderMasterServlet extends HttpServlet {
 				return;
 			}
 		}	
+		
+		if("get_Status_Display_ForRent".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+//			System.out.println("進來了");
+			
+			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
+			
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
+			
+			if(omVO == null) {
+				errorMsgs.add("查無資料");
+			}
+			
+			for(OrderMasterVO oms : omVO) {
+				req.setAttribute("OrderMasterVO", oms);
+				String url = "/front_end/order/listStatusOrderMasterForRent.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			}
+		}	
+		
+		if("get_Status_Display_Manager".equals(action)) {
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+//			System.out.println("進來了");
+			
+			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
+			
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
+			
+			if(omVO == null) {
+				errorMsgs.add("查無資料");
+			}
+			
+			for(OrderMasterVO oms : omVO) {
+				req.setAttribute("OrderMasterVO", oms);
+				String url = "/back_end/order/listStatusOrderMaster.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			}
+		}	
+		
 		if ("getComment_For_Display".equals(action)) { // 來自listAllOrderMaster.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
