@@ -43,7 +43,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 				pstmt.setInt(2, pbreplyVO.getMemberId());
 				pstmt.setString(3, pbreplyVO.getReplyCont());
 				pstmt.setTimestamp(4, pbreplyVO.getReplyTime());
-
+				
 				pstmt.executeUpdate();
 
 				// Handle any SQL errors
