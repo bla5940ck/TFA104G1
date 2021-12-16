@@ -90,7 +90,7 @@ th, td {
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-	<%@ include file="/includeFolder/leaseMemberAside.file"%>
+	<%@ include file="/includeFolder/rentMemberAside.file"%>
 		
 		<main class="main">
 			
