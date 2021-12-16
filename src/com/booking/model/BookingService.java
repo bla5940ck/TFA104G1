@@ -1,12 +1,11 @@
 package com.booking.model;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.product.model.ProdDAO;
 import com.product.model.ProdDAO_Interface;
-import com.product.model.ProdVO;
 
 public class BookingService {
 	
@@ -18,26 +17,28 @@ public class BookingService {
 	}
 	
 	
-	public BookingVO addBk(Integer prodID,Integer status ,Date estStart ,Date estEnd) {
+	public BookingVO addBk(Integer prodID,Integer status ,Date estStart ,Date estEnd ,Integer ordID) {
 		BookingVO bk = new BookingVO();
 		
 		bk.setProdID(prodID);
 		bk.setStatus(status);
 		bk.setEstStart(estStart);
 		bk.setEstEnd(estEnd);
+		bk.setOrdID(ordID);
 		
 		dao.add(bk);
 		
 		return bk;
 	}
 	
-	public BookingVO updateBk(Integer bkID,Integer prodID,Integer status ,Date estStart ,Date estEnd) {
+	public BookingVO updateBk(Integer bkID,Integer prodID,Integer status ,Date estStart ,Date estEnd , Integer ordID) {
 		BookingVO bk = new BookingVO();
 		bk.setBkID(bkID);
 		bk.setProdID(prodID);
 		bk.setStatus(status);
 		bk.setEstStart(estStart);
 		bk.setEstEnd(estEnd);
+		bk.setOrdID(ordID);
 		
 		dao.update(bk);
 		return bk;
@@ -56,5 +57,18 @@ public class BookingService {
 		return dao.getAll();
 	}
 	
+	public BookingVO insertWithList(Integer prodID,Integer status ,Date estStart ,Date estEnd , Integer ordID,Connection con) {
+		BookingVO bk = new BookingVO();
+		
+		bk.setProdID(prodID);
+		bk.setStatus(status);
+		bk.setEstStart(estStart);
+		bk.setEstEnd(estEnd);
+		bk.setOrdID(ordID);
+			
+		dao.add2(bk, con);
+		
+		return bk;
+	}
 
 }

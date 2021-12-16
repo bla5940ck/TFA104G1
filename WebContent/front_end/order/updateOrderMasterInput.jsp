@@ -107,16 +107,7 @@ a.cart-img > img{
 	<FORM METHOD="post" ACTION="/TFA104G1/OrderMasterServlet" name="form1">
 
 		<div class="main_content">
-			<aside class="aside">
-				<nav class="nav">
-					<h3>出租者專區</h3>
-					<h5>會員編號 : <%=memID%></h5>
-					<ul class="nav_list">
-						<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
-						<h4><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">訂單評價</a></h4>
-					</ul>
-				</nav>
-			</aside>
+			<%@ include file="/includeFolder/leaseMemberAside.file"%>
 			<main class="main">
 			
 			

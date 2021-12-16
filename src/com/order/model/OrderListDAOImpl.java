@@ -12,6 +12,10 @@ import java.util.List;
 
 import org.apache.tomcat.dbcp.dbcp2.SQLExceptionList;
 
+import com.booking.model.BookingDAO;
+import com.booking.model.BookingService;
+import com.booking.model.BookingVO;
+
 import util.Util;
 
 public class OrderListDAOImpl implements OrderListDAO_interface {
@@ -24,9 +28,9 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_LIST WHERE ORD_STATUS = ?";
 	private static final String UPDATE = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE (LIST_ID = ?)";
 	private static final String FIND_BY_ORD_ID = "SELECT * FROM ORDER_LIST WHERE ORD_ID = ?";
-	private static final String UPDATE_LIST_STATUS = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
+	private static final String UPDATE_LIST_STATUS = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE ORD_ID = ?";
 	private static final String UPDATE_ORDER_STATUS = "UPDATE ORDER_MASTER SET ORD_STATUS =? WHERE (ORD_ID = ?)";
-	
+
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -104,17 +108,38 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, olVO.getProdID());
+//			System.out.println(olVO.getProdID());
 			pstmt.setInt(2, olVO.getOrdID());
+//			System.out.println(olVO.getOrdID());
 			pstmt.setInt(3, olVO.getProdPrice());
+//			System.out.println(olVO.getProdPrice());
 			pstmt.setDate(4, olVO.getEstStart());
+//			System.out.println(olVO.getEstStart());
 			pstmt.setDate(5, olVO.getEstEnd());
+//			System.out.println(olVO.getEstEnd());
+
+			pstmt.executeUpdate();
+			BookingDAO bkdao = new BookingDAO();
+			BookingVO bkVO = new BookingVO();
+			bkVO.setProdID(olVO.getProdID());
+			bkVO.setStatus(0);
+			bkVO.setEstStart(olVO.getEstStart());
+			bkVO.setEstEnd(olVO.getEstEnd());
+			bkVO.setOrdID(olVO.getOrdID());
+//			System.out.println("由ListDAO至BKDAO");
+			bkdao.add2(bkVO, con);
+
+//			BookingService bkSVC = new BookingService();
+//			System.out.println("進入list");
+//			bkSVC.insertWithList(olVO.getProdID(), 0, olVO.getEstStart(), olVO.getEstEnd(), olVO.getOrdID(), con);
+//			System.out.println("進入list2");
 
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("set auto_increment_increment=1;");
-			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
+					se.printStackTrace();
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-orderList");
 					con.rollback();
@@ -355,7 +380,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			pstmt.setInt(2, olVO.getListID());
 
 			pstmt.executeUpdate();
-			
+
 //			pstmt2 = con.prepareStatement(UPDATE_ORDER_STATUS);
 //			UPDATR ORDER_MASTER SET ORD_STATUS =? WHERE ORD_ID = ?
 //			pstmt2.setInt(1, omVO.getOrdStatus());
@@ -405,7 +430,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			pstmt.setInt(2, olVO.getListID());
 
 			pstmt.executeUpdate();
-			
+
 			pstmt2 = con.prepareStatement(UPDATE_ORDER_STATUS);
 //			UPDATR ORDER_MASTER SET ORD_STATUS =? WHERE ORD_ID = ?
 			pstmt2.setInt(1, omVO.getOrdStatus());
@@ -439,12 +464,48 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 			}
 		}
 	}
+	
+	@Override
+	public void updateWithOrder(OrderListVO olVO, Connection con) {
+		PreparedStatement pstmt = null;
 
+		try {
+			pstmt = con.prepareStatement(UPDATE_LIST_STATUS);
+//		UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE ORD_ID = ?
+			pstmt.setInt(1, olVO.getOrdStatus());
+			pstmt.setInt(2, olVO.getOrdID());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					se.printStackTrace();
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-orderList");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+
+	
 	public static void main(String[] args) {
 		OrderListDAO_interface oldao = new OrderListDAOImpl();
 
 		// 更新交易控制
-
 
 		// 更新
 //		OrderListVO ol1 = new OrderListVO();
@@ -493,5 +554,4 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 //			System.out.println(ol4);
 		}
 	}
-
 }

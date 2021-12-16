@@ -1,22 +1,21 @@
-<%@page import="java.util.stream.Collectors"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="java.util.stream.Collectors"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-// 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
 	List<OrderMasterVO> list1 = omSVC.getAll();
-// 	for(OrderMasterVO leaseVO : list){
-// 		if()
-// 	}
+
 	List<OrderMasterVO> list2 =list.
 								stream()
 									.filter(o->o.getLeaseID()==memID)
@@ -26,7 +25,6 @@
 	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
-<%-- <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" /> --%>
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -102,20 +100,9 @@ th, td {
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<h3>出租者專區</h3>
-				<h5>會員編號 : <%=memID%></h5>
-				<ul class="nav_list">
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
-					<h4><a href="listSuccessOrder.jsp">訂單評價</a></h4>
-				</ul>
-			</nav>
-		</aside>
+	<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">
-
-
-				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
+		<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -125,20 +112,21 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-
+			<div>
+				 <h5>依日期查詢訂單</h5>
+				 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
+			  	 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
+			</div>
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
 					<th>承租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
-<!-- 					<th>運送狀態</th> -->
-<!-- 					<th>付款狀態</th> -->
+
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-<!-- 					<th>出貨碼</th> -->
-<!-- 					<th>歸還碼</th> -->
-<!-- 					<th>超商碼</th> -->
+
 					<th>出貨日期</th>
 					<th>到貨日期</th>
 					<th>歸還日期</th>
@@ -147,8 +135,6 @@ th, td {
 				</tr>
 				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${omVO.ordStatus == 2 && omVO.leaseID == id}"> --%>
 							<tr>
 								<td>${omVO.ordID}</td>
 								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
@@ -161,41 +147,22 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 
-								<c:choose>
-									<c:when test="${omVO.couponID == ''}">
-										<td>無</td>
-									</c:when>
-									<c:otherwise>
-										<td>${mcoSVC.findByPrimaryKey(omVO.couponID).coupon_name}</td>
-									</c:otherwise>
-								</c:choose>
+								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+								<c:set var="count" value="0"/>
+									<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+										<c:if test="${count==0}">
+											<c:choose>
+												<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+													<td>無</td>
+												</c:when>
+												<c:when test="${true}">
+													<td>${mcVO.coupon_name}</td>
+												</c:when>
+											</c:choose>
+												<c:set var="count" value="1"/>
+										</c:if>
+									</c:forEach>
 
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${omVO.shipStatus == '0'}"> --%>
-<!-- 										<td>待出貨</td> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:when test="${omVO.shipStatus == '1'}"> --%>
-<!-- 										<td>已出貨</td> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:when test="${omVO.shipStatus == '2'}"> --%>
-<!-- 										<td>待取貨</td> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:when test="${omVO.shipStatus == '3'}"> --%>
-<!-- 										<td>取貨完成</td> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<td>商品遺失</td> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
-
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${omVO.payStatus == '0'}"> --%>
-<!-- 										<td>待付款</td> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<td>已付款</td> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
 
 								<c:choose>
 									<c:when test="${omVO.ordStatus == '0'}">
@@ -214,9 +181,6 @@ th, td {
 
 								<td><fmt:formatDate value="${omVO.ordDate}"
 										pattern="yyyy-MM-dd" /></td>
-<%-- 								<td>${omVO.shipCode}</td> --%>
-<%-- 								<td>${omVO.returnCode}</td> --%>
-<%-- 								<td>${omVO.storeCode}</td> --%>
 								<td><fmt:formatDate value="${omVO.shipDate}"
 										pattern="yyyy-MM-dd" /></td>
 								<td><fmt:formatDate value="${omVO.arrivalDate}"
@@ -231,13 +195,10 @@ th, td {
 										style="margin-bottom: 0px;">
 										<input type="submit" value="評價"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
-<%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
 										<input type="hidden" name="action" value="getComment_For_Display">
 									</FORM>
 								</td>
 							</tr>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>
@@ -245,6 +206,59 @@ th, td {
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link   rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+  .xdsoft_datetimepicker .xdsoft_datepicker {
+           width:  300px;   /* width:  300px; */
+  }
+  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+           height: 151px;   /* height:  151px; */
+  }
+</style>
+
+<script>
+$("#f_date1").blur(function(){
+// 	alert(1);
+	console.log($("#f_date1").val());
+	if($("#f_date1").val() != null && $("#f_date1") != ''){		
+		$("#f_date2").blur(function(){
+			console.log($("#f_date2").val());
+			if($("#f_date2").val != null && $("#f_date2") != ''){
+				$.ajax({
+					url:"<%=request.getContextPath()%>/OrderMasterServlet",
+					type:"POST",
+					data:{
+						startDate:($("#f_date1").val()),
+						endDate:($("#f_date2").val()),
+						action:"get_Date_Order",
+			
+					},
+						dataType:"json",
+				});
+			}		
+		})	
+	}	
+});
+
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date1").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d',
+	       value:'',
+        });
+        $("#f_date2").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d',
+	       value:'',
+        });
+
+</script>
+
 </html>

@@ -90,54 +90,10 @@ th, td {
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<h3>出租者專區</h3>
-				<h5>會員編號 : <%=memID%></h5>
-				<ul class="nav_list">
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">訂單評價</a></h4>
-				</ul>
-			</nav>
-		</aside>
+	<%@ include file="/includeFolder/leaseMemberAside.file"%>
+		
 		<main class="main">
-			<div>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>輸入訂單明細編號 (如1): 
-					<input type="text" name="listID"> 
-					<input type="hidden" name="action" value="getOne_For_Display"> 
-					<input type="submit" value="送出"></h5>
-				</FORM>
-
-				<jsp:useBean id="OrdserListSvc" scope="page"
-					class="com.order.model.OrderListService" />
-
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>選擇訂單明細編號:
-					<select size="1" name="listID">
-						<c:forEach var="OrderListVO" items="${OrdserListSvc.all}">
-							<option value="${OrderListVO.listID}">${OrderListVO.listID}
-						</c:forEach>
-					</select> 
-					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出"></h5>
-				</FORM>
-
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>選擇訂單狀態:
-					<select size="1" name="ordStatus">
-						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option>
-						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option>
-						<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option>
-						<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option>
-					</select> 
-					<input type="hidden" name="action" value="get_Status_Display">
-					<input type="submit" value="送出"></h5>
-				</FORM>
-			</div>
+			
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
 				<ul>
@@ -146,20 +102,8 @@ th, td {
 					</c:forEach>
 				</ul>
 			</c:if>
-			<table id="table-1">
-				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
-							<td><button name="ordStatus" value="0">已成立</button></td>
-							<td><button name="ordStatus" value="1">待歸還</button></td>
-							<td><button name="ordStatus" value="2">已完成</button></td>
-							<td><button name="ordStatus" value="9">已取消</button></td>
-						</tr>
-						<input type="hidden" name="action" value="get_Status_Display">
-					</FORM>
-				</div>
-			</table>	
+			
+		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/memberservice/problemTypeReport.jsp" name="form1">
 			<table id="table-1">
 				<tr>
 					<th>訂單明細編號</th>
@@ -170,6 +114,7 @@ th, td {
 					<th>預計開始日期</th>
 					<th>預計結束日期</th>
 					<th>訂單狀態</th>
+<!-- 					<th>更新狀態</th> -->
 				</tr>
 				<%@ include file="page1.file"%>
 				<c:forEach var="olVO" items="${list}" begin="<%=pageIndex%>"
@@ -185,30 +130,99 @@ th, td {
 						<td>${olVO.prodPrice}</td>
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estStart}</td>
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
-					
+						
+						<td class="status">
 						<c:choose>
-							<c:when test="${olVO.ordStatus == '0'}"><td>已成立</td></c:when>
-							<c:when test="${olVO.ordStatus == '1'}"><td>待歸還</td></c:when>							
-							<c:when test="${olVO.ordStatus == '2'}"><td>已完成</td></c:when>							
-							<c:otherwise><td>已取消</td></c:otherwise>							
+							<c:when test="${olVO.ordStatus == '0'}">已成立</c:when>
+							<c:when test="${olVO.ordStatus == '1'}">待歸還</c:when>							
+							<c:when test="${olVO.ordStatus == '2'}">已完成</c:when>							
+							<c:when test="${olVO.ordStatus == '9'}">已取消</c:when>								
 						</c:choose>
+						</td>
+						
 						<td>
-							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/OrderListServlet"
-								style="margin-bottom: 0px;">
-								<input type="submit" value="更新"> 
-								<input type="hidden" name="ordID" value="${olVO.ordID}">
-								<input type="hidden" name="listID" value="${olVO.listID}">
-								<input type="hidden" name="action" value="getOne_For_Update">
-							</FORM>
+<!-- 								<select size="1" name="ordStatus" id="ordStatus" class="ordStatus"> -->
+<%-- 									<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option> --%>
+<%-- 									<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option> --%>
+<%-- 									<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option> --%>
+<%-- 									<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option> --%>
+<!-- 								</select> -->
+								<input type="hidden" id="ordID" name="ordID" value="${olVO.ordID}">
+								<input type="hidden" id="listID" name="listID" value="${olVO.listID}">
+								<input type="hidden" id="proID" name="prodID" value="${olVO.prodID}">
+								<input type="hidden" name="action" value="updateList"> 
 						</td>
 					<tr>
 				</c:forEach>
 				</table>
+				<input type="submit" value="提出問題">
+				<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">回上頁</a>
+			</FORM>
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
 	<%@ include file="/includeFolder/footer2.file" %>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+var ordStatus = $("select.ordStatus");
+
+var map = new Map();
+ordStatus.change(function(){
+// 	console.log(ordStatus.val());
+	if($(this).val() == 0){
+		$(this).closest('tr').find('td.status').eq(0).text("已成立");
+	}else if($(this).val() == 1){
+		$(this).closest('tr').find('td.status').eq(0).text("待歸還");
+	}else if($(this).val() == 2){
+		$(this).closest('tr').find('td.status').eq(0).text("已完成");	
+	}else if($(this).val() == 9){
+		$(this).closest('tr').find('td.status').eq(0).text("已取消");
+	}
+	var ordID = $("#ordID").val();
+	var listID = $(this).closest('tr').find('input').eq(1).val();
+	
+// 	console.log(ordID);
+// 	console.log(listID);
+	
+	map.set(listID, $(this).val());
+	
+	
+});
+// console.log(map.size);
+
+	$("#btn").click(function(){
+	console.log(map);
+	var obj = Object.create(null);
+	
+	var iterator = map.keys();
+	for(var i = 0; i < map.size; i++){
+		var key = iterator.next().value;
+		obj[key] = map.get(key);
+	}
+	var mapString = JSON.stringify(obj);
+	console.log(mapString);
+	
+		$.ajax({
+			url:"<%=request.getContextPath()%>/OrderListServlet",
+			type:"POST",
+			data:{
+				listMap: mapString,
+				ordID: $("#ordID").val(),
+				prodID: $("#prodID").val(),
+				action: "updateList",
+			},
+			dataType: 'json',
+			success: function(data){
+			console.log("到這");
+			},
+	
+		})
+
+	})
+
+
+
+</script>
 </html>

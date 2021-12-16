@@ -6,6 +6,7 @@
 <%
   PromolistVO promolistVO = (PromolistVO) request.getAttribute("promolistVO");
 %>
+<jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -33,25 +34,24 @@ div.main_content {
 	font-size: 0;
 }
 
-
-
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;
-	height: 620px;
+	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
+	background-color:#F0B594;
+	height:720px;
 }
 
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -76,12 +76,8 @@ th, td {
 </style>
 <style>
 table#table-1 {
-	width: 80%;
 	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
+	border: 2px solid black;
 	text-align: center;
 }
 
@@ -91,33 +87,64 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h2 {
-	color: blue;
+h4 {
+	color: red;
 	display: inline;
+}
+</style>
+
+<style>
+table {
+	width: 100%;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	height: 100px padding: 5px;
+	text-align: center;
+}
+
+.pic {
+	object-fit: contain;
+	width: 95px;
+	height: 80px;
 }
 
 .signOut{
 background-color:#6495ed;
 }
-
-
 </style>
 
 </head>
 <body bgcolor='white'>
+
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
 
-<table id="table-1">
-	<tr><td>
-		 <h3>專案明細資料新增 - add_promolist.jsp</h3></td><td>
-		 <h4><a href="select_promolist.jsp"><img src="images/tomcat.png" width="100" height="100" border="0">回首頁</a></h4>
-	</td></tr>
-</table>
+	
+	<c:if test="${b==true }">
+		<script>
+ 			alert("新增成功");
+		</script>
+	</c:if>
 
-<h3>資料新增:</h3>
+	<c:if test="${b==false}">
+			<script>
+			alert("新增失敗");
+		</script>
+	</c:if>
+
+		 <h3>專案明細資料新增 - add_promolist.jsp</h3>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -131,51 +158,70 @@ background-color:#6495ed;
 <!-- coupon_id, promo_id, category_id, coupon_name, discount, amount, used, start_date, end_date -->
 <FORM METHOD="post" ACTION="promolist.do" name="form1">
 <table>
-
+	
 	<tr>
-		<td>專案編號:</td>
-		<td><input type="TEXT" name="promo_id" size="45"></td>
+		<td>專案名稱:</td>
+		<td><select size="1" name="promo_id">
+			<c:forEach var="promoVO" items="${promoSvc.all}">
+				<option value="${promoVO.promo_id}" ${(promolistVO.promo_id==promoVO.promo_id)? 'selected':'' } >${promoVO.promo_name}
+			</c:forEach>
+		</select></td>
 	</tr>
+
+<!-- 	<tr> -->
+<!-- 		<td>專案編號:</td> -->
+<!-- 		<td><input type="TEXT" name="promo_id" size="45"></td> -->
+<!-- 	</tr> -->
 <!-- 	<tr> -->
 <!-- 		<td>專案編號:<font color=red><b>*</b></font></td> -->
 <%-- 		<td>${promolistVO}</td> --%>
 <!-- 	</tr> -->
-	<tr>
-		<td>商品類別編號:</td>
-		<td><input type="TEXT" name="category_id" size="45"></td>
-	</tr>
+
+<!-- 		<td>商品類別編號:</td> -->
+<!-- 		<td> -->
+<!-- 		</td> -->
+
 
 	<tr>
 		<td>折價券名稱:</td>
-		<td><input type="TEXT" name="coupon_name" size="45"/></td>
+		<td><input type="TEXT" name="coupon_name" size="10"/></td>
 	</tr>
 	<tr>
 		<td>折扣金額:</td>
-		<td><input type="TEXT" name="discount" size="45"></td>
+		<td><input type="TEXT" name="discount" size="2"></td>
 	</tr>
-	<tr>
-		<td>數量:</td>
-		<td><input type="TEXT" name="amount" size="45"></td>
-	</tr>
-	<tr>
-		<td>已領取數量:</td>
-		<td><input type="TEXT" name="used" size="45"></td>
-	</tr>
+<!-- 	<tr> -->
+<!-- 		<td>數量:</td> -->
+<!-- 		<td> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+<!-- 	<tr> -->
+<!-- 		<td>已領取數量:</td> -->
+<!-- 		<td> -->
+<!-- 		</td> -->
+<!-- 	</tr> -->
+	
 	<tr>
 		<td>開始日期:</td>
-		<td><input name="start_date" id="f_date1" type="text"></td>
+		<td><input name="start_date" id="f_date1" type="text" size="10"></td>
 	</tr>
 	<tr>
 		<td>結束日期:</td>
-		<td><input name="end_date" id="f_date2" type="text"></td>
+		<td><input name="end_date" id="f_date2" type="text" size="10"></td>
 	</tr>
 	
 </table>
 <br>
+		<input type="hidden" name="category_id" value=1>
+		<input type="hidden" name="amount" value=1>
+		<input type="hidden" name="used" value=0>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+</main>
+</div>
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
+
 
 <% 
   java.sql.Date start_date = null;
@@ -205,7 +251,16 @@ background-color:#6495ed;
            height: 151px;   /* height:  151px; */
   }
 </style>
-
+<%-- <c:forEach var="promoVO" items="${promoSvc.all}"> --%>
+<%-- 				<c:if test="${promolistVO.promo_id==promoVO.promo_id}"> --%>
+<%-- 				<label>${promoVO.promo_start}</label> --%>
+<%-- 			</c:if> --%>
+<%-- 		</c:forEach>	 --%>
+<%-- 				<c:forEach var="promoVO" items="${promoSvc.all}"> --%>
+<%-- 				<c:if test="${promolistVO.promo_id==promoVO.promo_id}"> --%>
+<%-- 				<label>${promoVO.promo_end}</label> --%>
+<%-- 			</c:if> --%>
+<%-- 		</c:forEach>	 --%>
 <script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
@@ -215,9 +270,11 @@ background-color:#6495ed;
 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
 		   value: '<%=start_date%>', // value:   new Date(),
            //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-           //startDate:	            '2017/07/10',  // 起始日
-           //minDate:               '-1970-01-01', // 去除今日(不含)之前
-           //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+       	   //startDate:            //'2017/07/10',  // 起始日
+         //  minDate:'promoVO.promo_start',   
+        //	   '-1970-01-01', // 去除今日(不含)之前
+        //   maxDate:'promoVO.promo_end',   
+        //	   '+1970-01-01'  // 去除今日(不含)之後
         });
         
         $.datetimepicker.setLocale('zh');

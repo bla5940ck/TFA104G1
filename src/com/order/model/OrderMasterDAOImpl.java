@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.booking.model.BookingDAO;
+import com.booking.model.BookingVO;
+
 import util.Util;
 
 public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
@@ -38,8 +41,6 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String INSERT_LEASE_COMMENT=
 			"UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 	
-//	private static final String FIND_SUCCESS_BY_RETURNDATE=
-//			"SELECT * FROM ORDER_MASTER WHERE ORD_STATUS = ? AND (RETURN_DATE BETWEEN ? AND ?) ORDER BY ORD_DATE";
 	
 	static {
 		try {
@@ -170,28 +171,30 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				next_ordID = rs.getString(1);
-				System.out.println("自增主鍵值 = " + next_ordID + "剛新增成功的訂單編號");
+//				System.out.println("自增主鍵值 = " + next_ordID + "剛新增成功的訂單編號");
 			} else {
-				System.out.println("未取得自增主鍵直");
+//				System.out.println("未取得自增主鍵直");
 			}
 			rs.close();
 			// 同時再新增訂單明細
 			OrderListDAOImpl oldao = new OrderListDAOImpl();
-			System.out.println("新增前有 : " + list.size());
+//			System.out.println("新增前有 : " + list.size());
 			for (OrderListVO olVO : list) {
 				olVO.setOrdID(new Integer(next_ordID));
-				oldao.insertOrder(olVO, con);
+				oldao.insertOrder(olVO, con);							
+				
 			}
 
 			// 設定autoCommit(true)於pstmt.executeUpdate()之後
 			con.commit();
 			con.setAutoCommit(true);
-			System.out.println("新增後有 : " + list.size());
-			System.out.println("新增訂單編號" + next_ordID + "時,共有明細" + list.size() + "筆,同時被新增");
+//			System.out.println("新增後有 : " + list.size());
+//			System.out.println("新增訂單編號" + next_ordID + "時,共有明細" + list.size() + "筆,同時被新增");
 
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
+					se.printStackTrace();
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-orderMaster");
 					con.rollback();
@@ -625,18 +628,35 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	}
 
 	@Override
-	public void updateWithListStatus(OrderMasterVO omVO, Connection con) {		
-		PreparedStatement pstmt = null;
+	public void updateWithListStatus(OrderMasterVO omVO, OrderListVO olVO) {		
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;		
 		try {
-			pstmt = con.prepareStatement(UPDATE2);
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con.setAutoCommit(false);
 			
+			pstmt = con.prepareStatement(UPDATE2);
+//			UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?
+			//先更新訂單主檔
 			pstmt.setInt(1, omVO.getOrdStatus());
 			pstmt.setInt(2, omVO.getOrdID());
 			pstmt.executeUpdate();
-				
+			
+			//在更新訂單明細
+			OrderListDAOImpl oldao = new OrderListDAOImpl();
+			olVO.setOrdID(omVO.getOrdID());
+			olVO.setOrdStatus(omVO.getOrdStatus());
+			
+			oldao.updateWithOrder(olVO, con);
+			
+			con.commit();
+			con.setAutoCommit(true);
+			
 		} catch (SQLException se) {
 			if (con != null) {
 				try {
+					se.printStackTrace();
 					System.err.print("Transaction is being ");
 					System.err.println("rolled back-由-orderMaster");
 					con.rollback();
@@ -655,6 +675,8 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			}
 		}
 	}
+				
+		
 	@Override
 	public void addLeaseComment(OrderMasterVO orderMaster) {
 		Connection con = null;
@@ -801,15 +823,15 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		om2.setLeaseComt("gg");
 //		om2.setRentComtdate(timeStamp);
 //		om2.setLeaseComtdate(timeStamp);
-//		om2.setOrdID(114);
+//		om2.setOrdID(190);
 //
 //		OrderListVO olVO = new OrderListVO();
 //		olVO.setListID(6);
-//		olVO.setOrdID(114);
+//		olVO.setOrdID(190);
 //		olVO.setOrdStatus(1);
-
+//
 //		OrderListDAOImpl oldao = new OrderListDAOImpl();
-
+//
 //		olVO = oldao.findOrderListByPK(6);
 //		System.out.println("更新前" + olVO.getOrdStatus());		
 //		omdao.updateAllOrder(om2, olVO);
