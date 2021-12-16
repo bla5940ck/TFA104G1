@@ -24,13 +24,13 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 		private static final String INSERT_STMT = 
 				"INSERT INTO post_board (category_id,member_id,post_title,post_cont,post_time,pic) VALUES (?, ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-				"SELECT * FROM post_board order by post_id";
+				"SELECT * FROM post_board order by post_id desc";
 		private static final String GET_ONE_STMT = 
 				"SELECT post_id,category_id,member_id,post_title,post_cont,post_time,reply_count,pic FROM post_board where post_id = ?";
 		private static final String DELETE = 
 				"DELETE FROM post_board where post_id = ?";
 		private static final String UPDATE = 
-				"UPDATE post_board set category_id=?, member_id=?, post_title=? ,post_cont=? ,post_time=? ,pic=? where post_id = ?";
+				"UPDATE post_board set category_id=?, member_id=?, post_title=? ,post_cont=? ,post_time=?, reply_count=? ,pic=? where post_id = ?";
 			
 			
 			@Override
@@ -91,9 +91,9 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 					pstmt.setString(3, postboardVO.getPostTitle());
 					pstmt.setString(4, postboardVO.getPostCont());
 					pstmt.setTimestamp(5, postboardVO.getPostTime());
-//					pstmt.setInt(6, postboardVO.getReplyCount());
-					pstmt.setBytes(6, postboardVO.getPic());
-					pstmt.setInt(7, postboardVO.getPostId());
+					pstmt.setInt(6, postboardVO.getReplyCount());
+					pstmt.setBytes(7, postboardVO.getPic());
+					pstmt.setInt(8, postboardVO.getPostId());
 
 					pstmt.executeUpdate();
 
