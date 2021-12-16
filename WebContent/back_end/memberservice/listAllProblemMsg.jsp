@@ -195,7 +195,7 @@ background-color:#6495ed;
 						<td>${msVO.managerID}</td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
 						
-						<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp?ordID=">${msVO.ordID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderManager2.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td><button id = "class1" class="class1" value="${msVO.problemMsg}">查詢</button></td>
 						<td class="pic"><img alt=""
