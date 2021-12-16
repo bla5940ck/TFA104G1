@@ -107,7 +107,7 @@ a.cart-img > img{
 	<FORM METHOD="post" ACTION="/TFA104G1/OrderMasterServlet" name="form1">
 
 		<div class="main_content">
-			<%@ include file="/includeFolder/rentMemberAside.file"%>
+			<%@ include file="/includeFolder/managerAside.file"%>
 			<main class="main">
 			
 			
