@@ -27,7 +27,7 @@ public class PromolistServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getPromolist".equals(action)) { // 來自select_Promo.jsp的請求
+		if ("getPromolist".equals(action)) { // 來自select_Promolist.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
