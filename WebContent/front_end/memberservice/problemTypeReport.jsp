@@ -6,6 +6,11 @@
 	MemberServiceVO memberserviceVO = (MemberServiceVO) request.getAttribute("memberserviceVO");
 	Integer memID = (Integer)session.getAttribute("id");
 	out.print(memID);
+	if(request.getParameter("ordID")!=null){
+	Integer ordID = Integer.valueOf(request.getParameter("ordID"));
+		
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
