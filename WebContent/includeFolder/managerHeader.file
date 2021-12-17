@@ -71,7 +71,7 @@
           <div class="col-md-12">
             <div class="aa-header-bottom-area">
               <div class="aa-logo">
-                <a href="index copy.html">
+                <a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp">
                   <img src="<%=request.getContextPath()%>/includeFolder/img/logo_org_noframe_191561.png" alt="">
                 </a>
               </div>
