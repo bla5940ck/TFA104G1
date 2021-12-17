@@ -7,7 +7,13 @@
 	Integer memID = (Integer)session.getAttribute("id");
 	out.print(memID);
 	String ordID = request.getParameter("ordID");
+	if(ordID == null){
+		ordID = "";
+	}
 	String prodID = request.getParameter("prodID");
+	if(prodID == null){
+		prodID = "";
+	}
 	
 // 	if(request.getParameter("ordID")!=null){
 // 	Integer ordID = Integer.valueOf(request.getParameter("ordID"));
@@ -129,7 +135,7 @@ object-fit: contain;
 			
 				<table id="table-1">
 					<tr>
-						<td>反應會員編號</td>
+						<td>反應會員帳號</td>
 						<td>
 						<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 						<jsp:useBean id="ptSVC" scope="page" class="com.problemtype.model.ProblemTypeService" />
@@ -139,7 +145,7 @@ object-fit: contain;
 					<tr>
 						<td>反應商品編號</td>
 						<td>						
-						<input type="TEXT" name="prodID" size="45" /></td>
+						<input type="hidden" name="prodID" size="45" value=<%=prodID %>><%=prodID %></td>
 											
 						</td>
 					</tr>
@@ -153,7 +159,7 @@ object-fit: contain;
 					</tr>
 					<br>
 					<tr>
-						<td>問題類型:</td>
+						<td>問題類型</td>
 						<td>					
 							<select size="1" name="typeID">
 								<c:forEach var="problemtypeVO" items="${ptSVC.getAll()}">
@@ -164,7 +170,7 @@ object-fit: contain;
 					</tr>
 					<br>
 					<tr>
-						<td>問題描述:</td>
+						<td>問題描述</td>
 							<td><textarea class="problem1" name="problemmsg" placeholder="請輸入內容...."></textarea>
 						</td>
 					</tr>
