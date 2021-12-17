@@ -9,20 +9,25 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
 <%
+// 	session.setAttribute("id", 1);
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
-	List<OrderMasterVO> list1 = omSVC.getAll();
 
-	List<OrderMasterVO> list2 =list.
-								stream()
-									.filter(o->o.getRentID()==memID)
-										.filter(o->o.getOrdStatus()==2)
-											.collect(Collectors.toList());
-
+	List<OrderMasterVO> list2 = list.
+			stream()
+			.filter(o->o.getRentID()==memID)
+				.filter(o->o.getOrdStatus()==2)
+					.collect(Collectors.toList());
+	
+	if(request.getAttribute("list") != null){
+		list2 = (List)request.getAttribute("list");
+	}
+	
 	pageContext.setAttribute("list", list2);
+
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
@@ -116,8 +121,11 @@ th, td {
 			</c:if>
 			<div>
 				 <h5>依日期查詢訂單</h5>
-				 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
-				 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
+				 	<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+						 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
+						 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
+						<input type="hidden" name="action" value="get_date_forRent_order">
+					</FORM>
 			</div>
 			<table id="table-1">
 				<tr>
@@ -125,10 +133,8 @@ th, td {
 					<th>出租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
-
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-
 					<th>出貨日期</th>
 					<th>到貨日期</th>
 					<th>歸還日期</th>
@@ -137,8 +143,8 @@ th, td {
 				</tr>
 				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-					<c:choose>
-						<c:when test="${omVO.ordStatus == 2 && omVO.rentID == id}">
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test="${omVO.ordStatus == 2 && omVO.rentID == id}"> --%>
 							<tr>
 								<td>${omVO.ordID}</td>
 								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
@@ -197,13 +203,13 @@ th, td {
 										ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="評價"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
+										<input id="ordID" class="ordID" type="hidden" name="ordID" value="${omVO.ordID}"> 
 										<input type="hidden" name="action" value="getRentComment_For_Display">
-									</FORM>
+									</FORM>								
 								</td>
 							</tr>
-						</c:when>
-					</c:choose>
+<%-- 						</c:when> --%>
+<%-- 					</c:choose> --%>
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>
@@ -225,24 +231,31 @@ th, td {
 </style>
 
 <script>
+	
 $("#f_date1").blur(function(){
 // 	alert(1);
 	console.log($("#f_date1").val());
+	
 	if($("#f_date1").val() != null && $("#f_date1") != ''){		
 		$("#f_date2").blur(function(){
 			console.log($("#f_date2").val());
 			if($("#f_date2").val != null && $("#f_date2") != ''){
-				$.ajax({
-					url:"<%=request.getContextPath()%>/OrderMasterServlet",
-					type:"POST",
-					data:{
-						startDate:($("#f_date1").val()),
-						endDate:($("#f_date2").val()),
-						action:"get_Date_Order",
+				$("#DATE").submit();
+				
+				
+// 				$.ajax({
+<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
+// 					type:"POST",
+// 					data:{
+// 						startDate:($("#f_date1").val()),
+// 						endDate:($("#f_date2").val()),
+// 						action:"get_Date_Order",
 			
-					},
-						dataType:"json",
-				});
+// 					},success:function(data){
+						
+// 					},
+// 						dataType:"json",
+// 				});
 			}		
 		})	
 	}	
@@ -253,14 +266,14 @@ $("#f_date1").blur(function(){
            theme: '',          //theme: 'dark',
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'Y-m-d',
+	       format: 'Y-m-d H:i:s',
 	       value:'',
         });
         $("#f_date2").datetimepicker({
            theme: '',          //theme: 'dark',
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'Y-m-d',
+	       format: 'Y-m-d H:i:s',
 	       value:'',
         });
 </script> 
