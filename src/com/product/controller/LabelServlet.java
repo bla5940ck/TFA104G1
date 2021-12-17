@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -137,8 +138,54 @@ public class LabelServlet extends HttpServlet {
 		
 		
 		}
-		
-		
+		//最近瀏覽
+		if("cookieID".equals(req.getParameter("action"))) {
+			Integer cookieID = 0;
+			Boolean flag = false;
+			ProdVO prodCookie = null;
+			ProdService prodSvc = new ProdService();
+			HttpSession session = req.getSession();
+			if ("y".equals(req.getParameter("cookie"))) {
+				cookieID = Integer.valueOf(req.getParameter("prodID"));
+				prodCookie = prodSvc.findProductByPK(cookieID);
+			}
+			
+			List<ProdVO> listCookie = (List<ProdVO>) session.getAttribute("listCookie");
+			
+			
+			if (listCookie != null && cookieID != 0 &&listCookie.size()!=0) {
+				for (ProdVO p : listCookie) {
+				
+					if(p==null)
+						listCookie.remove(0);
+					
+					flag = flag || (p.getProdID() == cookieID);
+				} //假如編號有重複 就不加入瀏覽清單
+				if (!flag) {
+					if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
+						listCookie.remove(0);
+					}
+					listCookie.add(prodCookie);
+					
+				}
+				
+				session.setAttribute("listCookie", listCookie);
+			}
+			//還沒瀏覽時，new 一個list
+			if (listCookie == null) {
+				listCookie = new ArrayList();
+				listCookie.add(prodCookie);
+				session.setAttribute("listCookie", listCookie);
+
+			}
+			
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("CookieList", listCookie);
+			res.getWriter().print(jsonObject);
+			
+			
+		}
+			
 		
 	
 	
@@ -146,7 +193,7 @@ public class LabelServlet extends HttpServlet {
 	
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
