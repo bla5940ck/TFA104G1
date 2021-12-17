@@ -414,7 +414,7 @@ request.setAttribute("product", product);
 							<!-- Tab panes -->
 							<div class="tab-content">
 								<div class="tab-pane fade in active" id="description">
-
+			
 
 
 
@@ -881,7 +881,7 @@ function selflog_show(id){
 		
 		
 		$("input.report-btn").click(function(){
-			location.href="<%=path%>/back_end/memberservice/problemTypeReport.jsp";
+			location.href="<%=path%>/front_end/memberservice/problemTypeReport.jsp?prodID=<%=product.getProdID()%>";
 		});
 		
 		
@@ -894,7 +894,7 @@ function selflog_show(id){
 			dataType:"json",
 			cache:false,
 			success:function(data){
-				console.log(data);
+// 				console.log(data);
 				for(var i =0;i<7;i++){
 					$('label.searchLabel').append("#"+ "<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>&nbsp&nbsp")
 				}
@@ -908,54 +908,36 @@ function selflog_show(id){
 		
 		
 		
+		//最近瀏覽
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:"/TFA104G1/prod/LabelServlet",
+			data:{
+				action:"cookieID",
+				cookie :"y",
+				prodID :<%=product.getProdID()%>
+			},
+			success:function(data){
+// 				console.log(data);
+				
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	
 	</script>
 
 
 
-	<%
 	
-		//瀏覽圖片儲存
-		Integer cookieID = 0;
-		Boolean flag = false;
-		ProdVO prodCookie = null;
-		if ("y".equals(request.getParameter("cookie"))) {
-			cookieID = Integer.valueOf(request.getParameter("prodID"));
-			prodCookie = prodSvc.findProductByPK(cookieID);
-		}
-		
-		List<ProdVO> listCookie = (List<ProdVO>) session.getAttribute("listCookie");
-		
-		
-		if (listCookie != null && cookieID != 0 &&listCookie.size()!=0) {
-			for (ProdVO p : listCookie) {
-			
-				if(p==null)
-					listCookie.remove(0);
-				
-				flag = flag || (p.getProdID() == cookieID);
-			} //假如編號有重複 就不加入瀏覽清單
-			if (!flag) {
-				if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
-					listCookie.remove(0);
-				}
-				listCookie.add(prodCookie);
-				
-			}
-			
-			session.setAttribute("listCookie", listCookie);
-		}
-		//還沒瀏覽時，new 一個list
-		if (listCookie == null) {
-			listCookie = new ArrayList();
-			listCookie.add(prodCookie);
-			session.setAttribute("listCookie", listCookie);
-
-		}
-		
-		
-	%>
 
 
 </body>

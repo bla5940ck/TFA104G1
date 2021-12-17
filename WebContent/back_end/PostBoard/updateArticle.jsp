@@ -94,17 +94,14 @@ input:read-only {
 											<div>
 												 <input type="text" name="postCont" value="<%=pbVO.getPostCont() %>"/>
 											</div>
-										<label for="">上傳圖片</label> <input type="file" name="pic"/>
-<!-- 											<label for="">項目分類<span>*</span></label> <input  -->
-<!-- 											type="text" placeholder="請選擇分類" name="categoryId"/> -->
-<!-- 											<label for="">項目分類<span>*</span></label> <input  -->
-<!-- 											type="text" placeholder="請選擇分類" name="categoryId"/> -->
+											
+										<label for="">上傳圖片</label> 
+										<image id="upload" width="200" height="100" />
+										<div><input type="file" name="pic" value="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId}&action=writePic"
+												   onchange="document.getElementById('upload').src = window.URL.createObjectURL(this.files[0])"/></div>
 
-<!-- 										<label for="postTime">留言則數</label><input  -->
-<%-- 										name="replyCont" type="text" value="<%=pbVO.getReplyCount() %>"/> --%>
-
-										<label for="postTime">上傳時間</label>
-										<input type="text" name="posttime" value="<%=pbVO.getPostTime() %>"/>
+<!-- 										<label for="postTime">上傳時間</label> -->
+<%-- 										<input type="text" name="posttime" value="<%=pbVO.getPostTime() %>"/> --%>
 											
 										
 										 <button type="submit" class="aa-browse-btn" name="action" value="update"/>確認修改
