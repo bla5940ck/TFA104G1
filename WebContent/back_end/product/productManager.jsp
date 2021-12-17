@@ -1,3 +1,5 @@
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="java.util.stream.Collector"%>
 <%@page import="com.product.model.ProdService"%>
 <%@page import="com.product.model.ProdVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,6 +15,10 @@
 <% 
 	ProdService prodSvc = new ProdService();
 	List<ProdVO> list =  prodSvc.getAll();
+	list = list
+			.stream()
+			.sorted(Comparator.comparing(ProdVO::getProdID))
+			.collect(Collectors.toList());
 	if(request.getAttribute("list")!=null){
 		list=(List<ProdVO>)request.getAttribute("list");
 	}
