@@ -123,7 +123,7 @@ public class PostBoardServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			PostBoardVO pbVO = new PostBoardVO();
 //postId; categoryId; memberId; postTitle; postCont; postTime; replyCount; pic;
 
 			try {
@@ -178,21 +178,20 @@ public class PostBoardServlet extends HttpServlet {
 				//DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				System.out.println(postTime);
 
-				Integer replyCount = null;
+				Integer replyCount =0;
 				//System.out.println(replyCount);
 
 				Part part = req.getPart("pic"); 
-				//System.out.println(part);
+				System.out.println("testpic");
 				InputStream in = part.getInputStream();
 				byte[] buf = new byte[in.available()];
 				in.read(buf);
 				in.close();
 				System.out.println("buffer length: " + buf.length);
+								
 				
-				//Integer postId = 0; 
-			
 
-				PostBoardVO pbVO = new PostBoardVO();
+				
 				pbVO.setPostId(postId);
 				pbVO.setCategoryId(categoryId);
 				pbVO.setMemberId(memberId);
@@ -224,6 +223,7 @@ public class PostBoardServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				e.printStackTrace();
+				req.setAttribute("pbVO", pbVO); 
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
 				failureView.forward(req, res);

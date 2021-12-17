@@ -87,7 +87,7 @@
 						<td>${postBoardVO.postCont}</td>
 						<td>${postBoardVO.postTime}</td>
 						<td>${postBoardVO.replyCount}</td>
-						<td>${postBoardVO.pic}</td>
+						<td><image src="<%=request.getContextPath() %>/PbPhotoShow?postId=${postBoardVO.postId}"></td>
 						
                         <td>
 	                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" style="margin-bottom: 0px;">

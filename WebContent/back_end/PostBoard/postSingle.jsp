@@ -222,33 +222,43 @@
                     <h3>最新文章</h3>
                     <div class="aa-recently-views">
                       <ul>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId}&action=writePic" alt="img"></a>
+	                 <c:forEach var="pbVO" items="${pb1.all}" begin="0" end="2" varStatus="status">
+                		<li>
+                          <a class="aa-cartbox-img" href="#">
+                          	<img src="<%=request.getContextPath() %>/PbPhotoShow?postId=${pbVO.postId}"  alt="img"></a>
                           <div class="aa-cartbox-info">
-                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId}">${pb.postTitle}</a></h4>
-                            <p>${pb.postTime}</p>
-                          </div>                    
+                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">${pbVO.postTitle}</a></h4>
+                            <p>${pbVO.postTime}</p>
+                          </div>                                    
                         </li>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId-1}&action=writePic" alt="img" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId-1}"></a></h4>
-                            <p>${pb.postTime}</p>
-                          </div>                    
-                        </li>
-                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="#">健身環大冒險</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
-                        </li>                                      
-                      </ul>
+                      </c:forEach>
+                       </div>
+                       </ul>
+                    </div>  
+                  
+                        
+<!--                         <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">動物森友會</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li> -->
+                        
+<!--                          <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">健身環大冒險</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li>                                       -->
+<!--                       </ul> -->
                     </div>                            
                   </div>
                 </aside>
               </div>
             </div>
+           
           </div>
         </div>
       </div>
