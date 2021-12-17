@@ -3,10 +3,14 @@ package com.order.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -962,12 +966,73 @@ public class OrderMasterServlet extends HttpServlet {
 			}
 		}
 		
-		if("get_Date_Order".equals(action)) {
+		if("get_date_forRent_order".equals(action)) {
+			System.out.println("近來日期判斷");
+			DateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			
 			String startDate = (String)req.getParameter("startDate");
 			String endDate = (String)req.getParameter("endDate");
+			Integer memID = (Integer) req.getSession().getAttribute("id");
 			System.out.println(startDate);
-			System.out.println(endDate);
-		}
-		
+						
+			java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
+			java.sql.Timestamp ed = java.sql.Timestamp.valueOf(endDate);
+							
+					
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			List<OrderMasterVO> list = omdao.getAllOrderMaster();
+//			List<OrderMasterVO> list2 = list.stream()
+//										.filter(om -> om.getRentID() == memID)
+//											.filter(om -> om.getOrdStatus() == 2)
+//												.filter(om -> om.getReturnDate() != null)
+//													.filter(om -> om.getReturnDate().after(sd))
+//														.filter(om -> om.getReturnDate().before(ed))
+//																.collect(Collectors.toList());
+																	
+					
+//			list2.forEach(o->System.out.println(o.getOrdID()));
+//			list.forEach(o->System.out.println(o.getReturnDate()));
+			List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
+			for(OrderMasterVO omVO : list) {
+				if(omVO.getOrdStatus() == 2 && omVO.getReturnDate() != null && omVO.getReturnDate().before(ed) && omVO.getReturnDate().after(sd) && omVO.getRentID() == memID) {
+					long time = omVO.getReturnDate().getTime();
+					Integer ordID = omVO.getOrdID();
+					System.out.println("訂單編號 :" + ordID + "歸還時間" + time);
+					list2.add(omVO);
+				}
+			}
+			req.setAttribute("list", list2);
+			req.getRequestDispatcher("/front_end/order/listSuccessOrderForRent.jsp").forward(req,res);
+			return;
+		}		
+		if("get_date_forLease_order".equals(action)) {
+			System.out.println("近來日期判斷");
+			DateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+			
+			String startDate = (String)req.getParameter("startDate");
+			String endDate = (String)req.getParameter("endDate");
+			Integer memID = (Integer) req.getSession().getAttribute("id");
+			System.out.println(startDate);
+			
+			java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
+			java.sql.Timestamp ed = java.sql.Timestamp.valueOf(endDate);
+			
+			
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			List<OrderMasterVO> list = omdao.getAllOrderMaster();
+
+			List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
+			for(OrderMasterVO omVO : list) {
+				if(omVO.getOrdStatus() == 2 && omVO.getReturnDate() != null && omVO.getReturnDate().before(ed) && omVO.getReturnDate().after(sd) && omVO.getLeaseID() == memID) {
+					long time = omVO.getReturnDate().getTime();
+					Integer ordID = omVO.getOrdID();
+					System.out.println("訂單編號 :" + ordID + "歸還時間" + time);
+					list2.add(omVO);
+				}
+			}
+			req.setAttribute("list", list2);
+			req.getRequestDispatcher("/front_end/order/listSuccessOrder.jsp").forward(req,res);
+			return;
+		}		
 	}
 }
