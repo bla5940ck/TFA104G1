@@ -19,7 +19,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO member_service (prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT msg_id,prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status FROM member_service order by msg_id";
+			"SELECT msg_id,prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status FROM member_service order by msg_id desc";
 	private static final String GET_ONE_STMT = 
 			"SELECT msg_id,prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status FROM member_service where msg_id = ?  ";
 	private static final String DELETE = 

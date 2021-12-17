@@ -77,17 +77,19 @@ aside.aside {
 	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
-	background-color:#F0B594;
+	background-color:#F5D998;;
 	height:720px;
 }
 
+
+
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -111,8 +113,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-</style>
-<style>
+
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -129,9 +130,7 @@ h4 {
 	color: red;
 	display: inline;
 }
-</style>
 
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -156,7 +155,14 @@ th, td {
 }
 
 .signOut{
-background-color:#6495ed;
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
 }
 </style>
 
@@ -165,7 +171,7 @@ background-color:#6495ed;
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 	<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main">
+		<main class="main" >
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">

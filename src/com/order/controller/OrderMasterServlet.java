@@ -211,7 +211,7 @@ public class OrderMasterServlet extends HttpServlet {
 				
 				/***************** 3.查詢完成,準備轉交(Send the Success view) ***********/
 				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的omVO物件,存入req
-				String url = "/back_end/order/updateOrderManagerInput.jsp";
+				String url = "/back_end/order/updateOrderManager2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);//成功轉交
 				successView.forward(req, res);
 				

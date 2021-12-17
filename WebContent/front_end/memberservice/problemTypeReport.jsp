@@ -7,6 +7,7 @@
 	Integer memID = (Integer)session.getAttribute("id");
 	out.print(memID);
 	String ordID = request.getParameter("ordID");
+	String prodID = request.getParameter("prodID");
 	
 // 	if(request.getParameter("ordID")!=null){
 // 	Integer ordID = Integer.valueOf(request.getParameter("ordID"));
@@ -146,7 +147,7 @@ object-fit: contain;
 					<tr>
 						<td>反應訂單編號</td>
 						<td>						
-						<input type="TEXT" name="ordID" size="45" value=<%=ordID %>></td>
+						<input type="hidden" name="ordID" size="45" value=<%=ordID %>><%=ordID %></td>
 										
 						</td>
 					</tr>

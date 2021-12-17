@@ -40,7 +40,7 @@
   <!-- Start header section -->
   <header id="aa-header">
     <!-- start header top  -->
-    <div class="aa-header-top" style="background-color:#0093C1">
+    <div class="aa-header-top" style="background-color:	#F5D998">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -65,7 +65,7 @@
     </div>
     <!-- / header top  -->
     <!-- start header bottom  -->
-    <div class="aa-header-bottom" style="background-color:#E96FA4;">
+    <div class="aa-header-bottom" style="background-color:#C8CC95;">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
