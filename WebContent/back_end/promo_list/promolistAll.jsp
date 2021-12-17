@@ -6,12 +6,16 @@
 <%@ page import="com.promo_list.model.*"%>
 
 <%
-	List<PromolistVO> promolistVO = (List<PromolistVO>) request.getAttribute("promolistVO");
-    List<PromolistVO> list = promolistVO;
- 	pageContext.setAttribute("list",list);
-%>
+// 	List<PromolistVO> promolistVO = (List<PromolistVO>) request.getAttribute("promolistVO");
+//     List<PromolistVO> list = promolistVO;
+//  	pageContext.setAttribute("list",list);
+Integer promoID =(Integer)request.getAttribute("promoID");
+pageContext.setAttribute("promoID",promoID);
+System.out.println(promoID);
+%>;
 
 <jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
+<jsp:useBean id="promolistSvc" scope="page" class="com.promo_list.model.PromolistService" />
 
 <html>
 <head>
@@ -135,7 +139,6 @@ background-color:#6495ed;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" style="background-color:#C0C0C0;">	
 
-
 		 <h3>所有專案明細資料 - promolistAll.jsp</h3>
 
 
@@ -171,7 +174,7 @@ background-color:#6495ed;
 	</tr>
 <%-- 	<%@ include file="page1.file" %>  --%>
 <%-- 	<c:forEach var="promolistVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
-	<c:forEach var="promolistVO" items="${list}">
+	<c:forEach var="promolistVO" items="${promolistSvc.getPromoid(promoID)}">
 		
 <%-- 			     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;"> --%>
 <!-- 			     <input type="submit" value="新增"> -->
