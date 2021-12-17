@@ -131,7 +131,11 @@
 										<jsp:useBean id="cateSvc" scope="page"
 											class="com.category.model.ProdCategoryService" />
 										<select id="cate_select" name="categorySelect"
+<<<<<<< HEAD
+											style="display: inline ;	 float: left; width: 100%; height: 30px;">
+=======
 											style="display: inline ;float: left; width: 100%; height: 30px;">
+>>>>>>> bb7bacc122a30db0102cf757009942763a3cd62d
 											<c:choose>
 												<c:when test="${prodVO.categoryID==null}">
 													<option value=""  >請選擇商品類別</option>
