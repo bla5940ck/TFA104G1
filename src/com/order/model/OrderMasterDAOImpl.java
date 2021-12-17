@@ -27,10 +27,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String UPDATE = "UPDATE ORDER_MASTER SET "
 			+ "SHIP_STATUS = ?, ORD_STATUS = ?, PAY_STATUS = ?, SHIP_CODE = ?, RETURN_CODE = ?, "
 			+ "SHIP_DATE = ?, ARRIVAL_DATE = ?, RETURN_DATE = ?, RENT_RANK = ?, LEASE_RANK = ?, "
-			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
+			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
 	private static final String FIND_BY_PK = "SELECT * FROM ORDER_MASTER WHERE ORD_ID = ?";
-	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_MASTER WHERE  ORD_STATUS = ?";
-	private static final String GET_ALL = "SELECT * FROM ORDER_MASTER";
+	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_MASTER WHERE  ORD_STATUS = ? ORDER BY ORD_ID DESC";
+	private static final String GET_ALL = "SELECT * FROM ORDER_MASTER ORDER BY ORD_ID DESC";
 
 	private static final String INSERT_STMT_ORDERLIST = "INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String UPDATE_ORDERLIST = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
