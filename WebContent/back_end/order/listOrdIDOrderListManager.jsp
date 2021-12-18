@@ -190,16 +190,21 @@ background-color:#FFF0AC;
 						</td>
 						
 						<td>
-								
-								<input type="hidden" id="ordID" name="ordID" value="${olVO.ordID}">
-								<input type="hidden" id="listID" name="listID" value="${olVO.listID}">
-								<input type="hidden" id="proID" name="prodID" value="${olVO.prodID}">
-								<input type="hidden" name="action" value="updateList"> 
+							
+					<select size="1" name="ordStatus" class="ordStatus">
+						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option>
+						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option>
+						<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option>
+						<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option>
+					</select>
+							<input type="hidden" class="ordID" name="ordID" value="${olVO.ordID}">
+							<input type="hidden" class="listID" name="listID" value="${olVO.listID}">
+							<input type="hidden" class="prodID" name="prodID" value="${olVO.prodID}">
+							<input type="hidden" name="action" value="updateList"> 
 						</td>
 					<tr>
 				</c:forEach>
 				</table>
-<!-- 				<input type="submit" value="更新"> -->
 				<button type="button" id="btn">更新</button>
 			</FORM>
 			<%@ include file="page2.file"%>
@@ -224,7 +229,7 @@ ordStatus.change(function(){
 	}else if($(this).val() == 9){
 		$(this).closest('tr').find('td.status').eq(0).text("已取消");
 	}
-	var ordID = $("#ordID").val();
+	var ordID = $(".ordID").val();
 	var listID = $(this).closest('tr').find('input').eq(1).val();
 	
 // 	console.log(ordID);
@@ -253,8 +258,8 @@ ordStatus.change(function(){
 			type:"POST",
 			data:{
 				listMap: mapString,
-				ordID: $("#ordID").val(),
-				prodID: $("#prodID").val(),
+				ordID: $(".ordID").val(),
+				prodID: $(".prodID").val(),
 				action: "updateList",
 			},
 			dataType: 'json',

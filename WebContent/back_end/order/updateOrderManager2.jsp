@@ -1,19 +1,11 @@
-<%@page import="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.order.model.*"%>
 
 <%
-// 	Integer memID = (Integer) session.getAttribute("id");
-	Integer ordID = Integer.valueOf(request.getParameter("ordID"));
-	System.out.println(ordID);
-	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-	OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
-	Integer getOrdID = omVO.getOrdID();
-	System.out.println(omVO.getPayStatus());
-	
-// 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+	Integer memID = (Integer) session.getAttribute("id");
+	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 	OrderListVO olVO = new OrderListVO();
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
 %>
@@ -24,7 +16,6 @@
 //     out.println(formatDate);
 %>
 <jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
-<jsp:useBean id="omDAO"	class="com.order.model.OrderMasterDAOImpl" /> 
 
 
 <html>
@@ -33,47 +24,39 @@
 <title>訂單資料更新:</title>
 
 <style>
- body {
-	margin: 0;
-	padding: 10px;
-}
+ body { 
+ 	margin: 0; 
+ 	padding: 10px; 
+ 	z-index: 1001;
+ 	
+ } 
 
 img {
 	max-width: 100%;
 }
 
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
+ div.main_content { 
+ 	width: 100%; 
+ 	margin: 0 auto; 
+ 	font-size: 0; 
+ } 
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;	
+	width: 200px;
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;	
+	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
-	text-align: center;
-	background-color:#F5D998;;
-	height:720px;
+	text-align:center;
 }
-
-
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -82,95 +65,39 @@ main.main {
 }
 
 table {
-	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 100px;	
+	
 }
 
 table, th, td {
 	border: 1px solid lightgrey;
+	width: 800px; 
+	text-align:center;
+	
 }
 
 th, td {
 	padding: 5px;
-	text-align: center;
 }
 
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
+th{
+width: 180px;
 }
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: red;
-	display: inline;
-}
-
-table {
-	width: 100%;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	font-size: 10px;
-	border: 1px solid #CCCCFF;
-}
-
-th, td {
-	height: 100px padding: 5px;
-	text-align: center;
-}
-
-.pic {
+a.cart-img > img{
 	object-fit: contain;
-	width: 95px;
-	height: 80px;
+	width: 185px;
+	height: 140px;
 }
-
-.signOut{
-background-color:	#FF7575;
-}
-.class1{
-background-color:#FFF0AC;
-}
-
-input{
-background-color:#FFF0AC;
-}
-
-.img1{
-width:200px;
-height:190px;
-}
-
 </style>
 </head>
-
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
-	<FORM METHOD="post" ACTION="/TFA104G1/OrderMasterServlet" name="form1">
-
 		<div class="main_content">
 			<%@ include file="/includeFolder/managerAside.file"%>
-			<main class="main" style="background-color:#C0C0C0;">
+			<main class="main">
+					<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"style="margin-bottom: 0px;" name="form1">
 			
 			
 				<div>
@@ -181,9 +108,9 @@ height:190px;
 				<tr>
 					<th>商品照片</th>
 				
-					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(param.ordID)}">
+					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
-							<img class="img1" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
+							<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
 					</c:forEach>
 			
 					</tr>
@@ -224,36 +151,33 @@ height:190px;
 				<table>
 					<tr>
 						<th>出貨代碼</th>
-						<td><input type="TEXT" name="shipCode" size="20"
-							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"></td>
+						<td><input type="hidden" name="shipCode" size="20"
+							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"><%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%></td>
 
 					</tr>
 
 					<tr>
 						<th>歸還代碼</th>
-						<td><input type="TEXT" name="returnCode" size="20"
-							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /></td>
+						<td><input type="hidden" name="returnCode" size="20"
+							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /><%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%></td>
 					</tr>
 
 				</table>
-					<center><input type="button" onclick="ShowShipDate()" value="出貨時間 ">
-					<input type="button" onclick="ShowArrivalDate()" value="到貨時間 ">
-					<input type="button" onclick="ShowReturnDate()" value="歸還時間 "></center>
 				<table>
 					<tr>
 						<th>出貨日期</th>
 						<td><input type="hidden"  id="getShipDate">
-						<p id="shipDate">${omVO.shipDate}</p></td>
+						<p id="shipDate">${OrderMasterVO.shipDate}</p></td>
 					</tr>
 					<tr>
 						<th>實際到貨日期</th>
 						<td><input type="hidden" id="getArrivalDate">
-						<p id="arrivalDate">${omVO.arrivalDate}</p></td>																	
+						<p id="arrivalDate">${OrderMasterVO.arrivalDate}</p></td>																	
 					</tr>
 					<tr>
 						<th>實際歸還日期</th>
 						<td><input type="hidden" id="getReturnDate">
-						<p id="returnDate">${omVO.returnDate}</p></td>
+						<p id="returnDate">${OrderMasterVO.returnDate}</p></td>
 					</tr>
 				</table>
 				<table>
@@ -262,14 +186,7 @@ height:190px;
 						<td>
 						<input type="hidden" name="rentRank" value="<%=omVO.getRentRank() == null?"":omVO.getRentRank()%>">						
 						<p id="rr"><%=omVO.getRentRank()%></p></td>
-<!-- 						<td><select name="rentRank" size="1"> -->
-<%-- 								<option value="${OrderMasterVO.rentRank}">評價</option> --%>
-<!-- 								<option value="1">1</option> -->
-<!-- 								<option value="2">2</option> -->
-<!-- 								<option value="3">3</option> -->
-<!-- 								<option value="4">4</option> -->
-<!-- 								<option value="5">5</option> -->
-<!-- 						</select></td> -->
+
 					</tr>
 					<tr>
 						<th>出租方評價</th>
@@ -277,46 +194,21 @@ height:190px;
 						<input type="hidden" name="leaseRank" value="<%=omVO.getLeaseRank() == null?"":omVO.getLeaseRank()%>">
 						<p id="lr"><%=omVO.getLeaseRank()%></p>
 						</td>
-<!-- 						<td><select name="leaseRank" size="1"> -->
-<%-- 								<option value="${OrderMasterVO.leaseRank}">評價</option> --%>
-<!-- 								<option value="1">1</option> -->
-<!-- 								<option value="2">2</option> -->
-<!-- 								<option value="3">3</option> -->
-<!-- 								<option value="4">4</option> -->
-<!-- 								<option value="5">5</option> -->
-<!-- 						</select></td> -->
+
 					</tr>
 					<tr>
 						<th>承租方評論</th>
 						<td>
 						<input type="hidden" name="rentComt" value="<%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt() %>">					
 						<p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td>
-<!-- 						<td> -->
-<!-- 						<select name="rentComt"> -->
-<%-- 								<option value="${OrderMasterVO.rentComt}">請選擇</option> --%>
-<!-- 								<option value="出貨快 !">出貨快 !</option> -->
-<!-- 								<option value="價格合理 !">價格合理 !</option> -->
-<!-- 								<option value="溝通良好 !">溝通良好 !</option> -->
-<!-- 								<option value="態度不佳 !">態度不佳 !</option> -->
-<!-- 								<option value="出貨速度慢 !">出貨速度慢 !</option> -->
-<!-- 								<option value="與照片不符 !">與照片不符 !</option> -->
-<!-- 						</select> -->
-<!-- 						</td> -->
+
 					</tr>
 					<tr>
 						<th>出租方評論</th>
 						<td>
 						<input type="hidden" name="leaseComt" value="<%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %>">
 						<p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td>
-<!-- 						<td><select name="leaseComt"> -->
-<%-- 								<option value="${OrderMasterVO.leaseComt}">請選擇</option> --%>
-<!-- 								<option value="出貨快 !">歸還快速 !</option> -->
-<!-- 								<option value="價格合理 !">愉快的交易 !</option> -->
-<!-- 								<option value="溝通良好 !">溝通良好 !</option> -->
-<!-- 								<option value="態度不佳 !">態度不佳 !</option> -->
-<!-- 								<option value="出貨速度慢 !">還貨速度慢 !</option> -->
-<!-- 								<option value="不愛惜物品 !">不愛惜物品 !</option> -->
-<!-- 						</select></td> -->
+
 					</tr>
 				</table>
 				<input type="hidden" name="action" value="update_for_manager"> 
@@ -328,18 +220,23 @@ height:190px;
 				<input type="hidden" name="shipDate" id="shipTimelong" value="<%=omVO.getShipDate()== null ? "" : omVO.getShipDate().getTime()%>">
 				<input type="hidden" name="arrivalDate" id="arrivalTimelong" value="<%=omVO.getArrivalDate()== null ? "" : omVO.getArrivalDate().getTime()%>">
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">
-				<input type="hidden" name="rentComtdate" value="${omVO.rentComtdate}">
-				<input type="hidden" name="leaseComtdate" value="${omVO.leaseComtdate}">
-				<center><input type="submit" value="確認更新"></center>
+				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
+				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
+<%-- 				<center><button type="button" class="btn" value="確認更新"></button></center> --%>
+				<input type="submit" value="確認更新"> 
+	</FORM>
 			</main>
 		</div>
-	<%@ include file="/includeFolder/managerFooter.file" %>
-	</FORM>
+	<%@ include file="/includeFolder/footer2.file" %>
 </body>
 
 
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+$(".btn").click(function(){
+	form1.submit();
+})
 
 var shipDate = $("#shipDate");
 var getShipDate = $("#getShipDate");
@@ -466,9 +363,6 @@ function ShowReturnDate(){
 	}else{
 		lr.text("尚未評分");
 	}
-	
-	/*=====承租方評論=====*/
-
 	
 </script>
 </html>

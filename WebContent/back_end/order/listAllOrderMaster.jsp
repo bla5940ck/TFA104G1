@@ -174,20 +174,18 @@ background-color:#FFF0AC;
 		<main class="main" >
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 					<b>選擇訂單編號:</b> 
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-<%-- 							<c:if test="${OrderMasterVO.leaseID == id}"> --%>
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
-<%-- 							</c:if> --%>
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
 				</FORM>
 
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 					<b>輸入訂單編號 (如1):</b> 
 					<input type="text" name="ordID"> 
 					<input type="hidden" name="action" value="getOne_For_Display"> 
@@ -205,7 +203,7 @@ background-color:#FFF0AC;
 
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 						<tr>
 							<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
@@ -335,7 +333,7 @@ background-color:#FFF0AC;
 								<td>${omVO.rentDays}</td>
 								<td>${omVO.ordPrice}</td>
 								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
+									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="狀態修改"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}">
@@ -345,7 +343,7 @@ background-color:#FFF0AC;
 								</td>
 								<td>
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/OrderListServlet"
+										ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
