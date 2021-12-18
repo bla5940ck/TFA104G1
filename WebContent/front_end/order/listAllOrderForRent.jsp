@@ -111,7 +111,7 @@ th, td {
 	<div class="main_content">
 	<%@ include file="/includeFolder/rentMemberAside.file"%>
 
-		<main class="main">
+		<main class="main" >
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">

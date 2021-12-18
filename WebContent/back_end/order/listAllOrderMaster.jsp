@@ -77,17 +77,19 @@ aside.aside {
 	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
-	background-color:#F0B594;
+	background-color:#F5D998;;
 	height:720px;
 }
 
+
+
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -111,8 +113,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-</style>
-<style>
+
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -129,9 +130,7 @@ h4 {
 	color: red;
 	display: inline;
 }
-</style>
 
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -156,7 +155,14 @@ th, td {
 }
 
 .signOut{
-background-color:#6495ed;
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
 }
 </style>
 
@@ -165,23 +171,21 @@ background-color:#6495ed;
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 	<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main">
+		<main class="main" >
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 					<b>選擇訂單編號:</b> 
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-<%-- 							<c:if test="${OrderMasterVO.leaseID == id}"> --%>
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
-<%-- 							</c:if> --%>
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
 				</FORM>
 
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 					<b>輸入訂單編號 (如1):</b> 
 					<input type="text" name="ordID"> 
 					<input type="hidden" name="action" value="getOne_For_Display"> 
@@ -199,7 +203,7 @@ background-color:#6495ed;
 
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 						<tr>
 							<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
@@ -329,7 +333,7 @@ background-color:#6495ed;
 								<td>${omVO.rentDays}</td>
 								<td>${omVO.ordPrice}</td>
 								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
+									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="狀態修改"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}">
@@ -339,7 +343,7 @@ background-color:#6495ed;
 								</td>
 								<td>
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/OrderListServlet"
+										ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 

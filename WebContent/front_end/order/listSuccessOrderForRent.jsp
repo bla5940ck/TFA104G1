@@ -123,10 +123,10 @@ div.getTotal {
 				</ul>
 			</c:if>
 			<div>
-				<h5>依日期查詢訂單</h5>
+				<h5>依歸還日期查詢訂單</h5>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
-					結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;"> 
+					結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;"> <button>確認</button>
 							  <input type="hidden" name="action" value="get_date_forRent_order">
 				</FORM>
 			</div>
@@ -136,10 +136,12 @@ div.getTotal {
 					<th>出租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
+					<th>折底金額</th>
+					
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-					<th>出貨日期</th>
-					<th>到貨日期</th>
+<!-- 					<th>出貨日期</th> -->
+<!-- 					<th>到貨日期</th> -->
 					<th>歸還日期</th>
 					<th>承租天數</th>
 					<th>訂單金額</th>
@@ -190,8 +192,8 @@ div.getTotal {
 						</c:choose>
 
 						<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
-						<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td>
-						<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td>
+<%-- 						<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
+<%-- 						<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td> --%>
 						<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td>
 						<td>${omVO.rentDays}</td>
 						<td>${omVO.ordPrice}</td>

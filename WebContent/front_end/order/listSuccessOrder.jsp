@@ -123,10 +123,10 @@ div.getTotal {
 				</ul>
 			</c:if>
 			<div>
-				<h5>依日期查詢訂單</h5>
+				<h5>依歸還日期查詢訂單</h5>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 75px;"> 
-					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 75px;"> 
+					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 75px;"> <button>確認</button>
 						     <input type="hidden" name="action" value="get_date_forLease_order">
 				</FORM>
 			</div>
@@ -136,14 +136,15 @@ div.getTotal {
 					<th>承租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
+					<th>折抵金額</th>
+					
 
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
 
-					<th>出貨日期</th>
-					<th>到貨日期</th>
 					<th>歸還日期</th>
 					<th>承租天數</th>
+					<th>運費</th>
 					<th>訂單金額</th>
 				</tr>
 				<%@ include file="pageForLease.file"%>
@@ -176,6 +177,21 @@ div.getTotal {
 							</c:if>
 						</c:forEach>
 
+						<c:set var="count" value="0" />
+						<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+							<c:if test="${count==0}">
+								<c:choose>
+									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+										<td>無</td>
+									</c:when>
+									<c:when test="${true}">
+										<td>$${Math.round(mcVO.discount)}元</td>
+									</c:when>
+								</c:choose>
+								<c:set var="count" value="1" />
+							</c:if>
+						</c:forEach>
+
 						<c:choose>
 							<c:when test="${omVO.ordStatus == '0'}">
 								<td>已成立</td>
@@ -192,24 +208,35 @@ div.getTotal {
 						</c:choose>
 
 						<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
-						<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td>
-						<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td>
+<%-- 						<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
+<%-- 						<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td> --%>
 						<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td>
 						<td>${omVO.rentDays}</td>
-						<td>${omVO.ordPrice}</td>
+						<td>$${omVO.shipFee}元</td>
+						<td>$${omVO.ordPrice}元</td>
 						<td>
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
 								<input type="submit" value="評價"> 
 								<input type="hidden" name="ordID" value="${omVO.ordID}"> 
+								<input type="hidden" class="shipFee" name="shipFee" value="${omVO.shipFee}">
 								<input type="hidden" class="price" name="price" value="${omVO.ordPrice}"> 
+								<input type="hidden" class="ncFee" name="ncFee" value="${omVO.ordPrice - omVO.shipFee}"> 
 								<input type="hidden" name="action" value="getComment_For_Display">
 							</FORM>
 						</td>
 					</tr>
 				</c:forEach>
 			</table>
+			
+			<div class="getTotal">
+				<p class="sumFee"></p>
+			</div>
 			<div class="getTotal">
 				<p class="sum"></p>
+			</div>
+			
+			<div class="getTotal">
+				<p class="all"></p>
 			</div>
 			<%@ include file="page2.file"%>
 		</main>
@@ -231,6 +258,14 @@ div.getTotal {
 </style>
 
 <script>
+var shipFee = $("input.shipFee");
+var sumFee =$(".sumFee"); // 運費
+var totalFee = 0;
+shipFee.each(function(index, item){
+	totalFee += parseInt($(item).val());
+	sumFee.text("運費總額 : " + totalFee + "元");
+})
+
 var price = $("input.price"); // 金額
 var sum = $(".sum");
 console.log(price.val());
@@ -241,9 +276,17 @@ price.each(function(index, item) {
 // 	console.log($(item).val());
 	console.log(total);
 	
-	sum.text("總金額 : " + total + "元");
+	sum.text("訂單總金額 : " + total + "元");
 })
-
+	
+var ncFee = $("input.ncFee");
+var all = $(".all");
+var reSum = 0;
+ncFee.each(function(index, item) {
+	reSum += parseInt($(item).val());
+	console.log(total);
+	all.text("扣除運費後為 : " + reSum + "元");
+})
 
 $("#f_date1").blur(function(){
 // 	alert(1);

@@ -1,3 +1,5 @@
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="java.util.stream.Collector"%>
 <%@page import="com.product.model.ProdService"%>
 <%@page import="com.product.model.ProdVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,6 +15,10 @@
 <% 
 	ProdService prodSvc = new ProdService();
 	List<ProdVO> list =  prodSvc.getAll();
+	list = list
+			.stream()
+			.sorted(Comparator.comparing(ProdVO::getProdID))
+			.collect(Collectors.toList());
 	if(request.getAttribute("list")!=null){
 		list=(List<ProdVO>)request.getAttribute("list");
 	}
@@ -47,25 +53,28 @@ div.main_content {
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;
-	height: 720px;
+	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
+	background-color:#F5D998;;
+	height:720px;
 }
+
+
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
-	border: 1px solid black;
+	border: 1px solid #999;
 	padding: 10px;
 }
 
@@ -76,19 +85,18 @@ table {
 }
 
 table, th, td {
-	border: 1px  double lightgrey;
+	border: 1px solid lightgrey;
 }
 
 th, td {
 	padding: 5px;
 	text-align: center;
 }
-</style>
-<style>
+
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
-	
+	text-align: center;
 }
 
 table#table-1 h4 {
@@ -102,10 +110,6 @@ h4 {
 	display: inline;
 }
 
-
-</style>
-
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -114,45 +118,52 @@ table {
 }
 
 table, th, td {
-	font-size:10px;
-	border: 1px double black;
-	
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
 }
 
 th, td {
-height:100px
-	padding: 5px;
+	height: 100px padding: 5px;
 	text-align: center;
 }
 
-.pic{
-object-fit: contain;
+.pic {
+	object-fit: contain;
 	width: 95px;
 	height: 80px;
 }
 
+.signOut{
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+
 #table2{
-	background-color:	white; 
+	background-color:	#6A6AFF; 
 	color:white;
 	font-weight:bold;
 
 }
-#table2 a.aa-add-to-cart-btn{
-	color:#003060; 
+a.aa-add-to-cart-btn{
 	width:100%;
-	height:100%; 
-	border:none;
-	background-color:#82D900;
-	margin:0px
+	height:100%;
+	margin:0px;
 }
+
 </style>
 
 </head>
-<body bgcolor='white'>
+<body >
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main">
+		<main class="main" >
 			<table id="table-1">
 				<tr>
 					<td>
@@ -188,7 +199,7 @@ object-fit: contain;
 	<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/prod/SuspensionServlet"
 				name="form1" enctype="multipart/form-data">
-			<table style="background-color:white 	;font-size:20px" >
+			<table style="font-size:20px" >
 				<tr>
 					<th style="text-align:center;">商品編號</th>
 					<th style="text-align:center;">商品名稱</th>					
