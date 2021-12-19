@@ -34,7 +34,7 @@
 </head>
 
 <body bgcolor='white'>
-<%@ include file="header.file" %>
+<%@ include file="header2.file" %>
 	<%-- 錯誤表列 --%>
 	
 <%-- 	<c:if test="${not empty errorMsgs}"> --%>
@@ -119,5 +119,5 @@
  </section>
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 </html>

@@ -17,7 +17,7 @@
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="header2.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
@@ -42,10 +42,10 @@
                 <!-- Blog details -->
                 <div class="aa-blog-content aa-blog-details">
                   <article class="aa-blog-content-single">                        
-                    <h2><a href="#" >${pb.postTitle}</a></h2>
+                    <h2><a href="#" >${pb.postTitle}</a></h2><!--徵求標題-->
                      <div class="aa-article-bottom">
                       <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div><!--會員ID -->
-                      <div class="aa-post-date">${pb.postTime}</div><!--徵求標題 -->
+                      <div class="aa-post-date">${pb.postTime}</div><!--發文時間 -->
                      </div>
                      
                     <figure class="aa-blog-img"><!--內文照片 -->
@@ -109,6 +109,7 @@
                             <div class="media-body">
                              <h4 class="author-name">${pb.memberId}</h4><!--留言會員編號-->
                              <span class="comments-date"></span>
+                             <p style="font-size:8px;">${pb.postTime}</p>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
 
                             </div>
@@ -122,21 +123,21 @@
                     <div class="aa-blog-archive-pagination">
                       <nav>
                         <ul class="pagination">
-                          <li>
-                            <a href="#" aria-label="Previous">
-                              <span aria-hidden="true">«</span>
-                            </a>
-                          </li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li>
-                            <a href="#" aria-label="Next">
-                              <span aria-hidden="true">»</span>
-                            </a>
-                          </li>
+<!--                           <li> -->
+<!--                             <a href="#" aria-label="Previous"> -->
+<!--                               <span aria-hidden="true">«</span> -->
+<!--                             </a> -->
+<!--                           </li> -->
+<!--                           <li><a href="#">1</a></li> -->
+<!--                           <li><a href="#">2</a></li> -->
+<!--                           <li><a href="#">3</a></li> -->
+<!--                           <li><a href="#">4</a></li> -->
+<!--                           <li><a href="#">5</a></li> -->
+<!--                           <li> -->
+<!--                             <a href="#" aria-label="Next"> -->
+<!--                               <span aria-hidden="true">»</span> -->
+<!--                             </a> -->
+<!--                           </li> -->
                         </ul>
                       </nav>
                     </div>
@@ -271,7 +272,7 @@
 
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 
 
 </html>

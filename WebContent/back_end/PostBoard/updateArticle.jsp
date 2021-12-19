@@ -119,6 +119,6 @@ input:read-only {
 	<!-- / Cart view section -->
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 </html>
 
