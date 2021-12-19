@@ -1,18 +1,14 @@
-<%@page import="com.member_coupon.model.MemcouponVO"%>
-<%@page import="com.member_coupon.model.MemcouponDAO"%>
-<%@page import="java.sql.Timestamp"%>
-<%@page import="com.member.model.DefAddressJDBCDAO"%>
-<%@page import="com.member.model.DefAddressVO"%>
-<%@page import="com.member.model.MemberVO"%>
-<%@page import="com.member.model.MemberService"%>
-<%@page import="com.member.model.MemberDAO_interface"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.member_coupon.model.*"%>
+<%@ page import="java.sql.Timestamp"%>
+<%@ page import="com.member.model.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
-<%@page import="com.product.model.*"%>
-<%@page import="java.util.stream.Collectors"%>
+<%@ page import="com.product.model.*"%>
+<%@ page import="java.util.stream.Collectors"%>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
 <%
@@ -22,8 +18,6 @@
 // 		System.out.println(name.getCoupon_name());
 	}
 
-// 	Integer memID = (Integer) session.getAttribute("id");
-// 	System.out.println("會員編號 : " + memID);
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 	List<DefAddressVO> daVO = dadao.getAll();
 
@@ -31,21 +25,21 @@
 	
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 	List<OrderMasterVO> list = omSVC.getAll();
-	List<OrderMasterVO> list1 = omSVC.getAll();
 	
 // 	List<OrderMasterVO> list2 =list.
 // 								stream()
 // 									.filter(o->o.getLeaseID()==memID)
 // 										.collect(Collectors.toList());
 
+	if (request.getAttribute("list") != null) {
+		list = (List) request.getAttribute("list");
+	}
+
 	pageContext.setAttribute("list", list);
 %>
-<jsp:useBean id="memSVC" scope="page"
-	class="com.member.model.MemberService" />
-<jsp:useBean id="mcoSVC" scope="page"
-	class="com.member_coupon.model.MemcouponService" />
-<jsp:useBean id="daSVC" scope="page"
-	class="com.member.model.DefAddressService" />
+<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
+<jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
 
 <html>
 <head>
@@ -103,6 +97,7 @@ table {
 	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	border : 1px solid black;
 }
 
 table, th, td {
@@ -136,6 +131,7 @@ table {
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	
 }
 
 table, th, td {
@@ -192,6 +188,16 @@ background-color:#FFF0AC;
 					<input type="submit" value="送出">
 				</FORM>
 			</div>
+			<div>
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
+					<b>依歸還日期查詢訂單
+						起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+						結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;">
+								<button>確認</button>
+								<input type="hidden" name="action" value="get_date_manager_order">
+					</b>
+				</FORM>
+			</div>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
 				<ul>
@@ -228,12 +234,12 @@ background-color:#FFF0AC;
 					<th>付款狀態</th>
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-					<th>出貨碼</th>
-					<th>歸還碼</th>
+<!-- 					<th>出貨碼</th> -->
+<!-- 					<th>歸還碼</th> -->
 					<th>超商碼</th>
 	
-					<th>出貨日期</th>
-					<th>到貨日期</th>
+<!-- 					<th>出貨日期</th> -->
+<!-- 					<th>到貨日期</th> -->
 					<th>歸還日期</th>
 					<th>承租天數</th>
 
@@ -245,8 +251,8 @@ background-color:#FFF0AC;
 								<td>${omVO.ordID}</td>
 
 
-								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
-								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).loginId}</td>
+								<td>${memSVC.getOneMember(omVO.rentID).loginId}</td>
 
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
@@ -314,22 +320,13 @@ background-color:#FFF0AC;
 										<td>已取消</td>
 									</c:otherwise>
 								</c:choose>
-
-								<td><fmt:formatDate value="${omVO.ordDate}"
-										pattern="yyyy-MM-dd" /></td>
-
-								<td>${omVO.shipCode}</td>
-								<td>${omVO.returnCode}</td>
+								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
+<%-- 								<td>${omVO.shipCode}</td> --%>
+<%-- 								<td>${omVO.returnCode}</td> --%>
 								<td>${omVO.storeCode}</td>
-
-								<%-- 						<td>${omVO.estStart}</td> --%>
-								<%-- 						<td>${omVO.estEnd}</td> --%>
-								<td><fmt:formatDate value="${omVO.shipDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.arrivalDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.returnDate}"
-										pattern="yyyy-MM-dd" /></td>
+<%-- 								<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
+<%-- 								<td><fmt:formatDate value="${omVO.arrivalDate}"	pattern="yyyy-MM-dd" /></td> --%>
+<%-- 								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> --%>
 								<td>${omVO.rentDays}</td>
 								<td>${omVO.ordPrice}</td>
 								<td>
@@ -358,4 +355,58 @@ background-color:#FFF0AC;
 	</div>
 	<%@ include file="/includeFolder/managerFooter.file"%>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
+<script type="text/javascript">
+$("#f_date1").blur(function(){
+// 	alert(1);
+	console.log($("#f_date1").val());
+	if($("#f_date1").val() != null && $("#f_date1") != ''){		
+		$("#f_date2").blur(function(){
+			console.log($("#f_date2").val());
+			if($("#f_date2").val != null && $("#f_date2") != ''){
+				$("#DATE").submit();
+// 				$.ajax({
+<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
+// 					type:"POST",
+// 					data:{
+// 						startDate:($("#f_date1").val()),
+// 						endDate:($("#f_date2").val()),
+// 						action:"get_Date_Order",
+			
+// 					},
+// 						dataType:"json",
+// 				});
+			}		
+		})	
+	}	
+});
+
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date1").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+        $("#f_date2").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+</script>
 </html>
