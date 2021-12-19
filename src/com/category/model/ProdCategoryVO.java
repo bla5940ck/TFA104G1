@@ -1,6 +1,6 @@
 package com.category.model;
 
-public class ProdCategoryVO {
+public class ProdCategoryVO implements java.io.Serializable{
 	private Integer categoryID;
 	private String categoryName;
 	

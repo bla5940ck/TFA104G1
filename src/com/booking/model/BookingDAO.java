@@ -19,6 +19,12 @@ import java.util.stream.Collectors;
 import util.Util;
 
 public class BookingDAO implements BookingDAO_interface {
+	private static final String INSERT = "INSERT INTO BOOKING(`PROD_ID`, `STATUS`, `EST_START`, `EST_END` ,`ORD_ID`) VALUES (?, ?, ?, ?,?);";
+	private static final String UPDATE = "UPDATE BOOKING SET `STATUS`= ? WHERE BK_ID =?;";
+	private static final String FINDDATEBYPRODID = "SELECT * FROM BOOKING WHERE PROD_ID = ? &&( STATUS =1 ||STATUS =0)" ;
+	private static final String FINDBOOKINGBYPK = "SELECT * FROM BOOKING WHERE BK_ID = ?" ;
+	private static final String DELETE = "DELETE FROM BOOKING WHERE `BK_ID` = ?;";
+	private static final String ALL = "SELECT * FROM BOOKING";
 	
 	static {
 		try {
@@ -29,13 +35,12 @@ public class BookingDAO implements BookingDAO_interface {
 		}
 	}
 	public void add(BookingVO bk) {
-		String sql = "INSERT INTO booking(`prod_id`, `status`, `est_start`, `est_end` ,`ord_id`) VALUES (?, ?, ?, ?,?);";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(INSERT);
 			pstmt.setInt(1,bk.getProdID());
 			pstmt.setInt(2,bk.getStatus());
 			pstmt.setDate(3, bk.getEstStart());
@@ -58,12 +63,11 @@ public class BookingDAO implements BookingDAO_interface {
 
 	@Override
 	public void update(BookingVO bk) {
-		String sql = "update booking set `status`= ? where bk_id =?;";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, bk.getStatus());
 			pstmt.setInt(2, bk.getBkID());
 			pstmt.executeUpdate();
@@ -84,13 +88,12 @@ public class BookingDAO implements BookingDAO_interface {
 	@Override
 	public void delete(Integer bkID) {
 	
-	String sql = "DELETE FROM booking WHERE `bk_id` = ?;";
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	
 	try {
 		con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-		pstmt = con.prepareStatement(sql);
+		pstmt = con.prepareStatement(DELETE);
 		pstmt.setInt(1, bkID);
 		pstmt.executeUpdate();
 	} catch (SQLException e) {
@@ -111,12 +114,11 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from booking where prod_id = ? &&( status =1 ||status =0)" ;
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(FINDDATEBYPRODID);
 			pstmt.setInt(1, prodID);
 			
 			rs=pstmt.executeQuery();
@@ -125,7 +127,7 @@ public class BookingDAO implements BookingDAO_interface {
 				
 				bk.setEstStart(rs.getDate("est_start"));
 				bk.setEstEnd(rs.getDate("est_end"));
-				
+				bk.setBkID(rs.getInt("bk_id"));
 				list.add(bk);
 				
 			}
@@ -149,12 +151,11 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from booking where bk_id = ?" ;
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(FINDBOOKINGBYPK);
 			pstmt.setInt(1, bkID);
 			
 			rs=pstmt.executeQuery();
@@ -192,13 +193,12 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
-		String sql = "select * from booking";
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(ALL);
 			rs = pstmt.executeQuery();
 		
 			while(rs.next()) {
