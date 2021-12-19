@@ -24,14 +24,10 @@
 
 	pageContext.setAttribute("list", list2);
 %>
-<jsp:useBean id="prodSVC" scope="page"
-	class="com.product.model.ProdService" />
-<jsp:useBean id="memSVC" scope="page"
-	class="com.member.model.MemberService" />
-<jsp:useBean id="mcoSVC" scope="page"
-	class="com.member_coupon.model.MemcouponService" />
-<jsp:useBean id="daSVC" scope="page"
-	class="com.member.model.DefAddressService" />
+<jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
+<jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
+<jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
+<jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
 
 <html>
 <head>
@@ -125,8 +121,8 @@ div.getTotal {
 			<div>
 				<h5>依歸還日期查詢訂單</h5>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 75px;"> 
-					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 75px;"> <button>確認</button>
+					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> <button>確認</button>
 						     <input type="hidden" name="action" value="get_date_forLease_order">
 				</FORM>
 			</div>
