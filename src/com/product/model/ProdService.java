@@ -11,15 +11,16 @@ import java.util.stream.Collectors;
 
 import com.booking.model.BookingDAO;
 import com.category.model.ProdCategoryDAO;
-import com.category.model.ProdCategoryDAOImpl;
+import com.category.model.ProdCategory_Interface;
 import com.category.model.ProdCategory_Interface;
 
 
 
 public class ProdService {
 	private ProdDAO_Interface dao;
-	private ProdCategoryDAOImpl dao2;
+	private ProdCategory_Interface dao2;
 	private BookingDAO dao3;
+
 	public ProdService() {
 		dao = new ProdDAO();
 		dao2 = new ProdCategoryDAO();
