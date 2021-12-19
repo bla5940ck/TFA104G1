@@ -16,21 +16,19 @@ import com.booking.model.BookingVO;
 
 @WebServlet("/bk/BkServlet")
 public class BkServlet extends HttpServlet {
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
-		if("searchBk".equals(req.getParameter("action"))) {
+
+		if ("searchBk".equals(req.getParameter("action"))) {
 			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
 			BookingService bkSvc = new BookingService();
 			List<BookingVO> bkList = bkSvc.findDateByProdID(prodID);
 			JSONObject obj = new JSONObject();
 			obj.put("bkList", bkList);
 			res.getWriter().print(obj);
-			
+
 		}
-		
-	
-	
+
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

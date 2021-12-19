@@ -845,13 +845,9 @@ function selflog_show(id){
 					 
 // 						location.reload();
 						$("span.aa-cart-notify").text(
-								parseInt($("input.dataCount").val()) + 1);
+								parseInt($("span.aa-cart-notify").text()) + 1);
 								
-						$("input.dataCount").val(
-								$("span.aa-cart-notify")
-										.text(
-												parseInt($("input.dataCount")
-														.val()) + 1))
+					
 							
 						Swal.fire({
  							 position: 'center',
