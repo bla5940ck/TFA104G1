@@ -785,7 +785,10 @@ request.setAttribute("product", product);
 	<!--   自己寫的 -->
 	<script type="text/javascript" src="js/time.js"></script>
 
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
+	<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="sweetalert2.all.min.js"></script>
 
 	<script>
 
@@ -826,7 +829,15 @@ function selflog_show(id){
 	    			else if (data.length == 0 || data == null) {
 						alert("請登入會員");
 					} else if (data == count) {
-						alert("此商品重複 確認購物車");
+						Swal.fire({
+							  title: '此商品已存在你購物車',
+							  showClass: {
+							    popup: 'animate__animated animate__fadeInDown'
+							  },
+							  hideClass: {
+							    popup: 'animate__animated animate__fadeOutUp'
+							  }
+							})
 					} else {
 						//加入購物車 數量+1
 					 $("div.aa-cartbox-summary").load("<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=product.getProdID()%>" + " div.aa-cartbox-summary");
@@ -834,19 +845,21 @@ function selflog_show(id){
 					 
 // 						location.reload();
 						$("span.aa-cart-notify").text(
-								parseInt($("input.dataCount").val()) + 1);
+								parseInt($("span.aa-cart-notify").text()) + 1);
 								
-						$("input.dataCount").val(
-								$("span.aa-cart-notify")
-										.text(
-												parseInt($("input.dataCount")
-														.val()) + 1))
+					
 							
-						alert("加入購物車");
-					}
+						Swal.fire({
+ 							 position: 'center',
+  							 icon: 'success',
+ 							 title: '加入購物車',
+ 							 showConfirmButton:false,
+									timer : 1000
+								})
+							}
 
-				},
-			});
+						},
+					});
 		};
 
 		var disableddates = new Array();

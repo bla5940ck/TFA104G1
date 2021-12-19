@@ -7,23 +7,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.memberservice.model.*"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://www.itxst.com/js/jquery.js"></script>
 <script src="https://www.itxst.com/package/artDialog/artDialog.js"></script>
-<link href="https://www.itxst.com/package/artDialog/skins/default.css" rel="stylesheet" />
-<% 
+<link href="https://www.itxst.com/package/artDialog/skins/default.css"
+	rel="stylesheet" />
+<%
 	ProdService prodSvc = new ProdService();
-	List<ProdVO> list =  prodSvc.getAll();
-	list = list
-			.stream()
-			.sorted(Comparator.comparing(ProdVO::getProdID))
-			.collect(Collectors.toList());
-	if(request.getAttribute("list")!=null){
-		list=(List<ProdVO>)request.getAttribute("list");
+	List<ProdVO> list = prodSvc.getAll();
+	list = list.stream().sorted(Comparator.comparing(ProdVO::getProdID)).collect(Collectors.toList());
+	if (request.getAttribute("list") != null) {
+		list = (List<ProdVO>) request.getAttribute("list");
 	}
 
-	pageContext.setAttribute("list",list);
+	pageContext.setAttribute("list", list);
 %>
 
 <html>
@@ -53,22 +52,20 @@ div.main_content {
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;	
+	width: 200px;
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;	
+	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
-	background-color:#F5D998;;
-	height:720px;
+	background-color: #F5D998;;
+	height: 720px;
 }
-
-
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: #F0F0F0;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -133,220 +130,231 @@ th, td {
 	height: 80px;
 }
 
-.signOut{
-background-color:	#FF7575;
-}
-.class1{
-background-color:#FFF0AC;
+.signOut {
+	background-color: #FF7575;
 }
 
-input{
-background-color:#FFF0AC;
+.class1 {
+	background-color: #FFF0AC;
 }
 
-#table2{
-	background-color:	#6A6AFF; 
-	color:white;
-	font-weight:bold;
-
-}
-a.aa-add-to-cart-btn{
-	width:100%;
-	height:100%;
-	margin:0px;
+input {
+	background-color: #FFF0AC;
 }
 
+#table2 {
+	background-color: #6A6AFF;
+	color: white;
+	font-weight: bold;
+}
+
+a.aa-add-to-cart-btn {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+}
 </style>
 
 </head>
-<body >
+<body>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main" >
+		<main class="main">
 			<table id="table-1">
 				<tr>
 					<td>
-						
+
 						<h4>
 							<a
 								href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
 						</h4>
 					</td>
 				</tr>
-			
+
 			</table>
-			
-		
-			
-			<table id="table2" >
+
+
+
+			<table id="table2">
 				<div>
-					
-						<tr>
-							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/back_end/product/productManager.jsp">全部商品</a></td>
-							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=2">被檢舉商品</a></td>
-							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=1">上架中</a></td>
-							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=0">下架中</a></td>
-							<td><a class="aa-add-to-cart-btn" href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=9">停用中</a></td>
-						</tr>
-					
-					
+
+					<tr>
+						<td><a class="aa-add-to-cart-btn"
+							href="<%=request.getContextPath()%>/back_end/product/productManager.jsp">全部商品</a></td>
+						<td><a class="aa-add-to-cart-btn"
+							href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=2">被檢舉商品</a></td>
+						<td><a class="aa-add-to-cart-btn"
+							href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=1">上架中</a></td>
+						<td><a class="aa-add-to-cart-btn"
+							href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=0">下架中</a></td>
+						<td><a class="aa-add-to-cart-btn"
+							href="<%=request.getContextPath()%>/msg/MsgProdServlet?action=selectItem&value=9">停用中</a></td>
+					</tr>
+
+
 				</div>
 			</table>
-			
-			
-			
-	<FORM METHOD="post"
+
+
+
+			<FORM METHOD="post"
 				ACTION="<%=request.getContextPath()%>/prod/SuspensionServlet"
 				name="form1" enctype="multipart/form-data">
-			<table style="font-size:20px" >
-				<tr>
-					<th style="text-align:center;">商品編號</th>
-					<th style="text-align:center;">商品名稱</th>					
-					<th style="text-align:center;">商品租金</th>
-					<th style="text-align:center;">商品價值</th>
-					<th style="text-align:center;">商品類別</th>
-					<th style="text-align:center;">商品處理</th>					
-					<th style="text-align:center;">查看檢舉內容</th>
-					
-				
-				</tr>
-				<jsp:useBean id="cateSvc" scope="page" class="com.category.model.ProdCategoryService" />
-				<%@ include file="page1.file"%>
-				
-				<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>"
-					end="<%=pageIndex+rowsPerPage-1%>">
-					
-					<tr>					
-						<td><a href="/TFA104G1/front_end/product/prodDetail.jsp?prodID=${prodVO.prodID}">${prodVO.prodID}</a></td>
-						<td><a href="/TFA104G1/front_end/product/prodDetail.jsp?prodID=${prodVO.prodID}">${prodVO.prodName}</a></td>
-						<td>${prodVO.prodRent}</td>
-						<td>${prodVO.prodPrice}</td>
-						<td>${cateSvc.findCategoryByPK(prodVO.categoryID).categoryName}</td>
-			
-						
-						<td>
-						<span class="span_status">
-						<c:choose>
-						<c:when test="${prodVO.prodStatus=='0'}">
-						<label style='color:blue'>下架</label>
-						</c:when>
-						<c:when test="${prodVO.prodStatus=='1'}">
-						<label style='color:green'>上架</label>
-						</c:when>
-						<c:when test="${prodVO.prodStatus=='9'}">
-						<label style='color:red'>停用</label>
-						</c:when>
-						
-						</c:choose>
-						
-						</span>&nbsp&nbsp&nbsp
-						<input type="hidden" name="prodID" value="${prodVO.prodID}">
-						<select name="prodStatus" size="1" class="prodStatus">
-							
-									<c:if test="${prodVO.prodStatus==0 }">
-							<option value="0" >下架</option>
-							<option value="1" >上架</option>
-								<option value="9" >停用</option>
-						</c:if>
-							<c:if test="${prodVO.prodStatus==1 }">
-							<option value="1" >上架</option>
-							<option value="0" >下架</option>
-								<option value="9" >停用</option>
-						</c:if>
-							<c:if test="${prodVO.prodStatus==9 }">
-							<option value="9" >停用</option>
-								<option value="0" >下架</option>
-								<option value="1" >上架</option>
-						</c:if>
-					
-						</select></td>
-						
-					<jsp:useBean id="msSvc" scope="page" class="com.memberservice.model.MemberServiceService" />
-						<c:set var ="count" value="0"/>
-						<c:forEach var="msVO" items="${msSvc.all}">
-						<c:if test="${msVO.prodID==prodVO.prodID  }">
-						
-						
-						
-						<c:if test="${count== 0}">
-						<td><a class="" href="<%=request.getContextPath()%>/back_end/memberservice/listOneProblemMsg.jsp?prodID=${prodVO.prodID}"><img style="height:40px" src="https://i.pinimg.com/originals/0c/50/95/0c509522f742e45c2c505033458a4791.png"></a></td>
-						<c:set var ="count" value="1"/>
-						</c:if>
-						</c:if>
-						</c:forEach>
-						<td style="height:40px"></td>
-							
+				<table style="font-size: 20px">
+					<tr>
+						<th style="text-align: center;">商品編號</th>
+						<th style="text-align: center;">商品名稱</th>
+						<th style="text-align: center;">商品租金</th>
+						<th style="text-align: center;">商品價值</th>
+						<th style="text-align: center;">商品類別</th>
+						<th style="text-align: center;">商品處理</th>
+						<th style="text-align: center;">查看檢舉內容</th>
+
+
 					</tr>
-		
-				</c:forEach>
-		</table>
-		<input type="hidden" name="action" value="offShelf" >
-				
+					<jsp:useBean id="cateSvc" scope="page"
+						class="com.category.model.ProdCategoryService" />
+					<%@ include file="page1.file"%>
+
+					<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>"
+						end="<%=pageIndex+rowsPerPage-1%>">
+
+						<tr>
+							<td><a
+								href="/TFA104G1/front_end/product/prodDetail.jsp?prodID=${prodVO.prodID}">${prodVO.prodID}</a></td>
+							<td><a
+								href="/TFA104G1/front_end/product/prodDetail.jsp?prodID=${prodVO.prodID}">${prodVO.prodName}</a></td>
+							<td>${prodVO.prodRent}</td>
+							<td>${prodVO.prodPrice}</td>
+							<td>${cateSvc.findCategoryByPK(prodVO.categoryID).categoryName}</td>
+
+
+							<td><span class="span_status"> <c:choose>
+										<c:when test="${prodVO.prodStatus=='0'}">
+											<label style='color: blue'>下架</label>
+										</c:when>
+										<c:when test="${prodVO.prodStatus=='1'}">
+											<label style='color: green'>上架</label>
+										</c:when>
+										<c:when test="${prodVO.prodStatus=='9'}">
+											<label style='color: red'>停用</label>
+										</c:when>
+
+									</c:choose>
+
+							</span>&nbsp&nbsp&nbsp <input type="hidden" name="prodID"
+								value="${prodVO.prodID}"> <select name="prodStatus"
+								size="1" class="prodStatus">
+
+									<c:if test="${prodVO.prodStatus==0 }">
+										<option value="0">下架</option>
+										<option value="1">上架</option>
+										<option value="9">停用</option>
+									</c:if>
+									<c:if test="${prodVO.prodStatus==1 }">
+										<option value="1">上架</option>
+										<option value="0">下架</option>
+										<option value="9">停用</option>
+									</c:if>
+									<c:if test="${prodVO.prodStatus==9 }">
+										<option value="9">停用</option>
+										<option value="0">下架</option>
+										<option value="1">上架</option>
+									</c:if>
+
+							</select></td>
+
+							<jsp:useBean id="msSvc" scope="page"
+								class="com.memberservice.model.MemberServiceService" />
+							<c:set var="count" value="0" />
+							<c:forEach var="msVO" items="${msSvc.all}">
+								<c:if test="${msVO.prodID==prodVO.prodID  }">
+
+
+
+									<c:if test="${count== 0}">
+										<td><a class=""
+											href="<%=request.getContextPath()%>/back_end/memberservice/listOneProblemMsg.jsp?prodID=${prodVO.prodID}"><img
+												style="height: 40px"
+												src="https://i.pinimg.com/originals/0c/50/95/0c509522f742e45c2c505033458a4791.png"></a></td>
+										<c:set var="count" value="1" />
+									</c:if>
+								</c:if>
+							</c:forEach>
+							<td style="height: 40px"></td>
+
+						</tr>
+
+					</c:forEach>
+				</table>
+				<input type="hidden" name="action" value="offShelf">
+
 			</FORM>
 			<%@ include file="page2.file"%>
-			
+
 		</main>
 	</div>
-	
-	
-	
+
+
+
 	<script>
-	$("a.findmsg").click(function(){
-		a();
-		return false;
-	});
-	
-	
-	
-	 function a(){     
-		 art.dialog({content:'hello world!'})
-	 }
-	
-	
-	 
-	 
-	$("select.prodStatus").change(function(){
-		
-	var that = $(this).closest('td').find('input').eq(0).val()
-// 		alert("123")
-	var status=$(this).val();
-	console.log(status)
-	var spanStatus = $(this).closest('tr').find('span.span_status').eq(0);
-	console.log(spanStatus);
-		$.ajax({
-			url:"/TFA104G1/prod/SuspensionServlet",
-			type: "POST",
-			cache : false,
-			data:{
-				prodID :that,
-				action:"offShelf",
-				status:status
-			},success:function(data){
-				console.log(data);
-				if(data==1){
-					$(spanStatus).html("<label style='color:green'>上架</label>");
-				}else if(data==9){
-					$(spanStatus).html("<label style='color:red'>停用</label>");
-				}else if(data==0){
-					$(spanStatus).html("<label style='color:blue'>下架</label>");
-				}
-				
-			},error:function(e){
-				console.log("失敗");
-			}
+		$("a.findmsg").click(function() {
+			a();
+			return false;
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-	});
-	
-	
+
+		function a() {
+			art.dialog({
+				content : 'hello world!'
+			})
+		}
+
+		$("select.prodStatus")
+				.change(
+						function() {
+
+							var that = $(this).closest('td').find('input')
+									.eq(0).val()
+							// 		alert("123")
+							var status = $(this).val();
+							console.log(status)
+							var spanStatus = $(this).closest('tr').find(
+									'span.span_status').eq(0);
+							console.log(spanStatus);
+							$
+									.ajax({
+										url : "/TFA104G1/prod/SuspensionServlet",
+										type : "POST",
+										cache : false,
+										data : {
+											prodID : that,
+											action : "offShelf",
+											status : status
+										},
+										success : function(data) {
+											console.log(data);
+											if (data == 1) {
+												$(spanStatus)
+														.html(
+																"<label style='color:green'>上架</label>");
+											} else if (data == 9) {
+												$(spanStatus)
+														.html(
+																"<label style='color:red'>停用</label>");
+											} else if (data == 0) {
+												$(spanStatus)
+														.html(
+																"<label style='color:blue'>下架</label>");
+											}
+
+										},
+										error : function(e) {
+											console.log("失敗");
+										}
+									});
+
+						});
 	</script>
 </body>
 

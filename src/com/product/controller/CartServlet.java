@@ -24,24 +24,23 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-
 @WebServlet("/cart/CartServlet")
 public class CartServlet extends HttpServlet {
 	private static JedisPool pool = JedisPoolUtil.getJedisPool();
-    public CartServlet() {
-     
-    }
+
+	public CartServlet() {
+
+	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
-		
-	
+
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		Gson gson = new Gson();
-		
-		////////////加入購物車/////////////////////
+
+		//////////// 加入購物車/////////////////////
 		if ("cart".equals(req.getParameter("action"))) {
 
 			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
@@ -136,9 +135,7 @@ public class CartServlet extends HttpServlet {
 			}
 
 		}
-	
-	
-	
+
 	}
 
 }
