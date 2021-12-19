@@ -340,7 +340,10 @@ CartVO cartVO1=null;
   <!-- Custom js -->
   <script src="<%=request.getContextPath()%>/front_end/product/js/custom.js"></script> 
 
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
+	<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="sweetalert2.all.min.js"></script>
 <script>
 
 
@@ -348,13 +351,27 @@ CartVO cartVO1=null;
 
 $("a.remove").click(function(){
     
-	  let r = confirm("確認移除？");
   
   let that = this;
  
   let prodid = $(that).closest("tr").find("input").eq(0).val();
-  
-	  if (r){
+  let prodName = $(that).closest("tr").find("a.aa-cart-title").eq(0).text();
+  Swal.fire({
+	  title: '確定刪除?',
+	  text: "商品: " + prodName,
+	  icon: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+	  cancelButtonColor: '#d33',
+	  confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+	  if (result.isConfirmed) {
+	    Swal.fire(
+	      '已成功刪除',
+	      '商品編號'+prodid
+	      
+	    )
+	 
 		 
   		
 	    $.ajax({
@@ -413,7 +430,8 @@ location.href + " table.aa-totals-table");
       }
 
     });
-    }
+	  }
+	})
 
   });
   

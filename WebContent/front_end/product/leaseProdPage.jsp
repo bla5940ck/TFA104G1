@@ -759,6 +759,7 @@ div.overlay > article{
 				  $("a.score").on("click", function(){
 					  console.log($(this).closest('ul').find('a').eq(0).text());
 					  let prodID = $(this).closest('ul').find('a').eq(0).text();
+					  
 					  $.ajax({
 						 type:"post",
 						 dataType:"json",
@@ -768,8 +769,8 @@ div.overlay > article{
 							prodID:prodID
 						 },
 						 success:function(data){
-							 console.log(data.bkList);
 							 let bkList = data.bkList;
+							 $('div.overlay h1').text("商品編號" +prodID +" 預約查看");
 							 for(var i=0;i<bkList.length;i++){
 								  $('table.bk_table').append("<tr class='add1' style='height:30px;background-color:#ADFEDC'><td>"+ bkList[i].bkID +"</td><td>"+ bkList[i].estStart +"</td><td>"+ bkList[i].estEnd +"</td></tr>");
 
