@@ -97,7 +97,6 @@ table {
 	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	border : 1px solid black;
 }
 
 table, th, td {
@@ -110,7 +109,7 @@ th, td {
 }
 
 table#table-1 {
-	background-color: #CCCCFF;
+	
 	border: 2px solid black;
 	text-align: center;
 }
@@ -131,7 +130,6 @@ table {
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	
 }
 
 table, th, td {
@@ -159,6 +157,18 @@ background-color:#FFF0AC;
 
 input{
 background-color:#FFF0AC;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+
+.a1{
+border:3px solid black;
+background-color:white;
 }
 </style>
 
@@ -211,7 +221,7 @@ background-color:#FFF0AC;
 				<div>
 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><a class="a1" href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
 							<td><button name="ordStatus" value="1">待歸還</button></td>
 							<td><button name="ordStatus" value="2">已完成</button></td>
@@ -222,7 +232,7 @@ background-color:#FFF0AC;
 				</div>
 			</table>
 
-			<table id="table-1">
+			<table id="table-2">
 				<tr>
 					<th>訂單編號</th>
 					
@@ -353,7 +363,7 @@ background-color:#FFF0AC;
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
-	<%@ include file="/includeFolder/managerFooter.file"%>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
