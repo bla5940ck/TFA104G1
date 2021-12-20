@@ -1,6 +1,7 @@
 package com.member.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,27 +56,27 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				String name = req.getParameter("name").trim();
 				System.out.println("333333");
-//				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-//				if (name == null || name.trim().length() == 0) {
-//					errorMsgs.add("姓名: 請勿空白");
-//				} else if(!name.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
-//					errorMsgs.add("姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-//	            }
+				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				if (name == null || name.trim().length() == 0) {
+					errorMsgs.add("姓名: 請勿空白");
+				} else if(!name.trim().matches(enameReg)) { //以下練習正則(規)表示式(regular-expression)
+					errorMsgs.add("姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+	            }
 				
 				String loginId = req.getParameter("loginId").trim();
-//				if (loginId == null || loginId.trim().length() == 0) {
-//					errorMsgs.add("帳號請勿空白");
-//				}
+				if (loginId == null || loginId.trim().length() == 0) {
+					errorMsgs.add("帳號請勿空白");
+				}
 //				
 				String password = req.getParameter("password").trim();
-//				if (password == null || password.trim().length() == 0) {
-//					errorMsgs.add("密碼請勿空白");
-//				}
+				if (password == null || password.trim().length() == 0) {
+					errorMsgs.add("密碼請勿空白");
+				}
 				
 				String idcn = req.getParameter("idcn").trim();
-//				if (idcn == null || idcn.trim().length() == 0) {
-//					errorMsgs.add("身分證號請勿空白");
-//				}
+				if (idcn == null || idcn.trim().length() == 0) {
+					errorMsgs.add("身分證號請勿空白");
+				}
 //				
 				
 				java.sql.Date birthday = null;
@@ -147,8 +148,51 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 //				if (fileName != null && !"".equals(fileName)) {
 //					part.write(savePath + "/" + fileName);
 //				}
+//				身分證正面寫入
+				Part part = req.getPart("file_name1");
+				MemFrontServlet mfs = new MemFrontServlet();
+				String filename = mfs.getFileNameFromPart(part);
+				System.out.println("121444444");
+				InputStream in = part.getInputStream();
+				idcF = new byte[in.available()];
+//				if (filename!= null && part.getContentType()!=null) {
+//					String name = part.getName();
+//					String ContentType = part.getContentType();
+//					long size = part.getSize();
+//					System.out.println("121355555");
+//					File f = new File(fsaveDirectory, filename);
+//					System.out.println("1213666666");
+//					part.write(f.toString());
+//					part.write(fileName);
+					System.out.println(idcF);
+					System.out.println("72133333333");
+					System.out.println("82133333333");
+					in.read(idcF);
+					in.close();
 				System.out.println("8888");
 				
+//				身分證反面寫入
+				Part part2 = req.getPart("file_name2");
+				MemFrontServlet mfs2 = new MemFrontServlet();
+				String filename2 = mfs2.getFileNameFromPart(part2);
+				System.out.println("121444444");
+				InputStream in2 = part2.getInputStream();
+				idcB = new byte[in2.available()];
+//				if (filename!= null && part.getContentType()!=null) {
+//					String name = part.getName();
+//					String ContentType = part.getContentType();
+//					long size = part.getSize();
+//					System.out.println("121355555");
+//					File f = new File(fsaveDirectory, filename);
+//					System.out.println("1213666666");
+//					part.write(f.toString());
+//					part.write(fileName);
+					System.out.println(idcB);
+					System.out.println("72133333333");
+					System.out.println("82133333333");
+					in2.read(idcB);
+					in2.close();
+				System.out.println("8888");
 				
 				
 //				Integer deptno = new Integer(req.getParameter("deptno").trim());
@@ -190,7 +234,7 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 				System.out.println("1212121121");
 				memberVO = memberSvc.addMem(bankCode, email, loginId, idcn, phoneNum, password, status, name, nickName, birthday, address, bankAccount, accountName, rentScore, leaseScore, creatDate, pic, idcF, idcB, foul);
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/front_end/member/Suss.jsp";
+				String url = "/front_end/product/homePage.jsp";
 				out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
 				out.println("<BODY>會員註冊成功，待審核通過後會MAIL通知您，3秒後會轉往【JoyLease】首頁<BR>");
 				out.println("</BODY></HTML>");
