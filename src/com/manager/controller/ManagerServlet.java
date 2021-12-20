@@ -335,7 +335,7 @@ public class ManagerServlet extends HttpServlet {
 		
 		if("sign_out".equals(action)) {
 			req.getSession().invalidate();
-			RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/managerFrontPage.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/managerlogin.jsp");
 			successView.forward(req, res);
 			return;
 		}
