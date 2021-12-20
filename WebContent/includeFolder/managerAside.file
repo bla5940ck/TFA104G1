@@ -1,17 +1,103 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style>
+        html,
+        body {
+            height: 100%;
+        }
+        
+        body {
+            background-color: #546377;
+        }
+        
+        .side-menu {
+            width: 300px;
+            height: 100%;
+            padding: 50px 0;
+            box-sizing: border-box;
+            background: linear-gradient(45deg, #3381b0, #c2196c);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0px 10px hsla(240, 50%, 20%, .6);
+        }
+        
+        .side-menu form {
+            display: flex;
+            margin: 0 10px 50px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, .4);
+        }
+        
+        .side-menu input,
+        .side-menu button {
+            border: none;
+            padding: 5px 10px;
+            background-color: transparent;
+            color: #fff;
+        }
+        
+        .side-menu input:focus,
+        .side-menu button:focus {
+            outline: none;
+        }
+        
+        .side-menu input::placeholder {
+            color: #fff;
+        }
+        
+        .side-menu input {
+            width: 230px;
+        }
+        
+        .side-menu button {
+            width: 50px;
+        }
+        
+        nav a {
+            display: block;
+            padding: 10px;
+            color: #fff;
+            text-decoration: none;
+            position: relative;
+        }
+        /* 若設定一般border會把整塊貼滿，不好看 */
+        
+        nav a+a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 10px;
+            left: 10px;
+            border-top: 1px solid rgba(255, 255, 255, .4);
+        }
+        
+        nav a .tou {
+            <!--margin-right: -1.1em;-->
+            transform: scale(0);
+            transition: .3s;
+        }
+        
+        nav a:hover .tou {
+            margin-right: 2em;
+            transform: scale(1);
+        }
+        
+       .signOut{
+			background-color:	#FFBB00;
+		}
+    </style>
 <aside class="aside">
 			<nav class="nav">
-				<ul class="nav_list">
-					<h2>
-						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'>管理者專區</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>問題處理</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/product/productManager.jsp'>商品管理</a> <br>
-						<a href='<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp'>訂單管理</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/member/listAllMember.jsp'>會員管理</a> <br> 
+				<ul class="nav_list" style="list-style-type:none;">
+					<h4>
+						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'><i class="tou"></i>管理者專區</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'><i class="tou"></i>問題處理</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/product/productManager.jsp'><i class="tou"></i>商品管理</a> <br>
+						<a href='<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp'><i class="tou"></i>訂單管理</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/member/listAllMember.jsp'><i class="tou"></i>會員管理</a> <br> 
 						<a>帳務管理</a> <br>
-						<a href='<%=request.getContextPath()%>/back_end/member/listAllPdrMember.jsp'>會員審核</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'>專案專區</a>
-					</h2>
+						<a href='<%=request.getContextPath()%>/back_end/member/listAllPdrMember.jsp'><i class="tou"></i>會員審核</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'><i class="tou"></i>專案專區</a>
+					</h4>
 					<form action="/TFA104G1/ManagerServlet" method="post" >
 				<button class="signOut" type="submit">登出</button>
 				<input type="hidden" name="action" value="sign_out" />

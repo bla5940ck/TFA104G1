@@ -90,7 +90,7 @@ aside.aside {
 					<br>
 						<li class="pure-menu-item subnav-item">
 						<div class="item-conatiner">
-							<a href="<%=request.getContextPath()%>/front_end/RentAccountNotice.jsp"
+							<a href="<%=request.getContextPath()%>/front_end/member/RentAccountNotice.jsp"
 								class="pure-menu-link subnav-item-link icon-nav-notification ">
 								<svg class="nav-icon nav-icon-notification" width="22"
 									height="22" viewBox="0 0 24 24" data-icon="ec-notification">

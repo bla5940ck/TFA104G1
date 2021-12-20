@@ -54,9 +54,9 @@ div.main_content {
     color: blue;
     display: inline;
   }
-    .signOut{
-background-color:#6495ed;
-}
+/*     .signOut{ */
+/* background-color:#6495ed; */
+/* } */
 </style>
 
 <style>
