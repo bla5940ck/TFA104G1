@@ -137,9 +137,9 @@
                   <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
                 </ul>
               </li>
-              <li><a href="#">使用教學</a>
+              <li><a href="<%=request.getContextPath()%>/front_end/others/Manual.jsp">使用教學</a>
               </li>
-              <li><a href="#">Q&A</a>
+              <li><a href="<%=request.getContextPath()%>/front_end/others/Qa.jsp">Q&A</a>
               </li>
             </ul>
             </li>
