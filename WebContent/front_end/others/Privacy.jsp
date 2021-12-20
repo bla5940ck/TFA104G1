@@ -36,6 +36,8 @@
 						<div class="row" id="row2">
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
+		<br>
+		<br>
 		<p
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 26pt">
 			<span style="font-family: '微軟正黑體'; font-weight: bold">隱私權政策</span>
@@ -108,7 +110,8 @@
 			<span style="font-family: 'MS Gothic'; font-weight: bold">​</span><span
 				style="font-family: '微軟正黑體'; font-weight: bold">八、本服務所蒐集之會員資料或信用卡資訊，本平台將依法採取相關保護措施，並設有防火牆、防毒等各種資訊安全措施以保護會員資料安全，包括作業程序面、技術面及本平台人員的個人資料保護教育訓練，並簽有保密條款，以確保會員之隱私。</span>
 		</p>
-	
+	<br>
+	<br>
 								</div>
 <!-- 						</div> -->
 						</div>
