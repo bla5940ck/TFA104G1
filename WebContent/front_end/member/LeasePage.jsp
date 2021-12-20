@@ -69,7 +69,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			background-color: #ddd;
+			
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -80,7 +80,7 @@
 		
 		/*--------------------main區域-------------------- */
 		main.main {
-			background-color: #ddd;
+			background-color: white;
 			width: calc(100% - 200px - 10px);
 			display: inline-block;
 			vertical-align: top;
@@ -132,12 +132,15 @@
 		table, th, td {
 			border: 1px solid #CCCCFF;
 		}
-		
+		#nav_list2{
+			float:right;
+		}
 		
 		</style>
 	</head>
 	<body bgcolor='white'>
-		<header class="header"> header區域 </header>
+	<%@ include file="/includeFolder/header.file"%>
+		<%-- <header class="header"> header區域 </header>--%>
 		<c:if test="${not empty errorMsgs}">
 					<font style="color: red">請修正以下錯誤:</font>
 					<ul>
@@ -160,7 +163,7 @@
 															if (null == pic || "".equals(pic))
 																pic ="123";
 														%>
-														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
+														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
 													</td>
 												    <td>${memberVO.loginId}</td>
 											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
@@ -170,7 +173,7 @@
 								<h1>承租專區</h1>
 								<ul class="nav_list">
 									<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a>
-										<ul class="nav_list">
+										<ul class="nav_list2">
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">個人檔案</a></li>
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp">銀行帳號</a></li>
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp">地址</a></li>
@@ -179,7 +182,7 @@
 									</li>
 									<li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">訂單資訊</a></li>
 									<li><a href="">通知</a></li>
-										<ul class="nav_list">
+										<ul class="nav_list2">
 											<li><a href="">訂單更新通知</a></li>
 											<li><a href="">評價通知</a></li>
 											<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li>
@@ -240,7 +243,7 @@
 				 </main>
 		</div>
 						
-		<footer class="footer"> footer區域 </footer>
+		<%@ include file="/includeFolder/footer2.file"%>
 	</body>
 	<!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
