@@ -387,6 +387,7 @@ public class OrderMasterServlet extends HttpServlet {
 		if ("submit_order".equals(action)) { // 來自addOrderMaster.jsp的請求
 
 //			System.out.println("進來servlet");
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -407,6 +408,8 @@ public class OrderMasterServlet extends HttpServlet {
 				Date date = new Date();
 				long ord = date.getTime();
 				Timestamp ordDate = new Timestamp(ord);
+				
+				
 
 //			System.out.println("訂單日期 : " + ordDate);
 				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -467,7 +470,7 @@ public class OrderMasterServlet extends HttpServlet {
 				System.out.println(req.getSession().getAttribute("list1"));
 				List<OrderListVO> list = (List<OrderListVO>) req.getSession().getAttribute("list1");
 //				System.out.println(list.size());
-
+			
 				System.out.println("明細存入");
 
 				if (!errorMsgs.isEmpty()) {
@@ -482,8 +485,7 @@ public class OrderMasterServlet extends HttpServlet {
 				/*********************** 開始新增 ************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 				omdao.inesetWithList(omVO, list);
-//				System.out.println("訂單+明細新增");
-
+//				System.out.println("訂單+明細新增");					
 				/*********************** 修改會員折價券狀態 ************************/
 
 				MemcouponDAO mcdao = new MemcouponDAO();
@@ -519,13 +521,24 @@ public class OrderMasterServlet extends HttpServlet {
 					jedis.close();
 				}
 
+//				req.getRequestDispatcher("/front_end/order/ECorder.html").forward(req, res);
+//				http://localhost:8081/TFA104G1/front_end/order/ECorder.html
+				
 				/************* 綠界串接 ***********/
 //				System.out.println("準備進綠界");
+				
+				for(OrderListVO ec : list) {
+					System.out.println("527 取得訂單編號" + ec.getOrdID());
+				
+				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				String ecord = sdf3.format(ordDate);
+								
 				AllInOne all = new AllInOne("");
 				AioCheckOutALL obj = new AioCheckOutALL(); //產生訂單
-				obj.setMerchantID("2000132");
-				obj.setMerchantTradeNo("123129940");		//賣方編號
-				obj.setMerchantTradeDate("2017/01/01 08:05:23"); //交易日期
+										
+				obj.setMerchantID("2000132");				//特店編號
+				obj.setMerchantTradeNo("JL" + (ec.getOrdID()).toString());	//訂單編號
+				obj.setMerchantTradeDate(ecord); //交易日期S
 				obj.setTotalAmount(ordPrice.toString());          //交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台");       //交易描述
 				obj.setItemName(prodName);                       //商品名稱
@@ -535,13 +548,19 @@ public class OrderMasterServlet extends HttpServlet {
 				
 				String form = all.aioCheckOut(obj, null);
 				System.out.println(form);
-//				ao.aioCheckOut(obj, null);
+				
+//				res.getWriter().print(form);
+				req.setAttribute("EC", form);
 				all.aioCheckOut(obj, null);
 				
+				req.getRequestDispatcher("/front_end/order/ECpage.jsp").forward(req, res);
+				
+				
+				}
 				/*********************** 新增完成準備轉交 ************************/
-				String url = "/front_end/order/listAllOrderForRent.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				String url = "/front_end/order/listAllOrderForRent.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
 				
 			} catch (Exception e) {
 				System.out.println("例外");
