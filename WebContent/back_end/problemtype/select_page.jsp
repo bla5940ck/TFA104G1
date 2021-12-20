@@ -43,7 +43,11 @@ aside.aside {
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: 	#F0F0F0; 
+	background-image:url("<%=request.getContextPath()%>/includeFolder/img/OIP8.jpg");
+	background-repeat:no-repeat;
+	background-size: cover;
+	opacity:1;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -125,13 +129,15 @@ background-color:#FFF0AC;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
 		<ul>
-			<li><a href='listAllProblemType.jsp'>所有問題類型</a></li>
+			<button><a href='listAllProblemType.jsp'>所有問題類型</a></button>
 		</ul>
+		<br>
 		<ul>
-			<li><a href='addProblemType.jsp'>新增問題類型</a></li>
-		</ul>		
+			<button><a href='addProblemType.jsp'>新增問題類型</a></button>
+		</ul>
+		<br>		
 		<ul>
-			<li><a href="/TFA104G1/back_end/memberservice/listAllProblemMsg.jsp">投訴問題處理</a></li>
+			<button><a href="/TFA104G1/back_end/memberservice/listAllProblemMsg.jsp">投訴問題處理</a></button>
 		</ul>
 			
 	</main>
