@@ -6,8 +6,11 @@
 <meta charset="UTF-8">
 <title>出租登入</title>
 </head>
-<body>
+<body bgcolor='white'>
+<div class="modal-content">                      
+        <div class="modal-body">
 <div class="aa-myaccount-login">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                   <h4>出租會員Login</h4>
                   <form METHOD="post" action="<%=request.getContextPath()%>/member/LoginServlet"" class="aa-login-form">
                     <label for="">帳號 : <span>*</span></label>
@@ -20,5 +23,7 @@
                     <p class="aa-lost-password"><a href="#">忘記密碼？</a></p>
                   </form>
                 </div>
+                 </div>                        
+      </div>
 </body>
 </html>

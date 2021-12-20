@@ -3,19 +3,31 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
-
+<%@ page import="com.order.model.*"%>
+<%@page import="java.sql.Timestamp"%>
 <%
-    MemberService memSvc = new MemberService();
-    List<MemberVO> list = memSvc.getAll();
-    pageContext.setAttribute("list",list);
+
+DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
+List<DefAddressVO> daVO = dadao.getAll();
+List<Integer> list1 = new ArrayList<>();
+OrderMasterService ordserMasterSvc = new OrderMasterService();
+OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+List<OrderMasterVO> list = ordserMasterSvc.getAll();
+
+for (int i : list1) {
+	System.out.println(i);
+}
+pageContext.setAttribute("list", list);
+
 %>
 
-<!--  <!DOCTYPE html> -->
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>後台會員資料 - listAllMember.jsp</title>
-
+<title>Account.JSP</title>
+</head>
 <style>
 body {
 	margin: 0;
@@ -114,20 +126,17 @@ main.main {
   }
 
 </style>
-
-</head>
-<body bgcolor='white'>
-<%@ include file="/includeFolder/managerHeader.file"%>
-<div class="main_content">
-<%@ include file="/includeFolder/managerAside.file"%>
-<main class="main" >
-<table id="table-1">
+<body>
+	<%@ include file="/includeFolder/managerHeader.file"%>
+	<div class="main_content">
+	<%@ include file="/includeFolder/managerAside.file"%>
+	<main class="main">
+	<table id="table-1">
 	<tr><td>
-		 <h3>所有會員資料- listAllMember.jsp</h3>
+		 <h3>待轉帳資料- AccountListDetile.jsp</h3>
 		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/index.jpg" width="100" height="32" border="0"></a></h4>
 	</td></tr>
 </table>
-
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -138,66 +147,72 @@ main.main {
 	</ul>
 </c:if>
 
-  <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
-        <b>輸入會員編號 :</b>
-        <input type="text" name="memberId">
-        <input type="hidden" name="action" value="getOneMemberMemberId">
-        <input type="submit" value="送出">
- 	</FORM>
-   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
-        <b>輸入會員登入帳號 :</b>
-        <input type="text" name="loginId">
-        <input type="hidden" name="action" value="getOneMemberLoginId">
-        <input type="submit" value="送出">
-    </FORM>
-    
-  </li>
+
+	<div>
+				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<b>選擇訂單編號:</b> 
+					<select size="1" name="ordID">
+						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
+							<c:if test="${OrderMasterVO.leaseID == id}">
+								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
+							</c:if>
+						</c:forEach>
+					</select> 
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="submit" value="送出">
+				</FORM>
+
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<b>輸入訂單編號 (如1):</b> 
+					<input type="text" name="ordID"> 
+					<input type="hidden" name="action" value="getOne_For_Display"> 
+					<input type="submit" value="送出">
+				</FORM>
+			</div>
 
 <table>
 	<tr>
+		<!--  <th>選擇</th>-->
 		<th>會員編號</th>
-		<th>會員姓名</th>
-		<th>電子信箱</th>
-		<th>註冊日期</th>
-		<th>會員帳號</th>
-		<th>手機號碼</th>
-		<th>會員狀態</th>
-		<th>修改</th>
-		<th>停權</th>
+		<th>訂單編號</th>
+		<th>訂單日期</th>
+		<th>訂單金額</th>
+		<th>訂單運費</th>
+		<th>訂單應收金額</th>
+		
+		
+
 	</tr>
 	<%@ include file="page1.file" %> 
-	  <c:forEach var="memberVO"  items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
+	  <c:forEach var="omVO"  items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 		<tr>
-			<td>${memberVO.memberId}</td>
-			<td>${memberVO.name}</td>
-			<td>${memberVO.email}</td>
-			<!-- <td>${memberVO.creatDate}</td>-->
-			<td><fmt:formatDate value="${memberVO.creatDate}" pattern="yyyy-MM-dd "/></td>
-			<td>${memberVO.loginId}</td>
-			<td>${memberVO.phoneNum}</td> 
-			<!--<td>${memberVO.status}</td>-->
-		    <td>${(memberVO.status==1)?'使用中':'未啟用/停用'}</td>
+			<!--<td><input type="checkbox" value="修改"></td>  -->
+			<td>${omVO.rentID}</td>
+			<td>${omVO.ordID}</td>
+			<td><fmt:formatDate value="${omVO.ordDate}"
+										pattern="yyyy-MM-dd" /></td>
+		
 			
-			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
-			     <input type="hidden" name="memberId"  value="${memberVO.memberId}">
-			     <input type="hidden" name="action"	value="updateMember"></FORM>
-			</td>
+			<td>${omVO.ordPrice}</td>
+			<td>${omVO.shipFee}</td> 
+			<!--<td>${memberVO.status}</td>-->
+		    <td>double(${omVO.ordPrice})-double(${omVO.shipFee})</td>
+			
+<%--
 			<td>
 			     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="停權" >
 			     <input type="hidden" name="memberId"  value="${memberVO.memberId}">
 			      <input type="hidden" name="action"  value="9"></FORM>
 			</td>
-		
+		 --%>
 		</tr>
 </c:forEach> 
 </table>
 <%@ include file="page2.file" %>
-	</main>
-	</div>
 
+			</main>
+	</div>	
 </body>
 </html>
