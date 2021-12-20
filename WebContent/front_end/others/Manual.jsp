@@ -39,11 +39,11 @@
 		<br>
 		
 		<br>
-		承租流程
+		<h2>承租流程</h2>
 		<img alt="承租流程" src="img/rent.jpg">
 		<br>
 		<br>
-		承租流程
+		<h2>承租流程</h2>
 		<img alt="出租流程" src="img/lease.jpg">
 		<br>
 	<br>
