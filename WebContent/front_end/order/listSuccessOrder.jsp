@@ -72,7 +72,7 @@ aside.aside {
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
-	width: calc(100% - 150px - 10px);
+	width: calc(100% - 200px);
 	height: 620px;
 	display: inline-block;
 	vertical-align: top;
@@ -95,12 +95,6 @@ table, th, td {
 th, td {
 	padding: 5px;
 	text-align: left;
-}
-div.getTotal {
-	/* 	border: 1px solid black; */
-	text-align: right;
-	font-size: 20px;
-	padding: 0 80px 0 0;
 }
 </style>
 </head>
