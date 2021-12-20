@@ -10,7 +10,7 @@ import java.util.List;
 
 import util.Util;
 
-public class ProdCategoryDAO implements ProdCategoryDAOImpl{
+public class ProdCategoryDAO implements ProdCategory_Interface{
 		
 		static {
 			try {
@@ -26,7 +26,7 @@ public class ProdCategoryDAO implements ProdCategoryDAOImpl{
 		PreparedStatement pstmt = null;
 		ResultSet rs  = null;
 		ProdCategoryVO prodCategory = null;
-		String sql = "select * from product_category where category_id = ?";
+		String sql = "SELECT * FROM PRODUCT_CATEGORY WHERE CATEGORY_ID = ?";
 		try {
 			
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
@@ -77,7 +77,7 @@ public class ProdCategoryDAO implements ProdCategoryDAOImpl{
 		PreparedStatement pstmt = null;
 		ResultSet rs  = null;
 		ProdCategoryVO prodCategory = null;
-		String sql = "select * from product_category";
+		String sql = "SELECT * FROM PRODUCT_CATEGORY";
 		List<ProdCategoryVO> list = new ArrayList<ProdCategoryVO>();
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);

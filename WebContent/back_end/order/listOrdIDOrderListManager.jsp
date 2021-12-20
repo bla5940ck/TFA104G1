@@ -23,44 +23,47 @@
 <meta charset="UTF-8">
 <title>訂單狀態查詢</title>
 <style>
- body { 
- 	margin: 0; 
- 	padding: 10px; 
- } 
+ body {
+	margin: 0;
+	padding: 10px;
+}
 
 img {
 	max-width: 100%;
 }
 
-button{
-	font-size:13px;
+button {
+	font-size: 13px;
 	outline-width: 100%;
-	background-color:white;
+	background-color: white;
 }
 
- div.main_content { 
- 	width: 100%; 
- 	margin: 0 auto; 
- 	font-size: 0; 
- } 
+div.main_content {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 0;
+}
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;
-	height:620px;
+	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
-	text-align:center;
+	text-align: center;
+	background-color:#F5D998;;
+	height:720px;
 }
+
+
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
-	height:620px;
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -69,7 +72,7 @@ main.main {
 }
 
 table {
-	width: 100%;
+	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -82,6 +85,57 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+table#table-1 {
+	background-color: #CCCCFF;
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: red;
+	display: inline;
+}
+
+table {
+	width: 100%;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	height: 100px padding: 5px;
+	text-align: center;
+}
+
+.pic {
+	object-fit: contain;
+	width: 95px;
+	height: 80px;
+}
+
+.signOut{
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
 </style>
 </head>
 
@@ -89,7 +143,7 @@ th, td {
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main">
+		<main class="main" >
 			
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -136,16 +190,21 @@ th, td {
 						</td>
 						
 						<td>
-								
-								<input type="hidden" id="ordID" name="ordID" value="${olVO.ordID}">
-								<input type="hidden" id="listID" name="listID" value="${olVO.listID}">
-								<input type="hidden" id="proID" name="prodID" value="${olVO.prodID}">
-								<input type="hidden" name="action" value="updateList"> 
+							
+					<select size="1" name="ordStatus" class="ordStatus">
+						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option>
+						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option>
+						<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option>
+						<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option>
+					</select>
+							<input type="hidden" class="ordID" name="ordID" value="${olVO.ordID}">
+							<input type="hidden" class="listID" name="listID" value="${olVO.listID}">
+							<input type="hidden" class="prodID" name="prodID" value="${olVO.prodID}">
+							<input type="hidden" name="action" value="updateList"> 
 						</td>
 					<tr>
 				</c:forEach>
 				</table>
-<!-- 				<input type="submit" value="更新"> -->
 				<button type="button" id="btn">更新</button>
 			</FORM>
 			<%@ include file="page2.file"%>
@@ -170,7 +229,7 @@ ordStatus.change(function(){
 	}else if($(this).val() == 9){
 		$(this).closest('tr').find('td.status').eq(0).text("已取消");
 	}
-	var ordID = $("#ordID").val();
+	var ordID = $(".ordID").val();
 	var listID = $(this).closest('tr').find('input').eq(1).val();
 	
 // 	console.log(ordID);
@@ -199,8 +258,8 @@ ordStatus.change(function(){
 			type:"POST",
 			data:{
 				listMap: mapString,
-				ordID: $("#ordID").val(),
-				prodID: $("#prodID").val(),
+				ordID: $(".ordID").val(),
+				prodID: $(".prodID").val(),
 				action: "updateList",
 			},
 			dataType: 'json',
