@@ -65,11 +65,6 @@ div.overlay > article{
 
 
 
-	<%
-// 		session.setAttribute("id", 1);
-// 		String memberID = (String)session.getAttribute("id");
-	%>
-
 
 
 	<%@ include file="/includeFolder/header.file"%>
