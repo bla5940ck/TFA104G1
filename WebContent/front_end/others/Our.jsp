@@ -41,6 +41,9 @@
 		廖勁驊　<br>王勝平　<br>江宇晟　<br>林家祥　<br>孫浣茗　<br>林昊葳
 		<br>
 	<br>
+	<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
+								<br>
+	<br>
 								</div>
 <!-- 						</div> -->
 						</div>

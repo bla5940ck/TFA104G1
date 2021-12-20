@@ -308,7 +308,7 @@ public class PromolistServlet extends HttpServlet {
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 //				req.setAttribute("promolistVO", promolistVO); // 資料庫update成功後,正確的的promoVO物件,存入req
 				req.setAttribute("promoID", promo_id);
-				String url = "/back_end/promo_list/";
+				String url = "/back_end/promo_list/promolistAll.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // promolistAll.jsp修改成功後,轉交listOne_promo.jsp
 				successView.forward(req, res);
 
