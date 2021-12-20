@@ -1,59 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page import="java.util.*"%>
-<%@ page import="com.promo_list.model.*"%>
+<%@ page import="com.postboard.model.*"%>
+<%@ page import="java.sql.*"%>
+<%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
 
+<!DOCTYPE html>
 <html>
 <head>
-<title>折價券領取頁面</title>
+<meta charset="UTF-8">
+</head>
+
 <style>
-body {
-	margin: 0;
-	padding: 10px;
-}
-
-img {
-	max-width: 100%;
-}
-
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
-
-/*-------------------aside區域------------------- */
-/* aside.aside { */
-/* 	width: 200px; */
-/* 	height:620px; */
-/* 	display: inline-block; */
-/* 	vertical-align: top; */
-/* 	font-size: 1rem; */
-/* 	margin-right: 10px; */
-/* 	border: 1px solid #999; */
-/* 	text-align:center; */
-/* } */
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: 100%;
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
 table {
 	width: 100%;
 	margin-top: 5px;
@@ -68,13 +26,33 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+	input.memberId {
+  			background-color: lightgray;
+	}
+	
 </style>
-</head>
+
+
 <body>
+		<%@ include file="/includeFolder/header.file"%>
+<!-- 錯誤表列 -->
+
+
+<!-- / catg header banner section -->
+
+<!-- Cart view section -->
+	<section id="aa-myaccount">
+		<div class="container">
+			<div class="row" id="row1">
+				<div class="col-md-12" id="col-md-12">
+<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
+						<div class="row" id="row2">
+							<!--<div class="col-md-6" id="col-md-6"> -->
+								<div class="aa-myaccount-login" id="aa-myaccount-login">
 	<%
 		session.setAttribute("id", 1);
-	%>
-		<%@ include file="/includeFolder/header.file"%>
+	%>	
 	<!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<!-- 		<aside class="aside"> -->
@@ -170,13 +148,14 @@ th, td {
 
 
 		</main>
-	</div>
+				</div>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- 		</div> -->
+	</section>
 	<%@ include file="/includeFolder/footer2.file"%>
-	<!-- 	<footer class="footer"> footer區域 </footer> -->
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
-	
-</script>
 </html>
