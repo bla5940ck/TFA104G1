@@ -17,7 +17,7 @@
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="header2.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
@@ -42,10 +42,10 @@
                 <!-- Blog details -->
                 <div class="aa-blog-content aa-blog-details">
                   <article class="aa-blog-content-single">                        
-                    <h2><a href="#" >${pb.postTitle}</a></h2>
+                    <h2><a href="#" >${pb.postTitle}</a></h2><!--徵求標題-->
                      <div class="aa-article-bottom">
                       <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div><!--會員ID -->
-                      <div class="aa-post-date">${pb.postTime}</div><!--徵求標題 -->
+                      <div class="aa-post-date">${pb.postTime}</div><!--發文時間 -->
                      </div>
                      
                     <figure class="aa-blog-img"><!--內文照片 -->
@@ -109,6 +109,7 @@
                             <div class="media-body">
                              <h4 class="author-name">${pb.memberId}</h4><!--留言會員編號-->
                              <span class="comments-date"></span>
+                             <p style="font-size:8px;">${pb.postTime}</p>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
 
                             </div>
@@ -122,21 +123,21 @@
                     <div class="aa-blog-archive-pagination">
                       <nav>
                         <ul class="pagination">
-                          <li>
-                            <a href="#" aria-label="Previous">
-                              <span aria-hidden="true">«</span>
-                            </a>
-                          </li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li>
-                            <a href="#" aria-label="Next">
-                              <span aria-hidden="true">»</span>
-                            </a>
-                          </li>
+<!--                           <li> -->
+<!--                             <a href="#" aria-label="Previous"> -->
+<!--                               <span aria-hidden="true">«</span> -->
+<!--                             </a> -->
+<!--                           </li> -->
+<!--                           <li><a href="#">1</a></li> -->
+<!--                           <li><a href="#">2</a></li> -->
+<!--                           <li><a href="#">3</a></li> -->
+<!--                           <li><a href="#">4</a></li> -->
+<!--                           <li><a href="#">5</a></li> -->
+<!--                           <li> -->
+<!--                             <a href="#" aria-label="Next"> -->
+<!--                               <span aria-hidden="true">»</span> -->
+<!--                             </a> -->
+<!--                           </li> -->
                         </ul>
                       </nav>
                     </div>
@@ -222,33 +223,43 @@
                     <h3>最新文章</h3>
                     <div class="aa-recently-views">
                       <ul>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId}&action=writePic" alt="img"></a>
+	                 <c:forEach var="pbVO" items="${pb1.all}" begin="0" end="2" varStatus="status">
+                		<li>
+                          <a class="aa-cartbox-img" href="#">
+                          	<img src="<%=request.getContextPath() %>/PbPhotoShow?postId=${pbVO.postId}"  alt="img"></a>
                           <div class="aa-cartbox-info">
-                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId}">${pb.postTitle}</a></h4>
-                            <p>${pb.postTime}</p>
-                          </div>                    
+                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">${pbVO.postTitle}</a></h4>
+                            <p>${pbVO.postTime}</p>
+                          </div>                                    
                         </li>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId-1}&action=writePic" alt="img" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId-1}"></a></h4>
-                            <p>${pb.postTime}</p>
-                          </div>                    
-                        </li>
-                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="#">健身環大冒險</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
-                        </li>                                      
-                      </ul>
+                      </c:forEach>
+                       </div>
+                       </ul>
+                    </div>  
+                  
+                        
+<!--                         <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">動物森友會</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li> -->
+                        
+<!--                          <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">健身環大冒險</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li>                                       -->
+<!--                       </ul> -->
                     </div>                            
                   </div>
                 </aside>
               </div>
             </div>
+           
           </div>
         </div>
       </div>
@@ -261,7 +272,7 @@
 
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 
 
 </html>
