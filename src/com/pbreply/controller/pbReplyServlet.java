@@ -182,12 +182,11 @@ public class pbReplyServlet extends HttpServlet {
 
 				String replyCont = req.getParameter("replyCont");
 				
-				String ts = req.getParameter("replyTime");
-				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				Date date = sdf.parse(ts);// date 格式
-				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
-				java.sql.Timestamp replyTime = java.sql.Timestamp.valueOf(ts);
-				//System.out.println(ts);
+				Date date = new Date();
+				long time =date.getTime();
+				Timestamp replyTime = new Timestamp(time);
+				//DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				System.out.println(replyTime);
 
 				pbReplyVO pbrVO = new pbReplyVO();
 				pbrVO.setPostId(postId);

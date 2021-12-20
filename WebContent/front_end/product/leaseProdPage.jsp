@@ -9,6 +9,35 @@
 
 <!doctype html public "-//w3c//dtd html 4.01//en" "http://www.w3.org/tr/html4/strict.dtd">
 <html dir="ltr" lang="zh-Hant-TW">
+<style>
+div.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: hsla(0, 0%, 0%, .5);
+  
+  display: none;
+}
+
+/* 元素 article 置中及基本樣式 */
+div.overlay > article{
+  background-color: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ddd;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 200px;
+  overflow: scroll;
+}
+
+</style>
 <head>
 <title>出租者頁面</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -18,9 +47,9 @@
 <link rel="stylesheet" type="text/css"
 	href="https://s.yimg.com/qs/mall/yps/common/yps.20170504.2017-0504-153103.css" />
 
-<style>
-
-</style>
+<script src="http://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	var $li = $('.pure-menu-list subnav-list ul li').click(function() {
 		$li.removeClass('selected');
@@ -312,7 +341,7 @@
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'
@@ -320,7 +349,7 @@
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_canbrush.png'
 																			title='可刷卡' /><img alt='零利率'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_0rate.png'
-																			title='零利率' /></li>
+																			title='零利率' />
 
 																	</ul>
 																</td>
@@ -373,7 +402,7 @@
 																				type="hidden" class="prodStatus" name="prodStatus">
 																		</form></td>
 																</c:if>
-																<c:if test="${prodVO.prodStatus==2}">
+																<c:if test="${prodVO.prodStatus==9}">
 																	<td><label style="color: red; font-size: 20px;">停用中</label></td>
 																</c:if>
 
@@ -657,6 +686,27 @@
 		</main>
 	</div>
 
+
+
+<div class="overlay" style="border: 1px solid red;">
+  <article  style=" height:400px">
+    <h1>商品預約查看</h1>
+    <table class="bk_table">
+     <tr style="height:30px;background-color:#00E3E3">
+            <td>預約編號</td>
+            <td>預約起日</td>
+            <td>預約迄日</td>
+        </tr>
+    
+    
+    </table>
+	
+    <button type="button" class="btn_modal_close">關閉</button>
+  </article>
+</div>
+		
+		
+		
 	<script>
 		$("a.a-mod2").click(
 				function() {
@@ -700,8 +750,51 @@
 				$("span.subnav-item-count").text(<%=index1%>)
 				 
 			});
-		
-		
+
+			
+			
+			$(function(){
+				  
+				  
+				  $("a.score").on("click", function(){
+					  console.log($(this).closest('ul').find('a').eq(0).text());
+					  let prodID = $(this).closest('ul').find('a').eq(0).text();
+					  
+					  $.ajax({
+						 type:"post",
+						 dataType:"json",
+						 url:"/TFA104G1/bk/BkServlet",
+						 data:{
+							action:"searchBk",
+							prodID:prodID
+						 },
+						 success:function(data){
+							 let bkList = data.bkList;
+							 $('div.overlay h1').text("商品編號" +prodID +" 預約查看");
+							 for(var i=0;i<bkList.length;i++){
+								  $('table.bk_table').append("<tr class='add1' style='height:30px;background-color:#ADFEDC'><td>"+ bkList[i].bkID +"</td><td>"+ bkList[i].estStart +"</td><td>"+ bkList[i].estEnd +"</td></tr>");
+
+							 }
+							 
+						 },error:function(x){
+							 console.log("失敗");
+						 }
+					  });
+					  
+
+		  
+					// 開啟 Modal 彈跳視窗
+				    $("div.overlay").fadeIn();
+				    return false;
+				  });
+				  
+				  // 關閉 Modal
+				  $("button.btn_modal_close").on("click", function(){
+				    $("div.overlay").fadeOut();
+				    $('tr.add1').remove();
+				  });
+				  
+				});
 		
 	</script>
 

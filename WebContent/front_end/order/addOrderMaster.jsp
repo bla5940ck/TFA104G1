@@ -58,6 +58,7 @@ a.cart-img>img {
 										boolean flag = true;
 
 										List<CartVO> checkoutList = (List<CartVO>) request.getAttribute("checkoutList");
+											System.out.println(checkoutList.size());
 										// 				Set<CartVO> treeSet = new TreeSet();
 										List<OrderListVO> orderList = new ArrayList();
 										for (CartVO cartVO : checkoutList) {
@@ -71,8 +72,8 @@ a.cart-img>img {
 											// 					System.out.println("承租者編號 : " + memID);
 											//會員名稱
 											MemberService memSVC = new MemberService();
-											System.out.println("這裡");
-											System.out.println(cartVO.getLeaseID());
+// 											System.out.println("這裡");
+// 											System.out.println(cartVO.getLeaseID());
 											MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
 											// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
 											String leaseName = memVO.getName();
@@ -183,7 +184,7 @@ a.cart-img>img {
 																	<option value="0">請選擇折價券
 																		<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 																			<c:choose>
-																				<c:when test="${mcVO.member_id == id}">
+																				<c:when test="${mcVO.member_id == id && mcVO.status == 0}">
 																					<option data-id="${mcVO.coupon_id}"
 																						value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 																				</c:when>
@@ -216,8 +217,7 @@ a.cart-img>img {
 														</tr>
 														<tr>
 															<td>運費:</td>
-															<td><input type="hidden" id="shipFee" name="shipFee"
-																value="60">60 元</td>
+															<td><input type="hidden" id="shipFee" name="shipFee" value="60">60 元</td>
 														</tr>
 														<tr>
 															<td>訂單金額:</td>

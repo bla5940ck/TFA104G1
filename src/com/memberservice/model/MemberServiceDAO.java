@@ -19,13 +19,14 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 	private static final String INSERT_STMT = 
 			"INSERT INTO member_service (prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT msg_id,prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status FROM member_service order by msg_id";
+			"SELECT msg_id,prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status FROM member_service order by msg_id desc";
 	private static final String GET_ONE_STMT = 
 			"SELECT msg_id,prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status FROM member_service where msg_id = ?  ";
 	private static final String DELETE = 
 			"DELETE FROM member_service where msg_id =? ";
-	private static final String UPDATE = 
+	private static final String UPDATE = 			 
 			"UPDATE member_service set prod_id=?,member_id=?,manager_id=?,type_id=?,ord_id=?,msg_date=?,problem_msg=?,msg_res=?,pic_1=?,pic_2=?,pic_3=?,problem_status=? where msg_id=?";
+	
 
 	@Override
 	public void insert(MemberServiceVO manberServiceVO) {
@@ -111,11 +112,28 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, manberServiceVO.getProdID());
+			
+			if (manberServiceVO.getProdID() == null) {
+				pstmt.setObject(1, manberServiceVO.getProdID());
+			} else {
+				pstmt.setInt(1, manberServiceVO.getProdID());
+			}
 			pstmt.setInt(2, manberServiceVO.getMemberID());
-			pstmt.setInt(3, manberServiceVO.getManagerID());
+			
+			if (manberServiceVO.getManagerID() == null) {
+				pstmt.setObject(3, manberServiceVO.getManagerID());
+			} else {
+				pstmt.setInt(3, manberServiceVO.getManagerID());
+			}
 			pstmt.setInt(4, manberServiceVO.getTypeID());
-			pstmt.setInt(5, manberServiceVO.getOrdID());
+			
+			if (manberServiceVO.getOrdID() == null) {
+				pstmt.setObject(5, manberServiceVO.getOrdID());
+			} else {
+				pstmt.setInt(5, manberServiceVO.getOrdID());
+			}
+			
+			
 			pstmt.setTimestamp(6, manberServiceVO.getMsgDate());
 			pstmt.setString(7, manberServiceVO.getProblemMsg());
 			pstmt.setString(8, manberServiceVO.getMsgRes());

@@ -74,7 +74,7 @@ th, td {
 	<%
 		session.setAttribute("id", 1);
 	%>
-		<%@ include file="/includeFolder/header2.file"%>
+		<%@ include file="/includeFolder/header.file"%>
 	<!-- 	<header class="header"> header區域 </header> -->
 	<div class="main_content">
 		<!-- 		<aside class="aside"> -->
@@ -86,21 +86,21 @@ th, td {
 		<!-- 			</nav> -->
 		<!-- 		</aside> -->
 		<main class="main">
-	<c:if test="${b==true }">
-<%-- 	<c:if test="${ok=='ok'}"> --%>
+		
+		
+<c:if test="${b==true }">
+
 		<script>
  			alert("領取成功");
 		</script>
 	</c:if>
-<%-- 	</c:if> --%>
+
 	<c:if test="${b==false}">
 			<script>
 			alert("已領取過");
 		</script>
 	</c:if>
 	
-
-
 			<table id="table-1">
 				<tr>
 					<td>

@@ -19,7 +19,13 @@ import java.util.stream.Collectors;
 import util.Util;
 
 public class BookingDAO implements BookingDAO_interface {
-
+	private static final String INSERT = "INSERT INTO BOOKING(`PROD_ID`, `STATUS`, `EST_START`, `EST_END` ,`ORD_ID`) VALUES (?, ?, ?, ?,?);";
+	private static final String UPDATE = "UPDATE BOOKING SET `STATUS`= ? WHERE BK_ID =?;";
+	private static final String FINDDATEBYPRODID = "SELECT * FROM BOOKING WHERE PROD_ID = ? &&( STATUS =1 ||STATUS =0)" ;
+	private static final String FINDBOOKINGBYPK = "SELECT * FROM BOOKING WHERE BK_ID = ?" ;
+	private static final String DELETE = "DELETE FROM BOOKING WHERE `BK_ID` = ?;";
+	private static final String ALL = "SELECT * FROM BOOKING";
+	
 	static {
 		try {
 			Class.forName(Util.DRIVER);
@@ -29,17 +35,17 @@ public class BookingDAO implements BookingDAO_interface {
 		}
 	}
 	public void add(BookingVO bk) {
-		String sql = "INSERT INTO booking(`prod_id`, `status`, `est_start`, `est_end`) VALUES (?, ?, ?, ?);";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(INSERT);
 			pstmt.setInt(1,bk.getProdID());
 			pstmt.setInt(2,bk.getStatus());
 			pstmt.setDate(3, bk.getEstStart());
 			pstmt.setDate(4, bk.getEstEnd());
+			pstmt.setInt(5, bk.getOrdID());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -57,12 +63,11 @@ public class BookingDAO implements BookingDAO_interface {
 
 	@Override
 	public void update(BookingVO bk) {
-		String sql = "update booking set `status`= ? where bk_id =?;";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, bk.getStatus());
 			pstmt.setInt(2, bk.getBkID());
 			pstmt.executeUpdate();
@@ -82,14 +87,13 @@ public class BookingDAO implements BookingDAO_interface {
 
 	@Override
 	public void delete(Integer bkID) {
-
-	String sql = "DELETE FROM booking WHERE `bk_id` = ?;";
+	
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	
 	try {
 		con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-		pstmt = con.prepareStatement(sql);
+		pstmt = con.prepareStatement(DELETE);
 		pstmt.setInt(1, bkID);
 		pstmt.executeUpdate();
 	} catch (SQLException e) {
@@ -110,12 +114,11 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from booking where prod_id = ? &&( status =1 ||status =0)" ;
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(FINDDATEBYPRODID);
 			pstmt.setInt(1, prodID);
 			
 			rs=pstmt.executeQuery();
@@ -124,7 +127,7 @@ public class BookingDAO implements BookingDAO_interface {
 				
 				bk.setEstStart(rs.getDate("est_start"));
 				bk.setEstEnd(rs.getDate("est_end"));
-				
+				bk.setBkID(rs.getInt("bk_id"));
 				list.add(bk);
 				
 			}
@@ -148,12 +151,11 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from booking where bk_id = ?" ;
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(FINDBOOKINGBYPK);
 			pstmt.setInt(1, bkID);
 			
 			rs=pstmt.executeQuery();
@@ -164,6 +166,7 @@ public class BookingDAO implements BookingDAO_interface {
 				bk.setStatus(rs.getInt("status"));
 				bk.setEstStart(rs.getDate("est_start"));
 				bk.setEstEnd(rs.getDate("est_end"));
+				bk.setOrdID(rs.getInt("ord_id"));
 				
 				
 				
@@ -190,13 +193,12 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
-		String sql = "select * from booking";
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		
 		try {
 			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(ALL);
 			rs = pstmt.executeQuery();
 		
 			while(rs.next()) {
@@ -206,6 +208,7 @@ public class BookingDAO implements BookingDAO_interface {
 				bk.setStatus(rs.getInt("status"));
 				bk.setEstStart(rs.getDate("est_start"));
 				bk.setEstEnd(rs.getDate("est_end"));
+				bk.setOrdID(rs.getInt("ord_id"));
 				list.add(bk);
 				
 			}
@@ -228,7 +231,7 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
-		String sql ="SELECT prod_id,count(bk_id) as countBk FROM booking group by prod_id order by count(bk_id) desc";
+		String sql ="SELECT B.PROD_ID ,COUNT(B.PROD_ID) AS COUNT FROM BOOKING B JOIN PRODUCT P  ON B.PROD_ID= P.PROD_ID WHERE P.PROD_STATUS=1 GROUP BY B.PROD_ID ORDER BY COUNT(B.PROD_ID) DESC;";
 		BookingVO bk = null;
 		List<Integer> list = new ArrayList<>();
 		List<Integer> listCount = new ArrayList();
@@ -240,7 +243,7 @@ public class BookingDAO implements BookingDAO_interface {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				list.add(rs.getInt("prod_id"));
+				list.add(rs.getInt(1));
 				listCount.add(rs.getInt(2));
 				
 				map.put(rs.getInt(1), rs.getInt(2));
@@ -304,5 +307,50 @@ public class BookingDAO implements BookingDAO_interface {
 //		}
 		
 	}
+
+	@Override
+	public void add2(BookingVO bk, Connection con) {
+		String sql = "INSERT INTO booking(`prod_id`, `status`, `est_start`, `est_end` ,`ord_id`) VALUES (?, ?, ?, ?,?);";
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1,bk.getProdID());
+			System.out.println("進到bookingDAO");
+			System.out.println(bk.getProdID());
+			pstmt.setInt(2,bk.getStatus());
+			System.out.println(bk.getStatus());
+			pstmt.setDate(3, bk.getEstStart());
+			System.out.println(bk.getEstStart());
+			pstmt.setDate(4, bk.getEstEnd());
+			System.out.println(bk.getEstEnd());
+			pstmt.setInt(5, bk.getOrdID());
+			System.out.println(bk.getOrdID());
+			
+			pstmt.executeUpdate();
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					se.printStackTrace();
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-bookingDAO");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. " + excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+		
+	
 
 }

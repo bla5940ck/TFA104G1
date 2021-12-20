@@ -3,8 +3,11 @@ package com.order.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +16,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.order.model.OrderListDAOImpl;
 import com.order.model.OrderListService;
 import com.order.model.OrderListVO;
+import com.order.model.OrderMasterDAOImpl;
 import com.order.model.OrderMasterVO;
 
 @WebServlet("/OrderListServlet")
@@ -95,7 +101,7 @@ public class OrderListServlet extends HttpServlet {
 		if ("get_Status_Display".equals(action)) { // 來自listStatusOrderList.jsp
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("進來了");
+//			System.out.println("進來了");
 
 			try {
 
@@ -222,6 +228,74 @@ public class OrderListServlet extends HttpServlet {
 				return;
 			}
 		}
+		
+		if ("getlist_For_Rent".equals(action)) { // 來自listStatusOrderList.jsp
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println("進來了");
+			
+			try {
+				
+				String str = req.getParameter("ordID");
+				System.out.println(str);
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入訂單編號");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				Integer ordID = null;
+				try {
+					ordID = new Integer(str);
+				} catch (Exception e) {
+					errorMsgs.add("編號格式不正確");
+				}
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				/**************** 2.開始查詢資料 ****************/
+				
+				OrderListDAOImpl oldao = new OrderListDAOImpl();
+				List<OrderListVO> olVO = oldao.findOrderListByOrdID(ordID);
+				
+				if (olVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				for (OrderListVO ols : olVO) {
+					
+					/************** 3.查詢完成,準備轉交 *************/
+					req.setAttribute("OrderListVO", ols);
+					String url = "/front_end/order/listOrdIDForRent.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher(req.getContextPath() + "/front_end/order/listAllOrderList.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+		}
+		
+		
 
 		if ("getOne_For_Update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
@@ -302,6 +376,73 @@ public class OrderListServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("updateList".equals(action)) {
+			
+			String map = req.getParameter("listMap");
+			JSONObject jsonObject = new JSONObject(map);
+			System.out.println(jsonObject);
+			System.out.println(jsonObject.keySet());
+			
+			String sordID = req.getParameter("ordID");
+			Integer ordID = new Integer(sordID);
+			System.out.println(ordID);
+			
+			Integer prodID = new Integer(req.getParameter("prodID"));
+			System.out.println(prodID);
+			
+			Set<String> set = jsonObject.keySet();
+			Iterator it = set.iterator();
+			
+			List<OrderListVO> list = new ArrayList();
+			OrderListDAOImpl oldao = new OrderListDAOImpl();
+			OrderListVO olVO = new OrderListVO();
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
+						
+			while(it.hasNext()){
+				String key = (String)it.next(); //明細編號
+				String val = (String)jsonObject.get(key); //狀態碼
+				System.out.println(key);
+				
+				if(val.equals("9")) { //訂單取消
+					
+					olVO.setListID(Integer.valueOf(key));
+					olVO.setOrdStatus(Integer.valueOf(val));
+					omVO.setOrdStatus(Integer.valueOf(val));
+					oldao.update2(olVO, omVO);
+				}
+			}
+			
+			
+//			Integer listID = new Integer(req.getParameter("listID"));
+//			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
+//			Integer ordID = new Integer(req.getParameter("ordID"));
+			
+//			List<OrderListVO> olVO = new ArrayList<OrderListVO>();
+//			OrderListDAOImpl oldao = new OrderListDAOImpl();
+//			olVO = oldao.findOrderListByOrdID(ordID);
+//				for(OrderListVO uol : olVO) {
+//					if(ordStatus == 2) {
+//					uol.setOrdStatus(ordStatus);
+//					olVO.add(uol);
+//					
+//					OrderMasterVO omVO = new OrderMasterVO();
+//					omVO.setOrdID(ordID);
+//					omVO.setOrdStatus(ordStatus);
+//					oldao.update2(uol, omVO);
+//				}
+//			}
+//			req.setAttribute("OrderListVO", olVO);
+			
+//			String url = "/front_end/order/listOrdIDOrderList.jsp";
+//			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneOrderMaster.jsp
+//			successView.forward(req, res);
+//			System.out.println("完成");
+//			return;
+		}
+		
+		
 //		if ("getComment_For_Display".equals(action)) { // 來自listStatusOrderList.jsp
 //			List<String> errorMsgs = new LinkedList<String>();
 //			req.setAttribute("errorMsgs", errorMsgs);

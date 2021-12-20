@@ -1,3 +1,5 @@
+<%@page import="com.member_coupon.model.MemcouponVO"%>
+<%@page import="com.member_coupon.model.MemcouponDAO"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="com.member.model.DefAddressJDBCDAO"%>
 <%@page import="com.member.model.DefAddressVO"%>
@@ -10,28 +12,33 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 <%@page import="com.product.model.*"%>
+<%@page import="java.util.stream.Collectors"%>
 
 
 <%
+	MemcouponDAO memDAO = new MemcouponDAO();
+	List <MemcouponVO> memVO = memDAO.getAll();
+	for(MemcouponVO name : memVO){
+// 		System.out.println(name.getCoupon_name());
+	}
+
 	Integer memID = (Integer) session.getAttribute("id");
-	System.out.println("會員編號 : " + memID);
+// 	System.out.println("會員編號 : " + memID);
 	DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 	List<DefAddressVO> daVO = dadao.getAll();
-	List<Integer> list1 = new ArrayList<>();
-	OrderMasterService ordserMasterSvc = new OrderMasterService();
-	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-	List<OrderMasterVO> list = ordserMasterSvc.getAll();
-	for (OrderMasterVO omVO : list) {
-		if (omVO.getLeaseID() == memID) {
 
-			System.out.println(memID + "的訂單為" + omVO.getOrdID());
-		}
-	}
-	for (int i : list1) {
-		System.out.println(i);
-	}
-	pageContext.setAttribute("list", list);
-	// 	pageContext.setAttribute("list1", list1);
+	OrderMasterService omSVC = new OrderMasterService();
+	
+	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+	List<OrderMasterVO> list = omSVC.getAll();
+	List<OrderMasterVO> list1 = omSVC.getAll();
+	
+	List<OrderMasterVO> list2 =list.
+								stream()
+									.filter(o->o.getLeaseID()==memID)
+										.collect(Collectors.toList());
+
+	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="memSVC" scope="page"
 	class="com.member.model.MemberService" />
@@ -111,19 +118,6 @@ th, td {
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
 	<%@ include file="/includeFolder/leaseMemberAside.file"%>
-	
-<!-- 		<aside class="aside"> -->
-<!-- 			<nav class="nav"> -->
-<!-- 				<h3>出租者專區</h3> -->
-<!-- 				<h5> -->
-<!-- 					會員編號 : -->
-<%-- 					<%=memID%></h5> --%>
-<!-- 				<ul class="nav_list"> -->
-<!-- 					<h4><a href="listAllOrderMaster.jsp">全部訂單</a></h4> -->
-<!-- 					<h4><a href="listSuccessOrder.jsp">訂單評價</a></h4> -->
-<!-- 				</ul> -->
-<!-- 			</nav> -->
-<!-- 		</aside> -->
 		<main class="main">
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
@@ -174,7 +168,7 @@ th, td {
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
-					<!-- 					<th>承租者編號</th> -->
+
 					<th>承租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
@@ -185,23 +179,15 @@ th, td {
 					<th>出貨碼</th>
 					<th>歸還碼</th>
 					<th>超商碼</th>
-					<!-- 					<th>預計租借起日</th> -->
-					<!-- 					<th>預計租借訖日</th> -->
+	
 					<th>出貨日期</th>
 					<th>到貨日期</th>
 					<th>歸還日期</th>
 					<th>承租天數</th>
-					<!-- 					<th>承租者評分</th> -->
-					<!-- 					<th>出租者評分</th> -->
-					<!-- 					<th>承租者評論</th> -->
-					<!-- 					<th>出租者評論</th> -->
-					<!-- 					<th>承租者評論日期</th> -->
-					<!-- 					<th>出租者評論日期</th> -->
-					<!-- 					<th>商品小計</th> -->
-					<!-- 					<th>運費</th> -->
+
 					<th>訂單金額</th>
 				</tr>
-				<%@ include file="page1.file"%>
+				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 				<c:choose>
 						<c:when test="${omVO.leaseID == id}">
@@ -223,15 +209,22 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 
-								<c:choose>
-									<c:when test="${omVO.couponID == ''}">
-										<td>無</td>
-									</c:when>
-									<c:otherwise>
-										<td>${mcoSVC.findByPrimaryKey(omVO.couponID).coupon_name}</td>
-									</c:otherwise>
-								</c:choose>
-
+							<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+							<c:set var="count" value="0"/>
+								<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+									<c:if test="${count==0}">
+										<c:choose>
+											<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+												<td>無</td>
+											</c:when>
+											<c:when test="${true}">
+												<td>${mcVO.coupon_name}</td>
+											</c:when>
+										</c:choose>
+										<c:set var="count" value="1"/>
+									</c:if>
+								</c:forEach>
+								
 								<c:choose>
 									<c:when test="${omVO.shipStatus == '0'}">
 										<td>待出貨</td>
