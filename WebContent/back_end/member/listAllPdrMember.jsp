@@ -105,7 +105,7 @@ main.main {
 <%@ include file="/includeFolder/managerHeader.file"%>
 <div class="main_content">
 <%@ include file="/includeFolder/managerAside.file"%>
-<main class="main" style="background-color:#C0C0C0;">
+<main class="main" >
 <table id="table-1">
 	<tr><td>
 		 <h3>待審核會員資料 listAllPdrMember.jsp</h3>
