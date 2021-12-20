@@ -32,6 +32,7 @@ aside.aside {
 	border: 3px solid #999;
 	text-align: center;
 	
+	
 }
 
 </style>
