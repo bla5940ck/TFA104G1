@@ -140,7 +140,7 @@ main.main {
 	</tr>
 	<%@ include file="page1_1.file" %> 
 		  <c:forEach var="memberVO"  items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >    
-
+	
 		<tr>
 			<td>${memberVO.memberId}</td>
 			<td>${memberVO.name}</td>
