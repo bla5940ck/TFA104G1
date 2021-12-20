@@ -174,6 +174,7 @@ background-color:#FFF0AC;
 					<th>圖片二</th>
 					<th>圖片三</th>
 					<th>問題狀態</th>
+					<th>回覆</th>
 
 				</tr>
 				<jsp:useBean id="ptSVC" scope="page"
@@ -223,12 +224,14 @@ background-color:#FFF0AC;
 								
 								<select name="problemStatus" size="1" id="s">
 									<option value="0" ${msVO.problemStatus == 0 ? "selected" : "" }>未處理</option>
-									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>
-									
-								</select> 
+									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>									
+								</select><br> 
 									<input type="hidden" name="action" value="update"> 
 									<input type="submit" value="送出">
 							</FORM>
+						</td>
+						<td>
+						<button class="class1">mail</button>
 						</td>
 
 					</tr>

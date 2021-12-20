@@ -43,7 +43,11 @@ aside.aside {
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: 	#F0F0F0; 
+	background-image:url("<%=request.getContextPath()%>/includeFolder/img/OIP8.jpg");
+	background-repeat:no-repeat;
+	background-size: cover;
+	opacity:1;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
