@@ -69,6 +69,7 @@ aside.aside {
 	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
+	background-color:#F5D998;
 	text-align: center;
 }
 
@@ -86,7 +87,7 @@ main.main {
 
   table {
 	width: calc(100% - 200px - 10px);
-	background-color: white;
+	
 	margin-top: 5px;
 	margin-bottom: 5px;
   }

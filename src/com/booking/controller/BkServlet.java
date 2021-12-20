@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.booking.model.BookingService;
@@ -24,7 +25,12 @@ public class BkServlet extends HttpServlet {
 			BookingService bkSvc = new BookingService();
 			List<BookingVO> bkList = bkSvc.findDateByProdID(prodID);
 			JSONObject obj = new JSONObject();
-			obj.put("bkList", bkList);
+			try {
+				obj.put("bkList", bkList);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			res.getWriter().print(obj);
 
 		}
