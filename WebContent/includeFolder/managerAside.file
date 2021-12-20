@@ -7,9 +7,9 @@
 						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'>問題處理</a> <br> 
 						<a href='<%=request.getContextPath()%>/back_end/product/productManager.jsp'>商品管理</a> <br>
 						<a href='<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp'>訂單管理</a> <br> 
-						<a>會員管理</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/member/listAllMember.jsp'>會員管理</a> <br> 
 						<a>帳務管理</a> <br>
-						<a>會員審核</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/member/listAllPdrMember.jsp'>會員審核</a> <br> 
 						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'>專案專區</a>
 					</h2>
 					<form action="/TFA104G1/ManagerServlet" method="post" >

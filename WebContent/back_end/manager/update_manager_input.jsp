@@ -136,11 +136,10 @@ background-color:#FFF0AC;
 			<table id="table-1">
 				<tr>
 					<td>
-						<h3>員工資料修改 - update_manager_input.jsp</h3>
+<!-- 						<h3>員工資料修改 - update_manager_input.jsp</h3> -->
 						<h4>
 							<a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">
-							<img src="<%=request.getContextPath()%>/back_end/manager/images/back1.gif"
-								width="100" height="32" border="0">回首頁
+							回首頁
 							</a>
 						</h4>
 					</td>

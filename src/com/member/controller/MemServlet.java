@@ -42,8 +42,8 @@ public class MemServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		String actionOne = req.getParameter("actionOne");
 		
-//單筆查詢
-		if ("getOneMember".equals(action)) { // 來自listAllMember.jsp的請求
+//單筆會員ID查詢
+		if ("getOneMemberMemberId".equals(action)) { // 來自listAllMember.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -107,6 +107,69 @@ public class MemServlet extends HttpServlet {
 			}
 		}
 		
+		
+		
+//單筆會員"帳號"ID查詢
+				if ("getOneMemberLoginId".equals(action)) { // 來自listAllMember.jsp的請求
+					System.out.println("000000");
+					List<String> errorMsgs = new LinkedList<String>();
+					// Store this set in the request scope, in case we need to
+					// send the ErrorPage view.
+					req.setAttribute("errorMsgs", errorMsgs);
+
+					try {
+						/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+						System.out.println("111111000000");
+						String loginId = req.getParameter("loginId");
+						if (loginId == null || (loginId.trim()).length() == 0) {
+							errorMsgs.add("請輸入會員資料");
+						}
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req
+									.getRequestDispatcher("/back_end/member/listAllMember.jsp");
+							failureView.forward(req, res);
+							return;//程式中斷
+						}
+						
+						
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req
+									.getRequestDispatcher("/back_end/member/listAllMember.jsp");
+							failureView.forward(req, res);
+							return;//程式中斷
+						}
+						
+						/***************************2.開始查詢資料*****************************************/
+						System.out.println("222222");
+						MemberService memSvc = new MemberService();
+						MemberVO memberVO = memSvc.getLoginMember(loginId);
+						if (memberVO == null) {
+							errorMsgs.add("查無資料");
+						}
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req
+									.getRequestDispatcher("/back_end/member/listAllMember.jsp");
+							failureView.forward(req, res);
+							return;//程式中斷
+						}
+						
+						System.out.println("33333");/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+						req.setAttribute("memberVO", memberVO); // 資料庫取出的memberVO物件,存入req
+						String url = "/back_end/member/listOneMember.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneMember.jsp
+						successView.forward(req, res);
+
+						/***************************其他可能的錯誤處理*************************************/
+					} catch (Exception e) {
+						errorMsgs.add("無法取得資料:" + e.getMessage());
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/back_end/member/index.jsp");
+						failureView.forward(req, res);
+					}
+				}		
 		
 //修改		
 		if ("updateMember".equals(action)) { // 來自listAllEmp.jsp的請求
