@@ -38,7 +38,7 @@ img {
 button {
 	font-size: 13px;
 	outline-width: 100%;
-	background-color: yellow;
+	background-color: white;
 }
 
 div.main_content {
