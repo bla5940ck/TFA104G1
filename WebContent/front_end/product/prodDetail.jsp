@@ -181,8 +181,14 @@ request.setAttribute("product", product);
 									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
 									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
 									<!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
-									<li><a href="" data-toggle="modal"
-										data-target="#login-modal">會員登入</a></li>
+									<c:choose>
+                  	<c:when test="${id == null}">
+                     	<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseLogin.jsp" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
+                 	</c:when>
+                 	<c:otherwise>
+                  		<li><a href="<%=request.getContextPath()%>/LogoutServlet" data-toggle="modal">會員登出</a></li>				
+					</c:otherwise>                 
+                  </c:choose>    
 								</ul>
 							</div>
 						</div>
@@ -267,8 +273,9 @@ request.setAttribute("product", product);
 							
 									
 								</ul></li>
-							<li><a href="#">使用教學</a>   
-                 <li><a href="#">Q&A</a>
+							 <li><a href="<%=request.getContextPath()%>/front_end/others/Manual.jsp">使用教學</a>
+              </li>
+              <li><a href="<%=request.getContextPath()%>/front_end/others/Qa.jsp">Q&A</a>
               </li>
 					<!--/.nav-collapse -->
 				</div>
