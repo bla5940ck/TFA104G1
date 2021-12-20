@@ -6,21 +6,22 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <%
+	// 	session.setAttribute("id", 1);
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
-	List<OrderMasterVO> list1 = omSVC.getAll();
 
-	List<OrderMasterVO> list2 =list.
-								stream()
-									.filter(o->o.getRentID()==memID)
-										.filter(o->o.getOrdStatus()==2)
-											.collect(Collectors.toList());
+	List<OrderMasterVO> list2 = list.stream().filter(o -> o.getRentID() == memID)
+			.filter(o -> o.getOrdStatus() == 2).collect(Collectors.toList());
+
+	if (request.getAttribute("list") != null) {
+		list2 = (List) request.getAttribute("list");
+	}
 
 	pageContext.setAttribute("list", list2);
 %>
@@ -94,17 +95,24 @@ th, td {
 	padding: 5px;
 	text-align: left;
 }
+
+div.getTotal {
+	/* 	border: 1px solid black; */
+	text-align: right;
+	font-size: 20px;
+	padding: 0 80px 0 0;
+}
 </style>
 </head>
 
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
-	<div class="main_content">
+	<div class="main_content"> 
 		<%@ include file="/includeFolder/rentMemberAside.file"%>
-		
+
 		<main class="main">
 
-				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
+			<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -115,9 +123,12 @@ th, td {
 				</ul>
 			</c:if>
 			<div>
-				 <h5>依日期查詢訂單</h5>
-				 起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
-				 結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;">
+				<h5>依歸還日期查詢訂單</h5>
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
+					結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;"> <button>確認</button>
+							  <input type="hidden" name="action" value="get_date_forRent_order">
+				</FORM>
 			</div>
 			<table id="table-1">
 				<tr>
@@ -125,124 +136,140 @@ th, td {
 					<th>出租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
-
+					<th>折底金額</th>
+					
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-
-					<th>出貨日期</th>
-					<th>到貨日期</th>
+<!-- 					<th>出貨日期</th> -->
+<!-- 					<th>到貨日期</th> -->
 					<th>歸還日期</th>
 					<th>承租天數</th>
 					<th>訂單金額</th>
 				</tr>
 				<%@ include file="pageForLease.file"%>
-				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-					<c:choose>
-						<c:when test="${omVO.ordStatus == 2 && omVO.rentID == id}">
-							<tr>
-								<td>${omVO.ordID}</td>
-								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
+				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+					<tr>
+						<td>${omVO.ordID}</td>
+						<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
+						<c:choose>
+							<c:when test="${omVO.payID == '1'}">
+								<td>信用卡</td>
+							</c:when>
+							<c:otherwise>
+								<td>面交</td>
+							</c:otherwise>
+						</c:choose>
+
+						<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+						<c:set var="count" value="0" />
+						<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+							<c:if test="${count==0}">
 								<c:choose>
-									<c:when test="${omVO.payID == '1'}">
-										<td>信用卡</td>
+									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+										<td>無</td>
 									</c:when>
-									<c:otherwise>
-										<td>面交</td>
-									</c:otherwise>
+									<c:when test="${true}">
+										<td>${mcVO.coupon_name}</td>
+									</c:when>
 								</c:choose>
+								<c:set var="count" value="1" />
+							</c:if>
+						</c:forEach>
 
-								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
-								<c:set var="count" value="0"/>
-									<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
-										<c:if test="${count==0}">
-											<c:choose>
-												<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
-													<td>無</td>
-												</c:when>
-												<c:when test="${true}">
-													<td>${mcVO.coupon_name}</td>
-												</c:when>
-											</c:choose>
-												<c:set var="count" value="1"/>
-										</c:if>
-									</c:forEach>
+						<c:choose>
+							<c:when test="${omVO.ordStatus == '0'}">
+								<td>已成立</td>
+							</c:when>
+							<c:when test="${omVO.ordStatus == '1'}">
+								<td>待歸還</td>
+							</c:when>
+							<c:when test="${omVO.ordStatus == '2'}">
+								<td>已完成</td>
+							</c:when>
+							<c:otherwise>
+								<td>已取消</td>
+							</c:otherwise>
+						</c:choose>
 
-								<c:choose>
-									<c:when test="${omVO.ordStatus == '0'}">
-										<td>已成立</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '1'}">
-										<td>待歸還</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '2'}">
-										<td>已完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>已取消</td>
-									</c:otherwise>
-								</c:choose>
-
-								<td><fmt:formatDate value="${omVO.ordDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.shipDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.arrivalDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.returnDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td>${omVO.rentDays}</td>
-								<td>${omVO.ordPrice}</td>
-								<td>
-									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="評價"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
-										<input type="hidden" name="action" value="getRentComment_For_Display">
-									</FORM>
-								</td>
-							</tr>
-						</c:when>
-					</c:choose>
+						<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
+<%-- 						<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
+<%-- 						<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td> --%>
+						<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td>
+						<td>${omVO.rentDays}</td>
+						<td>${omVO.ordPrice}</td>
+						<td>
+							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
+								<input type="submit" value="評價"> 
+								<input class="ordID" type="hidden" name="ordID" value="${omVO.ordID}">
+								<input class="price" type="hidden" name="price" value="${omVO.ordPrice}"> 
+								<input type="hidden" name="action" value="getRentComment_For_Display">
+							</FORM>
+						</td>
+					</tr>
 				</c:forEach>
 			</table>
+			<div class="getTotal">
+				<p class="sum"></p>
+			</div>
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link   rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
 <script src="datetimepicker/jquery.js"></script>
 <script src="datetimepicker/jquery.datetimepicker.full.js"></script>
 <style>
-  .xdsoft_datetimepicker .xdsoft_datepicker {
-           width:  300px;   /* width:  300px; */
-  }
-  .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
-           height: 151px;   /* height:  151px; */
-  }
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
 </style>
 
 <script>
+var price = $("input.price"); // 金額
+var sum = $(".sum");
+console.log(price.val());
+var total = 0;
+
+price.each(function(index, item) {
+	total += parseInt($(item).val());
+// 	console.log($(item).val());
+	console.log(total);
+	
+	sum.text("總金額 : " + total + "元");
+})
+	
+	
+	
 $("#f_date1").blur(function(){
 // 	alert(1);
 	console.log($("#f_date1").val());
+	
 	if($("#f_date1").val() != null && $("#f_date1") != ''){		
 		$("#f_date2").blur(function(){
 			console.log($("#f_date2").val());
 			if($("#f_date2").val != null && $("#f_date2") != ''){
-				$.ajax({
-					url:"<%=request.getContextPath()%>/OrderMasterServlet",
-					type:"POST",
-					data:{
-						startDate:($("#f_date1").val()),
-						endDate:($("#f_date2").val()),
-						action:"get_Date_Order",
+				$("#DATE").submit();
+				
+				
+// 				$.ajax({
+<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
+// 					type:"POST",
+// 					data:{
+// 						startDate:($("#f_date1").val()),
+// 						endDate:($("#f_date2").val()),
+// 						action:"get_Date_Order",
 			
-					},
-						dataType:"json",
-				});
+// 					},success:function(data){
+						
+// 					},
+// 						dataType:"json",
+// 				});
 			}		
 		})	
 	}	
@@ -253,15 +280,15 @@ $("#f_date1").blur(function(){
            theme: '',          //theme: 'dark',
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'Y-m-d',
+	       format: 'Y-m-d H:i:s',
 	       value:'',
         });
         $("#f_date2").datetimepicker({
            theme: '',          //theme: 'dark',
            timepicker: false,   //timepicker: false,
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-	       format: 'Y-m-d',
+	       format: 'Y-m-d H:i:s',
 	       value:'',
         });
-</script> 
+</script>
 </html>

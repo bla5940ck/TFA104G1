@@ -4,7 +4,7 @@ import java.util.List;
 
 
 public class ProdCategoryService {
-	private ProdCategoryDAOImpl dao;
+	private ProdCategory_Interface dao;
 	
 	public ProdCategoryService() {
 		dao = new ProdCategoryDAO();

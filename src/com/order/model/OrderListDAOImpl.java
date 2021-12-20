@@ -24,10 +24,10 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 //			"INSERT INTO ORDER_LIST(PROD_ID, PROD_PRICE, EST_START, EST_END) VALUES (?, ?, ?, ?)";
 			"INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String FIND_BY_PK = "SELECT * FROM ORDER_LIST WHERE LIST_ID = ?";
-	private static final String GET_ALL = "SELECT * FROM ORDER_LIST";
-	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_LIST WHERE ORD_STATUS = ?";
+	private static final String GET_ALL = "SELECT * FROM ORDER_LIST ORDER BY ORD_ID DESC";
+	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_LIST WHERE ORD_STATUS = ? ORDER BY ORD_ID DESC";
 	private static final String UPDATE = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE (LIST_ID = ?)";
-	private static final String FIND_BY_ORD_ID = "SELECT * FROM ORDER_LIST WHERE ORD_ID = ?";
+	private static final String FIND_BY_ORD_ID = "SELECT * FROM ORDER_LIST WHERE ORD_ID = ? ORDER BY ORD_ID DESC";
 	private static final String UPDATE_LIST_STATUS = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE ORD_ID = ?";
 	private static final String UPDATE_ORDER_STATUS = "UPDATE ORDER_MASTER SET ORD_STATUS =? WHERE (ORD_ID = ?)";
 

@@ -50,17 +50,19 @@ aside.aside {
 	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
-	background-color:#F0B594;
+	background-color:#F5D998;;
 	height:720px;
 }
 
+
+
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -84,8 +86,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-</style>
-<style>
+
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -102,9 +103,7 @@ h4 {
 	color: red;
 	display: inline;
 }
-</style>
 
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -129,7 +128,14 @@ th, td {
 }
 
 .signOut{
-background-color:#6495ed;
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
 }
 </style>
 </head>
@@ -137,21 +143,15 @@ background-color:#6495ed;
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main" style="background-color: #C0C0C0;">
-			<h4>此頁練習採用 EL 的寫法取值:</h4>
-			<table id="table-1">
+		<main class="main" >
 				<tr>
 					<td>
 
 						<h4>
-							<a
-								href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
+							<a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
 						</h4>
 					</td>
 				</tr>
-
-			</table>
-
 			<%--錯誤列表 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -190,7 +190,7 @@ background-color:#6495ed;
 
 					<tr>
 						<td>${msVO.msgID}</td>
-						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?pordID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?prodID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
 						<td><a>${msVO.memberID}</a></td>
 						<td>${msVO.managerID}</td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
@@ -227,8 +227,9 @@ background-color:#6495ed;
 									<option value="0" ${msVO.problemStatus == 0 ? "selected" : "" }>未處理</option>
 									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>
 									
-								</select> <input type="hidden" name="action" value="update"> <input
-									type="submit" value="送出">
+								</select> 
+									<input type="hidden" name="action" value="update"> 
+									<input type="submit" value="送出">
 							</FORM>
 						</td>
 

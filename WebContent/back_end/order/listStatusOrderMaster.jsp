@@ -56,21 +56,24 @@ div.main_content {
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 150px;
-	height: 620px;
+	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
+	background-color:#F5D998;;
+	height:720px;
 }
+
+
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
-	width: calc(100% - 150px - 10px);
-	height: 620px;
+	background-color: 	#F0F0F0;
+	width: calc(100% - 200px - 10px);
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -79,10 +82,9 @@ main.main {
 }
 
 table {
-	width: 100%;
+	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	font-size: 12px;
 }
 
 table, th, td {
@@ -91,7 +93,58 @@ table, th, td {
 
 th, td {
 	padding: 5px;
-	text-align: left;
+	text-align: center;
+}
+
+table#table-1 {
+	background-color: #CCCCFF;
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: red;
+	display: inline;
+}
+
+table {
+	width: 100%;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	height: 100px padding: 5px;
+	text-align: center;
+}
+
+.pic {
+	object-fit: contain;
+	width: 95px;
+	height: 80px;
+}
+
+.signOut{
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
 }
 </style>
 </head>
@@ -113,20 +166,17 @@ th, td {
 					</h5>
 				</FORM>
 
-				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
-
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/OrderListServlet">
-					<h5>
-						選擇訂單明細編號: <select size="1" name="listID">
-							<c:forEach var="OrderListVO" items="${OrdserListSvc.all}">
-								<option value="${OrderListVO.listID}">${OrderListVO.listID}
-							</c:forEach>
-						</select> 
-						<input type="hidden" name="action" value="getOne_For_Display">
-						<input type="submit" value="送出">
-					</h5>
-				</FORM>	
+			<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
+					<b>選擇訂單編號:</b> 
+					<select size="1" name="ordID">
+						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
+								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
+						</c:forEach>
+					</select> 
+					<input type="hidden" name="action" value="getOne_For_Display">
+					<input type="submit" value="送出">
+				</FORM>
 			</div>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -138,7 +188,7 @@ th, td {
 			</c:if>
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
 						<tr>
 							<td><a href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
 							<td><button name="ordStatus" value="0">已成立</button></td>
@@ -258,7 +308,7 @@ th, td {
 								<td>${omVO.ordPrice}</td>
 								<td>
 									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/OrderListServlet"
+										ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
