@@ -167,8 +167,8 @@ background-color:#FFF0AC;
 }
 
 .a1{
-border:3px solid black;
-background-color:white;
+border:2px solid black;
+background-color:#FFF0AC;
 }
 </style>
 
