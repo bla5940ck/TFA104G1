@@ -34,7 +34,7 @@
 </head>
 
 <body bgcolor='white'>
-<%@ include file="header.file" %>
+<%@ include file="header2.file" %>
 	<%-- 錯誤表列 --%>
 	
 <%-- 	<c:if test="${not empty errorMsgs}"> --%>
@@ -87,7 +87,7 @@
 						<td>${postBoardVO.postCont}</td>
 						<td>${postBoardVO.postTime}</td>
 						<td>${postBoardVO.replyCount}</td>
-						<td>${postBoardVO.pic}</td>
+						<td><image src="<%=request.getContextPath() %>/PbPhotoShow?postId=${postBoardVO.postId}"></td>
 						
                         <td>
 	                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" style="margin-bottom: 0px;">
@@ -119,5 +119,5 @@
  </section>
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 </html>

@@ -178,19 +178,20 @@ public class PostBoardServlet extends HttpServlet {
 				//DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				System.out.println(postTime);
 
-				Integer replyCount = null;
+				Integer replyCount = 0;
 				//System.out.println(replyCount);
 
 				Part part = req.getPart("pic"); 
-				//System.out.println(part);
+				System.out.println("testpic");
 				InputStream in = part.getInputStream();
 				byte[] buf = new byte[in.available()];
 				in.read(buf);
 				in.close();
 				System.out.println("buffer length: " + buf.length);
 				
-				//Integer postId = 0; 
-			
+				
+								
+				
 
 				PostBoardVO pbVO = new PostBoardVO();
 				pbVO.setPostId(postId);
@@ -201,6 +202,8 @@ public class PostBoardServlet extends HttpServlet {
 				pbVO.setPostTime(postTime);
 				pbVO.setReplyCount(replyCount);
 				pbVO.setPic(part2Bytes(part));
+				
+				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -222,13 +225,14 @@ public class PostBoardServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
+				} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}
+		
 
 		// ok
 		if ("insert".equals(action)) { // 來自addarticle.jsp的請求

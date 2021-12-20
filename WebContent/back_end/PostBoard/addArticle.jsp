@@ -101,7 +101,7 @@
 			</div>
 		</div>
 	</section>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 </body>
 </html>
 
