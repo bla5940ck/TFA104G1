@@ -137,19 +137,18 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-			<h4>此頁練習採用 EL 的寫法取值:</h4>
+			
 		
-			<table id="table-1">
+		
 				<tr>
 					<td>
 						
 						<h4>
-							<a
-								href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>
-			</table>
+				<br>
 
 			<%--錯誤列表 --%>
 			<c:if test="${not empty errorMsgs}">
