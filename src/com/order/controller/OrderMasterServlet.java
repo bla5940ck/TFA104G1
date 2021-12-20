@@ -842,7 +842,7 @@ public class OrderMasterServlet extends HttpServlet {
 				Integer memID = (Integer) req.getSession().getAttribute("id");
 				System.out.println(startDate);
 
-				java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
+				java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);			
 				java.sql.Timestamp ed = java.sql.Timestamp.valueOf(endDate);
 
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
@@ -864,7 +864,7 @@ public class OrderMasterServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/order/listAllOrderMaster.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listSuccessOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}

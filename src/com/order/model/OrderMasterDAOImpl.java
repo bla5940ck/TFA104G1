@@ -38,7 +38,6 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 
 	private static final String INSERT_RENT_COMMENT = "UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String INSERT_LEASE_COMMENT = "UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
-	private static final String FIND_BY_YM = "SELECT * FROM ORDER_MASTER WHERE YEAR(ORD_DATE) = ? AND MONTH(ORD_DATE) = ? AND ORD_STATUS = ? ORDER BY ORD_ID DESC";
 
 	static {
 		try {

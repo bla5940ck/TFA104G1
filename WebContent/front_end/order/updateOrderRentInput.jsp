@@ -141,8 +141,8 @@ a.cart-img > img{
 						<th>運送狀態</th>
 						<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
 						<td><select name="shipStatus" size="1" id="s" style="width:100px;">
-								<option value="0" <%=omVO.getShipStatus() == 0? "selected" : ""%>>待出貨</option>
-								<option value="1" <%=omVO.getShipStatus() == 1? "selected" : ""%>>已出貨</option>
+<%-- 								<option value="0" <%=omVO.getShipStatus() == 0? "selected" : ""%>>待出貨</option> --%>
+<%-- 								<option value="1" <%=omVO.getShipStatus() == 1? "selected" : ""%>>已出貨</option> --%>
 								<option value="2" <%=omVO.getShipStatus() == 2? "selected" : ""%>>待取貨</option>
 								<option value="3" <%=omVO.getShipStatus() == 3? "selected" : ""%>>取貨完成</option>
 								<option value="9" <%=omVO.getShipStatus() == 9? "selected" : ""%>>商品遺失</option>
