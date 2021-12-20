@@ -135,7 +135,7 @@ main.main {
 		<th>會員狀態</th>
 		<th>查看</th>
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="page1_1.file" %> 
 		  <c:forEach var="memberVO"  items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >    
 
 		<tr>
