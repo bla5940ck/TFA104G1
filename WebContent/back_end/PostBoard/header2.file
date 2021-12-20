@@ -1,0 +1,175 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<head>
+<meta content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JoyLease | Home</title>
+
+  <!-- Font awesome -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/font-awesome.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/bootstrap.css" rel="stylesheet">
+  <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+  <link href="<%=request.getContextPath()%>/includeFolder/js/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+  <!-- Product view slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/jquery.simpleLens.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/slick.css">
+  <!-- price picker slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/nouislider.css">
+  <!-- Theme color -->
+  <link id="switcher" href="<%=request.getContextPath()%>/includeFolder/css/theme-color/dark-navy-theme.css" rel="stylesheet">
+  <!-- <link id="switcher" href="<%=request.getContextPath()%>/includeFolder/css/theme-color/bridge-theme.css" rel="stylesheet"> -->
+  <!-- Top Slider CSS -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+
+  <!-- Main style sheet -->
+ <link href="<%=request.getContextPath()%>/includeFolder/css/style copy.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+
+  </div>
+  <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+  <!-- END SCROLL TOP BUTTON -->
+  <!-- Start header section -->
+  <header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-top-area">
+              <!-- start header top left -->
+              <div class="aa-header-top-left">
+                <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
+              </div>
+              <div class="aa-header-top-right">
+                <ul class="aa-head-top-nav-right">
+                  <li><a href="account copy.html">會員帳戶</a></li>
+                  <li class="hidden-xs"><a href="account copy.html">我要出租</a></li>
+                  <li class="hidden-xs"><a href="account copy.html">我要徵求</a></li>
+                  <li class="hidden-xs"><a href="cart copy.html">購物車</a></li>
+                  <!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
+                  <li><a href="" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header top  -->
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-bottom-area">
+              <div class="aa-logo">
+                <a href="index copy.html">
+                  <img src="<%=request.getContextPath()%>/includeFolder/img/logo_org_noframe_191561.png" alt="">
+                </a>
+              </div>
+              <!--  cart box -->
+              <div class="aa-cartbox">
+                <a class="aa-cart-link" href="#">
+                  <span class="fa fa-shopping-basket"></span>
+                  <span class="aa-cart-title">我的購物車</span>
+                  <span class="aa-cart-notify">2</span>
+                </a>
+                <div class="aa-cartbox-summary">
+                  <ul>
+                    <li>
+                      <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/includeFolder/img/woman-small-2.jpg" alt="img"></a>
+                      <div class="aa-cartbox-info">
+                        <h4><a href="#">SwitchOLED</a></h4>
+                        <p>1 x $250</p>
+                      </div>
+                      <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                    </li>
+                    <li>
+                      <a class="aa-cartbox-img" href="#"><img src="<%=request.getContextPath()%>/includeFolder/woman-small-1.jpg" alt="img"></a>
+                      <div class="aa-cartbox-info">
+                        <h4><a href="#">健身環大冒險</a></h4>
+                        <p>1 x $250</p>
+                      </div>
+                      <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                    </li>
+                    <li>
+                      <span class="aa-cartbox-total-title">
+                       總計
+                      </span>
+                      <span class="aa-cartbox-total-price">
+                        $500
+                      </span>
+                    </li>
+                  </ul>
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="checkout copy.html">購物車結帳</a>
+                </div>
+              </div>
+              <!-- / cart box -->
+              <!-- search box -->
+              <div class="aa-search-box">
+                <form action="">
+                  <input type="text" name="" id="" placeholder="健身環大冒險">
+                  <button type="submit"><span class="fa fa-search"></span></button>
+                </form>
+              </div>
+              <!-- / search box -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header bottom  -->
+  </header>
+  <!-- / header section -->
+  <!-- menu -->
+  <section id="menu">
+    <div class="container">
+      <div class="menu-area">
+        <!-- Navbar -->
+        <div class="navbar navbar-default" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav ">
+              <li><a href="#">全部分類<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Nintendo</a></li>
+                  <li><a href="#">PlayStation</a></li>
+                  <li><a href="#">XBOX</a></li>
+                  <li><a href="#">其他遊戲主機</a></li>
+                  <li><a href="#">電腦遊戲</a></li>
+                  <li><a href="#">桌遊</a></li>
+                  <li><a href="#">拼圖</a></li>
+                  <li><a href="#">其他</a></li>
+                </ul>
+              </li>
+              <li><a href="#">使用教學</a>
+              </li>
+              <li><a href="#">Q&A</a>
+              </li>
+            </ul>
+            </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>
