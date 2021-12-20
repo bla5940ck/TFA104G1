@@ -144,12 +144,12 @@ background-color:#FFF0AC;
 		<main class="main" >
 				<tr>
 					<td>
-
 						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>
+				<br>
 			<%--錯誤列表 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
