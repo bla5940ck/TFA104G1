@@ -4,10 +4,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
-<%
+<%--
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
-%>
+--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,7 +79,7 @@ aside.aside {
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: #ddd;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
 	display: inline-block;
 	vertical-align: top;
@@ -137,7 +137,7 @@ table, th, td {
 
 </head>
 <body bgcolor='white'>
-<header class="header"> header區域 </header>
+<%@ include file="/includeFolder/header.file"%>
 <c:if test="${not empty errorMsgs}">
 					<font style="color: red">請修正以下錯誤:</font>
 					<ul>
@@ -148,7 +148,8 @@ table, th, td {
 			</c:if>
 
 <div class="main_content">
-		<aside class="aside">
+<%@ include file="/includeFolder/rentMemberAside.file"%>
+	<%-- 	<aside class="aside">
 			<nav class="nav">
 			<div>
 				<a class="" href="<%=request.getContextPath()%>/front_end/member/RentPage.jsp">
@@ -188,13 +189,13 @@ table, th, td {
 					
 				</ul>
 			</nav>
-		</aside>
+		</aside>--%>
 		<main class="main">
 		</main>
 
 	</div>
 
 
-<footer class="footer"> footer區域 </footer>
+<%@ include file="/includeFolder/footer2.file"%>
 </body>
 </html>

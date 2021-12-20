@@ -172,7 +172,12 @@ public class LabelServlet extends HttpServlet {
 			}
 
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("CookieList", listCookie);
+			try {
+				jsonObject.put("CookieList", listCookie);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			res.getWriter().print(jsonObject);
 
 		}
