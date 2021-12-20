@@ -29,7 +29,7 @@ import javax.servlet.http.*;
 @WebServlet("/prod/ProdServlet")
 @MultipartConfig()
 public class ProdServlet extends HttpServlet {
-	
+
 //	Timer timer;
 
 	public void destroy() {
@@ -82,12 +82,12 @@ public class ProdServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			ProdVO prod = new ProdVO();
 			System.out.println(ServletFileUpload.isMultipartContent(req));
-			
+
 			Jedis jedis = null;
 			jedis = pool.getResource();
 
 			List<String> list = new ArrayList();
-			
+
 			// 驗證商品
 			String[] labels = req.getParameterValues("checkbox1");
 
@@ -186,7 +186,7 @@ public class ProdServlet extends HttpServlet {
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("prodVO", prod);
-				
+
 				jedis.close();
 				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/product/uploadProd.jsp");
 				failureView.forward(req, res);
@@ -263,7 +263,6 @@ public class ProdServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			String[] labels = req.getParameterValues("checkbox1");
 			String name = req.getParameter("product_name");
-			
 
 			if (name == null || (name.trim().length() == 0)) {
 				errorMsgs.add("商品名稱不能空白");
@@ -311,10 +310,7 @@ public class ProdServlet extends HttpServlet {
 			Timestamp shelfTime = null;
 
 			Jedis jedis = pool.getResource();
-			
-			
-			
-			
+
 			ProdVO prodVO = new ProdVO();
 			prodVO.setProdName(name);
 			prodVO.setProdRent(rent);
@@ -428,11 +424,11 @@ public class ProdServlet extends HttpServlet {
 
 			System.out.println("更新後... " + prodID);
 
-			//更新標籤
-			
-			if(labels!=null &&labels.length!=0) {
-					jedis.del("prod"+prodID);
-					jedis.rpush("prod"+prodID, labels);
+			// 更新標籤
+
+			if (labels != null && labels.length != 0) {
+				jedis.del("prod" + prodID);
+				jedis.rpush("prod" + prodID, labels);
 			}
 			ProdService prodSvc = new ProdService();
 			ProdVO prod_original = prodSvc.findProductByPK(prodID);
@@ -573,14 +569,14 @@ public class ProdServlet extends HttpServlet {
 			Integer prodStatus = Integer.valueOf(req.getParameter("prodStatus"));
 			long date = System.currentTimeMillis();
 			Timestamp shelfTime = null;
-			
+
 			ProdService prodSvc = new ProdService();
 			ProdVO prodVO = prodSvc.findProductByPK(prodID);
-			
-			if(prodStatus==1) {
+
+			if (prodStatus == 1) {
 				shelfTime = new Timestamp(date);
 			}
-			
+
 			prodSvc.updateProd(prodID, prodVO.getCategoryID(), prodVO.getProdName(), prodVO.getProdCot(),
 					prodVO.getProdRent(), prodVO.getProdPrice(), prodVO.getComt(), prodVO.getPic1(), prodVO.getPic2(),
 					prodVO.getPic3(), shelfTime, prodStatus);
@@ -588,7 +584,6 @@ public class ProdServlet extends HttpServlet {
 			res.sendRedirect(req.getContextPath() + "/front_end/product/leaseProdPage.jsp");
 
 		}
-
 
 		///////////// 結帳////////////////////
 		if ("checkout".equals(req.getParameter("action"))) {
@@ -629,7 +624,7 @@ public class ProdServlet extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				jedis.close();
 				req.getRequestDispatcher("/front_end/product/cart.jsp").forward(req, res);
-				
+
 				return;
 
 			}

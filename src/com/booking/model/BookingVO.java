@@ -2,7 +2,7 @@ package com.booking.model;
 
 import java.sql.Date;
 
-public class BookingVO {
+public class BookingVO implements java.io.Serializable{
 	private Integer bkID;
 	private Integer prodID;
 	private Integer status;

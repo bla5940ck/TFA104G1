@@ -89,9 +89,9 @@ th, td {
 
 </head>
 <body bgcolor="white">
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-		<%@ include file="/includeFolder/leaseMemberAside.file"%>
+		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main">			
 		<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/BackEndOrderServlet" style="margin-bottom: 0px;">
 			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
@@ -105,7 +105,7 @@ th, td {
 									</c:when>
 								</c:choose>
 								</c:forEach>
-				<input type="hidden" name="action" value="getOne_For_Update">
+				<input type="hidden" name="action" value="getOne_For_Manager_Update">
 			</FORM>
 			<table id="table-1">
 				<tr>

@@ -14,6 +14,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.chatroom.jedis.JedisPoolUtil;
+import com.order.model.OrderMasterDAOImpl;
+import com.order.model.OrderMasterVO;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -30,18 +32,25 @@ public class ProdDAO implements ProdDAO_Interface {
 		}
 	}
 
-	private static String INSERT  = "INSERT INTO product(category_id,prod_status,prod_name,prod_cot,prod_rent,prod_price,comt,pic_1,pic_2,pic_3,shelf_date) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+	private static final String SEARCH = "SELECT * FROM PRODUCT WHERE PROD_NAME LIKE \"%\"?\"%\" OR PROD_COT LIKE \"%\"?\"%\"";
+	private static final String INSERT = "INSERT INTO PRODUCT(CATEGORY_ID,PROD_STATUS,PROD_NAME,PROD_COT,PROD_RENT,PROD_PRICE,COMT,PIC_1,PIC_2,PIC_3,SHELF_DATE) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+	private static final String DESC = "SELECT * FROM PRODUCT GROUP BY PROD_ID ORDER BY PROD_RENT DESC;";
+	private static final String ASC = "SELECT * FROM PRODUCT GROUP BY PROD_ID ORDER BY PROD_RENT;";
+	private static final String ALL = "SELECT * FROM PRODUCT GROUP BY PROD_ID ORDER BY SHELF_DATE DESC";
+	private static final String UPDATE = "UP"
+			+ "DATE PRODUCT SET CATEGORY_ID=?, PROD_STATUS=?, PROD_NAME=? ,PROD_COT =? ,PROD_RENT=?,PROD_PRICE=? ,PIC_1=?,PIC_2=?,PIC_3=?,COMT=?,SHELF_DATE=? WHERE PROD_ID = ? ";
+	private static final String FINDPRODUCTBYPK = "SELECT * FROM PRODUCT WHERE PROD_ID = ?";
+
 	public Integer add(ProdVO prod) {
-		
-		
-		String[] cols = {"prod_id"};
+
+		String[] cols = { "prod_id" };
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs =null;
+		ResultSet rs = null;
 		Integer key = null;
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
-			pstmt = con.prepareStatement(INSERT,cols);
+			pstmt = con.prepareStatement(INSERT, cols);
 
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
@@ -54,43 +63,37 @@ public class ProdDAO implements ProdDAO_Interface {
 			pstmt.setBytes(9, prod.getPic2());
 			pstmt.setBytes(10, prod.getPic3());
 			pstmt.setTimestamp(11, prod.getShelfDate());
-			
-			
-			
+
 			pstmt.executeUpdate();
-			
+
 			rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				key = rs.getInt(1); // 只支援欄位索引值取得自增主鍵值
 				System.out.println("自增主鍵值 = " + key + "(剛新增成功的員工編號)");
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-		if (pstmt != null) {
-			try {
-				pstmt.close();
-			} catch (SQLException se) {
-				se.printStackTrace(System.err);
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
 			}
 		}
-		if (con != null) {
-			try {
-				con.close();
-			} catch (Exception e) {
-				e.printStackTrace(System.err);
-			}
-		}
-	}
 		return key;
 	}
 
-	private static String UPDATE= "up"
-			+ "date product set category_id=?, prod_status=?, prod_name=? ,prod_cot =? ,prod_rent=?,prod_price=? ,pic_1=?,pic_2=?,pic_3=?,comt=?,shelf_date=? where prod_id = ? ";
 	public void update(ProdVO prod) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -110,14 +113,13 @@ public class ProdDAO implements ProdDAO_Interface {
 			pstmt.setString(10, prod.getComt());
 			pstmt.setTimestamp(11, prod.getShelfDate());
 			pstmt.setInt(12, prod.getProdID());
-			
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -140,7 +142,7 @@ public class ProdDAO implements ProdDAO_Interface {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -149,8 +151,6 @@ public class ProdDAO implements ProdDAO_Interface {
 
 	}
 
-
-	private static String FINDPRODUCTBYPK = "select * from product where prod_id = ?";
 	public ProdVO findProductByPK(Integer prodId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -183,7 +183,7 @@ public class ProdDAO implements ProdDAO_Interface {
 
 			}
 		} catch (SQLException e) {
-		
+
 			e.printStackTrace();
 		} finally {
 			if (rs != null) {
@@ -211,15 +211,13 @@ public class ProdDAO implements ProdDAO_Interface {
 
 		return prod;
 	}
-	
 
-	private static String ALL = "select * from product group by prod_id order by shelf_date desc";
 	public List<ProdVO> getAll() {
 		List<ProdVO> prodList = new ArrayList<ProdVO>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(ALL);
@@ -275,21 +273,19 @@ public class ProdDAO implements ProdDAO_Interface {
 
 		return prodList;
 	}
-	
-	
-	private static String ASC = "select * from product group by prod_id order by prod_rent;";
-	public List<ProdVO> priceSortAsc(){
+
+	public List<ProdVO> priceSortAsc() {
 		List<ProdVO> list = new ArrayList();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(ASC);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				ProdVO prod = new ProdVO();
 				prod.setProdID(rs.getInt("prod_id"));
 				prod.setCategoryID(rs.getInt("category_id"));
@@ -307,13 +303,13 @@ public class ProdDAO implements ProdDAO_Interface {
 				prod.setComt(rs.getString("comt"));
 
 				list.add(prod);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -339,21 +335,19 @@ public class ProdDAO implements ProdDAO_Interface {
 
 		return list;
 	}
-	
-	
-	private static String DESC = "select * from product group by prod_id order by prod_rent desc;";
-	public List<ProdVO> priceSortDesc(){
+
+	public List<ProdVO> priceSortDesc() {
 		List<ProdVO> list = new ArrayList();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(DESC);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				ProdVO prod = new ProdVO();
 				prod.setProdID(rs.getInt("prod_id"));
 				prod.setCategoryID(rs.getInt("category_id"));
@@ -371,13 +365,13 @@ public class ProdDAO implements ProdDAO_Interface {
 				prod.setComt(rs.getString("comt"));
 
 				list.add(prod);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -403,23 +397,23 @@ public class ProdDAO implements ProdDAO_Interface {
 
 		return list;
 	}
-	private static String SEARCH = "SELECT * FROM product where prod_name like \"%\"?\"%\" or prod_cot like \"%\"?\"%\"";
-	public List<ProdVO> getAllByKeyword(String keyword){
-		
+
+	public List<ProdVO> getAllByKeyword(String keyword) {
+
 		List<ProdVO> list = new ArrayList();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
 			pstmt = con.prepareStatement(SEARCH);
-			
+
 			pstmt.setString(1, keyword);
 			pstmt.setString(2, keyword);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				ProdVO prod = new ProdVO();
 				prod.setProdID(rs.getInt("prod_id"));
 				prod.setCategoryID(rs.getInt("category_id"));
@@ -437,13 +431,13 @@ public class ProdDAO implements ProdDAO_Interface {
 				prod.setComt(rs.getString("comt"));
 
 				list.add(prod);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (rs != null) {
 				try {
 					rs.close();
@@ -469,9 +463,7 @@ public class ProdDAO implements ProdDAO_Interface {
 
 		return list;
 	}
-	
-	
-	
+
 	public static void main(String[] args) {
 //		ProdDAO dao = new ProdDAO();
 //		
@@ -502,17 +494,14 @@ public class ProdDAO implements ProdDAO_Interface {
 //		for(ProdVO p : allByKeyword) {
 //			System.out.println();
 //		}
-		
+
 //		ProdVO findProductByPK = dao.findProductByPK(1);
 //		System.out.println(findProductByPK.getProdPrice());
-	
-	
+
 //		ProdService prodSvc = new ProdService();
 //		List<ProdVO> list = prodSvc.getAllByTimeDesc();
 //		list.forEach(p->System.out.println(p.getProdID()));
-	
-	
-		
+
 //	JedisPool pool = JedisPoolUtil.getJedisPool();
 //	Jedis jedis = pool.getResource();
 ////	
@@ -520,12 +509,7 @@ public class ProdDAO implements ProdDAO_Interface {
 //////	jedis.lrem("prod124", Long.valueOf(jedis.llen("prod124")),"10" );
 //	jedis.del("prod123");
 //	jedis.rpush("prod123", "333q3");	
-		
-		
-		
-		
-		
-	
+
 	}
 
 }
