@@ -33,7 +33,7 @@ public class ProdDAO implements ProdDAO_Interface {
 	}
 
 	private static final String SEARCH = "SELECT * FROM PRODUCT WHERE PROD_NAME LIKE \"%\"?\"%\" OR PROD_COT LIKE \"%\"?\"%\"";
-	private static final String INSERT = "INSERT INTO PRODUCT(CATEGORY_ID,PROD_STATUS,PROD_NAME,PROD_COT,PROD_RENT,PROD_PRICE,COMT,PIC_1,PIC_2,PIC_3,SHELF_DATE) VALUES (?,?,?,?,?, ?, ?, ?, ?, ?,?);";
+	private static final String INSERT = "INSERT INTO PRODUCT(CATEGORY_ID,PROD_STATUS,PROD_NAME,PROD_COT,PROD_RENT,PROD_PRICE,COMT,PIC_1,PIC_2,PIC_3,SHELF_DATE,MEMBER_ID) VALUES (?,?,?,?,?,?, ?, ?, ?, ?, ?,?);";
 	private static final String DESC = "SELECT * FROM PRODUCT GROUP BY PROD_ID ORDER BY PROD_RENT DESC;";
 	private static final String ASC = "SELECT * FROM PRODUCT GROUP BY PROD_ID ORDER BY PROD_RENT;";
 	private static final String ALL = "SELECT * FROM PRODUCT GROUP BY PROD_ID ORDER BY SHELF_DATE DESC";
@@ -63,6 +63,7 @@ public class ProdDAO implements ProdDAO_Interface {
 			pstmt.setBytes(9, prod.getPic2());
 			pstmt.setBytes(10, prod.getPic3());
 			pstmt.setTimestamp(11, prod.getShelfDate());
+			pstmt.setInt(12, prod.getMemberID());
 
 			pstmt.executeUpdate();
 

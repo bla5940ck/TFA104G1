@@ -124,9 +124,7 @@ th, td {
 	height: 80px;
 }
 
-.signOut{
-background-color:	#FF7575;
-}
+
 .class1{
 background-color:#FFF0AC;
 }
@@ -147,7 +145,7 @@ background-color:#FFF0AC;
 					<td>
 						
 						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>

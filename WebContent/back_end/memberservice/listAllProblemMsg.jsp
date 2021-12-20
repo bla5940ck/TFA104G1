@@ -127,9 +127,7 @@ th, td {
 	height: 80px;
 }
 
-.signOut{
-background-color:	#FF7575;
-}
+
 .class1{
 background-color:#FFF0AC;
 }
@@ -146,12 +144,12 @@ background-color:#FFF0AC;
 		<main class="main" >
 				<tr>
 					<td>
-
 						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>
+				<br>
 			<%--錯誤列表 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -176,6 +174,7 @@ background-color:#FFF0AC;
 					<th>圖片二</th>
 					<th>圖片三</th>
 					<th>問題狀態</th>
+					<th>回覆</th>
 
 				</tr>
 				<jsp:useBean id="ptSVC" scope="page"
@@ -225,12 +224,14 @@ background-color:#FFF0AC;
 								
 								<select name="problemStatus" size="1" id="s">
 									<option value="0" ${msVO.problemStatus == 0 ? "selected" : "" }>未處理</option>
-									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>
-									
-								</select> 
+									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>									
+								</select><br> 
 									<input type="hidden" name="action" value="update"> 
 									<input type="submit" value="送出">
 							</FORM>
+						</td>
+						<td>
+						<button class="class1">mail</button>
 						</td>
 
 					</tr>

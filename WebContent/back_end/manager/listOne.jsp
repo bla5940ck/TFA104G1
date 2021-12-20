@@ -112,9 +112,7 @@ th, td {
 	height: 80px;
 }
 
-.signOut{
-background-color:	#FF7575;
-}
+
 .class1{
 background-color:#FFF0AC;
 }
@@ -129,18 +127,18 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-			<h4>此頁暫練習採用 Script 的寫法取值:</h4>
 			
-			<table id="table-1">
+			
+			
 				<tr>
 					<td>
 						
 						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>
-			</table>
+			
 
 			<table>
 				<tr>

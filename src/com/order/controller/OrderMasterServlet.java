@@ -45,24 +45,24 @@ public class OrderMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static JedisPool pool = JedisPoolUtil.getJedisPool();
 	public static AllInOne all;
-	
+
 	public static void main(String[] args) {
 		initial();
 //		System.out.println("aioCheckOutALL: " + genAioCheckOutALL());
 
 	}
-	private static void initial(){
+
+	private static void initial() {
 		all = new AllInOne("");
 	}
-	
-	public static boolean cmprChkMacValue(){
+
+	public static boolean cmprChkMacValue() {
 		Hashtable<String, String> dict = new Hashtable<String, String>();
 		dict.put("MerchantID", "2000132");
 		dict.put("CheckMacValue", "50BE3989953C1734E32DD18EB23698241E035F9CBCAC74371CCCF09E0E15BD61");
 		return all.compareCheckMacValue(dict);
 	}
-	
-	
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 //		String path = req.getRequestURI();
@@ -387,6 +387,7 @@ public class OrderMasterServlet extends HttpServlet {
 		if ("submit_order".equals(action)) { // 來自addOrderMaster.jsp的請求
 
 //			System.out.println("進來servlet");
+
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -478,12 +479,12 @@ public class OrderMasterServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-			
+
 				/*********************** 開始新增 ************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 				omdao.inesetWithList(omVO, list);
-//				System.out.println("訂單+明細新增");
-
+//				System.out.println("訂單+明細新增");		
+					
 				/*********************** 修改會員折價券狀態 ************************/
 
 				MemcouponDAO mcdao = new MemcouponDAO();
@@ -519,29 +520,46 @@ public class OrderMasterServlet extends HttpServlet {
 					jedis.close();
 				}
 
+//				req.getRequestDispatcher("/front_end/order/ECorder.html").forward(req, res);
+//				http://localhost:8081/TFA104G1/front_end/order/ECorder.html
+
 				/************* 綠界串接 ***********/
 //				System.out.println("準備進綠界");
-				AllInOne all = new AllInOne("");
-				AioCheckOutALL obj = new AioCheckOutALL(); //產生訂單
-				obj.setMerchantID("2000132");
-				obj.setMerchantTradeNo("123129940");		//賣方編號
-				obj.setMerchantTradeDate("2017/01/01 08:05:23"); //交易日期
-				obj.setTotalAmount(ordPrice.toString());          //交易金額
-				obj.setTradeDesc("感謝您使用joyLease平台");       //交易描述
-				obj.setItemName(prodName);                       //商品名稱
-				obj.setReturnURL("/front_end/order/listAllOrderForRent.jsp"); //付款完成通知回傳網址
-				obj.setNeedExtraPaidInfo("N");
-				obj.setChooseSubPayment("ALL");
-				
-				String form = all.aioCheckOut(obj, null);
-				System.out.println(form);
-//				ao.aioCheckOut(obj, null);
-				all.aioCheckOut(obj, null);
-				
+
+				for (OrderListVO ec : list) {
+					System.out.println("527 取得訂單編號" + ec.getOrdID());
+
+					SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+					String ecord = sdf3.format(ordDate);
+
+					AllInOne all = new AllInOne("");
+					AioCheckOutALL obj = new AioCheckOutALL(); // 產生訂單
+
+					obj.setMerchantID("2000132"); // 特店編號
+					obj.setMerchantTradeNo("JL" + (ec.getOrdID()).toString()); // 訂單編號
+					obj.setMerchantTradeDate(ecord); // 交易日期S
+					obj.setTotalAmount(ordPrice.toString()); // 交易金額
+					obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
+					obj.setItemName(prodName); // 商品名稱
+					obj.setReturnURL("/front_end/order/listAllOrderForRent.jsp"); // 付款完成通知回傳網址
+					obj.setNeedExtraPaidInfo("N");
+					obj.setChooseSubPayment("ALL");
+
+					String form = all.aioCheckOut(obj, null);
+					System.out.println(form);
+
+//				res.getWriter().print(form);
+					req.setAttribute("EC", form);
+					all.aioCheckOut(obj, null);
+
+					req.getRequestDispatcher("/front_end/order/ECpage.jsp").forward(req, res);
+
+				}
 				/*********************** 新增完成準備轉交 ************************/
-				String url = "/front_end/order/listAllOrderForRent.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
+//				String url = "/front_end/order/listAllOrderForRent.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+				req.removeAttribute("list1");
 				
 			} catch (Exception e) {
 				System.out.println("例外");
@@ -668,9 +686,9 @@ public class OrderMasterServlet extends HttpServlet {
 				Date date = new Date();
 				long strlc = (date.getTime());
 				Timestamp leaseComtdate = new Timestamp(strlc);
-				
+
 				Integer ordID = new Integer(req.getParameter("ordID"));
-				
+
 				OrderMasterVO omVO = new OrderMasterVO();
 				omVO.setLeaseRank(leaseRank);
 				omVO.setLeaseComt(leaseComt);
@@ -824,7 +842,7 @@ public class OrderMasterServlet extends HttpServlet {
 				Integer memID = (Integer) req.getSession().getAttribute("id");
 				System.out.println(startDate);
 
-				java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
+				java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);			
 				java.sql.Timestamp ed = java.sql.Timestamp.valueOf(endDate);
 
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
@@ -846,7 +864,7 @@ public class OrderMasterServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/order/listAllOrderMaster.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listSuccessOrder.jsp");
 				failureView.forward(req, res);
 			}
 		}

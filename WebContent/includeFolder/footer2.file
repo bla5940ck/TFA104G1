@@ -32,8 +32,8 @@
                   <div class="aa-footer-widget">
                     <h3>關於我們</h3>
                     <ul class="aa-footer-nav">
-                      <li><a href="#">網站理念</a></li>
-                      <li><a href="#">團隊介紹</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/others/Idea.jsp">網站理念</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/others/Our.jsp">團隊介紹</a></li>
                       <!-- <li><a href="#">Services</a></li>
                       <li><a href="#">Discount</a></li>
                       <li><a href="#">Special Offer</a></li> -->
@@ -46,7 +46,8 @@
                   <div class="aa-footer-widget">
                     <h3>使用須知</h3>
                     <ul class="aa-footer-nav">
-                      <li><a href="#">服務條款</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/others/Terms.jsp">服務條款及會員契約</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp">隱私權政策</a></li>
                       <!-- <li><a href="#">Search</a></li>
                       <li><a href="#">Advanced Search</a></li>
                       <li><a href="#">Suppliers</a></li>

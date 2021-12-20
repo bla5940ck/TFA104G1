@@ -65,121 +65,13 @@ div.overlay > article{
 
 
 
-	<%
-		session.setAttribute("id", 1);
-		// String memberID = (String)session.getAttribute("id");
-	%>
-
 
 
 	<%@ include file="/includeFolder/header.file"%>
 
 	<div class="main_content">
-		<aside class="aside"> <br>
-		<div id="mh-navigation" class="mh-nav pure-u">
-			<div class="mh-nav-hd">
-				<h2 id="mh-profile">
-					<i class="mh-avatar-wrap"><img id="mh-avatar"
-						src="https://s.yimg.com/ag/images/default_user_profile_pic_192sq.jpg"
-						height="56" alt="用戶大頭貼"></i> <span class="nav-item-wrap">
-						<span class="nav-title">驊</span> <span class="nav-item"> <svg
-								class="nav-icon nav-icon-points" width="18" height="18"
-								viewBox="0 0 24 24" data-icon="ec-points"
-								style="fill: rgb(255, 140, 0); stroke: rgb(255, 140, 0); stroke-width: 0; vertical-align: bottom;">
-							</svg>
-					</span>
-					</span>
-				</h2>
-			</div>
-			<div class="mh-subnav pure-menu">
-				<h3 style="font-weight: bold;" class="subnav-title">個人相關</h3>
-				<ul class="pure-menu-list subnav-list">
-					<li class="pure-menu-item subnav-item">
-						<div class="item-conatiner">
-							<a href=""
-								class="pure-menu-link subnav-item-link icon-nav-my-store ">
-								<svg class="nav-icon nav-icon-favorite" width="25" height="22"
-									viewBox="0 0 24 24" data-icon="ec-favorite"> </svg> <lable
-									style="font-size:20px">會員折價卷</lable>
-							</a>
-						</div>
-					</li>
-					</br>
-					<li class="pure-menu-item subnav-item">
-						<div class="item-conatiner">
-							<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp"
-								class="pure-menu-link subnav-item-link icon-nav-order "> <svg
-									class="nav-icon nav-icon-order" width="18" height="22"
-									viewBox="0 0 24 24" data-icon="ec-order"> </svg> <lable
-									style="font-size:20px">訂單查詢</lable>
-							</a> <span class=""></span>
-						</div>
-					</li>
-					</br>
-					<li class="pure-menu-item subnav-item">
-						<div class="item-conatiner">
-							<a href=""
-								class="pure-menu-link subnav-item-link icon-nav-notification ">
-								<svg class="nav-icon nav-icon-notification" width="22"
-									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
-								</svg> <lable style="font-size:20px">商品管理</lable>
-							</a>
-						</div>
-					</li>
-					
-					<br>
-						<li class="pure-menu-item subnav-item">
-						<div class="item-conatiner">
-							<a href=""
-								class="pure-menu-link subnav-item-link icon-nav-notification ">
-								<svg class="nav-icon nav-icon-notification" width="22"
-									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
-								</svg> <lable style="font-size:20px">會員管理</lable>
-							</a>
-						</div>
-					</li>
-					<br>
-						<li class="pure-menu-item subnav-item">
-						<div class="item-conatiner">
-							<a href=""
-								class="pure-menu-link subnav-item-link icon-nav-notification ">
-								<svg class="nav-icon nav-icon-notification" width="22"
-									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
-								</svg> <lable style="font-size:20px">帳務管理</lable>
-							</a>
-						</div>
-					</li>
-					
-					<br>
-					
-					
-					
-					
-					
-					
-					<li class="pure-menu-item subnav-item">
-						<div class="item-conatiner">
-							<a href=""
-								class="pure-menu-link subnav-item-link icon-nav-notification ">
-								<svg class="nav-icon nav-icon-notification" width="22"
-									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
-								<path
-									d="M21.383 17.817c.262.205.375.36.375.36.15.192.242.433.242.696 0 .622-.505 1.127-1.128 1.127-.03 0-.062-.003-.093-.005H3.22c-.03.002-.06.005-.09.005C2.505 20 2 19.495 2 18.873c0-.263.09-.504.242-.696 0 0 .114-.155.376-.36.075-.06.677-.562 1.163-1.44.095-.172.374-.777.418-.9.12-.332.204-.734.333-1.31.308-1.977.287-4.796.287-4.796l-.002-.19c0-3.45 2.437-6.328 5.685-7.02V2c0-.83.672-1.5 1.5-1.5s1.5.67 1.5 1.5v.16c3.25.69 5.688 3.57 5.688 7.02 0 .064-.002.127-.003.19 0 .002-.022 2.82.284 4.797.128.576.212.98.332 1.31.044.123.323.728.418.9.486.878 1.088 1.38 1.163 1.44zM12 17.995h6.875c-.137-.198-.274-.415-.405-.652-.13-.235-.458-.936-.548-1.184-.15-.415-.244-.834-.362-1.364l-.043-.19-.014-.067-.01-.067c-.328-2.113-.31-4.996-.308-5.117V9.327c.002-.05.003-.097.003-.146 0-2.854-2.326-5.177-5.187-5.18-2.858.003-5.185 2.326-5.185 5.18 0 .046 0 .092.002.138l.023.857-.03.03c-.016 1.058-.08 2.832-.302 4.268l-.01.066-.014.065-.043.19c-.118.53-.21.95-.362 1.365-.09.247-.417.948-.547 1.183-.13.238-.268.455-.405.652H12zM14.5 21c0 1.38-1.12 2.5-2.5 2.5S9.5 22.38 9.5 21h5z"></path>
-								</svg> <lable style="font-size:20px">通知</lable>
-							</a>
-						</div>
-					</li>
-					<li class="pure-menu-item subnav-item"></br>
-						<div class="item-conatiner">
-							<a href="" class="pure-menu-link subnav-item-link icon-nav-cart ">
-								<svg class="nav-icon nav-icon-cart" width="22" height="22"
-									viewBox="0 0 24 24" data-icon="ec-cart"> <path
-									d="M9.5 10.5H16c.552 0 1 .444 1 1 0 .552-.445 1-1 1H9.5c-.552 0-1-.444-1-1 0-.552.445-1 1-1zM10 21c0-1.105-.895-2-2-2s-2 .895-2 2 .895 2 2 2 2-.895 2-2zm9.5 0c0-1.105-.895-2-2-2s-2 .895-2 2 .895 2 2 2 2-.895 2-2zM4.496 2H4.5c.552.005.998.445 1 .996L7 15h11.5L20 4.996S20.082 4 21 4c.915 0 1 .762 1 1l-1.5 11.004c0 .55-.448.996-1 .996H6c-.552 0-1-.45-1-.996L3.616 4H1.01C.45 4 0 3.556 0 3c0-.552.45-1 1.01-1H4.495zM9.5 5.5H16c.552 0 1 .444 1 1 0 .552-.445 1-1 1H9.5c-.552 0-1-.444-1-1 0-.552.445-1 1-1z"></path>
-								</svg> <lable class="cart-member" style="font-size:20px">購物車</lable>
-							</a> <span class="subnav-item-count" style="color:blue"></span>
-						</div></li></ul>
-					</br>
-		</aside>
+		
+	<%@ include file="/includeFolder/leaseMemberAside.file"%>
 
 		<main class="main">
 

@@ -46,8 +46,12 @@ aside.aside {
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
-	width: calc(100% - 200px - 10px);
+	background-color: 	#F0F0F0; 
+	background-image:url("<%=request.getContextPath()%>/includeFolder/img/OIP3.jpg");
+	background-repeat:no-repeat;
+	background-size: cover;
+	opacity:1;
+	width: 100%;
 	height: 720px;
 	display: inline-block;
 	vertical-align: top;
@@ -71,11 +75,7 @@ th, td {
 	text-align: center;
 }
 
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
+
 
 table#table-1 h4 {
 	color: red;
@@ -111,9 +111,7 @@ th, td {
 	height: 80px;
 }
 
-.signOut{
-background-color:	#FF7575;
-}
+
 .class1{
 background-color:#FFF0AC;
 }
@@ -121,20 +119,34 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+.login1{
+width:30%;
+height:30%;
+background-color:white;
+}
+
+.wrapper{
+text-align: center;
+margin-top: 190px;
+}
+
+.form-signin-heading{
+color:	white;
+} 
+.login{
+background-color:#FFF0AC
+}
 </style>
 </head>
 
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<ul class="nav_list"  height: 100%">
-				
-				
-			</ul>
-		</aside>
+
 	
-		<main class="main" >
+		<main class="main"  >
+
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -149,9 +161,11 @@ background-color:#FFF0AC;
 			<div class="wrapper">
 				<h2 class="form-signin-heading">請登入</h2>
 				<form action="/TFA104G1/ManagerServlet" method="post" >
-				<input type="text" class="form-control" name="managerUser"	placeholder="請輸入帳號" /> 
-				<input type="password" class="form-control"	name="managerPassword" placeholder="請輸入密碼" />
-				<button class="login" type="submit">Login</button>
+				<input class="login1" type="text" class="form-control" name="managerUser"	placeholder="請輸入帳號" /> 
+				<br>
+				<input class="login1" type="password" class="form-control"	name="managerPassword" placeholder="請輸入密碼" />				
+				<br>
+				<button class="login" type="submit">登入</button>
 				<input type="hidden" name="action" value="login" />
 				
 				

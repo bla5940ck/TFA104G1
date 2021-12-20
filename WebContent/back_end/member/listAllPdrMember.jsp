@@ -54,9 +54,9 @@ div.main_content {
     color: blue;
     display: inline;
   }
-    .signOut{
-background-color:#6495ed;
-}
+/*     .signOut{ */
+/* background-color:#6495ed; */
+/* } */
 </style>
 
 <style>
@@ -105,13 +105,16 @@ main.main {
 <%@ include file="/includeFolder/managerHeader.file"%>
 <div class="main_content">
 <%@ include file="/includeFolder/managerAside.file"%>
-<main class="main" style="background-color:#C0C0C0;">
-<table id="table-1">
-	<tr><td>
-		 <h3>待審核會員資料 listAllPdrMember.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/index.jpg" width="200" height="90" border="0"></a></h4>
-	</td></tr>
-</table>
+<main class="main" >
+
+	<tr>
+		<td>
+		 
+		 <button><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp">回首頁</a></button>
+		</td>
+	</tr>
+	<br>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -135,9 +138,9 @@ main.main {
 		<th>會員狀態</th>
 		<th>查看</th>
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="page1_1.file" %> 
 		  <c:forEach var="memberVO"  items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >    
-
+	
 		<tr>
 			<td>${memberVO.memberId}</td>
 			<td>${memberVO.name}</td>

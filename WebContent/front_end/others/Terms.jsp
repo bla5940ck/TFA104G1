@@ -1,78 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.postboard.model.*"%>
+<%@ page import="java.sql.*"%>
+<%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
+
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="Content-Style-Type" content="text/css" />
-<meta name="generator" content="Aspose.Words for .NET 17.1.0.0" />
-<title></title>
-<style>
-body {
-	margin: 0;
-	padding: 10px;
-}
-
-img {
-	max-width: 100%;
-}
-
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
-
-/*-------------------aside區域------------------- */
-/* aside.aside { */
-/* 	width: 200px; */
-/* 	height:620px; */
-/* 	display: inline-block; */
-/* 	vertical-align: top; */
-/* 	font-size: 1rem; */
-/* 	margin-right: 10px; */
-/* 	border: 1px solid #999; */
-/* 	text-align:center; */
-/* } */
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: 100%;
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-table {
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	border: 1px solid lightgrey;
-}
-
-th, td {
-	padding: 5px;
-	text-align: center;
-}
-</style>
+<meta charset="UTF-8">
 </head>
-		<%@ include file="/includeFolder/header.file"%>
+
+<style>
+
+	input.memberId {
+  			background-color: lightgray;
+	}
+	
+</style>
+
+
 <body>
-	<div>
+		<%@ include file="/includeFolder/header.file"%>
+<!-- 錯誤表列 -->
+
+
+<!-- / catg header banner section -->
+
+<!-- Cart view section -->
+	<section id="aa-myaccount">
+		<div class="container">
+			<div class="row" id="row1">
+				<div class="col-md-12" id="col-md-12">
+<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
+						<div class="row" id="row2">
+							<!--<div class="col-md-6" id="col-md-6"> -->
+								<div class="aa-myaccount-login" id="aa-myaccount-login">
+		<br>
+		<br>
 		<p
 			style="margin-top: 0pt; margin-bottom: 40pt; text-align: center; font-size: 28pt">
 			<span style="font-family: '微軟正黑體'; font-weight: bold; color: #161213">服務條款及會員契約</span>
@@ -494,14 +459,20 @@ th, td {
 			style="margin-top: 0pt; margin-bottom: 0pt; widows: 0; orphans: 0; font-size: 12pt">
 			<span style="font-family: Calibri">&#xa0;</span>
 		</p>
-	</div>
-	<%@ include file="/includeFolder/footer2.file"%>
-	<!-- 	<footer class="footer"> footer區域 </footer> -->
-</body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript">
+		<br>
+		<br>
+		<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
+								<br>
+	<br>
 	
-</script>
-
+								</div>
+<!-- 						</div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+<!-- 		</div> -->
+	</section>
+	<%@ include file="/includeFolder/footer2.file"%>
+</body>
 </html>
