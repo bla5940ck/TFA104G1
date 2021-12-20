@@ -200,14 +200,7 @@ a.cart-img > img{
 						<td>
 						<input type="hidden" name="rentRank" value="<%=omVO.getRentRank() == null?"":omVO.getRentRank()%>">						
 						<p id="rr"><%=omVO.getRentRank()%></p></td>
-<!-- 						<td><select name="rentRank" size="1"> -->
-<%-- 								<option value="${OrderMasterVO.rentRank}">評價</option> --%>
-<!-- 								<option value="1">1</option> -->
-<!-- 								<option value="2">2</option> -->
-<!-- 								<option value="3">3</option> -->
-<!-- 								<option value="4">4</option> -->
-<!-- 								<option value="5">5</option> -->
-<!-- 						</select></td> -->
+
 					</tr>
 					<tr>
 						<th>出租方評價</th>
@@ -215,46 +208,21 @@ a.cart-img > img{
 						<input type="hidden" name="leaseRank" value="<%=omVO.getLeaseRank() == null?"":omVO.getLeaseRank()%>">
 						<p id="lr"><%=omVO.getLeaseRank()%></p>
 						</td>
-<!-- 						<td><select name="leaseRank" size="1"> -->
-<%-- 								<option value="${OrderMasterVO.leaseRank}">評價</option> --%>
-<!-- 								<option value="1">1</option> -->
-<!-- 								<option value="2">2</option> -->
-<!-- 								<option value="3">3</option> -->
-<!-- 								<option value="4">4</option> -->
-<!-- 								<option value="5">5</option> -->
-<!-- 						</select></td> -->
+
 					</tr>
 					<tr>
 						<th>承租方評論</th>
 						<td>
 						<input type="hidden" name="rentComt" value="<%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt() %>">					
 						<p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td>
-<!-- 						<td> -->
-<!-- 						<select name="rentComt"> -->
-<%-- 								<option value="${OrderMasterVO.rentComt}">請選擇</option> --%>
-<!-- 								<option value="出貨快 !">出貨快 !</option> -->
-<!-- 								<option value="價格合理 !">價格合理 !</option> -->
-<!-- 								<option value="溝通良好 !">溝通良好 !</option> -->
-<!-- 								<option value="態度不佳 !">態度不佳 !</option> -->
-<!-- 								<option value="出貨速度慢 !">出貨速度慢 !</option> -->
-<!-- 								<option value="與照片不符 !">與照片不符 !</option> -->
-<!-- 						</select> -->
-<!-- 						</td> -->
+
 					</tr>
 					<tr>
 						<th>出租方評論</th>
 						<td>
 						<input type="hidden" name="leaseComt" value="<%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %>">
 						<p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td>
-<!-- 						<td><select name="leaseComt"> -->
-<%-- 								<option value="${OrderMasterVO.leaseComt}">請選擇</option> --%>
-<!-- 								<option value="出貨快 !">歸還快速 !</option> -->
-<!-- 								<option value="價格合理 !">愉快的交易 !</option> -->
-<!-- 								<option value="溝通良好 !">溝通良好 !</option> -->
-<!-- 								<option value="態度不佳 !">態度不佳 !</option> -->
-<!-- 								<option value="出貨速度慢 !">還貨速度慢 !</option> -->
-<!-- 								<option value="不愛惜物品 !">不愛惜物品 !</option> -->
-<!-- 						</select></td> -->
+
 					</tr>
 				</table>
 				<input type="hidden" name="action" value="update"> 
@@ -268,7 +236,6 @@ a.cart-img > img{
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">
 				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
 				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
-<%-- 				<center><%@ include file="/includeFolder/comment.file" %></center> --%>
 				<center><input type="submit" value="確認更新"></center>
 			</main>
 		</div>
