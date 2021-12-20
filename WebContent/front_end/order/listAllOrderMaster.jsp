@@ -14,6 +14,11 @@
 <%@page import="com.product.model.*"%>
 <%@page import="java.util.stream.Collectors"%>
 
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 
 <%
 	MemcouponDAO memDAO = new MemcouponDAO();
@@ -31,13 +36,16 @@
 	
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 	List<OrderMasterVO> list = omSVC.getAll();
-	List<OrderMasterVO> list1 = omSVC.getAll();
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
 									.filter(o->o.getLeaseID()==memID)
 										.collect(Collectors.toList());
-
+	if(request.getAttribute("list") != null){
+		list2 = (List) request.getAttribute("list");
+	}
+	
+	
 	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="memSVC" scope="page"
@@ -138,6 +146,31 @@ th, td {
 					<b>輸入訂單編號 (如1):</b> 
 					<input type="text" name="ordID"> 
 					<input type="hidden" name="action" value="getOne_For_Display"> 
+					<input type="submit" value="送出">
+				</FORM>
+				
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+					<b>依月份查詢 :</b> 
+					<select  name="month">
+					<option value="1">1月</option>
+					<option value="2">2月</option>
+					<option value="3">3月</option>
+					
+					<option value="4">4月</option>
+					<option value="5">5月</option>
+					<option value="6">6月</option>
+					
+					<option value="7">7月</option>
+					<option value="8">8月</option>
+					<option value="9">9月</option>
+					
+					<option value="10" >10月</option>
+					<option value="11" >11月</option>
+					<option value="12">12月</option>
+					
+					</select>
+				
+					<input type="hidden" name="action" value="get_Date_Display"> 
 					<input type="submit" value="送出">
 				</FORM>
 			</div>
@@ -322,4 +355,28 @@ th, td {
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
+<script>
+ $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date1").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m',
+	       value:'',
+	       changeMonth: true,
+        });
+ </script>
 </html>

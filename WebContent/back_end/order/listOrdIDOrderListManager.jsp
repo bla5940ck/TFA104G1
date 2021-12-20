@@ -23,7 +23,7 @@
 <meta charset="UTF-8">
 <title>訂單狀態查詢</title>
 <style>
- body {
+body {
 	margin: 0;
 	padding: 10px;
 }
@@ -35,7 +35,7 @@ img {
 button {
 	font-size: 13px;
 	outline-width: 100%;
-	background-color: white;
+	background-color: inherit;
 }
 
 div.main_content {
@@ -87,7 +87,7 @@ th, td {
 }
 
 table#table-1 {
-	background-color: #CCCCFF;
+	
 	border: 2px solid black;
 	text-align: center;
 }
@@ -135,6 +135,18 @@ background-color:#FFF0AC;
 
 input{
 background-color:#FFF0AC;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+
+.a1{
+border:3px solid black;
+background-color:white;
 }
 </style>
 </head>
@@ -210,7 +222,7 @@ background-color:#FFF0AC;
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
-	<%@ include file="/includeFolder/footer2.file" %>
+	
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">

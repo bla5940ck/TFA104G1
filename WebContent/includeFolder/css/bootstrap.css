@@ -130,6 +130,7 @@ input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer;
+  background-color:#FFF0AC;
 }
 button[disabled],
 html input[disabled] {
