@@ -524,7 +524,7 @@ public class OrderMasterServlet extends HttpServlet {
 				AllInOne all = new AllInOne("");
 				AioCheckOutALL obj = new AioCheckOutALL(); //產生訂單
 				obj.setMerchantID("2000132");
-				obj.setMerchantTradeNo("JoyLease_test");		//賣方編號
+				obj.setMerchantTradeNo("123129940");		//賣方編號
 				obj.setMerchantTradeDate("2017/01/01 08:05:23"); //交易日期
 				obj.setTotalAmount(ordPrice.toString());          //交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台");       //交易描述
