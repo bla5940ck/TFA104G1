@@ -5,17 +5,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.memberservice.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
 <%
 	MemberServiceService msSvc = new MemberServiceService();
-// 	List<MemberServiceVO> list = msSvc.getAll();
-// 	pageContext.setAttribute("list", list);
-// 	for(MemberServiceVO mcVO : list){
-// 		System.out.println("圖1"  + mcVO.getPic1());
-// 	}	
-	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");	
-	List<MemberServiceVO> list = msSvc.getByProdID(2);
+	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
+	Integer id = Integer.valueOf(request.getParameter("prodID"));
+	List<MemberServiceVO> list = msSvc.getByProdID(id);
+	System.out.println(list.size());
 	pageContext.setAttribute("list", list);
-// 	System.out.print(msVO.getMsgID());
 %>
 
 <html>
@@ -49,17 +47,19 @@ aside.aside {
 	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
 	text-align: center;
-	background-color:#F0B594;
+	background-color:#F5D998;;
 	height:720px;
 }
 
+
+
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -83,8 +83,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-</style>
-<style>
+
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -101,9 +100,7 @@ h4 {
 	color: red;
 	display: inline;
 }
-</style>
 
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -128,7 +125,14 @@ th, td {
 }
 
 .signOut{
-background-color:#6495ed;
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
 }
 </style>
 </head>
@@ -136,7 +140,7 @@ background-color:#6495ed;
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main" style="background-color:#C0C0C0;">
+		<main class="main" >
 			<h4>此頁練習採用 EL 的寫法取值:</h4>
 			<table id="table-1">
 				<tr>
@@ -197,10 +201,17 @@ background-color:#6495ed;
 			</c:forEach>
 		</table>
 			<%@ include file="page2.file"%>
+			<button class="back_btn">返回上一頁</button>
 			
 			
 		</main>
 	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
 
+</script>
 </body>
 </html>

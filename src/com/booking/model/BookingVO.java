@@ -2,12 +2,13 @@ package com.booking.model;
 
 import java.sql.Date;
 
-public class BookingVO {
+public class BookingVO implements java.io.Serializable{
 	private Integer bkID;
 	private Integer prodID;
 	private Integer status;
 	private Date estStart;
 	private Date estEnd;
+	private Integer ordID;
 	
 	public BookingVO() {
 		super();
@@ -15,13 +16,26 @@ public class BookingVO {
 	}
 	
 	
-	public BookingVO(Integer bkID, Integer prodID, Integer status, Date estStart, Date estEnd) {
+	public BookingVO(Integer bkID, Integer prodID, Integer status, Date estStart, Date estEnd,Integer ordID) {
 		super();
 		this.bkID = bkID;
 		this.prodID = prodID;
 		this.status = status;
 		this.estStart = estStart;
 		this.estEnd = estEnd;
+		this.ordID = ordID;
+	}
+
+	
+	
+
+	public Integer getOrdID() {
+		return ordID;
+	}
+
+
+	public void setOrdID(Integer ordID) {
+		this.ordID = ordID;
 	}
 
 

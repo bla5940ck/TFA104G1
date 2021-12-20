@@ -16,7 +16,7 @@
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="header2.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
@@ -33,35 +33,33 @@
               <div class="col-md-9">
                 <div class="aa-blog-content">
                   <div class="row">
-                    <div class="col-md-4 col-sm-4">
-                  
-                     <jsp:useBean id="pbSvc" scope="page" class="com.postboard.model.PostBoardService" />
-                    		<c:forEach var="pbVO" items="${pbSvc.all}" varStatus="status">
-<%--                     			<c:if test="${(status.count-1)%2==0||status.count==2}" > --%>
-	                      			<article class="aa-latest-blog-single">
-	                        			<figure class="aa-blog-img">                    
-	                          				<a href=""><img alt="" 
-	                          			   	   src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pbVO.postId}&action=writePic"></a>  
-	                        				<figcaption class="aa-blog-img-caption">
-	                            				<a href="#"><i class="fa fa-comment-o"></i>${pbVO.replyCount}</a>
-	                            				<span href="#"><i class="fa fa-clock-o"></i>${pbVO.postTime}</span>
-	                          				</figcaption>                          
-	                        			</figure>
-	                        	<div class="aa-blog-info">
-	                          	<h3 class="aa-blog-title"><a href="#">${pbVO.postTitle}</a></h3>
-	                          	<p>${pbVO.postCont}</p> 
-	                            
-	                          		<a class="aa-read-mor-btn" 
-	                          	 	   href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">
-	                          	 	       全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
-	                        	</div>
+	                    <jsp:useBean id="pbSvc" scope="page" class="com.postboard.model.PostBoardService" />
+	                    	<c:forEach var="pbVO" items="${pbSvc.all}" varStatus="status">
+
+	                    	 <div class="col-md-4 col-sm-4">
+		                      	<article class="aa-latest-blog-single">
+		                        	<figure class="aa-blog-img">                    
+		                          		<a href=""><img alt="" 
+		                          		   src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pbVO.postId}&action=writePic"></a>  
+		                        		   <figcaption class="aa-blog-img-caption">
+		                            		   <a href="#"><i class="fa fa-comment-o"></i>${pbVO.replyCount}</a>
+		                            			 <span href="#"><i class="fa fa-clock-o"></i>${pbVO.postTime}</span>
+		                          		   </figcaption>                          
+		                        	</figure>
+		                        	
+		                        	<div class="aa-blog-info">
+		                          	<h3 class="aa-blog-title"><a href="#">${pbVO.postTitle}</a></h3>
+		                          	<p>${pbVO.postCont}</p> 
+		                          	<a class="aa-read-mor-btn" 
+		                          	   href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">
+		                          	       全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
+	                        		</div>
 	                           </article>
-	                            
-	                           
-<%-- 	                           </c:if> --%>
-                      	 </c:forEach>
-                    </div>                    
+	                          </div>
+	                          
+	                          </c:forEach>               
                   </div>
+                  
                 </div>
                 
                 <!-- Blog Pagination -->
@@ -124,32 +122,43 @@
                       <a href="#">金馬58麻將組</a>
                     </div>
                   </div>
+                  
                   <div class="aa-sidebar-widget">
                     <h3>最新文章</h3>
                     <div class="aa-recently-views">
                       <ul>
+                      <c:forEach var="pbVO" items="${pbSvc.all}" begin="0" end="2" varStatus="status">
                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                          <a class="aa-cartbox-img" href="#">
+                          	<img src="<%=request.getContextPath() %>/PbPhotoShow?postId=${pbVO.postId}" 
+                          	     alt="img"></a>
                           <div class="aa-cartbox-info">
-                            <h4><a href="#">徵求PS5一台</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
+                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">${pbVO.postTitle}</a></h4>
+                            <p>${pbVO.postTime}</p>
+                          </div>                                    
                         </li>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="#">動物森友會</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
-                        </li>
-                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="#">健身環大冒險</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
-                        </li>                                      
-                      </ul>
+                        </c:forEach>
+                       </div>
+                       </ul>
+                    </div>  
+                  
+                        
+<!--                         <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">動物森友會</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li> -->
+                        
+<!--                          <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">健身環大冒險</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li>                                       -->
+<!--                       </ul> -->
                     </div>                            
                   </div>
                 </aside>
@@ -164,5 +173,5 @@
   <!-- / Blog Archive -->
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 </html>

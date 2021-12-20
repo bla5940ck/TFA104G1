@@ -27,7 +27,7 @@ public class PromolistServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		if ("getPromolist".equals(action)) { // 來自select_Promo.jsp的請求
+		if ("getPromolist".equals(action)) { // 來自select_Promolist.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -36,18 +36,22 @@ public class PromolistServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				
 				Integer promo_id = new Integer(req.getParameter("promo_id").trim());
-				System.out.println("專案編號 "+promo_id);
+				
+				
+				
+//				System.out.println("專案編號 "+promo_id);
 				/*************************** 2.開始查詢資料 *****************************************/
-				PromolistService promolistSvc = new PromolistService();
-				List<PromolistVO> promolistVO = promolistSvc.getPromoid(promo_id);
+//				PromolistService promolistSvc = new PromolistService();
+//				List<PromolistVO> promolistVO = promolistSvc.getPromoid(promo_id);
 //				for(PromolistVO prvo : promolistVO) {
 //					System.out.println("這"+prvo.getPromo_id());
 //				}
 
-				if (promolistVO == null) {
-					errorMsgs.add("查無資料");
-				}
+//				if (promolistVO == null) {
+//					errorMsgs.add("查無資料");
+//				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo/listAll_promo.jsp");
@@ -56,7 +60,8 @@ public class PromolistServlet extends HttpServlet {
 				}
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("promolistVO", promolistVO); // 資料庫取出的promoVO物件,存入req
+//				req.setAttribute("promolistVO", promolistVO); // 資料庫取出的promoVO物件,存入req
+				req.setAttribute("promoID", promo_id);
 				String url = "/back_end/promo_list/promolistAll.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOne_promo.jsp
 				successView.forward(req, res);
@@ -301,15 +306,16 @@ public class PromolistServlet extends HttpServlet {
 						start_date, end_date);
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("promolistVO", promolistVO); // 資料庫update成功後,正確的的promoVO物件,存入req
-				String url = "/back_end/promo_list/listOne_promolist.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOne_promo.jsp
+//				req.setAttribute("promolistVO", promolistVO); // 資料庫update成功後,正確的的promoVO物件,存入req
+				req.setAttribute("promoID", promo_id);
+				String url = "/back_end/promo_list/";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // promolistAll.jsp修改成功後,轉交listOne_promo.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo_list/listAll_promolist.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/promo_list/promolistAll.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -410,7 +416,8 @@ public class PromolistServlet extends HttpServlet {
 						start_date, end_date);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back_end/promo_list/add_promolist.jsp";
+				req.setAttribute("promoID", promo_id);
+				String url = "/back_end/promo_list/promolistAll.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAll_promo.jsp
 				successView.forward(req, res);
 

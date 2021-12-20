@@ -223,7 +223,10 @@ request.setAttribute("product", product);
                   <input type="hidden" name="action" value="search">
                   <button type="submit"><span class="fa fa-search"></span></button>
                 </form>
+                	               
               </div>
+                   
+            
 							<!-- / search box -->
 						</div>
 					</div>
@@ -364,8 +367,8 @@ request.setAttribute("product", product);
 
 										<li> <span style="font-size:20px">備註: <%=comt%></span></li>
 										<td class="start" style="font-size:20px">
-										<li><span style="font-size:20px">預計租借日期: <input id="startDate" type="text" ></span></li>
-										 <span style="font-size:20px">預計歸還日期: <input id="endDate" type="text"></span></li>
+										<li><span style="font-size:20px;">預計租借日期: <input id="startDate" type="text"  style="width:150px"></span></li>
+										 <span style="font-size:20px">預計歸還日期: <input id="endDate" type="text"  style="width:150px"></span></li>
 										</td><br><br>
 										<td> <li style="font-size:20px">金額試算:<label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn"></li>
@@ -411,7 +414,7 @@ request.setAttribute("product", product);
 							<!-- Tab panes -->
 							<div class="tab-content">
 								<div class="tab-pane fade in active" id="description">
-
+			
 
 
 
@@ -782,7 +785,10 @@ request.setAttribute("product", product);
 	<!--   自己寫的 -->
 	<script type="text/javascript" src="js/time.js"></script>
 
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>	
+	<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="sweetalert2.all.min.js"></script>
 
 	<script>
 
@@ -823,7 +829,15 @@ function selflog_show(id){
 	    			else if (data.length == 0 || data == null) {
 						alert("請登入會員");
 					} else if (data == count) {
-						alert("此商品重複 確認購物車");
+						Swal.fire({
+							  title: '此商品已存在你購物車',
+							  showClass: {
+							    popup: 'animate__animated animate__fadeInDown'
+							  },
+							  hideClass: {
+							    popup: 'animate__animated animate__fadeOutUp'
+							  }
+							})
 					} else {
 						//加入購物車 數量+1
 					 $("div.aa-cartbox-summary").load("<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=product.getProdID()%>" + " div.aa-cartbox-summary");
@@ -831,28 +845,30 @@ function selflog_show(id){
 					 
 // 						location.reload();
 						$("span.aa-cart-notify").text(
-								parseInt($("input.dataCount").val()) + 1);
+								parseInt($("span.aa-cart-notify").text()) + 1);
 								
-						$("input.dataCount").val(
-								$("span.aa-cart-notify")
-										.text(
-												parseInt($("input.dataCount")
-														.val()) + 1))
+					
 							
-						alert("加入購物車");
-					}
+						Swal.fire({
+ 							 position: 'center',
+  							 icon: 'success',
+ 							 title: '加入購物車',
+ 							 showConfirmButton:false,
+									timer : 1000
+								})
+							}
 
-				},
-			});
+						},
+					});
 		};
 
 		var disableddates = new Array();
 	<%for (int i = 0; i < list.size(); i++) {
 				long k = (list.get(i).getEstEnd().getTime() - list.get(i).getEstStart().getTime()) / 86400000;
 
-				for (long j = 0; j <= k + 6; j++) {
+				for (long j = 0; j <= k ; j++) {
 					//儲存所有的區間日期
-					long d = list.get(i).getEstStart().getTime() + 86400000 * (j - 3);//前3後3緩衝計算
+					long d = list.get(i).getEstStart().getTime() + 86400000 * (j);
 					%>
 		disableddates.push(
 	<%=d%>
@@ -878,8 +894,54 @@ function selflog_show(id){
 		
 		
 		$("input.report-btn").click(function(){
-			location.href="<%=path%>/back_end/memberservice/problemTypeReport.jsp";
+			location.href="<%=path%>/front_end/memberservice/problemTypeReport.jsp?prodID=<%=product.getProdID()%>";
 		});
+		
+		
+		
+		
+		$.ajax({
+			type:"post",
+			contentType:"application/x-www-form-urlencoded;charset=utf-8",
+			url:"/TFA104G1/prod/LabelServlet?action=showLabel",
+			dataType:"json",
+			cache:false,
+			success:function(data){
+// 				console.log(data);
+				for(var i =0;i<7;i++){
+					$('label.searchLabel').append("#"+ "<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>&nbsp&nbsp")
+				}
+//		 		$('div.tag-cloud').append()
+				
+			},
+			error:function(){
+				console.log("失敗");
+			}
+		});
+		
+		
+		
+		//最近瀏覽
+		$.ajax({
+			type:"post",
+			dataType:"json",
+			url:"/TFA104G1/prod/LabelServlet",
+			data:{
+				action:"cookieID",
+				cookie :"y",
+				prodID :<%=product.getProdID()%>
+			},
+			success:function(data){
+// 				console.log(data);
+				
+			}
+		});
+		
+		
+		
+		
+		
+		
 		
 		
 		
@@ -888,48 +950,7 @@ function selflog_show(id){
 
 
 
-	<%
 	
-		//瀏覽圖片儲存
-		Integer cookieID = 0;
-		Boolean flag = false;
-		ProdVO prodCookie = null;
-		if ("y".equals(request.getParameter("cookie"))) {
-			cookieID = Integer.valueOf(request.getParameter("prodID"));
-			prodCookie = prodSvc.findProductByPK(cookieID);
-		}
-		
-		List<ProdVO> listCookie = (List<ProdVO>) session.getAttribute("listCookie");
-		
-		
-		if (listCookie != null && cookieID != 0 &&listCookie.size()!=0) {
-			for (ProdVO p : listCookie) {
-			
-				if(p==null)
-					listCookie.remove(0);
-				
-				flag = flag || (p.getProdID() == cookieID);
-			} //假如編號有重複 就不加入瀏覽清單
-			if (!flag) {
-				if (listCookie.size() >= 3) { //大於三張圖片 刪除第一張 
-					listCookie.remove(0);
-				}
-				listCookie.add(prodCookie);
-				
-			}
-			
-			session.setAttribute("listCookie", listCookie);
-		}
-		//還沒瀏覽時，new 一個list
-		if (listCookie == null) {
-			listCookie = new ArrayList();
-			listCookie.add(prodCookie);
-			session.setAttribute("listCookie", listCookie);
-
-		}
-		
-		
-	%>
 
 
 </body>

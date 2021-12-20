@@ -3,7 +3,7 @@
 <%@ page import="com.postboard.model.*"%>
 <%@ page import="com.pbreply.model.*"%>
 <%@ page import="java.sql.*"%>
-<%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
+<%@ page import="java.io.*,java.util.*, javax.servlet.*,java.text.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -17,16 +17,18 @@
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="header2.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
 	PostBoardService pbSvc = new PostBoardService();
 	PostBoardVO  pb = pbSvc.findByPrimaryKey(Integer.valueOf(request.getParameter("postId")));
-	pageContext.setAttribute("pb",pb );
+	pageContext.setAttribute("pb", pb );
 	
 	pbReplyVO pbrVO = (pbReplyVO) request.getAttribute("pbrVO");
-	pbReplyService pbrSvc = new pbReplyService();
+	//pbReplyService pbrSvc = new pbReplyService();
+	pageContext.setAttribute("pbr",pbrVO);
+	
 	
 %>
 
@@ -40,16 +42,17 @@
                 <!-- Blog details -->
                 <div class="aa-blog-content aa-blog-details">
                   <article class="aa-blog-content-single">                        
-                    <h2><a href="#" >${pb.postTitle}</a></h2>
+                    <h2><a href="#" >${pb.postTitle}</a></h2><!--徵求標題-->
                      <div class="aa-article-bottom">
-                      <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div>
-                      <div class="aa-post-date">${pb.postTime}</div>
+                      <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div><!--會員ID -->
+                      <div class="aa-post-date">${pb.postTime}</div><!--發文時間 -->
                      </div>
-                    <figure class="aa-blog-img">
+                     
+                    <figure class="aa-blog-img"><!--內文照片 -->
                       <a href="#"><img 
-                      	 src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pbVO.postId}&action=writePic"/></a>
+                      	 src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pb.postId}&action=writePic"/></a>
                     </figure>
-                    <p>${pb.postCont}</p>
+                    <p>${pb.postCont}</p><!--徵求內容 -->
                    
                     <div class="blog-single-bottom">
                       <div class="row">
@@ -75,128 +78,78 @@
                    
                   </article>
                   <!-- blog navigation -->
-                  <div class="aa-blog-navigation">
-                    <a class="aa-blog-prev" href="#"><span class="fa fa-arrow-left"></span>上一篇</a>
-                    <a class="aa-blog-next" href="#">下一篇<span class="fa fa-arrow-right"></span></a>
+                  <div class="aa-blog-navigation"><!--上下篇-->
+                    <a class="aa-blog-prev" 
+                       href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId+1}">上一篇<span class="fa fa-arrow-left"></span></a>
+                       
+                    <a class="aa-blog-next" 
+                       href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pb.postId-1}">下一篇<span class="fa fa-arrow-right"></span></a>
+                       
                   </div>
+                  
+                  
                   <!-- Blog Comment threats -->
                   <div class="aa-blog-comment-threat">
-                    <h3>留言 ( ${pbVo.replyCount} )</h3>
+                  <jsp:useBean id="pb1" class="com.postboard.model.PostBoardService"/>
+                  
+                    <h3>留言 ( ${pb1.findByPrimaryKey(pb.postId).replyCount} )</h3><!--留言數 -->
                     <div class="comments">
                       <ul class="commentlist">
-                        <li>
-                          <div class="media">
-                            <div class="media-left">    
-                                <img class="media-object news-img" src="img/testimonial-img-3.jpg" alt="img">      
-                            </div>
-                            <div class="media-body">
-                             <h4 class="author-name">${pbrVO.memberId}</h4>
-                             <span class="comments-date"></span>
-                             <p>${pbrVO.replyCont}</p>
-<!--                              <a href="#" class="reply-btn">回覆留言</a> -->
-                            </div>
-                          </div>
-                        </li>
-                        
-                        
-                        <li>
-                          <div class="media">
-                            <div class="media-left">    
-                                <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">      
-                            </div>
-                            <div class="media-body">
-                             <h4 class="author-name">Charlie Balley</h4>
-                             <span class="comments-date"> March 26th 2016</span>
-                             <p></p>
-<!--                              <a href="#" class="reply-btn">回覆留言</a> -->
-                            </div>
-                          </div>
-                        </li>
-                        
-                        
-<!--                         <ul class="children"> -->
-<!--                           <li class="author-comments"> -->
-<!--                             <div class="media"> -->
-<!--                               <div class="media-left">     -->
-<!--                                   <img class="media-object news-img" src="img/testimonial-img-3.jpg" alt="img">       -->
-<!--                               </div> -->
-<!--                               <div class="media-body"> -->
-<!--                                <h4 class="author-name">Admin</h4> -->
-<!--                                <span class="comments-date"> March 26th 2016</span> -->
-<!--                                <span class="author-tag">Author</span> -->
-<!--                                <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p> -->
-<!--                                <a href="#" class="reply-btn">回覆留言</a> -->
-<!--                               </div> -->
-<!--                             </div> -->
-<!--                           </li> -->
-                          
-                          
-<!--                           <ul class="children"> -->
-<!--                             <li> -->
-<!--                               <div class="media"> -->
-<!--                                 <div class="media-left">     -->
-<!--                                     <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">       -->
-<!--                                 </div> -->
-<!--                                 <div class="media-body"> -->
-<!--                                  <h4 class="author-name">Charlie Balley</h4> -->
-<!--                                  <span class="comments-date"> March 26th 2016</span> -->
-<!--                                  <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p> -->
-<!--                                  <a href="#" class="reply-btn">回覆留言</a> -->
-<!--                                 </div> -->
-<!--                               </div> -->
-<!--                             </li> -->
-<!--                           </ul> -->
-                        </ul>
-                        
-                        
-                        
-<!--                         <li> -->
-<!--                           <div class="media"> -->
-<!--                             <div class="media-left">     -->
-<!--                                 <img class="media-object news-img" src="img/testimonial-img-2.jpg" alt="img">       -->
-<!--                             </div> -->
-<!--                             <div class="media-body"> -->
-<!--                              <h4 class="author-name">Charlie Balley</h4> -->
-<!--                              <span class="comments-date"> March 26th 2016</span> -->
-<!--                              <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English</p> -->
-<!--                              <a href="#" class="reply-btn">回覆留言</a> -->
-<!--                             </div> -->
-<!--                           </div> -->
-<!--                         </li> -->
-<!--                       </ul> -->
                       
+                     <jsp:useBean id="pbrSvc" scope="page" class="com.pbreply.model.pbReplyService"/>
+               		  <c:forEach var="pbrVO" items="${pbrSvc.all}" varStatus="status">
+               		  	<c:if test="${pbrVO.postId == pb.postId}">
+               		  	
+<!--              SELECT reply_id,post_id,member_id,reply_cont,reply_time FROM pb_reply where post_id=1; -->
+                        <li>
+                          <div class="media">
+                            <div class="media-left">    
+                                <img class="media-object news-img" src="" alt="img">      
+                            </div>
+                            <div class="media-body">
+                             <h4 class="author-name">${pb.memberId}</h4><!--留言會員編號-->
+                             <span class="comments-date"></span>
+                             <p style="font-size:8px;">${pb.postTime}</p>
+                             <p>${pbrVO.replyCont}</p><!--留言內容 -->
+
+                            </div>
+                          </div>
+                        </li>
+                        </c:if>
+                     </c:forEach>
+                     
+                     </ul>
                     </div>
                     <div class="aa-blog-archive-pagination">
                       <nav>
                         <ul class="pagination">
-                          <li>
-                            <a href="#" aria-label="Previous">
-                              <span aria-hidden="true">«</span>
-                            </a>
-                          </li>
-                          <li><a href="#">1</a></li>
-                          <li><a href="#">2</a></li>
-                          <li><a href="#">3</a></li>
-                          <li><a href="#">4</a></li>
-                          <li><a href="#">5</a></li>
-                          <li>
-                            <a href="#" aria-label="Next">
-                              <span aria-hidden="true">»</span>
-                            </a>
-                          </li>
+<!--                           <li> -->
+<!--                             <a href="#" aria-label="Previous"> -->
+<!--                               <span aria-hidden="true">«</span> -->
+<!--                             </a> -->
+<!--                           </li> -->
+<!--                           <li><a href="#">1</a></li> -->
+<!--                           <li><a href="#">2</a></li> -->
+<!--                           <li><a href="#">3</a></li> -->
+<!--                           <li><a href="#">4</a></li> -->
+<!--                           <li><a href="#">5</a></li> -->
+<!--                           <li> -->
+<!--                             <a href="#" aria-label="Next"> -->
+<!--                               <span aria-hidden="true">»</span> -->
+<!--                             </a> -->
+<!--                           </li> -->
                         </ul>
                       </nav>
                     </div>
                   </div>
+                  
                   <!-- blog comments form -->
                   <div id="respond">
                     <h3 class="reply-title">留言</h3>
                     <form id="commentform" method="post" name="form1" 
-                    	  action="<%=request.getContextPath()%>/pbReplyServlet?postId=${pbVO.postId}">
+                    	  action="<%=request.getContextPath()%>/pbReplyServlet?postId=${pb.postId}">
                       
                       <p class="comment-form-author">
-<!--                       	<label for="">文章編號<span>*</span></label> -->
-<!-- 						<input type="Text" name="postId" value=""/> -->
 						
                         <label for="author">會員編號<span class="required">*</span></label>
                         <input type="text" name="memberId" value="" size="30" required="required">
@@ -204,8 +157,9 @@
 <!--                         <label for="">留言編號<span>*</span></label> -->
 <!-- 						<input type="Text" name="replyId" value=""/> -->
 						
-						<label for="replyTime">上傳時間</label>
-						<input name="replyTime" id="date" type="text"></input>
+<!-- 						<label for="replyTime">上傳時間</label> -->
+<!-- 						<input name="replyTime" id="date" type="text"></input> -->
+						
                         
                       </p>
                  
@@ -215,8 +169,11 @@
                       </p>
                      
                       <p class="form-submit">
-                        <input type="submit" class="aa-browse-btn" value="insert">
-                      </p>        
+                      <input type="submit" class="aa-browse-btn" value="送出留言"/>
+                      <input type="hidden"  class="aa-browse-btn" name="action" value="insert"/>
+                      
+                        
+                   	  </p>        
                     </form>
                   </div>
                 </div>
@@ -266,33 +223,43 @@
                     <h3>最新文章</h3>
                     <div class="aa-recently-views">
                       <ul>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+	                 <c:forEach var="pbVO" items="${pb1.all}" begin="0" end="2" varStatus="status">
+                		<li>
+                          <a class="aa-cartbox-img" href="#">
+                          	<img src="<%=request.getContextPath() %>/PbPhotoShow?postId=${pbVO.postId}"  alt="img"></a>
                           <div class="aa-cartbox-info">
-                            <h4><a href="#">徵求PS5一台</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
+                            <h4><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">${pbVO.postTitle}</a></h4>
+                            <p>${pbVO.postTime}</p>
+                          </div>                                    
                         </li>
-                        <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="#">動物森友會</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
-                        </li>
-                         <li>
-                          <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
-                          <div class="aa-cartbox-info">
-                            <h4><a href="#">健身環大冒險</a></h4>
-                            <p>March 26th 2016</p>
-                          </div>                    
-                        </li>                                      
-                      </ul>
+                      </c:forEach>
+                       </div>
+                       </ul>
+                    </div>  
+                  
+                        
+<!--                         <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">動物森友會</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li> -->
+                        
+<!--                          <li> -->
+<!--                           <a class="aa-cartbox-img" href="#"><img src="" alt="img"></a> -->
+<!--                           <div class="aa-cartbox-info"> -->
+<!--                             <h4><a href="#">健身環大冒險</a></h4> -->
+<!--                             <p>March 26th 2016</p> -->
+<!--                           </div>                     -->
+<!--                         </li>                                       -->
+<!--                       </ul> -->
                     </div>                            
                   </div>
                 </aside>
               </div>
             </div>
+           
           </div>
         </div>
       </div>
@@ -305,5 +272,7 @@
 
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
+
+
 </html>

@@ -4,7 +4,7 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 <%
- 	System.out.println(request.getAttribute("pbVO"));
+ 	System.out.println("11111 " +request.getAttribute("pbVO"));
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
 // 	System.out.print(pbVO.getPostId());
 %>
@@ -34,14 +34,7 @@ input:read-only {
 <%@ include file="header.file" %>
 
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+
 
 <!-- *loading畫面很久* -->
 <!-- 	wpf loader Two -->
@@ -66,6 +59,15 @@ input:read-only {
 <!-- 							<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
 									<h4>修改發文</h4>
+										<c:if test="${not empty errorMsgs}">
+											<font style="color:red">請修正以下錯誤:</font>
+											<ul>
+											<c:forEach var="message" items="${errorMsgs}">
+												<li style="color:red">${message}</li>
+											</c:forEach>
+											</ul>
+										</c:if>
+									
 									<form method="post" 
 										  action="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" 
 										  name="form1" class="aa-login-form" enctype="multipart/form-data">
@@ -94,17 +96,14 @@ input:read-only {
 											<div>
 												 <input type="text" name="postCont" value="<%=pbVO.getPostCont() %>"/>
 											</div>
-										<label for="">上傳圖片</label> <input type="file" name="pic"/>
-<!-- 											<label for="">項目分類<span>*</span></label> <input  -->
-<!-- 											type="text" placeholder="請選擇分類" name="categoryId"/> -->
-<!-- 											<label for="">項目分類<span>*</span></label> <input  -->
-<!-- 											type="text" placeholder="請選擇分類" name="categoryId"/> -->
+											
+										<label for="">上傳圖片</label> 
+										<image id="upload" width="200" height="100" src="<%=request.getContextPath() %>/PbPhotoShow?postId=${pbVO.postId}"/>
+										<div><input type="file" name="pic" value=""
+												   onchange="document.getElementById('upload').src = window.URL.createObjectURL(this.files[0])"/></div>
 
-<!-- 										<label for="postTime">留言則數</label><input  -->
-<%-- 										name="replyCont" type="text" value="<%=pbVO.getReplyCount() %>"/> --%>
-
-										<label for="postTime">上傳時間</label>
-										<input type="text" name="posttime" value="<%=pbVO.getPostTime() %>"/>
+<!-- 										<label for="postTime">上傳時間</label> -->
+<%-- 										<input type="text" name="posttime" value="<%=pbVO.getPostTime() %>"/> --%>
 											
 										
 										 <button type="submit" class="aa-browse-btn" name="action" value="update"/>確認修改
@@ -120,6 +119,6 @@ input:read-only {
 	<!-- / Cart view section -->
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="footer2.file" %>
 </html>
 

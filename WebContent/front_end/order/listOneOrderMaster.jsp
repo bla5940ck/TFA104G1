@@ -91,17 +91,9 @@ th, td {
 <body bgcolor="white">
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<ul class="nav_list">
-					<h2>出租者專區</h2>
-					<h4><a href="http://localhost:8081/TFA104G1/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
-				</ul>
-			</nav>
-		</aside>
-
+		<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">			
-		<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
+		<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/BackEndOrderServlet" style="margin-bottom: 0px;">
 			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
 				<input type="submit" value="更新">
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">

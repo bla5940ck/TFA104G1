@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
+<%@page import="java.util.stream.Collectors"%>
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
@@ -10,9 +11,20 @@
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
 	OrderMasterService omSVC = new OrderMasterService();
-	List<OrderMasterVO> list = omSVC.getStatus(2);
+	List<OrderMasterVO> list = omSVC.getStatus(omVO.getOrdStatus());
 
-	pageContext.setAttribute("list", list);
+// 	pageContext.setAttribute("list", list);
+
+// 	List<OrderMasterVO> list = omSVC.getAll();
+	List<OrderMasterVO> list1 = omSVC.getAll();
+	
+	List<OrderMasterVO> list2 =list.
+								stream()
+									.filter(o->o.getLeaseID()==memID)
+										.filter(o -> o.getOrdStatus() == omVO.getOrdStatus())
+											.collect(Collectors.toList());
+
+	pageContext.setAttribute("list", list2);
 %>
 <jsp:useBean id="prodSVC" scope="page" class="com.product.model.ProdService" />
 <%-- <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" /> --%>
@@ -91,16 +103,8 @@ th, td {
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<aside class="aside">
-			<nav class="nav">
-				<h3>出租者專區</h3>
-				<h5>會員編號 : <%=memID%></h5>
-				<ul class="nav_list">
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部訂單</a></h4>
-					<h4><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">訂單評價</a></h4>
-				</ul>
-			</nav>
-		</aside>
+	<%@ include file="/includeFolder/leaseMemberAside.file"%>
+
 		<main class="main">
 			<div>
 				<FORM METHOD="post"
@@ -167,7 +171,7 @@ th, td {
 			<table id="table-1">
 				<tr>
 					<th>訂單編號</th>
-					<th>出租者</th>
+					<th>承租者</th>
 					<th>交易方式</th>
 					<th>折價券</th>
 					<th>運送狀態</th>
@@ -183,13 +187,13 @@ th, td {
 					<th>承租天數</th>
 					<th>訂單金額</th>
 				</tr>
-				<%@ include file="page1.file"%>
+				<%@ include file="pageForLease.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 					<c:choose>
 						<c:when test="${omVO.leaseID == id}">
 							<tr>
 								<td>${omVO.ordID}</td>
-								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
+								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
 										<td>信用卡</td>
@@ -199,14 +203,21 @@ th, td {
 									</c:otherwise>
 								</c:choose>
 
-								<c:choose>
-									<c:when test="${omVO.couponID == ''}">
-										<td>無</td>
-									</c:when>
-									<c:otherwise>
-										<td>${mcoSVC.findByPrimaryKey(omVO.couponID).coupon_name}</td>
-									</c:otherwise>
-								</c:choose>
+								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+							<c:set var="count" value="0"/>
+								<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+									<c:if test="${count==0}">
+										<c:choose>
+											<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+												<td>無</td>
+											</c:when>
+											<c:when test="${true}">
+												<td>${mcVO.coupon_name}</td>
+											</c:when>
+										</c:choose>
+										<c:set var="count" value="1"/>
+									</c:if>
+								</c:forEach>
 
 								<c:choose>
 									<c:when test="${omVO.shipStatus == '0'}">

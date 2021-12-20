@@ -166,29 +166,32 @@ public class PostBoardServlet extends HttpServlet {
 //				}
 				//System.out.println(postCont);
 
-				String ts = req.getParameter("posttime");
-				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				Date date = sdf.parse(ts);// date 格式
+//				String ts = req.getParameter("posttime");
+//				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//				Date date = sdf.parse(ts);// date 格式
+//				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
+//				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
+				
+				Date date = new Date();
+				long time =date.getTime();
+				Timestamp postTime = new Timestamp(time);
+				//DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				System.out.println(postTime);
 
-				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
-
-				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
-
-				//System.out.println(ts);
-
-				Integer replyCount = null;
+				Integer replyCount = 0;
 				//System.out.println(replyCount);
 
 				Part part = req.getPart("pic"); 
-				//System.out.println(part);
+				System.out.println("testpic");
 				InputStream in = part.getInputStream();
 				byte[] buf = new byte[in.available()];
 				in.read(buf);
 				in.close();
 				System.out.println("buffer length: " + buf.length);
 				
-				//Integer postId = 0; 
-			
+				
+								
+				
 
 				PostBoardVO pbVO = new PostBoardVO();
 				pbVO.setPostId(postId);
@@ -199,6 +202,8 @@ public class PostBoardServlet extends HttpServlet {
 				pbVO.setPostTime(postTime);
 				pbVO.setReplyCount(replyCount);
 				pbVO.setPic(part2Bytes(part));
+				
+				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -220,13 +225,14 @@ public class PostBoardServlet extends HttpServlet {
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
+				} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}
+		
 
 		// ok
 		if ("insert".equals(action)) { // 來自addarticle.jsp的請求
@@ -276,25 +282,29 @@ public class PostBoardServlet extends HttpServlet {
 //				Timestamp timestamp = new Timestamp(postTime);
 //				String ts = "2021-12-02 20:20:20" ;
 //				SimpleDateFormat sd = 
-				String ts = req.getParameter("posttime");
-				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-				Date date = sdf.parse(ts);// date 格式
-
-				Timestamp timeStamp = new Timestamp(date.getTime()); // new timestamp(long) =>long l = date.getTime();
-
-				java.sql.Timestamp postTime = java.sql.Timestamp.valueOf(ts);
+				//String ts = req.getParameter("posttime");
+				Date date = new Date();
+				long time =date.getTime();
+				Timestamp postTime = new Timestamp(time);
+				//DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				System.out.println(postTime);
 
 				// Integer replyCount = null;
 				// Integer replyCount = new Integer(req.getParameter("replyCount").trim());
 
 
 				Part part = req.getPart("pic"); 
-				//System.out.println(part);
-				InputStream in = part.getInputStream();
-				byte[] buf = new byte[in.available()];
-				in.read(buf);
-				in.close();
-				//System.out.println("buffer length: " + buf.length);
+				if(part.getInputStream().available() == 0) {
+					errorMsgs.add("至少上傳一張圖片");
+				}else {
+					InputStream in = part.getInputStream();
+					byte[] buf = new byte[in.available()];
+					in.read(buf);
+					in.close();
+				}
+				
+				
+				
 
 				PostBoardVO pbVO = new PostBoardVO();
 				// pbVO.setPostId(postId);
@@ -302,7 +312,7 @@ public class PostBoardServlet extends HttpServlet {
 				pbVO.setMemberId(memberId);
 				pbVO.setPostTitle(postTitle);
 				pbVO.setPostCont(postCont);
-				pbVO.setPostTime(timeStamp);
+				pbVO.setPostTime(postTime);
 				// pbVO.setReplyCount(replyCount);
 				pbVO.setPic(part2Bytes(part));
 

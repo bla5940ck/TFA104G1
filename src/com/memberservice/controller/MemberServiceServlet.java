@@ -359,11 +359,18 @@ if ("update".equals(action)) {
 				Integer typeID = new Integer(req.getParameter("typeID"));
 				System.out.println(typeID);
 				
-				Integer prodID = new Integer(req.getParameter("prodID"));
+				Integer prodID =null;
+				if(req.getParameter("prodID")!=null && req.getParameter("prodID").length()!=0) {
+					prodID = new Integer(req.getParameter("prodID"));
+				}
 				System.out.println(prodID);
 				
-				Integer ordID = new Integer(req.getParameter("ordID"));
-				System.out.println(ordID);
+				
+				Integer ordID =null;
+				if(req.getParameter("ordID")!=null && req.getParameter("ordID").length()!=0) {
+				ordID = new Integer(req.getParameter("ordID"));
+				}
+				
 				
 				
 				
