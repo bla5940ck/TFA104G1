@@ -5,9 +5,20 @@
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
+
+	System.out.println(request.getParameter("ordID"));
+	Integer ordID = new Integer(request.getParameter("ordID"));
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+		
 	OrderListVO olVO = new OrderListVO();
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
+	OrderMasterService omSVC = new OrderMasterService();
+	
+	if(request.getAttribute("OrderMasterVO") == null){
+		omVO = omSVC.getOneOrderMaster(ordID);
+		pageContext.setAttribute("OrderMasterVO", omVO);
+		
+	}
 %>
 
 <% 
