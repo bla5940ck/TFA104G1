@@ -95,7 +95,7 @@ aside.aside {
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
-	width: calc(100% - 150px - 10px);
+	width: calc(100% - 200px);
 	height: 620px;
 	display: inline-block;
 	vertical-align: top;
