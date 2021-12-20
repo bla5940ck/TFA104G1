@@ -17,46 +17,131 @@
 <title>後台會員資料 - listAllMember.jsp</title>
 
 <style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
+body {
+	margin: 0;
+	padding: 10px;
+}
 
-<style>
-  table {
-	width: 800px;
+img {
+	max-width: 100%;
+}
+
+button {
+	font-size: 13px;
+	outline-width: 100%;
+	background-color: white;
+}
+
+div.main_content {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 0;
+}
+
+/*-------------------aside區域------------------- */
+aside.aside {
+	width: 200px;	
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;	
+	margin-right: 10px;
+	border: 1px solid #999;
+	text-align: center;
+	background-color:#F5D998;;
+	height:720px;
+}
+
+
+
+/*--------------------main區域-------------------- */
+main.main {
+	background-color: 	#F0F0F0;
+	width: calc(100% - 200px - 10px);
+	height: 720px;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;
+	border: 1px solid #999;
+	padding: 10px;
+}
+
+table {
+	width: 80%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid lightgrey;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+
+table#table-1 {
+	background-color: #CCCCFF;
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: red;
+	display: inline;
+}
+
+table {
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
+}
+
+table, th, td {
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	height: 100px padding: 5px;
+	text-align: center;
+}
+
+.pic {
+	object-fit: contain;
+	width: 95px;
+	height: 80px;
+}
+
+.signOut{
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
 </style>
 
 </head>
 <body bgcolor='white'>
-
-
+<%@ include file="/includeFolder/managerHeader.file"%>
+<div class="main_content">
+<%@ include file="/includeFolder/managerAside.file"%>
+<main class="main" >
 <table id="table-1">
 	<tr><td>
 		 <h3>所有會員資料- listAllMember.jsp</h3>
-		 <h4><a href=""><img src="images/back1.gif" width="100" height="32" border="0">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/index.jpg" width="100" height="32" border="0"></a></h4>
 	</td></tr>
 </table>
 
@@ -71,12 +156,19 @@
 </c:if>
 
   <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet"" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
         <b>輸入會員編號 :</b>
         <input type="text" name="memberId">
-        <input type="hidden" name="action" value="getOneMember">
+        <input type="hidden" name="action" value="getOneMemberMemberId">
+        <input type="submit" value="送出">
+ 	</FORM>
+   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
+        <b>輸入會員登入帳號 :</b>
+        <input type="text" name="loginId">
+        <input type="hidden" name="action" value="getOneMemberLoginId">
         <input type="submit" value="送出">
     </FORM>
+    
   </li>
 
 <table>
@@ -112,7 +204,7 @@
 			</td>
 			<td>
 			     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="停權">
+			     <input type="submit" value="停權" >
 			     <input type="hidden" name="memberId"  value="${memberVO.memberId}">
 			      <input type="hidden" name="action"  value="9"></FORM>
 			</td>
@@ -121,6 +213,8 @@
 </c:forEach> 
 </table>
 <%@ include file="page2.file" %>
+	</main>
+	</div>
 
 </body>
 </html>

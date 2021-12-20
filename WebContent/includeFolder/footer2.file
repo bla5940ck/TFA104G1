@@ -46,7 +46,8 @@
                   <div class="aa-footer-widget">
                     <h3>使用須知</h3>
                     <ul class="aa-footer-nav">
-                      <li><a href="#">服務條款</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/others/Terms.jsp">服務條款及會員契約</a></li>
+                      <li><a href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp">隱私權政策</a></li>
                       <!-- <li><a href="#">Search</a></li>
                       <li><a href="#">Advanced Search</a></li>
                       <li><a href="#">Suppliers</a></li>

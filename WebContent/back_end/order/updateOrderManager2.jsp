@@ -5,9 +5,20 @@
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
+
+	System.out.println(request.getParameter("ordID"));
+	Integer ordID = new Integer(request.getParameter("ordID"));
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+		
 	OrderListVO olVO = new OrderListVO();
 	OrderListDAOImpl oldao = new OrderListDAOImpl();
+	OrderMasterService omSVC = new OrderMasterService();
+	
+	if(request.getAttribute("OrderMasterVO") == null){
+		omVO = omSVC.getOneOrderMaster(ordID);
+		pageContext.setAttribute("OrderMasterVO", omVO);
+		
+	}
 %>
 
 <% 
@@ -24,39 +35,47 @@
 <title>訂單資料更新:</title>
 
 <style>
- body { 
- 	margin: 0; 
- 	padding: 10px; 
- 	z-index: 1001;
- 	
- } 
+body {
+	margin: 0;
+	padding: 10px;
+}
 
 img {
 	max-width: 100%;
 }
 
- div.main_content { 
- 	width: 100%; 
- 	margin: 0 auto; 
- 	font-size: 0; 
- } 
+button {
+	font-size: 13px;
+	outline-width: 100%;
+	background-color: white;
+}
+
+div.main_content {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 0;
+}
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;
-	height:620px;
+	width: 200px;	
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;
+	font-size: 1rem;	
 	margin-right: 10px;
 	border: 1px solid #999;
-	text-align:center;
+	text-align: center;
+	background-color:#F5D998;;
+	height:720px;
 }
+
+
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: white;
+	background-color: 	#F0F0F0;
 	width: calc(100% - 200px - 10px);
+	height: 720px;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -65,30 +84,86 @@ main.main {
 }
 
 table {
+	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	margin-left: 100px;	
-	
 }
 
 table, th, td {
 	border: 1px solid lightgrey;
-	width: 800px; 
-	text-align:center;
-	
 }
 
 th, td {
 	padding: 5px;
+	text-align: center;
 }
 
-th{
-width: 180px;
+table#table-1 {
+	
+	border: 2px solid black;
+	text-align: center;
 }
-a.cart-img > img{
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: red;
+	display: inline;
+}
+
+table {
+	width: 100%;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	height: 100px padding: 5px;
+	text-align: center;
+}
+
+.pic {
 	object-fit: contain;
-	width: 185px;
-	height: 140px;
+	width: 95px;
+	height: 80px;
+}
+
+.signOut{
+background-color:	#FF7575;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+
+.a1{
+border:3px solid black;
+background-color:white;
+}
+
+.img2{
+width: 200px;
+	height: 180px;
 }
 </style>
 </head>
@@ -110,7 +185,7 @@ a.cart-img > img{
 				
 					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
-							<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
+							<img class="img2" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
 					</c:forEach>
 			
 					</tr>
@@ -227,7 +302,7 @@ a.cart-img > img{
 	</FORM>
 			</main>
 		</div>
-	<%@ include file="/includeFolder/footer2.file" %>
+
 </body>
 
 
