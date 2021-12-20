@@ -66,8 +66,8 @@ div.overlay > article{
 
 
 	<%
-		session.setAttribute("id", 1);
-		// String memberID = (String)session.getAttribute("id");
+// 		session.setAttribute("id", 1);
+// 		String memberID = (String)session.getAttribute("id");
 	%>
 
 
