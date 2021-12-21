@@ -87,7 +87,7 @@ input:read-only {
 											<div>
 												<select size="1" name="categoryId">
 													<c:forEach var="prodCategoryVO" items="${cateSvc.allCategory}">
-															<option value="${prodCategoryVO.categoryID}" ${(param.cateNo==prodCategoryVO.categoryID)? 'selected':'' } >${prodCategoryVO.categoryName}
+															<option value="${prodCategoryVO.categoryID}" ${(pbVO.categoryId==prodCategoryVO.categoryID)? 'selected':'' } >${prodCategoryVO.categoryName}
 													</c:forEach>
 												</select>
 											</div>

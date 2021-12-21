@@ -107,7 +107,7 @@
                                 <img class="media-object news-img" src="" alt="img">      
                             </div>
                             <div class="media-body">
-                             <h4 class="author-name">${pb.memberId}</h4><!--留言會員編號-->
+                             <h4 class="author-name">${pbrVO.memberId}</h4><!--留言會員編號-->
                              <span class="comments-date"></span>
                              <p style="font-size:8px;">${pb.postTime}</p>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
