@@ -24,13 +24,13 @@
 <style>
 aside.aside {
 	width: 200px;
-	height: 700px;
+	height: 100%;
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
 	margin-right: 0px;
 	border: 3px solid #999;
-	text-align: left;
+	text-align: center;
 	
 	
 }
@@ -47,7 +47,7 @@ aside.aside {
 						<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
 						</c:when>
 						<c:otherwise>
-					<img style="width:80px;height:80px" id="mh-avatar" src="https://s.yimg.com/ag/images/default_user_profile_pic_192sq.jpg" height="56" alt="用戶大頭貼">
+					<img style="width:150px;height:150px" id="mh-avatar" src="https://s.yimg.com/ag/images/default_user_profile_pic_192sq.jpg" height="56" alt="用戶大頭貼">
 						</c:otherwise>
 						</c:choose>
 						</i> <span class="nav-item-wrap">

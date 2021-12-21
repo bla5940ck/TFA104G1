@@ -441,33 +441,6 @@
               </div>
            
            
-           <script>
-           
-//            $("div.tag-cloud > a").click(function(){
-//         	   var label_name = $(this).text();
-//         	   console.log(label_name)
-//         	   $.ajax({
-<%--         		   url:"<%=request.getContextPath()%>/prod/ProdServlet", --%>
-//         		   type:"POST",
-        		  
-//         		   data:{
-//         			   labelName:label_name,
-//         			   action:'labelClick'
-//         		   },
-//         		   success:function(data){
-//         			   console.log(data);
-        			   
-        			   
-//         		   },error:function(){
-//         			   alert("傳送失敗");
-//         		   }
-        		   
-        		   
-//         	   });
-//         	   return false;
-        	   
-//            });   
-           </script>
            
            
             
