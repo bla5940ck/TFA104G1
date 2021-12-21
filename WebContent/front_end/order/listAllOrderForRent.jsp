@@ -169,9 +169,9 @@ th, td {
 					<th>付款狀態</th>
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-					<th>出貨碼</th>
-					<th>歸還碼</th>
-					<th>超商碼</th>
+<!-- 					<th>出貨碼</th> -->
+<!-- 					<th>歸還碼</th> -->
+<!-- 					<th>超商碼</th> -->
 
 					<th>出貨日期</th>
 					<th>到貨日期</th>
@@ -260,9 +260,9 @@ th, td {
 								<td><fmt:formatDate value="${omVO.ordDate}"
 										pattern="yyyy-MM-dd" /></td>
 
-								<td>${omVO.shipCode}</td>
-								<td>${omVO.returnCode}</td>
-								<td>${omVO.storeCode}</td>
+<%-- 								<td>${omVO.shipCode}</td> --%>
+<%-- 								<td>${omVO.returnCode}</td> --%>
+<%-- 								<td>${omVO.storeCode}</td> --%>
 
 								<td><fmt:formatDate value="${omVO.shipDate}"
 										pattern="yyyy-MM-dd" /></td>
