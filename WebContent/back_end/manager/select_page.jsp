@@ -126,6 +126,10 @@ input{
 background-color:#FFF0AC;
 }
 
+button{
+background-color: #FFF0AC;
+}
+
 
 </style>
 
