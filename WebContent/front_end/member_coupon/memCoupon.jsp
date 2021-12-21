@@ -12,7 +12,7 @@
 
 <html>
 <head>
-<title>折價券領取頁面</title>
+<title>所有訂單資料 - listAllOrderMaster.jsp</title>
 <style>
 body {
 	margin: 0;
@@ -36,21 +36,21 @@ div.main_content {
 }
 
 /*-------------------aside區域------------------- */
-/* aside.aside { */
-/* 	width: 200px; */
-/* 	height:620px; */
-/* 	display: inline-block; */
-/* 	vertical-align: top; */
-/* 	font-size: 1rem; */
-/* 	margin-right: 10px; */
-/* 	border: 1px solid #999; */
-/* 	text-align:center; */
-/* } */
+aside.aside {
+	width: 150px;
+	height: 620px;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;
+	margin-right: 10px;
+	border: 1px solid #999;
+	text-align: center;
+}
 
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
-	width: 100%;
+	width: calc(100% - 150px - 10px);
 	height: 620px;
 	display: inline-block;
 	vertical-align: top;
@@ -60,9 +60,10 @@ main.main {
 }
 
 table {
-	width: 100%;
+	width: 90%;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	font-size: 12px;
 }
 
 table, th, td {
@@ -71,24 +72,28 @@ table, th, td {
 
 th, td {
 	padding: 5px;
-	text-align: center;
+	text-align: left;
 }
 </style>
-</head>
-<body>
 
-		<%@ include file="/includeFolder/header2.file"%>
-	<!-- 	<header class="header"> header區域 </header> -->
-	<div class="main_content">
-		<!-- 		<aside class="aside"> -->
-		<!-- 			<nav class="nav"> -->
-		<!-- 				<ul class="nav_list"> -->
-		<!-- 					<h2>出租者專區</h2> -->
-		<%-- 					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4> --%>
-		<!-- 				</ul> -->
-		<!-- 			</nav> -->
-		<!-- 		</aside> -->
-		<main class="main">
+<body>
+		<%@ include file="/includeFolder/header.file"%>
+		<div class="main_content">
+	<%@ include file="/includeFolder/rentMemberAside.file"%>
+<!-- 錯誤表列 -->
+	<main class="main" >
+
+<!-- / catg header banner section -->
+
+<!-- Cart view section -->
+<!-- 	<section id="aa-myaccount"> -->
+		<div class="container">
+			<div class="row" id="row1">
+				<div class="col-md-12" id="col-md-12">
+<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
+						<div class="row" id="row2">
+							<!--<div class="col-md-6" id="col-md-6"> -->
+								<div class="aa-myaccount-login" id="aa-myaccount-login">
 
 
 
@@ -113,10 +118,10 @@ th, td {
 			<!-- mem_coupon_id, member_id, category_id, coupon_id, coupon_name, discount, status, start_date, end_date -->
 			<table>
 				<tr>
-					<th>會員的折價券編號</th>
+<!-- 					<th>會員的折價券編號</th> -->
 <!-- 					<th>會員編號</th> -->
 <!-- 					<th>商品類別編號</th> -->
-					<th>折價券編號</th>
+<!-- 					<th>折價券編號</th> -->
 					<th>折價券名稱</th>
 					<th>折價金額</th>
 					<th>折價券狀態</th>
@@ -126,10 +131,10 @@ th, td {
 				<c:forEach var="memcouponVO" items="${list}">
 
 					<tr>
-						<td>${memcouponVO.mem_coupon_id}</td>
+<%-- 						<td>${memcouponVO.mem_coupon_id}</td> --%>
 <%-- 						<td>${memcouponVO.member_id}</td> --%>
 <%-- 						<td>${memcouponVO.category_id}</td> --%>
-						<td>${memcouponVO.coupon_id}</td>
+<%-- 						<td>${memcouponVO.coupon_id}</td> --%>
 						<td>${memcouponVO.coupon_name}</td>
 						<td>${Math.round(memcouponVO.discount)}</td>
 						<td>${memcouponVO.status}</td>
@@ -149,10 +154,17 @@ th, td {
 			</table>
 
 
-		</main>
 	</div>
-	<%@ include file="/includeFolder/footer2.file"%>
 	<!-- 	<footer class="footer"> footer區域 </footer> -->
+	
+								</div>
+						</div>
+						</div>
+					</div>
+				</div>
+<!-- 		</section> -->
+<!-- 		</div> -->
+	<%@ include file="/includeFolder/footer2.file"%>
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

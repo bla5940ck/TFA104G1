@@ -24,7 +24,7 @@
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="/includeFolder/header.file" %>
 <!-- 錯誤表列 -->
 
 
@@ -101,7 +101,7 @@
 			</div>
 		</div>
 	</section>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </body>
 </html>
 
