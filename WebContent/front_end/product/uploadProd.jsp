@@ -80,9 +80,7 @@
 <title>JoyLease | upload</title>
 <%@ include file="/includeFolder/header.file"%>
 
-<%
-	session.setAttribute("id", 1);
-%>
+
 
 
 
@@ -188,7 +186,7 @@
 																		.closest(
 																				'div')
 																		.append(
-																				"<label style='font-family:DFKai-sb;'><input  type='checkbox' checked='checked' name='checkbox1' value="
+																				"<label><input  type='checkbox' checked='checked' name='checkbox1' value="
 																						+ $(
 																								'input.addLabel')
 																								.val()
