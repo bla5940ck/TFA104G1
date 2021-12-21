@@ -249,7 +249,7 @@
                 	
                 	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.allByTimeDesc : listSearch}" varStatus="loop">
                 	<c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
-                	<c:if test="${loop.index <12 and (param.page==null or param.page==1)}">
+                	<c:if test="${loop.index <12 and (empty param.page or param.page==1)}">
                 	<li>
                   <figure>
                     <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">

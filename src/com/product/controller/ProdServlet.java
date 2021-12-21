@@ -523,7 +523,7 @@ public class ProdServlet extends HttpServlet {
 				return;
 
 			}
-			// 遞增排列 以及回傳得到的類別ID
+			// 遞減排列 以及回傳得到的類別ID
 			else if (req.getParameter("prodSelect").equals("3")) {
 				List<ProdVO> list = prodSvc.getSortDesc();
 				req.setAttribute("flag", "desc");
