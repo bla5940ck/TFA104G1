@@ -131,14 +131,14 @@ public class PostBoardServlet extends HttpServlet {
 				Integer postId = new Integer(req.getParameter("postId").trim());
 				System.out.println(postId);
 
-				Integer categoryId = null;
+				Integer categoryId = new Integer(req.getParameter("categoryId").trim());
 
-				try {
-					categoryId = new Integer(req.getParameter("categoryId").trim());
-				} catch (NumberFormatException e) {
-					categoryId = 0;
-					errorMsgs.add("商品類別請選擇");
-				}
+//				try {
+//					categoryId = new Integer(req.getParameter("categoryId").trim());
+//				} catch (NumberFormatException e) {
+//					categoryId = 0;
+//					errorMsgs.add("商品類別請選擇");
+//				}
 				System.out.println(categoryId);
 
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
