@@ -18,7 +18,8 @@
   height: 300px;
 }</style> 
   <body> 
-   <%session.setAttribute("id", 1);
+   <%
+   
    response.setHeader("Cache-Control","no-store"); 
    response.setHeader("Pragma","no-cache");        
    response.setDateHeader ("Expires", 0);
@@ -248,7 +249,7 @@
                 	
                 	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.allByTimeDesc : listSearch}" varStatus="loop">
                 	<c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
-                	<c:if test="${loop.index <12 and (param.page==null or param.page==1)}">
+                	<c:if test="${loop.index <12 and (empty param.page or param.page==1)}">
                 	<li>
                   <figure>
                     <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
@@ -440,33 +441,6 @@
               </div>
            
            
-           <script>
-           
-//            $("div.tag-cloud > a").click(function(){
-//         	   var label_name = $(this).text();
-//         	   console.log(label_name)
-//         	   $.ajax({
-<%--         		   url:"<%=request.getContextPath()%>/prod/ProdServlet", --%>
-//         		   type:"POST",
-        		  
-//         		   data:{
-//         			   labelName:label_name,
-//         			   action:'labelClick'
-//         		   },
-//         		   success:function(data){
-//         			   console.log(data);
-        			   
-        			   
-//         		   },error:function(){
-//         			   alert("傳送失敗");
-//         		   }
-        		   
-        		   
-//         	   });
-//         	   return false;
-        	   
-//            });   
-           </script>
            
            
             

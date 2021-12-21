@@ -146,6 +146,10 @@ background-color:#FFF0AC;
 border:3px solid black;
 background-color:white;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 
@@ -217,7 +221,9 @@ background-color:white;
 				</table>
 				<button type="button" id="btn">更新</button>
 			</FORM>
-			<%@ include file="page2.file"%>
+			<%@ include file="page2.file"%>			
+			
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 	
@@ -282,6 +288,13 @@ ordStatus.change(function(){
 	})
 
 
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
 
 </script>
 </html>

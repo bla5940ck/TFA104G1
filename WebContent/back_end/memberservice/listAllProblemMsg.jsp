@@ -4,6 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.memberservice.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <%
 	MemberServiceService msSvc = new MemberServiceService();
 	List<MemberServiceVO> list = msSvc.getAll();
@@ -135,6 +136,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 <body bgcolor='white'>
@@ -142,14 +147,20 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-				<tr>
-					<td>
-						<h4>
-							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
-						</h4>
-					</td>
-				</tr>
-				<br>
+		
+				<div>
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/MemberServiceServlet">
+					<b>依歸還日期查詢訂單:
+					<br>
+						起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+						<br>
+						結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;">
+								<button>確認</button>
+								<input type="hidden" name="action" value="get_date_manager_order">
+					</b>
+				</FORM>
+			</div>
+				
 			<%--錯誤列表 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -174,6 +185,7 @@ background-color:#FFF0AC;
 					<th>圖片二</th>
 					<th>圖片三</th>
 					<th>問題狀態</th>
+					<th>回覆</th>
 
 				</tr>
 				<jsp:useBean id="ptSVC" scope="page"
@@ -223,12 +235,14 @@ background-color:#FFF0AC;
 								
 								<select name="problemStatus" size="1" id="s">
 									<option value="0" ${msVO.problemStatus == 0 ? "selected" : "" }>未處理</option>
-									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>
-									
-								</select> 
+									<option value="1" ${msVO.problemStatus == 1 ? "selected" : "" }>已處理</option>									
+								</select><br> 
 									<input type="hidden" name="action" value="update"> 
 									<input type="submit" value="送出">
 							</FORM>
+						</td>
+						<td>
+						<button class="class1">mail</button>
 						</td>
 
 					</tr>
@@ -239,11 +253,45 @@ background-color:#FFF0AC;
 
 
 			<%@ include file="page2.file"%>
+			<br>
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
 <script >
+$.datetimepicker.setLocale('zh'); // kr ko ja en
+$("#f_date1").datetimepicker({
+   theme: '',          //theme: 'dark',
+   timepicker: false,   //timepicker: false,
+   step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+   format: 'Y-m-d H:i:s',
+   value:'',
+});
+$("#f_date2").datetimepicker({
+   theme: '',          //theme: 'dark',
+   timepicker: false,   //timepicker: false,
+   step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+   format: 'Y-m-d H:i:s',
+   value:'',
+});
+
+
+
+
 var problemMsg = $(".class1");
 $(function(){	
     $(".class1").on("click",function(){
@@ -261,6 +309,13 @@ var val = $(this).val();
     });
 
 });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
 </script>
 
 </html>

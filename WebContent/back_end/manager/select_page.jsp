@@ -47,7 +47,11 @@ aside.aside {
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: 	#F0F0F0; 
+	background-image:url("<%=request.getContextPath()%>/includeFolder/img/OIP6.jpg");
+	background-repeat:no-repeat;
+	background-size: cover;
+	opacity:1;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -121,6 +125,12 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
+
+
 </style>
 
 </head>
@@ -132,7 +142,7 @@ background-color:#FFF0AC;
 		<main class="main" >					
 		
 
-			<h3>管理員查詢:</h3>
+			
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -156,7 +166,7 @@ background-color:#FFF0AC;
 				<li>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>輸入管理者編號 :</b> 
+						<h3 style="color:white;">輸入管理者編號 :</h3> 
 						<input type="text" name="managerID"> 
 						<input type="hidden" name="action" value="getOne_For_Display"> 
 						<input type="submit" value="送出">

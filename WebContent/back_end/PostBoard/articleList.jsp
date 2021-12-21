@@ -61,7 +61,7 @@
                         <th></th> -->
 <!--                           <th>文章序號</th> -->
                           <th style="font-size:14px;">類別編號</th>
-<!--                           <th>發文者編號</th> -->
+                          <th style="font-size:14px;">發文者編號</th>
                           <th style="font-size:14px;">徵求標題</th>
                           <th style="font-size:14px;">徵求內容</th>
                           <th style="font-size:14px;">日期時間</th>
@@ -82,7 +82,7 @@
                       <tr>
 <%--                         <td>${postBoardVO.postId}</td> --%>
 						<td>${postBoardVO.categoryId}</td>
-<%-- 						<td>${postBoardVO.memberId}</td> --%>
+						<td>${postBoardVO.memberId}</td>
 						<td><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${postBoardVO.postId}">${postBoardVO.postTitle}</a></td>
 						<td>${postBoardVO.postCont}</td>
 						<td>${postBoardVO.postTime}</td>

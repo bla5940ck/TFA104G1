@@ -113,6 +113,9 @@ th, td {
 					<th>商品金額</th>
 					<th>預計開始日期</th>
 					<th>預計結束日期</th>
+					<th>出貨碼</th>
+					<th>歸還碼</th>
+					<th>超商碼</th>
 					<th>訂單狀態</th>
 <!-- 					<th>更新狀態</th> -->
 				</tr>
@@ -130,7 +133,9 @@ th, td {
 						<td>${olVO.prodPrice}</td>
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estStart}</td>
 						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
-						
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).shipCode}</td>
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).returnCode}</td>
+						<td>${omSVC.getOneOrderMaster(olVO.ordID).storeCode}</td>
 						<td class="status">
 						<c:choose>
 							<c:when test="${olVO.ordStatus == '0'}">已成立</c:when>

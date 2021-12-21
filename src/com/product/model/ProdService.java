@@ -28,7 +28,7 @@ public class ProdService {
 	}
 
 	public Integer AddProd( Integer cate, String name, String cot, Integer rent,
-			Integer price, String comt, byte[] pic1, byte[] pic2, byte[] pic3,Timestamp shelfDate) {
+			Integer price, String comt, byte[] pic1, byte[] pic2, byte[] pic3,Timestamp shelfDate,Integer memberID) {
 		ProdVO prod = new ProdVO();
 		
 		prod.setCategoryID(cate);
@@ -37,11 +37,12 @@ public class ProdService {
 		prod.setProdPrice(price);
 		prod.setComt(comt);
 		prod.setProdCot(cot);
-		prod.setProdStatus(0);// �ݤW�[�N�X
+		prod.setProdStatus(0);
 		prod.setPic1(pic1);
 		prod.setPic2(pic2);
 		prod.setPic3(pic3);
 		prod.setShelfDate(shelfDate);
+		prod.setMemberID(memberID);
 	
 			Integer key =dao.add(prod);
  			
