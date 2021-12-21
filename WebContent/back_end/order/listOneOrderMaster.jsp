@@ -149,6 +149,10 @@ background-color:#FFF0AC;
 border:3px solid black;
 background-color:white;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -289,6 +293,8 @@ background-color:white;
 					<td><%=omVO.getOrdPrice()%></td>
 				</tr>
 			</table>
+			<br>
+<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 	
@@ -356,5 +362,12 @@ background-color:white;
 	} else {
 		ordS.text("已取消");
 	};
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
 </script>
 </html>

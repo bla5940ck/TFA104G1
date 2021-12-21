@@ -122,6 +122,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 <body bgcolor='white'>
@@ -129,13 +133,6 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >		
-				<tr>					
-					<td>
-						<h4>
-							<a href="select_page.jsp">回首頁</a>
-						</h4>
-					</td>
-				</tr>
 			
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -156,7 +153,16 @@ background-color:#FFF0AC;
 				</tr>
 				<br>
 				</FORM>
+				<br>
+				<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

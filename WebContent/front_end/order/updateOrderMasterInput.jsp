@@ -169,8 +169,8 @@ a.cart-img > img{
 
 					<tr>
 						<th>歸還代碼</th>
-						<td><input type="TEXT" name="returnCode" size="20"
-							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /></td>
+						<td><input type="hidden" name="returnCode" size="20"
+							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /><%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%></td>
 					</tr>
 
 				</table>
@@ -225,7 +225,7 @@ a.cart-img > img{
 
 					</tr>
 				</table>
-				<input type="hidden" name="action" value="update"> 
+				<input type="hidden" name="action" value="update_for_Lease"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
 				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
 				<input type="hidden" name="listID" value="${olVO.listID}">

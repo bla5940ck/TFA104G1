@@ -72,7 +72,7 @@ aside.aside {
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
-	width: calc(100% - 150px - 10px);
+	width: calc(100% - 200px);
 	height: 620px;
 	display: inline-block;
 	vertical-align: top;
@@ -96,12 +96,6 @@ th, td {
 	padding: 5px;
 	text-align: left;
 }
-div.getTotal {
-	/* 	border: 1px solid black; */
-	text-align: right;
-	font-size: 20px;
-	padding: 0 80px 0 0;
-}
 </style>
 </head>
 
@@ -124,7 +118,8 @@ div.getTotal {
 				<h5>依歸還日期查詢訂單</h5>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
-					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> <button>確認</button>
+					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
+							<input type="button" class="dateBtn" value="確認">
 						     <input type="hidden" name="action" value="get_date_forLease_order">
 				</FORM>
 			</div>
@@ -286,29 +281,43 @@ ncFee.each(function(index, item) {
 	all.text("扣除運費後為 : " + reSum + "元");
 })
 
-$("#f_date1").blur(function(){
-// 	alert(1);
-	console.log($("#f_date1").val());
-	if($("#f_date1").val() != null && $("#f_date1") != ''){		
-		$("#f_date2").blur(function(){
-			console.log($("#f_date2").val());
-			if($("#f_date2").val != null && $("#f_date2") != ''){
-				$("#DATE").submit();
-// 				$.ajax({
-<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
-// 					type:"POST",
-// 					data:{
-// 						startDate:($("#f_date1").val()),
-// 						endDate:($("#f_date2").val()),
-// 						action:"get_Date_Order",
+// $("#f_date1").blur(function(){
+// // 	alert(1);
+// 	alert("起始日");
+// 	console.log($("#f_date1").val());
+// 	if($("#f_date1").val() != null && $("#f_date1") != '' && $("#f_date2").val != null && $("#f_date2") != ''){	
+		
+// 		$("#f_date2").blur(function(){
+// 			console.log($("#f_date2").val());
 			
-// 					},
-// 						dataType:"json",
-// 				});
-			}		
-		})	
-	}	
+// 			if($("#f_date2").val != null && $("#f_date2") != ''){
+// 				$("#DATE").submit();
+
+// 			}else{
+// 				alert("請選擇起始日 !");
+// 				return false;
+// 			}
+// 		})	
+		
+// 	}else{
+// 		alert("請選擇起始日 !");
+// 		return false;
+// 	}	
+// });
+
+$(".dateBtn").click(function(){
+	if($("#f_date1").val() == ""){
+		alert("請選擇起始日 !");
+		return false;
+	}else if($("#f_date2").val() ==""){
+		alert("請選擇起始日 !");
+		return false;
+	}else{
+		$("#DATE").submit();	
+	}		
 });
+	
+
 
         $.datetimepicker.setLocale('zh'); // kr ko ja en
         $("#f_date1").datetimepicker({

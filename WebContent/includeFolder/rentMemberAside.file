@@ -4,63 +4,129 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); 
   pageContext.setAttribute("memberVO",memberVO);
 %>
-<style>
-aside.aside {
-	width: 150px;
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-	text-align: left;
-}
-</style>
+<c:set var="img" value="${memberVO.pic}" />
+<%
+byte b[] = (byte[]) pageContext.getAttribute("img");
+String pic = Base64.encode(b);
+if (null == pic || "".equals(pic))
+	pic ="123";
+%>
 
-
+<style>        
+        .side-menu {
+            width: 300px;
+            height: 100%;
+            padding: 50px 0;
+            box-sizing: border-box;
+            background: linear-gradient(45deg, #3381b0, #c2196c);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0px 10px hsla(240, 50%, 20%, .6);
+        }
+        
+        .side-menu form {
+            display: flex;
+            margin: 0 10px 50px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, .4);
+        }
+        
+        .side-menu input,
+        .side-menu button {
+            border: none;
+            padding: 5px 10px;
+            background-color: transparent;
+            color: #fff;
+        }
+        
+        .side-menu input:focus,
+        .side-menu button:focus {
+            outline: none;
+        }
+        
+        .side-menu input::placeholder {
+            color: #fff;
+        }
+        
+        .side-menu input {
+            width: 230px;
+        }
+        
+        .side-menu button {
+            width: 50px;
+        }
+        
+        nav a {
+            display: block;
+            padding: 10px;
+            color: #000;
+            text-decoration: none;
+            position: relative;
+        }
+        /* 若設定一般border會把整塊貼滿，不好看 */
+        
+        nav a+a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 10px;
+            left: 10px;
+            border-top: 1px solid rgba(255, 255, 255, .4);
+        }
+        
+        nav a:hover{
+            font-weight: bolder;
+            color:#fff;
+            background-color: #201974;    
+        
+        }
+        
+        nav a .tou {
+            <!--margin-right: -1.1em;-->
+            transform: scale(0);
+            transition: .3s;
+            
+        }
+        
+        nav a:hover .tou {
+            margin-right: 2em;
+            transform: scale(1);
+        }
+        
+    </style>
 <aside class="aside">
-						<nav class="nav">
-								<div>
-									<a class="" href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">
-										<div>
-												 <td>
-														<c:set var="img" value="${memberVO.pic}" />
-														<%
-														byte b[] = (byte[]) pageContext.getAttribute("img");
-															String pic = Base64.encode(b);
-															if (null == pic || "".equals(pic))
-																pic ="123";
-														%>
-														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
-													</td>
-												    <td>${memberVO.loginId}</td>
-											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
-										</div>
-									</a>
-								</div>
-								<h3>承租專區</h3>
-								<ul class="nav_list">
-									<h4><li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a></h4>
-										<ul class="nav_list">
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">個人檔案</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp">銀行帳號</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp">地址</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp">更改密碼</a></li>
-										</ul>
-									</li>
-									<h4><li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">訂單資訊</a></li>
-									<h4><li><a href="">通知</a></li></h4>
-										<ul class="nav_list">
-											<li><a href="">訂單更新通知</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp">評價通知</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li>
-										</ul>
-									<h4><li><a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp">問題回報查詢</a></li></h4>
-									<h4><li><a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid">我的折價券</a></li></h4>
-								</ul>
-						</nav>
-				</aside>
+			<nav class="nav">
+				<ul class="nav_list" style="list-style-type:none;">
+					<i class="mh-avatar-wrap">
+					<c:choose>
+					<c:when test="${fn:length(memberVO.pic)!=0 and memberVO.pic!=null}">
+			
+						<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
+						</c:when>
+						<c:otherwise>
+					<img style="width:80px;height:80px" id="mh-avatar" src="https://s.yimg.com/ag/images/default_user_profile_pic_192sq.jpg" height="56" alt="用戶大頭貼">
+						</c:otherwise>
+						</c:choose>
+						</i> 
+					
+					<h3>承租專區<br><span class="nav-title">${memberVO.loginId}</span></center></h3>
+					<h5>
+						<a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp"><i class="tou"></i>我的帳戶</a> 
+						<a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp"><i class="tou"></i>個人檔案</a>
+						<a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp"><i class="tou"></i>銀行帳號 </a> 
+						<a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp"><i class="tou"></i>地址 </a>
+						<a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp"><i class="tou"></i>更改密碼 </a>
+						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp"><i class="tou"></i>訂單資訊</a>
+						<a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp"><i class="tou"></i>評價訂單</a> 
+						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'><i class="tou"></i>專案專區</a>
+						<a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp"><i class="tou"></i>問題回報查詢</a>
+						<a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid"><i class="tou"></i>我的折價券</a>
+					</h5>					
+				</ul>
+			</nav>
+		</aside>

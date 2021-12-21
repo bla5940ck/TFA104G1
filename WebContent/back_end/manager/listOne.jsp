@@ -127,18 +127,10 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-			<h4>此頁暫練習採用 Script 的寫法取值:</h4>
 			
-			<table id="table-1">
-				<tr>
-					<td>
-						
-						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a>
-						</h4>
-					</td>
-				</tr>
-			</table>
+			
+			
+				
 
 			<table>
 				<tr>
@@ -177,8 +169,17 @@ background-color:#FFF0AC;
 					</td>
 				</tr>
 			</table>
+			<br>
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 	
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

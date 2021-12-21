@@ -47,7 +47,11 @@ aside.aside {
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: 	#F0F0F0; 
+	background-image:url("<%=request.getContextPath()%>/includeFolder/img/OIP6.jpg");
+	background-repeat:no-repeat;
+	background-size: cover;
+	opacity:1;
 	width: calc(100% - 200px - 10px);
 	height: 720px;
 	display: inline-block;
@@ -55,6 +59,7 @@ main.main {
 	font-size: 1rem;
 	border: 1px solid #999;
 	padding: 10px;
+	z-index:2;
 }
 
 table {
@@ -120,6 +125,12 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
+
+
 </style>
 
 </head>
@@ -129,8 +140,9 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >					
+		
 
-			<h3>管理員查詢:</h3>
+			
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -144,46 +156,27 @@ background-color:#FFF0AC;
 
 			<ul>
 				<li>
-					<a href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'><h2>管理員列表</h2></a><br>
-				</li>				
-				<li>
-					<a href='<%=request.getContextPath()%>/back_end/manager/addManager.jsp'><h2>新增管理員</h2></a><br>
+					<button><a href='<%=request.getContextPath()%>/back_end/manager/listAll.jsp'><h4>管理員列表</h4></a></button>
 				</li>
+				<br>				
+				<li>
+					<button><a href='<%=request.getContextPath()%>/back_end/manager/addManager.jsp'><h4>新增管理員</h4></a></button>
+				</li>
+				<br>
 				<li>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>輸入管理者編號 :</b> 
+						<h3 style="color:white;">輸入管理者編號 :</h3> 
 						<input type="text" name="managerID"> 
 						<input type="hidden" name="action" value="getOne_For_Display"> 
 						<input type="submit" value="送出">
 					</FORM>
 				</li>
-					<jsp:useBean id="msSvc" scope="page" class="com.manager.model.ManagerService" />
-				<li>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>選擇管理員編號:</b> 
-						<select size="1" name="managerID">
-							<c:forEach var="managerVO" items="${msSvc.all}">
-								<option value="${managerVO.managerID}">${managerVO.managerID}
-							</c:forEach>
-						</select> 
-						<input type="hidden" name="action" value="getOne_For_Display">
-						<input type="submit" value="送出">
-					</FORM>
-				</li>
-				<li>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<b>選擇管理員姓名:</b> 
-						<select size="1" name="managerID">
-							<c:forEach var="managerVO" items="${msSvc.all}">
-								<option value="${managerVO.managerID}">${managerVO.managerName}
-							</c:forEach>
-						</select> 
-						<input type="hidden" name="action" value="getOne_For_Display">
-						<input type="submit" value="送出">
-					</FORM>
-				</li>
-			</ul>			
+					
+				
+				
+			</ul>
+					
 		</main>
 	</div>	
 </body>

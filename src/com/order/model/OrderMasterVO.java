@@ -32,46 +32,13 @@ public class OrderMasterVO implements Serializable{
 	private Integer prodPrice; // 商品小計
 	private Integer shipFee;
 	private Integer ordPrice;
+	private Timestamp estTrfDa; // 預計轉帳日期
+	private Integer trfStatus; // 轉帳狀態
+	private Timestamp payDate; //付款日期
 	
 	public OrderMasterVO() {
 		super();
 		// TODO Auto-generated constructor stub
-	}
-
-	public OrderMasterVO(Integer ordID, Integer rentID, Integer leaseID, Integer payID, Integer couponID,
-			Integer shipStatus, Integer payStatus, Integer ordStatus, Timestamp ordDate, Integer shipCode,
-			Integer returnCode, Integer storeCode, Date estStart, Date estEnd, Timestamp shipDate,
-			Timestamp arrivalDate, Timestamp returnDate, Integer rentDays, Integer rentRank, Integer leaseRank,
-			String rentComt, String leaseComt, Timestamp rentComtdate, Timestamp leaseComtdate, Integer prodPrice,
-			Integer shipFee, Integer ordPrice) {
-		super();
-		this.ordID = ordID;
-		this.rentID = rentID;
-		this.leaseID = leaseID;
-		this.payID = payID;
-		this.couponID = couponID;
-		this.shipStatus = shipStatus;
-		this.payStatus = payStatus;
-		this.ordStatus = ordStatus;
-		this.ordDate = ordDate;
-		this.shipCode = shipCode;
-		this.returnCode = returnCode;
-		this.storeCode = storeCode;
-		this.estStart = estStart;
-		this.estEnd = estEnd;
-		this.shipDate = shipDate;
-		this.arrivalDate = arrivalDate;
-		this.returnDate = returnDate;
-		this.rentDays = rentDays;
-		this.rentRank = rentRank;
-		this.leaseRank = leaseRank;
-		this.rentComt = rentComt;
-		this.leaseComt = leaseComt;
-		this.rentComtdate = rentComtdate;
-		this.leaseComtdate = leaseComtdate;
-		this.prodPrice = prodPrice;
-		this.shipFee = shipFee;
-		this.ordPrice = ordPrice;
 	}
 
 	public Integer getOrdID() {
@@ -290,6 +257,30 @@ public class OrderMasterVO implements Serializable{
 		this.ordPrice = ordPrice;
 	}
 
+	public Timestamp getEstTrfDa() {
+		return estTrfDa;
+	}
+
+	public void setEstTrfDa(Timestamp estTrfDa) {
+		this.estTrfDa = estTrfDa;
+	}
+
+	public Integer getTrfStatus() {
+		return trfStatus;
+	}
+
+	public void setTrfStatus(Integer trfStatus) {
+		this.trfStatus = trfStatus;
+	}
+
+	public Timestamp getPayDate() {
+		return payDate;
+	}
+
+	public void setPayDate(Timestamp payDate) {
+		this.payDate = payDate;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderMasterVO [ordID=" + ordID + ", rentID=" + rentID + ", leaseID=" + leaseID + ", payID=" + payID
@@ -299,8 +290,10 @@ public class OrderMasterVO implements Serializable{
 				+ shipDate + ", arrivalDate=" + arrivalDate + ", returnDate=" + returnDate + ", rentDays=" + rentDays
 				+ ", rentRank=" + rentRank + ", leaseRank=" + leaseRank + ", rentComt=" + rentComt + ", leaseComt="
 				+ leaseComt + ", rentComtdate=" + rentComtdate + ", leaseComtdate=" + leaseComtdate + ", prodPrice="
-				+ prodPrice + ", shipFee=" + shipFee + ", ordPrice=" + ordPrice + "]";
+				+ prodPrice + ", shipFee=" + shipFee + ", ordPrice=" + ordPrice + ", estTrfDa=" + estTrfDa
+				+ ", trfStatus=" + trfStatus + ", payDate=" + payDate + "]";
 	}
+	
 	
 
 }

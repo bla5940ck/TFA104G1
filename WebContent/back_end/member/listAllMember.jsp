@@ -128,6 +128,14 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+li{
+list-style: none;
+}
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -136,32 +144,27 @@ background-color:#FFF0AC;
 <div class="main_content">
 <%@ include file="/includeFolder/managerAside.file"%>
 <main class="main" >
-<table id="table-1">
-	<tr><td>
-		 <h3>所有會員資料- listAllMember.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/index.jpg" width="100" height="32" border="0"></a></h4>
-	</td></tr>
-</table>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
+	<font style="color:red ">請修正以下錯誤:</font>
+	<ul >
 		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
+			<li style="color:red;">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
 
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
-        <b>輸入會員編號 :</b>
+        <b>輸入會員編號 :</b><br>
         <input type="text" name="memberId">
         <input type="hidden" name="action" value="getOneMemberMemberId">
         <input type="submit" value="送出">
  	</FORM>
    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
-        <b>輸入會員登入帳號 :</b>
+        <b>輸入會員登入帳號 :</b><br>
         <input type="text" name="loginId">
         <input type="hidden" name="action" value="getOneMemberLoginId">
         <input type="submit" value="送出">
@@ -211,8 +214,10 @@ background-color:#FFF0AC;
 </c:forEach> 
 </table>
 <%@ include file="page2.file" %>
+
 	</main>
 	</div>
 
 </body>
+
 </html>

@@ -98,6 +98,14 @@ main.main {
     padding: 5px;
     text-align: center;
   }
+  
+  li{
+  list-style: none;
+  }
+  
+  button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -106,12 +114,8 @@ main.main {
 <div class="main_content">
 <%@ include file="/includeFolder/managerAside.file"%>
 <main class="main" >
-<table id="table-1">
-	<tr><td>
-		 <h3>待審核會員資料 listAllPdrMember.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/index.jpg" width="200" height="90" border="0"></a></h4>
-	</td></tr>
-</table>
+
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -135,9 +139,9 @@ main.main {
 		<th>會員狀態</th>
 		<th>查看</th>
 	</tr>
-	<%@ include file="page1.file" %> 
+	<%@ include file="page1_1.file" %> 
 		  <c:forEach var="memberVO"  items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >    
-
+	
 		<tr>
 			<td>${memberVO.memberId}</td>
 			<td>${memberVO.name}</td>
@@ -188,7 +192,19 @@ main.main {
 </c:forEach> 
 </table>
 <%@ include file="page2.file" %>
+
+<br>
+<button class="back_btn">返回上一頁</button>
 	</main>
 	</div>
 </body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>
