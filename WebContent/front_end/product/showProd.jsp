@@ -174,19 +174,7 @@ img.simpleLens-big-image {
 					
 				</form>
 				
-<%-- 				<form id ="update_form" action="<%=request.getContextPath()%>/front_end/product.uploadProd.jsp"> --%>
-<%-- 					<input type ="hidden" name = "product_name" value=<%=product.getProdName()%>> --%>
-<%-- 					<input type ="hidden" name = "product_rent" value=<%=product.getProdRent()%>> --%>
-<%-- 					<input type ="hidden" name = "product_price" value=<%=product.getProdPrice()%>> --%>
-<%-- 					<input type ="hidden" name = "product_cot" value=<%=product.getProdCot()%>> --%>
-<%-- 					<input type ="hidden" name = "comt" value=<%=product.getComt()%>> --%>
-<%-- 					<input type ="hidden" name ="prodID" value =<%=product.getProdID()%>> --%>
-					
-<!-- <!-- 					<input type ="hidden"  name ="status" value="shelf"> --> -->
-<!-- <!-- 					<input type="hidden" name="action" value="update"> --> -->
-<%-- 					<input type ="hidden" name = "categorySelect" value=<%=product.getCategoryID()%>> --%>
-					
-<!-- 				</form> -->
+
 
 
 

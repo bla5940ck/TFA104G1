@@ -125,9 +125,10 @@ div.getTotal {
 			<div>
 				<h5>依歸還日期查詢訂單</h5>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					起始日期: <input name="startDate" id="f_date1" type="text" style="width: 75px;">
-					結束日期: <input name="endDate" id="f_date2" type="text" style="width: 75px;"> <button>確認</button>
-							  <input type="hidden" name="action" value="get_date_forRent_order">
+					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
+							<input type="button" class="dateBtn" value="確認">
+						     <input type="hidden" name="action" value="get_date_forRent_order">
 				</FORM>
 			</div>
 			<table id="table-1">
@@ -144,6 +145,7 @@ div.getTotal {
 <!-- 					<th>到貨日期</th> -->
 					<th>歸還日期</th>
 					<th>承租天數</th>
+<!-- 					<th>運費</th> -->
 					<th>訂單金額</th>
 				</tr>
 				<%@ include file="pageForLease.file"%>
@@ -170,6 +172,21 @@ div.getTotal {
 									</c:when>
 									<c:when test="${true}">
 										<td>${mcVO.coupon_name}</td>
+									</c:when>
+								</c:choose>
+								<c:set var="count" value="1" />
+							</c:if>
+						</c:forEach>
+
+						<c:set var="count" value="0" />
+						<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+							<c:if test="${count==0}">
+								<c:choose>
+									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
+										<td>無</td>
+									</c:when>
+									<c:when test="${true}">
+										<td>$${Math.round(mcVO.discount)}元</td>
 									</c:when>
 								</c:choose>
 								<c:set var="count" value="1" />
@@ -246,33 +263,16 @@ price.each(function(index, item) {
 	
 	
 	
-$("#f_date1").blur(function(){
-// 	alert(1);
-	console.log($("#f_date1").val());
-	
-	if($("#f_date1").val() != null && $("#f_date1") != ''){		
-		$("#f_date2").blur(function(){
-			console.log($("#f_date2").val());
-			if($("#f_date2").val != null && $("#f_date2") != ''){
-				$("#DATE").submit();
-				
-				
-// 				$.ajax({
-<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
-// 					type:"POST",
-// 					data:{
-// 						startDate:($("#f_date1").val()),
-// 						endDate:($("#f_date2").val()),
-// 						action:"get_Date_Order",
-			
-// 					},success:function(data){
-						
-// 					},
-// 						dataType:"json",
-// 				});
-			}		
-		})	
-	}	
+$(".dateBtn").click(function(){
+	if($("#f_date1").val() == ""){
+		alert("請選擇起始日 !");
+		return false;
+	}else if($("#f_date2").val() ==""){
+			alert("請選擇起始日 !");
+			return false;
+	}else{
+		$("#DATE").submit();	
+	}		
 });
 
         $.datetimepicker.setLocale('zh'); // kr ko ja en

@@ -38,7 +38,7 @@ public class OrderMasterService {
 	public OrderMasterVO updateorderMaster(Integer ordID, Integer shipStatus, Integer ordStatus, Integer payStatus,
 			Integer shipCode, Integer returnCode, Timestamp shipDate, Timestamp arrivalDate, Timestamp returnDate,
 			Integer rentRank, Integer leaseRank, String rentComt, String leaseComt, Timestamp rentComtdate,
-			Timestamp leaseComtdate) {
+			Timestamp leaseComtdate, Timestamp estTrfDa, Integer trfStatus, Timestamp payDate) {
 
 		OrderMasterVO omVO = new OrderMasterVO();
 		
@@ -57,7 +57,10 @@ public class OrderMasterService {
 		omVO.setLeaseComt(leaseComt);
 		omVO.setRentComtdate(rentComtdate);
 		omVO.setLeaseComtdate(leaseComtdate);
-
+		omVO.setEstTrfDa(estTrfDa);
+		omVO.setTrfStatus(trfStatus);
+		omVO.setPayDate(payDate);
+		
 		dao.updateOrderMaster(omVO);
 		
 		return omVO;

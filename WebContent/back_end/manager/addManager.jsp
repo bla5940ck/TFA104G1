@@ -130,16 +130,16 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-			<table id="table-1">
+			
 				<tr>
 					
 					<td>
 						<h4>
-							<a href="select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>
-			</table>
+			
 
 			<h3>資料新增:</h3>
 

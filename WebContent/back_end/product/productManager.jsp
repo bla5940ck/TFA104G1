@@ -158,21 +158,15 @@ a.aa-add-to-cart-btn {
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main">
-			<table id="table-1">
+			
 				<tr>
 					<td>
 
 						<h4>
-							<a
-								href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
+							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
 						</h4>
 					</td>
 				</tr>
-
-			</table>
-
-
-
 			<table id="table2">
 				<div>
 

@@ -136,12 +136,12 @@ background-color:#FFF0AC;
 <div class="main_content">
 <%@ include file="/includeFolder/managerAside.file"%>
 <main class="main" >
-<table id="table-1">
+
 	<tr><td>
-		 <h3>單筆會員資料- listOneMember.jsp</h3>
-		<h4><a href="<%=request.getContextPath()%>/back_end/member/listAllMember.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/back.png" width="200" height="90" border="0"></a></h4>
+		 
+		<button><a href="<%=request.getContextPath()%>/back_end/member/listAllMember.jsp">回首頁</a></button>
 	</td></tr>
-</table>
+
 
 <table>
 	<tr>
