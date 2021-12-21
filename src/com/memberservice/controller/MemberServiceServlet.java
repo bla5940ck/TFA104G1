@@ -232,7 +232,7 @@ if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("進來瞜");
+//			System.out.println("進來瞜");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 //				Integer prodID = new Integer(req.getParameter("prodID").trim());
@@ -245,7 +245,7 @@ if ("update".equals(action)) {
 				long ord = date.getTime();
 				Timestamp msgDate = new Timestamp(ord);
 				
-				System.out.println("訂單日期 : " + msgDate);
+//				System.out.println("訂單日期 : " + msgDate);
 				
 				String problemMsg = req.getParameter("problemMsg");
 				String problemMsgReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -264,21 +264,21 @@ if ("update".equals(action)) {
 				byte[] buf1 = new byte[in1.available()];
 				in1.read(buf1);
 				in1.close();
-				System.out.println("buffer lenght:"+ buf1.length);
+//				System.out.println("buffer lenght:"+ buf1.length);
 				
 				Part pic2 =	req.getPart("pic2");
 				InputStream in2 = pic2.getInputStream();
 				byte[] buf2 = new byte[in2.available()];
 				in2.read(buf2);
 				in2.close();
-				System.out.println("buffer lenght:"+ buf2.length);
+//				System.out.println("buffer lenght:"+ buf2.length);
 				
 				Part pic3 =	req.getPart("pic3");
 				InputStream in3 = pic3.getInputStream();
 				byte[] buf3 = new byte[in3.available()];
 				in3.read(buf3);
 				in3.close();
-				System.out.println("buffer lenght:"+ buf3.length);
+//				System.out.println("buffer lenght:"+ buf3.length);
 				
 				
 				
@@ -359,16 +359,16 @@ if ("update".equals(action)) {
 
 			try {
 				Integer memID = new Integer(req.getParameter("memberID"));
-				System.out.println(memID);
+//				System.out.println(memID);
 				
 				Integer typeID = new Integer(req.getParameter("typeID"));
-				System.out.println(typeID);
+//				System.out.println(typeID);
 				
 				Integer prodID =null;
 				if(req.getParameter("prodID")!=null && req.getParameter("prodID").length()!=0) {
 					prodID = new Integer(req.getParameter("prodID"));
 				}
-				System.out.println(prodID);
+//				System.out.println(prodID);
 				
 				
 				Integer ordID =null;
@@ -393,7 +393,7 @@ if ("update".equals(action)) {
 				pic1 = new byte[in1.available()];
 				in1.read(pic1);
 				in1.close();
-				System.out.println("buffer lenght:"+ pic1.length);
+//				System.out.println("buffer lenght:"+ pic1.length);
 				}				
 				
 				Part img2 =	req.getPart("pic2");				
@@ -404,7 +404,7 @@ if ("update".equals(action)) {
 				pic2 = new byte[in2.available()];
 				in2.read(pic2);
 				in2.close();
-				System.out.println("buffer lenght:"+ pic2.length);
+//				System.out.println("buffer lenght:"+ pic2.length);
 				}
 				
 				byte[] pic3 =null;
@@ -415,7 +415,7 @@ if ("update".equals(action)) {
 				pic3 = new byte[in3.available()];
 				in3.read(pic3);
 				in3.close();
-				System.out.println("buffer lenght:"+ pic3.length);
+//				System.out.println("buffer lenght:"+ pic3.length);
 				}				
 				
 				MemberServiceVO msVO = new MemberServiceVO();
@@ -462,9 +462,9 @@ if ("detail".equals(req.getParameter("action"))) {
 		byte[] pic1 = msVO.getPic1();	
 		byte[] pic3 = msVO.getPic3();	
 		
-		System.out.println(msgID+" : " + pic1);
-		System.out.println(msgID+" : " + pic2);
-		System.out.println(msgID+" : " + pic3);
+//		System.out.println(msgID+" : " + pic1);
+//		System.out.println(msgID+" : " + pic2);
+//		System.out.println(msgID+" : " + pic3);
 	switch(pic) {
 	case "1":
 		os.write(pic1);
@@ -537,10 +537,11 @@ if ("get_date_manager_order".equals(action)) {
 	req.setAttribute("errorMsgs", errorMsgs);
 
 	DateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-	
+	System.out.println("進到管理員日期");
 	try {
 
 		String startDate = (String) req.getParameter("startDate");
+		System.out.println("選擇開始日"+startDate);
 		if (startDate == null || (startDate.trim()).length() == 0) {
 			errorMsgs.add("請選擇日期");
 		}
@@ -552,6 +553,7 @@ if ("get_date_manager_order".equals(action)) {
 		
 		
 		String endDate = (String) req.getParameter("endDate");
+		System.out.println("選擇結束日"+endDate);
 		if (endDate == null || (endDate.trim()).length() == 0) {
 			errorMsgs.add("請選擇日期");
 		}
@@ -560,8 +562,6 @@ if ("get_date_manager_order".equals(action)) {
 			failureView.forward(req, res);
 			return;// 程式中斷
 		}
-		
-
 
 		java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
 		java.sql.Timestamp ed = java.sql.Timestamp.valueOf(endDate);
@@ -571,11 +571,9 @@ if ("get_date_manager_order".equals(action)) {
 
 		List<MemberServiceVO> list2 = new ArrayList<MemberServiceVO>();
 		for (MemberServiceVO omVO : list) {
-			if (omVO.getMsgID() != null && omVO.getMsgDate() != null && omVO.getMsgDate().before(ed)
-					&& omVO.getMsgDate().after(sd)) {
-				long time = omVO.getMsgDate().getTime();
-				Integer ordID = omVO.getOrdID();
-				System.out.println("訂單編號 :" + ordID + "歸還時間" + time);
+			if (omVO.getMsgDate().before(ed) && omVO.getMsgDate().after(sd)) {
+				System.out.println(omVO.getMsgDate());
+				omVO.getMsgID();
 				list2.add(omVO);
 			}
 		}
@@ -589,6 +587,7 @@ if ("get_date_manager_order".equals(action)) {
 		failureView.forward(req, res);
 	}
 }
+
 	}
 
 }

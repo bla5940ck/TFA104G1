@@ -632,8 +632,8 @@ $.ajax({
 	dataType:"json",
 	cache:false,
 	success:function(data){
-		console.log(data);
-		for(var i =0;i<8;i++){
+		console.log(data.all_label.length);
+		for(var i =0;i<data.all_label.length&&i<=8;i++){
 			$('div.tag-cloud').append("<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>")
 		}
 // 		$('div.tag-cloud').append()

@@ -12,7 +12,7 @@
 Integer promoID =(Integer)request.getAttribute("promoID");
 pageContext.setAttribute("promoID",promoID);
 System.out.println(promoID);
-%>;
+%>
 
 <jsp:useBean id="promoSvc" scope="page" class="com.promo.model.PromoService" />
 <jsp:useBean id="promolistSvc" scope="page" class="com.promo_list.model.PromolistService" />
