@@ -43,11 +43,11 @@ public class ECreturn extends HttpServlet {
 //		System.out.println(req.getParameter("RtnCode"));
 //		System.out.println(req.getParameter("CheckMacValue"));
 //		System.out.println("======================================");
-		
+
 		String paymentDate = req.getParameter("PaymentDate");
 		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		System.out.println(paymentDate);
-		
+
 		SimpleDateFormat ssss = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date parse = null;
 		try {
@@ -55,27 +55,29 @@ public class ECreturn extends HttpServlet {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		java.sql.Timestamp payDate = new java.sql.Timestamp(parse.getTime());
-		
+
 		Integer trfStatus = Integer.valueOf(req.getParameter("RtnCode"));
-		if(trfStatus != 1) {
-			return;
+		if (trfStatus == 1) {
+			String ordid = req.getParameter("MerchantTradeNo");
+			Integer ordID = Integer.valueOf(ordid.substring(ordid.length() - 4, ordid.length())); //取串接之訂單編號末四碼為訂單編號
+			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+			OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
+			
+			omVO.setTrfStatus(trfStatus); // 轉帳狀態
+			System.out.println("轉帳狀態" + omVO.getTrfStatus());
+
+			omVO.setPayDate(payDate); // 付款日期
+			System.out.println("付款日期" + omVO.getPayDate());
+
+			omVO.setPayStatus(1); //付款狀態
+			
+			omdao.updateOrderMaster(omVO);
 		}
-		
-		String ordid = req.getParameter("MerchantTradeNo");
-		Integer ordID = Integer.valueOf(ordid.substring(ordid.length()-4, ordid.length()));
-		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-		OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
-		omVO.setTrfStatus(trfStatus);  //轉帳狀態
-		System.out.println("轉帳狀態" + omVO.getTrfStatus());
-		
-		
-		omVO.setPayDate(payDate);	//付款日期
-		System.out.println("付款日期" + omVO.getPayDate());
-		
-		omdao.updateOrderMaster(omVO);
 	}
+
+//			return;
 //	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
