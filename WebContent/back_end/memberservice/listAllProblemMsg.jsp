@@ -8,10 +8,18 @@
 <%
 	MemberServiceService msSvc = new MemberServiceService();
 	List<MemberServiceVO> list = msSvc.getAll();
-	pageContext.setAttribute("list", list);
-	for (MemberServiceVO mcVO : list) {
-		System.out.println("圖1" + mcVO.getPic1());
+		
+	if (request.getAttribute("list") != null) {
+		list = (List) request.getAttribute("list");
 	}
+
+	pageContext.setAttribute("list", list);
+	
+	
+// 	pageContext.setAttribute("list", list);
+// 	for (MemberServiceVO mcVO : list) {
+// 		System.out.println("圖1" + mcVO.getPic1());
+// 	}
 	MemberServiceVO msVO = (MemberServiceVO) request.getAttribute("msVO");
 %>
 
@@ -147,17 +155,21 @@ background-color: #FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-		
-				<div>
+		<ul>
+			<button><a href='/TFA104G1/back_end/problemtype/listAllProblemType.jsp'>所有問題類型</a></button>
+		</ul>
+		<br>
+		<ul>
+			<button><a href='/TFA104G1/back_end/problemtype/addProblemType.jsp'>新增問題類型</a></button>
+		</ul>
+		<br>	
+			<div>
+				<h4>依提出問題日期查詢訂單</h4>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/MemberServiceServlet">
-					<b>依歸還日期查詢訂單:
-					<br>
-						起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
-						<br>
-						結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;">
-								<button>確認</button>
-								<input type="hidden" name="action" value="get_date_manager_order">
-					</b>
+					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
+						   <input type="button" class="dateBtn" value="確認">
+				           <input type="hidden" name="action" value="get_date_manager_order">
 				</FORM>
 			</div>
 				
@@ -205,7 +217,7 @@ background-color: #FFF0AC;
 						<td>${msVO.managerID}</td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
 						
-						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderManager2.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderProblem.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td><button id = "class1" class="class1" value="${msVO.problemMsg}">查詢</button></td>
 						<td class="pic"><img alt=""
@@ -273,24 +285,35 @@ background-color: #FFF0AC;
 }
 </style>
 <script >
-$.datetimepicker.setLocale('zh'); // kr ko ja en
-$("#f_date1").datetimepicker({
-   theme: '',          //theme: 'dark',
-   timepicker: false,   //timepicker: false,
-   step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-   format: 'Y-m-d H:i:s',
-   value:'',
+$(".dateBtn").click(function(){
+	if($("#f_date1").val() == ""){
+		alert("請選擇起始日 !");
+		return false;
+	}else if($("#f_date2").val() ==""){
+		alert("請選擇起始日 !");
+		return false;
+	}else{
+		$("#DATE").submit();	
+	}		
 });
-$("#f_date2").datetimepicker({
-   theme: '',          //theme: 'dark',
-   timepicker: false,   //timepicker: false,
-   step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
-   format: 'Y-m-d H:i:s',
-   value:'',
-});
+	
 
 
-
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date1").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+        $("#f_date2").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
 
 var problemMsg = $(".class1");
 $(function(){	
