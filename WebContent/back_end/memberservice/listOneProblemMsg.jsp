@@ -132,6 +132,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 <body bgcolor='white'>
@@ -139,18 +143,7 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-			<h4>此頁練習採用 EL 的寫法取值:</h4>
-			<table id="table-1">
-				<tr>
-					<td>
-						
-						<h4>
-							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
-						</h4>
-					</td>
-				</tr>
 			
-			</table>
 
 			<%--錯誤列表 --%>
 			
@@ -199,6 +192,7 @@ background-color:#FFF0AC;
 			</c:forEach>
 		</table>
 			<%@ include file="page2.file"%>
+			<br>
 			<button class="back_btn">返回上一頁</button>
 			
 			

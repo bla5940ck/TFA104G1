@@ -130,15 +130,7 @@ background-color:#FFF0AC;
 			
 			
 			
-				<tr>
-					<td>
-						
-						<h4>
-							<button><a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">回首頁</a></button>
-						</h4>
-					</td>
-				</tr>
-			
+				
 
 			<table>
 				<tr>
@@ -177,8 +169,17 @@ background-color:#FFF0AC;
 					</td>
 				</tr>
 			</table>
+			<br>
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 	
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

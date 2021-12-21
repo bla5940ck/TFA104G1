@@ -128,6 +128,14 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+li{
+list-style: none;
+}
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -137,31 +145,26 @@ background-color:#FFF0AC;
 <%@ include file="/includeFolder/managerAside.file"%>
 <main class="main" >
 
-	<tr>
-		<td>		 
-		 	<button><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp">回首頁</a></button>
-		</td>
-	</tr>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
+	<font style="color:red ">請修正以下錯誤:</font>
+	<ul >
 		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
+			<li style="color:red;">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
 
   <li>
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
-        <b>輸入會員編號 :</b>
+        <b>輸入會員編號 :</b><br>
         <input type="text" name="memberId">
         <input type="hidden" name="action" value="getOneMemberMemberId">
         <input type="submit" value="送出">
  	</FORM>
    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" >
-        <b>輸入會員登入帳號 :</b>
+        <b>輸入會員登入帳號 :</b><br>
         <input type="text" name="loginId">
         <input type="hidden" name="action" value="getOneMemberLoginId">
         <input type="submit" value="送出">
@@ -211,8 +214,10 @@ background-color:#FFF0AC;
 </c:forEach> 
 </table>
 <%@ include file="page2.file" %>
+
 	</main>
 	</div>
 
 </body>
+
 </html>

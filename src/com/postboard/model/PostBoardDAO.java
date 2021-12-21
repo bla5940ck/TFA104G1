@@ -85,7 +85,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 
 					con = DriverManager.getConnection(url, userid, passwd);
 					pstmt = con.prepareStatement(UPDATE);
-
+					System.out.println("dao" + postboardVO.getPic().length);
 					pstmt.setInt(1, postboardVO.getCategoryId());
 					pstmt.setInt(2, postboardVO.getMemberId());
 					pstmt.setString(3, postboardVO.getPostTitle());

@@ -156,6 +156,10 @@ background-color:#FFF0AC;
 border:3px solid black;
 background-color:white;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 

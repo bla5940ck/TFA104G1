@@ -477,67 +477,33 @@
             <h2>我要徵求</h2>
             <div class="row">
               <!-- single latest blog -->
-              <div class="col-md-4 col-sm-4">
-                <div class="aa-latest-blog-single">
-                  <figure class="aa-blog-img">                    
-                    <a href="#"><img src="img\ps5.jpg" alt="img"></a>  
-                      <figcaption class="aa-blog-img-caption">
-                      <span href="#"><i class="fa fa-eye"></i>5K</span>
-                      <a href="#"><i class="fa fa-thumbs-o-up"></i>426</a>
-                      <a href="#"><i class="fa fa-comment-o"></i>20</a>
-                      <span href="#"><i class="fa fa-clock-o"></i>June 26, 2016</span>
-                    </figcaption>                          
-                  </figure>
-                  <div class="aa-blog-info">
-                    <h3 class="aa-blog-title"><a href="#">跪求PS5一台</a></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, ad? Autem quos natus nisi aperiam, beatae, fugiat odit vel impedit dicta enim repellendus animi. Expedita quas reprehenderit incidunt, voluptates corporis.</p> 
-                    <a href="blog-single copy.html".html" class="aa-read-mor-btn">全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
-                  </div>
-                </div>
+              <jsp:useBean id="pbSvc" scope="page" class="com.postboard.model.PostBoardService" />
+	             <c:forEach var="pbVO" items="${pbSvc.all}" begin="0" end="2" varStatus="status">
+                	<div class="col-md-4 col-sm-4">
+		               <article class="aa-latest-blog-single">
+		                  <figure class="aa-blog-img">                    
+		                    <a href=""><img alt="" 
+		                       src="<%=request.getContextPath()%>/back_end/PostBoard/pb.do?postId=${pbVO.postId}&action=writePic"></a>  
+		                         <figcaption class="aa-blog-img-caption">
+		                            <a href="#"><i class="fa fa-comment-o"></i>${pbVO.replyCount}</a>
+		                            	<span href="#"><i class="fa fa-clock-o"></i>${pbVO.postTime}</span>
+		                         </figcaption>                          
+		                  </figure>
+		
+		                        	<div class="aa-blog-info">
+		                          	<h3 class="aa-blog-title"><a href="#">${pbVO.postTitle}</a></h3>
+		                          	<p>${pbVO.postCont}</p> 
+		                          	<a class="aa-read-mor-btn" 
+		                          	   href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${pbVO.postId}">
+		                          	       全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
+	                        		</div>
+	                           </article>
+	                          </div>
+	                           
+	            </c:forEach>               
               </div>
-              <!-- single latest blog -->
-              <div class="col-md-4 col-sm-4">
-                <div class="aa-latest-blog-single">
-                  <figure class="aa-blog-img">                    
-                    <a href="#"><img src="img/promo-banner-3.jpg" alt="img"></a>  
-                      <figcaption class="aa-blog-img-caption">
-                      <span href="#"><i class="fa fa-eye"></i>5K</span>
-                      <a href="#"><i class="fa fa-thumbs-o-up"></i>426</a>
-                      <a href="#"><i class="fa fa-comment-o"></i>20</a>
-                      <span href="#"><i class="fa fa-clock-o"></i>June 26, 2016</span>
-                    </figcaption>                          
-                  </figure>
-                  <div class="aa-blog-info">
-                    <h3 class="aa-blog-title"><a href="#">想租動物森友會~~~</a></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, ad? Autem quos natus nisi aperiam, beatae, fugiat odit vel impedit dicta enim repellendus animi. Expedita quas reprehenderit incidunt, voluptates corporis.</p> 
-                     <a href="#" class="aa-read-mor-btn">全文閱讀 <span class="fa fa-long-arrow-right"></span></a>         
-                  </div>
-                </div>
-              </div>
-              <!-- single latest blog -->
-              <div class="col-md-4 col-sm-4">
-                <div class="aa-latest-blog-single">
-                  <figure class="aa-blog-img">                    
-                    <a href="#"><img src="img/promo-banner-1.jpg" alt="img"></a>  
-                      <figcaption class="aa-blog-img-caption">
-                      <span href="#"><i class="fa fa-eye"></i>5K</span>
-                      <a href="#"><i class="fa fa-thumbs-o-up"></i>426</a>
-                      <a href="#"><i class="fa fa-comment-o"></i>20</a>
-                      <span href="#"><i class="fa fa-clock-o"></i>June 26, 2016</span>
-                    </figcaption>                          
-                  </figure>
-                  <div class="aa-blog-info">
-                    <h3 class="aa-blog-title"><a href="#">徵求麻將組及骰盅</a></h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda, ad? Autem quos natus nisi aperiam, beatae, fugiat odit vel impedit dicta enim repellendus animi. Expedita quas reprehenderit incidunt, voluptates corporis.</p> 
-                    <a href="#" class="aa-read-mor-btn">全文閱讀 <span class="fa fa-long-arrow-right"></span></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>    
-      </div>
-    </div>
+	        </div>
+
   </section>
  
 
