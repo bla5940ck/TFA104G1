@@ -166,7 +166,7 @@ background-color: #FFF0AC;
 				<li>
 					<FORM METHOD="post"
 						ACTION="<%=request.getContextPath()%>/ManagerServlet">
-						<h3 style="color:white;">輸入管理者編號 :</h3> 
+						<h3 style="color:white;">請輸入要查詢的管理者編號 :</h3> 
 						<input type="text" name="managerID"> 
 						<input type="hidden" name="action" value="getOne_For_Display"> 
 						<input type="submit" value="送出">
