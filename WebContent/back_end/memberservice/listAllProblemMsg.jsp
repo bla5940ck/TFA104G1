@@ -155,6 +155,14 @@ background-color: #FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
+		<ul>
+			<button><a href='/TFA104G1/back_end/problemtype/listAllProblemType.jsp'>所有問題類型</a></button>
+		</ul>
+		<br>
+		<ul>
+			<button><a href='/TFA104G1/back_end/problemtype/addProblemType.jsp'>新增問題類型</a></button>
+		</ul>
+		<br>	
 			<div>
 				<h4>依提出問題日期查詢訂單</h4>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/MemberServiceServlet">
@@ -209,7 +217,7 @@ background-color: #FFF0AC;
 						<td>${msVO.managerID}</td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
 						
-						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderManager2.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderProblem.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td><button id = "class1" class="class1" value="${msVO.problemMsg}">查詢</button></td>
 						<td class="pic"><img alt=""
