@@ -110,11 +110,13 @@ Integer prodID = null;
  if (request.getParameter("prodID") != null) {
 	prodID = Integer.parseInt(request.getParameter("prodID"));
 	product = prodSvc.findProductByPK(prodID);
+	pageContext.setAttribute("product", product);
 }
 else if (request.getAttribute("bk") != null) {
 	bk = (BookingVO) request.getAttribute("bk");
 	prodID = bk.getProdID();
 	product = prodSvc.findProductByPK(prodID);
+	pageContext.setAttribute("product", product);
 }
 
 BookingService bkDao = new BookingService();
@@ -181,8 +183,14 @@ request.setAttribute("product", product);
 									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
 									<li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
 									<!-- <li class="hidden-xs"><a href="checkout.html">Checkout</a></li> -->
-									<li><a href="" data-toggle="modal"
-										data-target="#login-modal">會員登入</a></li>
+									<c:choose>
+                  	<c:when test="${id == null}">
+                     	<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseLogin.jsp" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
+                 	</c:when>
+                 	<c:otherwise>
+                  		<li><a href="<%=request.getContextPath()%>/LogoutServlet" data-toggle="modal">會員登出</a></li>				
+					</c:otherwise>                 
+                  </c:choose>    
 								</ul>
 							</div>
 						</div>
@@ -256,19 +264,21 @@ request.setAttribute("product", product);
 							<!-- <li><a href="index.html">Home</a></li> -->
 							<li><a href="#">全部分類 <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Nintendo</a></li>
-									<li><a href="#">PlayStation</a></li>
-									<li><a href="#">XBOX</a></li>
-									<li><a href="#">其他遊戲主機</a></li>
-									<li><a href="#">電腦遊戲</a></li>
-									<li><a href="#">桌遊</a></li>
-									<li><a href="#">拼圖</a></li>
-									<li><a href="#">其他</a></li>
+									 <li><a href="/TFA104G1/prod/ProdServlet?action=select&prodSelect=<c:out value="${prodSelect}"/>">所有商品</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=1&prodSelect=<c:out value="${prodSelect}"/>">Nintendo</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=2&prodSelect=<c:out value="${prodSelect}"/>">PlayStation</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=3&prodSelect=<c:out value="${prodSelect}"/>">XBOX</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=4&prodSelect=<c:out value="${prodSelect}"/>">其他遊戲主機</a></li>                                                
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=5&prodSelect=<c:out value="${prodSelect}"/>">電腦遊戲</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=6&prodSelect=<c:out value="${prodSelect}"/>">桌遊</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=7&prodSelect=<c:out value="${prodSelect}"/>">拼圖</a></li>
+                  <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
 							
 									
 								</ul></li>
-							<li><a href="#">使用教學</a>   
-                 <li><a href="#">Q&A</a>
+							 <li><a href="<%=request.getContextPath()%>/front_end/others/Manual.jsp">使用教學</a>
+              </li>
+              <li><a href="<%=request.getContextPath()%>/front_end/others/Qa.jsp">Q&A</a>
               </li>
 					<!--/.nav-collapse -->
 				</div>
@@ -367,13 +377,21 @@ request.setAttribute("product", product);
 
 										<li> <span style="font-size:20px">備註: <%=comt%></span></li>
 										<td class="start" style="font-size:20px">
+										<c:choose>
+										<c:when test="${product.memberID!=id}">
 										<li><span style="font-size:20px;">預計租借日期: <input id="startDate" type="text"  style="width:150px"></span></li>
 										 <span style="font-size:20px">預計歸還日期: <input id="endDate" type="text"  style="width:150px"></span></li>
 										</td><br><br>
-										<td> <li style="font-size:20px">金額試算:<label id="subtotal" style="color: red"></label>元<input
+															<td> <li style="font-size:20px">金額試算:<label id="subtotal" style="color: red"></label>元<input
 											type="button" value="試算" id="subtotal_btn"></li>
 
 										</td>
+										</c:when>
+										<c:otherwise>
+										<li> <img style="width:500px" src="/TFA104G1/includeFolder/img/pp.png"></li>
+										</c:otherwise>
+										</c:choose>
+					
 										</br>
 										標籤:&nbsp<li class="label">
 											
@@ -390,9 +408,10 @@ request.setAttribute("product", product);
 											</div>
 										</form>
 										<p class="aa-prod-category">
-											<%--                         分類: <a href="#"><%=product.getCategoryID() %></a> --%>
 										</p>
 									</div>
+									<c:choose>
+										<c:when test="${product.memberID!=id}">
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
@@ -402,6 +421,8 @@ request.setAttribute("product", product);
 									<div>
 										<input class="report-btn" type="submit" value="檢舉商品">
 									</div>
+									</c:when>
+										</c:choose>	
 								</div>
 							</div>
 						</div>

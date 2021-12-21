@@ -50,7 +50,7 @@ a.cart-img>img {
 							<div class="cart-view-area">
 								<div class="cart-view-table">
 									<div>
-										<h3>結帳頁面</h3>
+										<h3>訂單確認</h3>
 									</div>
 									<h3>確認以下資訊</h3>
 
