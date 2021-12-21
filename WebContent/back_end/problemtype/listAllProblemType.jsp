@@ -126,8 +126,7 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
-</style>
-<style>
+
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -144,9 +143,7 @@ h4 {
 	color: red;
 	display: inline;
 }
-</style>
 
-<style>
 table {
 	width: 100%;
 	background-color: white;
@@ -173,6 +170,10 @@ th, td {
 .signOut{
 background-color:#6495ed;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -183,16 +184,6 @@ background-color:#6495ed;
 		<main class="main" >
 	
 	
-				<tr>
-					<td>
-						
-						<h4>
-							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
-						</h4>
-					</td>
-				</tr>
-				<br>
-			
 			
 			<table>
 				<tr>
@@ -229,7 +220,16 @@ background-color:#6495ed;
 				</c:forEach>		
 		</table>	
 			<%@ include file="page2.file"%>
+			<br>
+			<button class="back_btn">返回上一頁</button>
 			</main>
 	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

@@ -13,9 +13,7 @@
 
 	 <%@ include file="/includeFolder/header.file"%>
 	
-<%session.setAttribute("id",1); 
 
-%>
 
 
 

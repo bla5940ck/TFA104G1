@@ -26,47 +26,44 @@
 <head>
 <title>訂單資訊</title>
 <style>
-body {
-	margin: 0;
-	padding: 10px;
-}
+ body { 
+ 	margin: 0; 
+ 	padding: 10px; 
+ } 
 
 img {
 	max-width: 100%;
 }
 
-button {
-	font-size: 13px;
+button{
+	font-size:13px;
 	outline-width: 100%;
-	background-color: white;
+	background-color:white;
 }
 
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
+ div.main_content { 
+ 	width: 100%; 
+ 	margin: 0 auto; 
+ 	font-size: 0; 
+ } 
 
 /*-------------------aside區域------------------- */
 aside.aside {
-	width: 200px;	
+	width: 200px;
+	height:620px;
 	display: inline-block;
 	vertical-align: top;
-	font-size: 1rem;	
+	font-size: 1rem;
 	margin-right: 10px;
 	border: 1px solid #999;
-	text-align: center;
-	background-color:#F5D998;;
-	height:720px;
+	text-align:center;
 }
-
-
 
 /*--------------------main區域-------------------- */
 main.main {
-	background-color: 	#F0F0F0;
+	background-color: white;
 	width: calc(100% - 200px - 10px);
-	height: 720px;
+/* 	height:620px; */
 	display: inline-block;
 	vertical-align: top;
 	font-size: 1rem;
@@ -75,91 +72,26 @@ main.main {
 }
 
 table {
-	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 100px;
 }
 
 table, th, td {
 	border: 1px solid lightgrey;
+	width: 800px; 	
 }
 
 th, td {
-	padding: 5px;
-	text-align: center;
-}
-
-table#table-1 {
-	
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: red;
-	display: inline;
-}
-
-table {
-	width: 100%;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	font-size: 10px;
-	border: 1px solid #CCCCFF;
-}
-
-th, td {
-	height: 100px padding: 5px;
-	text-align: center;
-}
-
-.pic {
-	object-fit: contain;
-	width: 95px;
-	height: 80px;
-}
-
-
-.class1{
-background-color:#FFF0AC;
-}
-
-input{
-background-color:#FFF0AC;
-}
-.class1{
-background-color:#FFF0AC;
-}
-
-input{
-background-color:#FFF0AC;
-}
-
-.a1{
-border:3px solid black;
-background-color:white;
-}
-
-button{
-background-color: #FFF0AC;
+	width: 80px; 
 }
 </style>
 
 </head>
 <body bgcolor="white">
-	<%@ include file="/includeFolder/managerHeader.file"%>
+	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<%@ include file="/includeFolder/managerAside.file"%>
+		<%@ include file="/includeFolder/rentMemberAside.file"%>
 		<main class="main">			
 		<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/BackEndOrderServlet" style="margin-bottom: 0px;">
 			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
@@ -173,7 +105,7 @@ background-color: #FFF0AC;
 									</c:when>
 								</c:choose>
 								</c:forEach>
-				<input type="hidden" name="action" value="getOne_For_Manager_Update">
+				<input type="hidden" name="action" value="getOne_For_Update">
 			</FORM>
 			<table id="table-1">
 				<tr>
@@ -293,11 +225,9 @@ background-color: #FFF0AC;
 					<td><%=omVO.getOrdPrice()%></td>
 				</tr>
 			</table>
-			<br>
-<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
-	
+	<%@ include file="/includeFolder/footer2.file" %>
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -362,12 +292,5 @@ background-color: #FFF0AC;
 	} else {
 		ordS.text("已取消");
 	};
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-	$("button.back_btn").click(function(){
-		history.go(-1);
-	});
-
 </script>
 </html>

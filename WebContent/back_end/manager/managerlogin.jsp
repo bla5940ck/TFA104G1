@@ -75,11 +75,7 @@ th, td {
 	text-align: center;
 }
 
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
+
 
 table#table-1 h4 {
 	color: red;
@@ -125,37 +121,35 @@ background-color:#FFF0AC;
 }
 
 .login1{
-width:30%;
-height:30%;
+width:20%;
+height:20%;
 background-color:white;
 }
 
 .wrapper{
 text-align: center;
 margin-top: 190px;
+
 }
 
 .form-signin-heading{
 color:	white;
 } 
+
 .login{
 background-color:#FFF0AC
 }
+
 </style>
 </head>
 
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
 	<div class="main_content">
-<!-- 		<aside class="aside"> -->
-<!-- 			<ul class="nav_list"  height: 100%"> -->
-				
-				
-<!-- 			</ul> -->
-<!-- 		</aside> -->
+
 	
 		<main class="main"  >
-<%-- 		<img src="<%=request.getContextPath()%>/includeFolder/img/OIP.jpg"> --%>
+
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
