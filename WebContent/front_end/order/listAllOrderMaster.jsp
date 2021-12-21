@@ -123,7 +123,7 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-	<%@ include file="/includeFolder/header.file"%>
+	<%@ include file="/includeFolder/headerForLease.file"%>
 	<div class="main_content">
 	<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">
@@ -209,9 +209,9 @@ th, td {
 					<th>付款狀態</th>
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-					<th>出貨碼</th>
-					<th>歸還碼</th>
-					<th>超商碼</th>
+<!-- 					<th>出貨碼</th> -->
+<!-- 					<th>歸還碼</th> -->
+<!-- 					<th>超商碼</th> -->
 	
 					<th>出貨日期</th>
 					<th>到貨日期</th>
@@ -303,9 +303,9 @@ th, td {
 								<td><fmt:formatDate value="${omVO.ordDate}"
 										pattern="yyyy-MM-dd" /></td>
 
-								<td>${omVO.shipCode}</td>
-								<td>${omVO.returnCode}</td>
-								<td>${omVO.storeCode}</td>
+<%-- 								<td>${omVO.shipCode}</td> --%>
+<%-- 								<td>${omVO.returnCode}</td> --%>
+<%-- 								<td>${omVO.storeCode}</td> --%>
 
 								<%-- 						<td>${omVO.estStart}</td> --%>
 								<%-- 						<td>${omVO.estEnd}</td> --%>
@@ -353,7 +353,7 @@ th, td {
 			<%@ include file="page2.file"%>
 		</main>
 	</div>
-	<%@ include file="/includeFolder/footer2.file"%>
+	<%@ include file="/includeFolder/footerForLease.file"%>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
