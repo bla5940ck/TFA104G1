@@ -391,7 +391,7 @@ $("a.remove").click(function(){
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 	  cancelButtonColor: '#d33',
-	  confirmButtonText: 'Yes, delete it!'
+	  confirmButtonText: 'delete'
 	}).then((result) => {
 	  if (result.isConfirmed) {
 	    Swal.fire(
