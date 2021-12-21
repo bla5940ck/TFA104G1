@@ -762,12 +762,25 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	}
 
 	public static void main(String[] args) {
-		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-
-		long datetime = System.currentTimeMillis();
-		Timestamp timeStamp = new Timestamp(datetime);
-		java.sql.Date date = new java.sql.Date(datetime);
-		System.out.println(timeStamp);
+		
+		
+		String a = "JL16400867310151019";
+		String substring = a.substring(a.length()-4, a.length());
+		
+		System.out.println(substring);
+		
+		
+		
+		
+		
+		
+		
+//		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+//
+//		long datetime = System.currentTimeMillis();
+//		Timestamp timeStamp = new Timestamp(datetime);
+//		java.sql.Date date = new java.sql.Date(datetime);
+//		System.out.println(timeStamp);
 		
 		// 查詢某期間成功的訂單		
 		
@@ -917,7 +930,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		omdao.updateOrderMaster(om2);
 //		
 		// 從PK找
-		OrderMasterVO om3 = omdao.findOrderMasterByPK(170);
+//		OrderMasterVO om3 = omdao.findOrderMasterByPK(170);
 //		System.out.println(om3);
 //		System.out.println(om3.getPayID() + ",");
 //		System.out.println(om3.getRentID() + ",");
