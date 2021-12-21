@@ -26,7 +26,7 @@ public class PbPhotoShow extends HttpServlet {
     
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) 
 			throws ServletException, IOException {
-		System.out.println("1234");
+		//System.out.println("1234");
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 		

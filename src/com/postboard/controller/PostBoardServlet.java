@@ -189,9 +189,6 @@ public class PostBoardServlet extends HttpServlet {
 				in.close();
 				System.out.println("buffer length: " + buf.length);
 				
-				
-								
-				
 
 				PostBoardVO pbVO = new PostBoardVO();
 				pbVO.setPostId(postId);
@@ -203,8 +200,17 @@ public class PostBoardServlet extends HttpServlet {
 				pbVO.setReplyCount(replyCount);
 				pbVO.setPic(part2Bytes(part));
 				
+				PostBoardService pbSvc = new PostBoardService();
+				PostBoardVO pbVO2 = pbSvc.findByPrimaryKey(postId);
+				System.out.println("2: "+pbVO2.getPic().length);
+				System.out.println("1: "+pbVO.getPic().length);
 				
-
+			    byte[] pic1 = pbVO.getPic().length == 0?  pbVO2.getPic() : pbVO.getPic();	
+			    System.out.println(pic1.length);
+			    pbSvc.updatearticle(postId, categoryId, memberId, postTitle, postCont, 
+					postTime, replyCount,pic1);
+			    req.getSession().setAttribute("postId",postId);
+			
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("pbVO", pbVO);
@@ -214,9 +220,9 @@ public class PostBoardServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始修改資料 *****************************************/
-				PostBoardService pbSvc1 = new PostBoardService();
-				pbVO = pbSvc1.updatearticle(postId, categoryId, memberId, postTitle, postCont, postTime, replyCount,
-						part2Bytes(part));
+//				PostBoardService pbSvc1 = new PostBoardService();
+//				pbVO = pbSvc1.updatearticle(postId, categoryId, memberId, postTitle, postCont, postTime, replyCount,
+//						part2Bytes(part));
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("pbVO", pbVO); // 資料庫取出的postBoardVO物件,存入req
