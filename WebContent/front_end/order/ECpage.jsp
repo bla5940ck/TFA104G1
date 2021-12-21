@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 
 
-
+<%System.out.println("ECpage " + session.getAttribute("ordIDForEC")); %>
 <html>
 <head>
 <meta charset="UTF-8">
