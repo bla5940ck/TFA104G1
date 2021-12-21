@@ -720,15 +720,15 @@ public class OrderMasterServlet extends HttpServlet {
 
 				/************* 綠界串接 ***********/
 //				System.out.println("準備進綠界");
-
+				AllInOne all = new AllInOne("");
+				AioCheckOutALL obj = new AioCheckOutALL(); // 產生訂單
 				for (OrderListVO ec : list) {
 					System.out.println("527 取得訂單編號" + ec.getOrdID());
 
 					SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					String ecord = sdf3.format(ordDate);
 
-					AllInOne all = new AllInOne("");
-					AioCheckOutALL obj = new AioCheckOutALL(); // 產生訂單
+//					all = new AllInOne("");
 
 					obj.setMerchantID("2000132"); // 特店編號
 					obj.setMerchantTradeNo("JL2021" + (ec.getOrdID()).toString()); // 訂單編號
@@ -736,12 +736,12 @@ public class OrderMasterServlet extends HttpServlet {
 					obj.setTotalAmount(ordPrice.toString()); // 交易金額
 					obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 					obj.setItemName(prodName); // 商品名稱
-					obj.setReturnURL("/front_end/order/listAllOrderForRent.jsp"); // 付款完成通知回傳網址
+					obj.setReturnURL("https://1532-1-164-222-226.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 					obj.setNeedExtraPaidInfo("N");
 					obj.setChooseSubPayment("ALL");
-
+//					obj.setPaymentInfoURL("https://f150-1-164-222-16.ngrok.io/TFA104G1/OrderMasterServlet");
 					String form = all.aioCheckOut(obj, null);
-					System.out.println(form);
+					System.out.println(form);			
 
 //				res.getWriter().print(form);
 					req.setAttribute("EC", form);
@@ -755,6 +755,13 @@ public class OrderMasterServlet extends HttpServlet {
 //				RequestDispatcher successView = req.getRequestDispatcher(url);
 //				successView.forward(req, res);
 				req.removeAttribute("list1");
+				
+				
+				
+//				String info = obj.getPaymentInfoURL();
+//				System.out.println(info);
+//				String order = obj.getOrderResultURL();
+//				System.out.println(order);
 				
 			} catch (Exception e) {
 				System.out.println("例外");
