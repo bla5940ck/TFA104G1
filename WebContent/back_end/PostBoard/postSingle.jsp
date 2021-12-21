@@ -17,7 +17,7 @@
 
 
 <body>
-<%@ include file="header2.file" %>
+<%@ include file="/includeFolder/header.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
@@ -272,7 +272,7 @@
 
 
 </body>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 
 
 </html>

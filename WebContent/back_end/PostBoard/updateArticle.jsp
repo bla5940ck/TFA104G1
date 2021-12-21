@@ -31,7 +31,7 @@ input:read-only {
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="/includeFolder/header.file" %>
 
 <%-- 錯誤表列 --%>
 
@@ -119,6 +119,6 @@ input:read-only {
 	<!-- / Cart view section -->
 
 </body>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </html>
 

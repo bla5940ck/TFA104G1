@@ -58,7 +58,13 @@
                       <li><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">承租專區</a></li>
                     </ul>
                   </li>
-                  <li class="hidden-xs"><a href="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp">徵求版</a></li>
+                  <li><a href="#">徵求版<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp">徵求專區</a></li>
+                      <li><a href="<%=request.getContextPath()%>/back_end/PostBoard/addArticle.jsp">我要徵求</a></li>
+                    </ul>
+                  </li>
+                  	
                   <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
                   <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
                   <c:choose>
