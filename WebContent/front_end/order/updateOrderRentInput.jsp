@@ -141,7 +141,7 @@ a.cart-img > img{
 						<th>運送狀態</th>
 						<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
 						<td><select name="shipStatus" size="1" id="s" style="width:100px;">
-<%-- 								<option value="0" <%=omVO.getShipStatus() == 0? "selected" : ""%>>待出貨</option> --%>
+								<option value="0" <%=omVO.getShipStatus() == 0? "selected" : ""%>>待出貨</option>
 <%-- 								<option value="1" <%=omVO.getShipStatus() == 1? "selected" : ""%>>已出貨</option> --%>
 								<option value="2" <%=omVO.getShipStatus() == 2? "selected" : ""%>>待取貨</option>
 								<option value="3" <%=omVO.getShipStatus() == 3? "selected" : ""%>>取貨完成</option>
@@ -154,7 +154,7 @@ a.cart-img > img{
 						<td><select name="ordStatus" size="1" style="width:100px;">
 								<option value="0" <%=omVO.getOrdStatus() == 0? "selected" : ""%>>已成立</option>
 								<option value="1" <%=omVO.getOrdStatus() == 1? "selected" : ""%>>待歸還</option>
-								<option value="2" <%=omVO.getOrdStatus() == 2? "selected" : ""%>>已完成</option>
+<%-- 								<option value="2" <%=omVO.getOrdStatus() == 2? "selected" : ""%>>已完成</option> --%>
 								<option value="9" <%=omVO.getOrdStatus() == 9? "selected" : ""%>>已取消</option>
 						</select></td>
 					</tr>
@@ -162,8 +162,9 @@ a.cart-img > img{
 				<table>
 					<tr>
 						<th>出貨代碼</th>
-						<td><input type="TEXT" name="shipCode" size="20"
-							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"></td>
+						<td><input type="hidden" name="shipCode" size="20"
+							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"><%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%></td>
+						
 
 					</tr>
 
@@ -257,7 +258,7 @@ a.cart-img > img{
 <!-- 						</select></td> -->
 					</tr>
 				</table>
-				<input type="hidden" name="action" value="update"> 
+				<input type="hidden" name="action" value="update_for_Rent"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
 				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
 				<input type="hidden" name="listID" value="${olVO.listID}">
