@@ -204,10 +204,12 @@ public class ProdServlet extends HttpServlet {
 			// 更新並取得剛插入的自增
 			Integer key = prodService.AddProd(cate, name, cot, rent, price, comt, prod.getPic1(), prod.getPic2(),
 					prod.getPic3(), prod.getShelfDate(),memberID);
-
-			for (int k = 0; k < labels.length; k++) {
-				jedis.rpush("prod" + key, labels[k]);
-
+			if (labels != null && labels.length != 0) {
+			
+				for (int k = 0; k < labels.length; k++) {
+				
+					jedis.rpush("prod" + key, labels[k]);
+				}
 			}
 			jedis.close();
 			ProdService prodSvc = new ProdService();
