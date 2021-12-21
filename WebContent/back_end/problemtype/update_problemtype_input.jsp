@@ -130,17 +130,7 @@ background-color:#FFF0AC;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
 		
-			<table id="table-1">
-				<tr>
-					<td>
-						
-						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a>
-						</h4>
-					</td>
-				</tr>
-				<br>
-			</table>
+			
 
 			<h3>資料修改:</h3>
 
@@ -175,8 +165,18 @@ background-color:#FFF0AC;
 				<input type="hidden" name="typeName" value=<%=ptVO.getTypeName()%>> 
 				<input type="submit" value="送出修改">
 			</FORM>
+			<br>
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 	
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

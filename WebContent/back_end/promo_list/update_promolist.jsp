@@ -123,6 +123,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -214,6 +218,8 @@ background-color:#FFF0AC;
 <input type="hidden" name="coupon_id" value="<%=promolistVO.getCoupon_id()%>">
 <input type="hidden" name="promo_id" value="<%=promolistVO.getPromo_id()%>">
 <input type="submit" value="送出修改"></FORM>
+<br>
+<button class="back_btn">返回上一頁</button>
 </main>
 </div>
 </body>
@@ -325,5 +331,12 @@ background-color:#FFF0AC;
         //              return [true, ""];
         //      }});
         
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
 </script>
 </html>

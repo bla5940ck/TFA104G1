@@ -121,22 +121,25 @@ background-color:#FFF0AC;
 }
 
 .login1{
-width:30%;
-height:30%;
+width:20%;
+height:20%;
 background-color:white;
 }
 
 .wrapper{
 text-align: center;
 margin-top: 190px;
+
 }
 
 .form-signin-heading{
 color:	white;
 } 
+
 .login{
 background-color:#FFF0AC
 }
+
 </style>
 </head>
 

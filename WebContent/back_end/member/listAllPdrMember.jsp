@@ -98,6 +98,14 @@ main.main {
     padding: 5px;
     text-align: center;
   }
+  
+  li{
+  list-style: none;
+  }
+  
+  button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -107,13 +115,6 @@ main.main {
 <%@ include file="/includeFolder/managerAside.file"%>
 <main class="main" >
 
-	<tr>
-		<td>
-		 
-		 <button><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp">回首頁</a></button>
-		</td>
-	</tr>
-	<br>
 
 
 <%-- 錯誤表列 --%>
@@ -191,7 +192,19 @@ main.main {
 </c:forEach> 
 </table>
 <%@ include file="page2.file" %>
+
+<br>
+<button class="back_btn">返回上一頁</button>
 	</main>
 	</div>
 </body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

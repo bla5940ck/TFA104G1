@@ -168,6 +168,10 @@ background-color:#FFF0AC;
 border:2px solid black;
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -179,18 +183,18 @@ background-color:#FFF0AC;
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
-					<b>選擇訂單編號:</b> 
+					<b>選擇訂單編號:</b>  <br>
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 						</c:forEach>
-					</select> 
+					</select>
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<input type="submit" value="送出">
 				</FORM>
 
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
-					<b>輸入訂單編號 (如1):</b> 
+					<b>輸入訂單編號:</b><br> 
 					<input type="text" name="ordID"> 
 					<input type="hidden" name="action" value="getOne_For_Display"> 
 					<input type="submit" value="送出">
@@ -198,8 +202,10 @@ background-color:#FFF0AC;
 			</div>
 			<div>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
-					<b>依歸還日期查詢訂單
+					<b>依歸還日期查詢訂單:
+					<br>
 						起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+						<br>
 						結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;">
 								<button>確認</button>
 								<input type="hidden" name="action" value="get_date_manager_order">
@@ -359,6 +365,8 @@ background-color:#FFF0AC;
 				</c:forEach>
 			</table>
 			<%@ include file="page2.file"%>
+			<br>
+<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 
@@ -416,5 +424,13 @@ $("#f_date1").blur(function(){
 	       format: 'Y-m-d H:i:s',
 	       value:'',
         });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
 </script>
 </html>

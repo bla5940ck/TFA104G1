@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +22,8 @@ import javax.servlet.http.Part;
 import com.memberservice.model.MemberServiceDAO;
 import com.memberservice.model.MemberServiceService;
 import com.memberservice.model.MemberServiceVO;
+import com.order.model.OrderMasterDAOImpl;
+import com.order.model.OrderMasterVO;
 import com.product.model.ProdService;
 import com.product.model.ProdVO;
 
@@ -526,6 +531,64 @@ if ("detail".equals(req.getParameter("action"))) {
 //			}
 
 		}
+if ("get_date_manager_order".equals(action)) {
+	
+	List<String> errorMsgs = new LinkedList<String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+
+	DateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+	
+	try {
+
+		String startDate = (String) req.getParameter("startDate");
+		if (startDate == null || (startDate.trim()).length() == 0) {
+			errorMsgs.add("請選擇日期");
+		}
+		if (!errorMsgs.isEmpty()) {
+			RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		}
+		
+		
+		String endDate = (String) req.getParameter("endDate");
+		if (endDate == null || (endDate.trim()).length() == 0) {
+			errorMsgs.add("請選擇日期");
+		}
+		if (!errorMsgs.isEmpty()) {
+			RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp");
+			failureView.forward(req, res);
+			return;// 程式中斷
+		}
+		
+
+
+		java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
+		java.sql.Timestamp ed = java.sql.Timestamp.valueOf(endDate);
+
+		MemberServiceDAO memdao = new MemberServiceDAO();
+		List<MemberServiceVO> list = memdao.getAll();
+
+		List<MemberServiceVO> list2 = new ArrayList<MemberServiceVO>();
+		for (MemberServiceVO omVO : list) {
+			if (omVO.getMsgID() != null && omVO.getMsgDate() != null && omVO.getMsgDate().before(ed)
+					&& omVO.getMsgDate().after(sd)) {
+				long time = omVO.getMsgDate().getTime();
+				Integer ordID = omVO.getOrdID();
+				System.out.println("訂單編號 :" + ordID + "歸還時間" + time);
+				list2.add(omVO);
+			}
+		}
+		req.setAttribute("list", list2);
+		req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp").forward(req, res);
+		return;
+	} catch (Exception e) {
+		e.printStackTrace();
+		errorMsgs.add("修改資料失敗:" + e.getMessage());
+		RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp");
+		failureView.forward(req, res);
+	}
+}
 	}
 
 }

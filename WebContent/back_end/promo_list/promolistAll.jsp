@@ -133,6 +133,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -239,7 +243,16 @@ background-color:#FFF0AC;
 
 <!-- <h3>新增專案明細</h3> -->
 
+<br>
+<button class="back_btn">返回上一頁</button>
 </main>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

@@ -128,6 +128,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 <body bgcolor='white'>
@@ -137,10 +141,7 @@ background-color:#FFF0AC;
 <%@ include file="/includeFolder/managerAside.file"%>
 <main class="main" >
 
-	<tr><td>
-		 
-		<button><a href="<%=request.getContextPath()%>/back_end/member/listAllMember.jsp">回首頁</a></button>
-	</td></tr>
+
 
 
 <table>
@@ -180,8 +181,18 @@ background-color:#FFF0AC;
 			</td>
 	</tr>
 </table>
+<br>
+<button class="back_btn">返回上一頁</button>
 </main>
 	</div>
 
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>
