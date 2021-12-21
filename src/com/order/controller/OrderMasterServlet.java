@@ -736,7 +736,7 @@ public class OrderMasterServlet extends HttpServlet {
 					obj.setTotalAmount(ordPrice.toString()); // 交易金額
 					obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 					obj.setItemName(prodName); // 商品名稱
-					obj.setReturnURL("/front_end/order/listAllOrderForRent.jsp"); // 付款完成通知回傳網址
+					obj.setReturnURL("https://f150-1-164-222-16.ngrok.io/TFA104G1/OrderMasterServlet"); // 付款完成通知回傳網址
 					obj.setNeedExtraPaidInfo("N");
 					obj.setChooseSubPayment("ALL");
 
