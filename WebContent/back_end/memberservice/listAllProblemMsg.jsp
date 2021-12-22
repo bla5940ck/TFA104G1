@@ -197,7 +197,7 @@ background-color: #FFF0AC;
 					<th>圖片二</th>
 					<th>圖片三</th>
 					<th>問題狀態</th>
-					<th>回覆</th>
+					
 
 				</tr>
 				<jsp:useBean id="ptSVC" scope="page"
@@ -213,7 +213,7 @@ background-color: #FFF0AC;
 					<tr>
 						<td>${msVO.msgID}</td>
 						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?prodID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
-						<td><a>${msVO.memberID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/back_end/member/listOneMember.jsp?memberID=${msVO.memberID}">${msVO.memberID}</a></td>
 						<td>${msVO.managerID}</td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
 						
@@ -253,9 +253,7 @@ background-color: #FFF0AC;
 									<input type="submit" value="送出">
 							</FORM>
 						</td>
-						<td>
-						<button class="class1">mail</button>
-						</td>
+						
 
 					</tr>
 
