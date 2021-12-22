@@ -9,7 +9,7 @@ public class BankService {
 	private BankDAO_interface dao;
 
 	public BankService() {
-		dao = new BankJDBCDAO();
+		dao = new BankDAO();
 	}
 
 	public BankVO addBank(String code,String chineseName) {
