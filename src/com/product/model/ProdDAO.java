@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.chatroom.jedis.JedisPoolUtil;
 import com.order.model.OrderMasterDAOImpl;
 import com.order.model.OrderMasterVO;
@@ -22,12 +27,12 @@ import redis.clients.jedis.JedisPool;
 import util.Util;
 
 public class ProdDAO implements ProdDAO_Interface {
-
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Product");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -49,7 +54,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		ResultSet rs = null;
 		Integer key = null;
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT, cols);
 
 			pstmt.setInt(1, prod.getCategoryID());
@@ -100,7 +105,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, prod.getCategoryID());
 			pstmt.setInt(2, prod.getProdStatus());
@@ -159,7 +164,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		ProdVO prod = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDPRODUCTBYPK);
 			pstmt.setInt(1, prodId);
 
@@ -220,7 +225,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(ALL);
 
 			rs = pstmt.executeQuery();
@@ -282,7 +287,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(ASC);
 			rs = pstmt.executeQuery();
 
@@ -344,7 +349,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DESC);
 			rs = pstmt.executeQuery();
 
@@ -407,7 +412,7 @@ public class ProdDAO implements ProdDAO_Interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(SEARCH);
 
 			pstmt.setString(1, keyword);
