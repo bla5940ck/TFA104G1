@@ -221,6 +221,7 @@ if ("update".equals(action)) {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("msVO", msVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				
 				MailService mail = new MailService();
 				MemberService memsv = new MemberService();
 				
@@ -235,7 +236,13 @@ if ("update".equals(action)) {
 				ProblemTypeService ptsv = new ProblemTypeService();
 				String ptmsg = ptsv.getOneProblemType(typeID).getTypeName();
 				
-				mail.sendMail(memVO.getEmail(), "問題回覆", "親愛的" + memVO.getNickName() + "您好，您在" + sdf.format(pdate) + "時提出的" + ptmsg +"問題，已為您處理，感謝您的來信");
+				mail.sendMail(memVO.getEmail(), "問題回覆", "親愛的" 
+									+ memVO.getNickName() 
+									+ "您好，您在" 
+									+ sdf.format(pdate) 
+									+ "時提出的" 
+									+ ptmsg 
+									+"問題，已為您處理，JoyLease感謝您的來信");
 				
 				String url = "/back_end/memberservice/listAllProblemMsg.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
