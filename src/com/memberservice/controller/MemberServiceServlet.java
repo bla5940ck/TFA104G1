@@ -242,7 +242,7 @@ if ("update".equals(action)) {
 									+ sdf.format(pdate) 
 									+ "時提出的" 
 									+ ptmsg 
-									+"問題，已為您處理，JoyLease感謝您的來信");
+									+"問題，已為您處理，JoyLease在此感謝您的來信");
 				
 				String url = "/back_end/memberservice/listAllProblemMsg.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
