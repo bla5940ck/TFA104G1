@@ -16,9 +16,15 @@ import javax.sql.DataSource;
 
 
 public class PostBoardDAO implements PostBoardDAOImpl {
-		String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
-		String userid = "root";
-		String passwd = "password";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/PostBoard");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	
 		private static final String INSERT_STMT = 
@@ -40,7 +46,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 				PreparedStatement pstmt = null;
 
 				try {
-					con = DriverManager.getConnection(url, userid, passwd);
+					con = ds.getConnection();
 					pstmt = con.prepareStatement(INSERT_STMT);
 
 					pstmt.setInt(1, postboardVO.getCategoryId());
@@ -83,7 +89,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 
 				try {
 
-					con = DriverManager.getConnection(url, userid, passwd);
+					con = ds.getConnection();
 					pstmt = con.prepareStatement(UPDATE);
 					System.out.println("dao" + postboardVO.getPic().length);
 					pstmt.setInt(1, postboardVO.getCategoryId());
@@ -127,7 +133,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 
 				try {
 
-					con = DriverManager.getConnection(url, userid, passwd);
+					con = ds.getConnection();
 					pstmt = con.prepareStatement(DELETE);
 
 					pstmt.setInt(1, postId);
@@ -167,7 +173,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 
 				try {
 
-					con = DriverManager.getConnection(url, userid, passwd);
+					con = ds.getConnection();
 					pstmt = con.prepareStatement(GET_ONE_STMT);
 
 					pstmt.setInt(1, postId);
@@ -229,7 +235,7 @@ public class PostBoardDAO implements PostBoardDAOImpl {
 
 				try {
 
-					con = DriverManager.getConnection(url, userid, passwd);
+					con = ds.getConnection();
 					pstmt = con.prepareStatement(GET_ALL_STMT);
 					rs = pstmt.executeQuery();
 // post_id, category_id, member_id, post_title, post_cont, post_time, reply_count, pic
