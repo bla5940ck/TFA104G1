@@ -3,15 +3,12 @@ package com.order.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.booking.model.BookingService;
 import com.booking.model.BookingVO;
 import com.google.gson.Gson;
+import com.member.model.MailService;
+import com.member.model.MemberJDBCDAO;
+import com.member.model.MemberVO;
 import com.member_coupon.model.MemcouponDAO;
 import com.member_coupon.model.MemcouponVO;
-import com.mysql.cj.x.protobuf.MysqlxCrud.OrderOrBuilder;
 import com.order.model.OrderListDAOImpl;
 import com.order.model.OrderListService;
 import com.order.model.OrderListVO;
@@ -36,7 +35,7 @@ import com.product.jedis.JedisPoolUtil;
 import com.product.model.CartVO;
 
 import ecpay.payment.integration.AllInOne;
-import ecpay.payment.integration.domain.*;
+import ecpay.payment.integration.domain.AioCheckOutALL;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -559,6 +558,20 @@ public class OrderMasterServlet extends HttpServlet {
 				OrderMasterVO omVO1 = omdao.findOrderMasterByPK(ordID);
 				OrderListVO olVO1 = oldao.findOrderListByPK(listID);
 				
+				MemberJDBCDAO memdao = new MemberJDBCDAO();
+				
+				if(omVO1.getShipStatus() == 2) {
+					MailService mailService = new MailService();
+					Integer rentID = omVO1.getRentID();
+					MemberVO memVO = memdao.findByPrimaryKey(rentID);
+					String to = memVO.getEmail();
+					String subject = "JoyLease訂單出貨通知";
+					String messageText = "親愛的會員 : " + memVO.getNickName() + "您好 : 你的訂單" + omVO1.getOrdID() + "已出貨，請留意近期通知 !";
+					
+					mailService.sendMail(to, subject, messageText);
+					
+				}
+				
 				/******************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("OrderMasterVO", omVO1); // 資料庫update成功後,正確的的ordermasterVO物件,存入req
 				req.setAttribute("OrderListVO", olVO1);
@@ -737,9 +750,11 @@ public class OrderMasterServlet extends HttpServlet {
 					obj.setTotalAmount(ordPrice.toString()); // 交易金額
 					obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 					obj.setItemName(prodName); // 商品名稱
-					obj.setReturnURL("https://44b3-1-164-235-121.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+					obj.setReturnURL("https://b463-1-164-218-235.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 					obj.setNeedExtraPaidInfo("N");
 					obj.setChooseSubPayment("ALL");
+					obj.setClientBackURL("/front_end/order/listAllOrderForRent.jsp");
+					
 					String form = all.aioCheckOut(obj, null);
 					
 					

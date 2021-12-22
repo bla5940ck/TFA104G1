@@ -10,6 +10,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.apache.tomcat.dbcp.dbcp2.SQLExceptionList;
 
 import com.booking.model.BookingDAO;
@@ -31,11 +36,21 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 	private static final String UPDATE_LIST_STATUS = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE ORD_ID = ?";
 	private static final String UPDATE_ORDER_STATUS = "UPDATE ORDER_MASTER SET ORD_STATUS =? WHERE (ORD_ID = ?)";
 
+//	static {
+//		try {
+//			Class.forName(Util.DRIVER);
+//		} catch (ClassNotFoundException ce) {
+//			ce.printStackTrace();
+//		}
+//	}
+	
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException ce) {
-			ce.printStackTrace();
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/OrderList");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 	}
 
