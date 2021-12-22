@@ -32,11 +32,13 @@ public class ECreturn extends HttpServlet {
 		AioCheckOutALL obj = new AioCheckOutALL();
 		System.out.println(obj.getMerchantID());
 		Enumeration en = req.getParameterNames();
-
+		System.out.println("所有參數 : ");
 		while (en.hasMoreElements()) {
 			Object nextElement = en.nextElement();
+			System.out.println(nextElement);
 
 		}
+		System.out.println("=========================");
 //		System.out.println(req.getParameter("MerchantTradeNo"));
 //		System.out.println(req.getParameter("RtnMsg"));
 //		System.out.println(req.getParameter("PaymentDate"));

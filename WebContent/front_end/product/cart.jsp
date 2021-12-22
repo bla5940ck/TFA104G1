@@ -36,8 +36,11 @@ a.cart-img>img {
 	// List<Integer> leaseList = new ArrayList();
 	Set<Integer> leaseSet = new HashSet();
 	List<CartVO> checkoutList = new ArrayList();
-	CartVO checkoutCart = new CartVO();
-
+// 	CartVO checkoutCart = new CartVO();
+	CartVO cartVO =(CartVO)session.getAttribute("cartVO");
+	String memberID1 = (String)session.getAttribute("memberID");
+	String jsonString = gson.toJson(cartVO);
+	jedis.rpush("member" + memberID1, jsonString);
 	for (String cartStr : cart) {
 
 		leaseSet.add(gson.fromJson(cartStr, CartVO.class).getLeaseID());
