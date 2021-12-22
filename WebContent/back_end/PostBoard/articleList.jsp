@@ -9,16 +9,17 @@
 	PostBoardService pbSvc = new PostBoardService();
 	List<PostBoardVO> list = pbSvc.getAll();
 	
-	Integer memberId = (Integer) session.getAttribute("memberId");
+	Integer memberId = (Integer) session.getAttribute("id");
 	
 	System.out.println("會員編號"+memberId);
 	
 	List<PostBoardVO> list2 = list.stream()
 								.filter(p->p.getMemberId()==memberId)
 			                    .collect(Collectors.toList());
-		if(request.getAttribute("list") !=null){
-			list2 = (List) request.getAttribute("list");
-		}
+	
+// 		if(request.getAttribute("list") !=null){
+// 			list2 = (List) request.getAttribute("list");
+// 		}
 	
 	pageContext.setAttribute("list", list2);
 	
