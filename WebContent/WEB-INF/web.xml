@@ -49,9 +49,20 @@
     <filter-class>com.member.LeaseLoginFilter</filter-class>
     
   </filter>
-  <filter-mapping>
+ <filter-mapping>
     <filter-name>LeaseLoginFilter</filter-name>
     <url-pattern>/front_end/member/LeasePage.jsp</url-pattern>
+    <url-pattern>/front_end/getCoupon/*</url-pattern>
+    <url-pattern>/front_end/order/*</url-pattern>
+    <url-pattern>/front_end/mem_Coupon/*</url-pattern>
+    <url-pattern>/front_end/Chatroom/*</url-pattern>
+    <url-pattern>/front_end/memberservice/*</url-pattern>
+    <url-pattern>/front_end/product/cart.jsp</url-pattern>
+    <url-pattern>/front_end/product/leaseProdPage.jsp</url-pattern>
+    <url-pattern>/front_end/product/modifyProd.jsp</url-pattern>
+    <url-pattern>/front_end/product/prodDetail.jsp</url-pattern>
+    <url-pattern>/front_end/product/showProd.jsp</url-pattern>
+    <url-pattern>/front_end/product/uploadProd.jsp</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
