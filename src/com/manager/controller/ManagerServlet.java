@@ -311,9 +311,9 @@ public class ManagerServlet extends HttpServlet {
 						req.getSession().setAttribute("managerID", id);
 						req.getSession().setAttribute("managerUser", user);
 						req.getSession().setAttribute("managerPassword", password);
-
-						RequestDispatcher successView = req.getRequestDispatcher("/back_end/manager/select_page.jsp");
-						successView.forward(req, res);
+						System.out.println("loginServlet: "+(String)req.getSession().getAttribute("location"));
+						res.sendRedirect((String)req.getSession().getAttribute("location"));
+						
 						return;
 					}
 
