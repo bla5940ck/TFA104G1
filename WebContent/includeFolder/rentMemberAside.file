@@ -6,10 +6,10 @@
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
-  MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); 
-  pageContext.setAttribute("memberVO",memberVO);
+  MemberVO memberVO1 = (MemberVO) session.getAttribute("MemberVO"); 
+  pageContext.setAttribute("memberVO1",memberVO1);
 %>
-<c:set var="img" value="${memberVO.pic}" />
+<c:set var="img" value="${memberVO1.pic}" />
 <%
 byte b[] = (byte[]) pageContext.getAttribute("img");
 String pic = Base64.encode(b);
@@ -104,7 +104,7 @@ if (null == pic || "".equals(pic))
 				<ul class="nav_list" style="list-style-type:none;">
 					<i class="mh-avatar-wrap">
 					<c:choose>
-					<c:when test="${fn:length(memberVO.pic)!=0 and memberVO.pic!=null}">
+					<c:when test="${fn:length(memberVO1.pic)!=0 and memberVO1.pic!=null}">
 			
 						<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
 						</c:when>
@@ -114,7 +114,7 @@ if (null == pic || "".equals(pic))
 						</c:choose>
 						</i> 
 					
-					<h3 style="background-color:lightgreen;">承租專區<br><span class="nav-title">${memberVO.loginId}</span></center></h3>
+					<h3 style="background-color:lightgreen;">承租專區<br><span class="nav-title">${memberVO1.loginId}</span></center></h3>
 					<h5>
 						<a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp"><i class="tou"></i>我的帳戶</a> 
 						<a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp"><i class="tou"></i>個人檔案</a>
