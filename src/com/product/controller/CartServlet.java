@@ -37,7 +37,7 @@ public class CartServlet extends HttpServlet {
 
 	}
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		Gson gson = new Gson();
 
 		//////////// 加入購物車/////////////////////
@@ -135,6 +135,47 @@ public class CartServlet extends HttpServlet {
 			}
 
 		}
+		
+		if("directCheckout".equals(req.getParameter("action"))) {
+			System.out.println(req.getParameter("prodID"));
+			ProdService prodSvc = new ProdService();
+			ProdVO prodVO= prodSvc.findProductByPK(Integer.valueOf(req.getParameter("prodID")));
+			String eDateStr = req.getParameter("eDate");
+			String sDateStr= req.getParameter("sDate");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
+			java.util.Date sDate =null;
+			java.util.Date eDate =null;
+			try {
+				sDate = sdf.parse(sDateStr);
+				eDate = sdf.parse(eDateStr);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			long diffDay = (eDate.getTime()-sDate.getTime())/(24*60*60*1000) +1;
+			int totalPrice = (int)diffDay * prodVO.getProdRent();
+			System.out.println(diffDay);
+			CartVO cartVO = new CartVO();
+			
+			cartVO.setEstStart(new Date(sDate.getTime()));
+			cartVO.setEstEnd(new Date(eDate.getTime()));
+			cartVO.setProdID(Integer.valueOf(req.getParameter("prodID")));
+			cartVO.setRent(prodVO.getProdRent());
+			cartVO.setProdName(prodVO.getProdName());
+			cartVO.setLeaseID(prodVO.getMemberID());
+			cartVO.setTotalPrice(totalPrice);
+			
+			cartVO.setProdID(prodVO.getProdID());
+			
+			List<CartVO> cartList1 = new ArrayList();
+			cartList1.add(cartVO);
+			req.getSession().setAttribute("cartVO", cartVO);
+			req.getRequestDispatcher("/front_end/product/cart.jsp").forward(req, res);
+			
+		}
+		
 
 	}
 
