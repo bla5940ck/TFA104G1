@@ -16,8 +16,10 @@
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
 
-	List<OrderMasterVO> list2 = list.stream().filter(o -> o.getRentID() == memID)
-			.filter(o -> o.getOrdStatus() == 2).collect(Collectors.toList());
+	List<OrderMasterVO> list2 = 
+						list.stream().filter(o -> o.getRentID() == memID)
+							.filter(o -> o.getOrdStatus() == 2)
+								.collect(Collectors.toList());
 
 	if (request.getAttribute("list") != null) {
 		list2 = (List) request.getAttribute("list");

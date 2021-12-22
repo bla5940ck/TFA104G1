@@ -415,7 +415,7 @@ request.setAttribute("product", product);
 									<div class="aa-prod-view-bottom">
 										<a class="aa-add-to-cart-btn"
 											href="javascript:selflog_show(<%=product.getProdID()%>)">加入購物車</a>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="<%=path%>/front_end/product/cart.jsp">直接結帳</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="aa-add-to-cart-btn" href="javascript:checkout_show(<%=product.getProdID()%>)">直接結帳</a>
 									</div>
 									<br>
 									<div>
@@ -812,6 +812,29 @@ request.setAttribute("product", product);
 <script src="sweetalert2.all.min.js"></script>
 
 	<script>
+	/////直接結帳//////////
+	function checkout_show(id){
+		if($("#startDate").val()==""||$("#endDate").val()==""){
+			
+			alert("日期錯誤");
+			return false;
+		}else{
+			let sDate=  $("#startDate").val();
+			let eDate =	$("#endDate").val();
+			
+			location.href="<%=request.getContextPath()%>/cart/CartServlet?action=directCheckout&prodID="+ id +"&sDate=" +sDate+"&eDate=" + eDate ;
+		}
+		
+	
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 
 /// //加入購物車///////
 function selflog_show(id){ 
@@ -868,7 +891,7 @@ function selflog_show(id){
 						$("span.aa-cart-notify").text(
 								parseInt($("span.aa-cart-notify").text()) + 1);
 								
-					
+						
 							
 						Swal.fire({
  							 position: 'center',

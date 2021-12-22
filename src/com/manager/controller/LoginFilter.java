@@ -29,8 +29,9 @@ public class LoginFilter implements Filter {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/back_end/manager/managerlogin.jsp");
 			return;
-		} else {
+		} else if(session.getAttribute("location")!=null) {
 			chain.doFilter(request, response);
+			
 		}
 	}
 }
