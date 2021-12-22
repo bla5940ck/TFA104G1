@@ -24,6 +24,7 @@ a.cart-img>img {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JoyLease | Cart</title>
 
+
 <%@ include file="/includeFolder/header.file"%>
 
 
@@ -32,25 +33,23 @@ a.cart-img>img {
 
 
 <%
-	;
 	// List<Integer> leaseList = new ArrayList();
 	Set<Integer> leaseSet = new HashSet();
 	List<CartVO> checkoutList = new ArrayList();
 // 	CartVO checkoutCart = new CartVO();
-	CartVO cartVO =(CartVO)session.getAttribute("cartVO");
-	String memberID1 = (String)session.getAttribute("memberID");
-	String jsonString = gson.toJson(cartVO);
-	jedis.rpush("member" + memberID1, jsonString);
+	
 	for (String cartStr : cart) {
 
 		leaseSet.add(gson.fromJson(cartStr, CartVO.class).getLeaseID());
 	}
+	
 
 	pageContext.setAttribute("leaseSet", leaseSet);
 	int total = 0;
 	int index = 0;
 	int checkbox = 0;
 	CartVO cartVO1 = null;
+	
 %>
 
 
@@ -516,12 +515,49 @@ $("input.cart-checkbox").click(function(){
   });
   
   
-window.onload = function () {
+	$.ajax({
+		url:"/TFA104G1/cart/CartServlet",
+		data:{
+			action:"cartTest"
+		},
+		success:function(data){
+			console.log(data);
+			if(data==1){
+				history.go(0);
+				return;
+			}else if(data==3){
+				let timerInterval
+				Swal.fire({
+				  title: '此商品為您的商品，已自動刪除',
+				  html: '<b></b> 秒後關閉',
+				  timer: 1500,
+				  timerProgressBar: true,
+				  didOpen: () => {
+				    Swal.showLoading()
+				    const b = Swal.getHtmlContainer().querySelector('b')
+				    timerInterval = setInterval(() => {
+				      b.textContent = Swal.getTimerLeft()
+				    }, 100)
+				  },
+				  willClose: () => {
+				    clearInterval(timerInterval)
+				  }
+				}).then((result) => {
+				  /* Read more about handling dismissals below */
+				  if (result.dismiss === Swal.DismissReason.timer) {
+				    console.log('I was closed by the timer')
+				  }
+				})
+				return;
+			}
+		}
 	
+	
+	});
+window.onload = function () {
 	
 
 }
-	
 
   </script>
 </body>
