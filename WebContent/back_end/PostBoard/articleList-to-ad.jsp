@@ -112,5 +112,5 @@
  </section>
 
 </body>
-<%@ include file="footer.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </html>
