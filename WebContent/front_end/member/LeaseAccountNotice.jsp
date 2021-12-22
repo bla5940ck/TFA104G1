@@ -4,10 +4,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
-<%--
+<%
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
---%>
+%>
 <!DOCTYPE html>
 <html>
 	<head>
