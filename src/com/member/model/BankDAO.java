@@ -6,15 +6,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 import com.member.model.MemberVO;
 
 public class BankDAO implements BankDAO_interface {
 	
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Bank");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = 
 		"INSERT INTO bank (code,chinese_name) VALUES (?, ?)";
@@ -38,8 +49,8 @@ public class BankDAO implements BankDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, bankVO.getCode());
@@ -47,9 +58,7 @@ public class BankDAO implements BankDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+		
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -84,8 +93,7 @@ public class BankDAO implements BankDAO_interface {
 
 			try {
 
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 
 				pstmt.setString(1, bankVO.getCode());
@@ -96,9 +104,7 @@ public class BankDAO implements BankDAO_interface {
 				pstmt.executeUpdate();
 
 				// Handle any driver errors
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. "
-						+ e.getMessage());
+			
 				// Handle any SQL errors
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. "
@@ -132,8 +138,7 @@ public class BankDAO implements BankDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setString(1, code);
@@ -148,9 +153,7 @@ public class BankDAO implements BankDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+		
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -192,9 +195,7 @@ public class BankDAO implements BankDAO_interface {
 		ResultSet rs = null;
 
 		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -207,9 +208,7 @@ public class BankDAO implements BankDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+	
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -292,8 +291,7 @@ public class BankDAO implements BankDAO_interface {
 	
 		try {
 	
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_Mem_ByBankcode_STMT);
 			pstmt.setString(1, bankCode);
 			rs = pstmt.executeQuery();
@@ -325,10 +323,7 @@ public class BankDAO implements BankDAO_interface {
 			}
 	
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
