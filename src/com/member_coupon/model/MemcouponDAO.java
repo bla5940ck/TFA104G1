@@ -2,15 +2,22 @@ package com.member_coupon.model;
 
 import java.util.*;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import java.sql.*;
 import util.Util;
 
 public class MemcouponDAO implements Memcoupon_interface{
 
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException e) {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/MemCoupon");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -41,7 +48,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 			
 			try {
 				
-				con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(FIND_BY_MEMBERID);
 				
 				pstmt.setInt(1, member_id);
@@ -100,7 +107,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();		
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, memcouponVO.getMember_id());
@@ -146,7 +153,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			
@@ -193,7 +200,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, mem_coupon_id);
@@ -291,7 +298,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 
 		try {
 
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, mem_coupon_id);
@@ -335,7 +342,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 		
 		try {
 
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 

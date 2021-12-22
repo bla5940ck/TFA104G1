@@ -232,7 +232,9 @@ background-color: #FFF0AC;
 									</c:choose>
 
 							</span>&nbsp&nbsp&nbsp <input type="hidden" name="prodID"
-								value="${prodVO.prodID}"> <select name="prodStatus"
+								value="${prodVO.prodID}">
+								<input type="hidden" name="memberID" value="${prodVO.memberID}">
+								 <select name="prodStatus"
 								size="1" class="prodStatus">
 
 									<c:if test="${prodVO.prodStatus==0 }">
@@ -304,7 +306,11 @@ background-color: #FFF0AC;
 						function() {
 
 							var that = $(this).closest('td').find('input')
-									.eq(0).val()
+									.eq(0).val();
+							var memberID =$(this).closest('td').find('input')
+							.eq(1).val();
+							console.log("m: "+memberID);
+							console.log("p "+that)
 							// 		alert("123")
 							var status = $(this).val();
 							console.log(status)
@@ -319,7 +325,8 @@ background-color: #FFF0AC;
 										data : {
 											prodID : that,
 											action : "offShelf",
-											status : status
+											status : status,
+											memberID: memberID
 										},
 										success : function(data) {
 											console.log(data);
