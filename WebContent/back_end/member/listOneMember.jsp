@@ -6,7 +6,20 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%-- 取出 Concroller EmpServlet.java已存入request的MemberVO物件--%>
-<%MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");%>
+<%
+
+MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+MemberService memSVC = new MemberService();
+
+
+if(request.getAttribute("memberVO") == null){
+	Integer memID = Integer.valueOf(request.getParameter("memberID"));
+	memberVO = memSVC.getOneMember(memID);
+}
+	pageContext.setAttribute("memberVO", memberVO);
+
+%>
+
 
 <%-- 取出 對應的DeptVO物件--%>
 
