@@ -197,7 +197,7 @@ img.preview {
 <section id="aa-myaccount">
 		<div class="container">
 			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
+				<!-- <div class="col-md-12" id="col-md-12"> -->
 					<div class="aa-myaccount-area" id="aa-myaccount-area"> 
 						<div class="row" id="row2">
 							<!--<div class="col-md-6" id="col-md-6"> -->
@@ -269,6 +269,10 @@ img.preview {
 
 			
 			<hr>
+		
+			<input type="hidden" name="action" value="insert"> <input
+				type="submit" value="註冊">
+			
 			<div class="text-center">
 				<a class="small" href="ForgetPW.jsp" >Forgot Password?</a>
 			</div>
@@ -276,15 +280,13 @@ img.preview {
 				<a class="small" href="LeaseLogin.jsp">Already have an account?
 					Login!</a>
 			</div>
-			<input type="hidden" name="action" value="insert"> <input
-				type="submit" value="註冊">
 	</FORM>
 </div>
 					</div> 
 						</div>
 					</div>
 				</div>
-			</div>
+	<!--		</div>-->
 <!-- 		</div> -->
 	</section>
 	

@@ -25,7 +25,7 @@
 		
 		body {
 			margin: 0;
-			padding: 10px;
+			padding: 0px;
 		}
 		
 		img {
@@ -35,7 +35,7 @@
 		header.header {
 			background-color: #ddd;
 			width: 100%;
-			margin: 0 auto 10px auto;
+			margin: 0 auto 0px auto;
 			border: 1px solid #999;
 		}
 		
@@ -88,7 +88,7 @@
 			vertical-align: top;
 			font-size: 1rem;
 			border: 1px solid #999;
-			padding: 10px;
+			padding: 0px;
 		}
 		
 		@media ( max-width : 575.98px) {
