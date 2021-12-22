@@ -56,13 +56,7 @@ th, td {
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
 								
-								<br>
-								
-			     <center><a href="<%=request.getContextPath()%>/front_end/getCoupon/game.jsp">
-                  <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game.jpg" alt="">
-                </a></center>
-
-								<br>
+	
 		
 <c:if test="${b==true }">
 
@@ -77,14 +71,10 @@ th, td {
 		</script>
 	</c:if>
 	
-			<table id="table-1">
-				<tr>
-					<td>
-						<h3>折價券領取專區</h3>
-					</td>
-				</tr>
-			</table>
-
+<br>
+		
+						<center><h2>折價券領取專區</h2></center>
+	
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -100,8 +90,8 @@ th, td {
 <!-- 					<th>折價券編號</th> -->
 <!-- 					<th>專案編號</th> -->
 <!-- 					<th>商品類別編號</th> -->
-					<th>折價券名稱</th>
-					<th>折價金額</th>
+<!-- 					<th>折價券名稱</th> -->
+<!-- 					<th>折價金額</th> -->
 <!-- 					<th>數量</th> -->
 					<!-- 					<th>已領取數量</th> -->
 <!-- 										<th>開始日期</th> -->
@@ -117,7 +107,7 @@ th, td {
 <%-- 						<td>${promolistVO.promo_id}</td> --%>
 <%-- 						<td>${promolistVO.category_id}</td> --%>
 						<td>${promolistVO.coupon_name}</td>
-						<td>${Math.round(promolistVO.discount)}</td>
+<%-- 						<td>${Math.round(promolistVO.discount)}</td> --%>
 <%-- 						<td>${promolistVO.amount}</td> --%>
 						<%-- 						<td>${promolistVO.used}</td> --%>
 <%-- 												<td>${promolistVO.start_date}</td> --%>
@@ -143,7 +133,13 @@ th, td {
 		</tr>
 				</c:forEach>
 			</table>
+							<br>
+								
+			     <center><a href="<%=request.getContextPath()%>/front_end/getCoupon/game.jsp">
+                  <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game.jpg" alt="">
+                </a></center>
 
+								
 
 		</main>
 		<br>
@@ -159,6 +155,7 @@ th, td {
 			</div>
 <!-- 		</div> -->
 	</section>
+	
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
 </html>
