@@ -71,7 +71,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			background-color: #ddd;
+			
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -82,7 +82,7 @@
 		
 		/*--------------------main區域-------------------- */
 		main.main {
-			background-color: #ddd;
+			background-color: white;
 			width: calc(100% - 200px - 10px);
 			display: inline-block;
 			vertical-align: top;
@@ -139,7 +139,7 @@
 		</style>
 	</head>
 	<body bgcolor='white'>
-		<header class="header"> header區域 </header>
+			<%@ include file="/includeFolder/header.file"%>
 		<c:if test="${not empty errorMsgs}">
 					<font style="color: red">請修正以下錯誤:</font>
 					<ul>
@@ -149,48 +149,7 @@
 					</ul>
 			</c:if>
 		<div class="main_content">
-				<aside class="aside">
-						<nav class="nav">
-								<div>
-									<a class="" href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">
-										<div>
-												 <td>
-														<c:set var="img" value="${memberVO.pic}" />
-														<%
-														byte b[] = (byte[]) pageContext.getAttribute("img");
-															String pic = Base64.encode(b);
-															if (null == pic || "".equals(pic))
-																pic ="123";
-														%>
-														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
-													</td>
-												    <td>${memberVO.loginId}</td>
-											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
-										</div>
-									</a>
-								</div>
-								<h1>承租專區</h1>
-								<ul class="nav_list">
-								<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a>
-										<ul class="nav_list">
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">個人檔案</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp">銀行帳號</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp">地址</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp">更改密碼</a></li>
-										</ul>
-									</li>
-									<li><a href="">訂單資訊</a></li>
-									<li><a href="">通知</a></li>
-										<ul class="nav_list">
-											<li><a href="">訂單更新通知</a></li>
-											<li><a href="">評價通知</a></li>
-											<li><a href="">款項通知</a></li>
-										</ul>
-									<li><a href="">問題回報查詢</a></li>
-									<li><a href="">我的折價券</a></li>
-								</ul>
-						</nav>
-				</aside>
+			<%@ include file="/includeFolder/rentMemberAside.file"%>
 				
 				<%
 					DefAddressService dfaSvc = new DefAddressService();
@@ -227,7 +186,7 @@
 				 </main>
 		</div>
 						
-		<footer class="footer"> footer區域 </footer>
+		<%@ include file="/includeFolder/footer2.file"%>
 	</body>
 <script>
 	function showPic(picPath){
