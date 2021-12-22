@@ -3,12 +3,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.postboard.model.*"%>
+<%@page import="java.util.stream.Collectors"%>
 
 <%
 	PostBoardService pbSvc = new PostBoardService();
 	List<PostBoardVO> list = pbSvc.getAll();
-	pageContext.setAttribute("list", list);
+	
+	Integer memberId = (Integer) session.getAttribute("memberId");
+	
+	System.out.println("會員編號"+memberId);
+	
+	List<PostBoardVO> list2 = list.stream()
+								.filter(p->p.getMemberId()==memberId)
+			                    .collect(Collectors.toList());
+		if(request.getAttribute("list") !=null){
+			list2 = (List) request.getAttribute("list");
+		}
+	
+	pageContext.setAttribute("list", list2);
+	
 %>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -74,6 +90,7 @@
                       <%@ include file="page1.file"%>
 					  <c:forEach var="postBoardVO" items="${list}" begin="<%=pageIndex%>"
 			                     end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 			                     <c:if test="${postBoardVO.memberId == memberId} "> --%>
                     </thead>
                       
             
@@ -106,6 +123,7 @@
 
                       </tr>                   
                       </tbody>
+<%--                       </c:if> --%>
                       </c:forEach>
                   </table>
                   <%@ include file="page2.file"%>

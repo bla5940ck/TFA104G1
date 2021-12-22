@@ -150,7 +150,8 @@
 					</ul>
 			</c:if>
 		<div class="main_content">
-				<aside class="aside">
+		<%@ include file="/includeFolder/rentMemberAside.file"%>
+			<%-- 	<aside class="aside">
 						<nav class="nav">
 								<div>
 									<a class="" href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">
@@ -166,9 +167,8 @@
 														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
 													</td>
 												    <td>${memberVO.loginId}</td>
-											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
-										</div>
-									</a>
+									
+										</div>									</a>
 								</div>
 								<h1>承租專區</h1>
 								<ul class="nav_list">
@@ -191,7 +191,7 @@
 									<li><a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid">我的折價券</a></li>
 								</ul>
 						</nav>
-				</aside>
+				</aside> --%>
 				<main class="main">
 				
 					<%-- <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet"   name="form1">--%>
