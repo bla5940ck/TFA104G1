@@ -62,13 +62,13 @@ public class PostBoardServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 *****************************************/
 				PostBoardService pbSvc = new PostBoardService();
 				List<PostBoardVO> pbVO = pbSvc.getAll();
-				for(PostBoardVO pdid : pbVO) {
-					if(pdid.getMemberId()== memberId) {
-						System.out.println("取到的會員編號 :" + memberId);
-						System.out.println(pdid.getPostId());
-						
-					}
-				}
+//				for(PostBoardVO pdid : pbVO) {
+//					if(pdid.getMemberId()== memberId) {
+//						System.out.println("取到的會員編號 :" + memberId);
+//						System.out.println(pdid.getPostId());
+//						
+//					}
+//				}
 				
 				
 				if (pbVO == null) {
@@ -120,7 +120,7 @@ public class PostBoardServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}
