@@ -36,6 +36,7 @@ import com.product.model.CartVO;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
+import ecpay.payment.integration.domain.InvoiceObj;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -750,11 +751,11 @@ public class OrderMasterServlet extends HttpServlet {
 					obj.setTotalAmount(ordPrice.toString()); // 交易金額
 					obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 					obj.setItemName(prodName); // 商品名稱
-					obj.setReturnURL("https://b463-1-164-218-235.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+					obj.setReturnURL("https://48f9-1-164-254-212.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 					obj.setNeedExtraPaidInfo("N");
 					obj.setChooseSubPayment("ALL");
-					obj.setClientBackURL("/front_end/order/listAllOrderForRent.jsp");
-					
+					obj.setClientBackURL("http://localhost:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");
+										
 					String form = all.aioCheckOut(obj, null);
 					
 					
