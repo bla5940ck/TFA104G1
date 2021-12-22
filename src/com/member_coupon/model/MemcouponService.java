@@ -17,7 +17,7 @@ public class MemcouponService {
 		//假如是false 代表沒有重複
 		//true 代表重複
 		for(MemcouponVO memcouponVO:list) {
-			if(memcouponVO.getMember_id()==1) {
+			if(memcouponVO.getMember_id()==member_id) {
 				
 				flag = flag || (coupon_id.equals(memcouponVO.getCoupon_id()));
 			}

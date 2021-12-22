@@ -4,6 +4,11 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
+<%
+		
+Integer memID = (Integer)session.getAttribute("id");
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -50,21 +55,14 @@ th, td {
 						<div class="row" id="row2">
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
-	<%
-		session.setAttribute("id", 1);
-	%>	
-	<!-- 	<header class="header"> header區域 </header> -->
-	<div class="main_content">
-		<!-- 		<aside class="aside"> -->
-		<!-- 			<nav class="nav"> -->
-		<!-- 				<ul class="nav_list"> -->
-		<!-- 					<h2>出租者專區</h2> -->
-		<%-- 					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4> --%>
-		<!-- 				</ul> -->
-		<!-- 			</nav> -->
-		<!-- 		</aside> -->
-		<main class="main">
-		
+								
+								<br>
+								
+			     <center><a href="<%=request.getContextPath()%>/front_end/getCoupon/game.jsp">
+                  <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game.jpg" alt="">
+                </a></center>
+
+								<br>
 		
 <c:if test="${b==true }">
 
@@ -129,7 +127,7 @@ th, td {
 								ACTION="getcoupon.do"
 								style="margin-bottom: 0px;">
 								<input class="btn" type="submit" value="領取"> 
-								<input type="hidden" name="member_id" value="1"> 
+								<input type="hidden" name="member_id" value="<%=memID%>"> 
 								<input type="hidden" name="category_id" value="${promolistVO.category_id}"> 
 								<input type="hidden" name="coupon_id" value="${promolistVO.coupon_id}"> 
 								<input type="hidden" name="coupon_name" value="${promolistVO.coupon_name}"> 
