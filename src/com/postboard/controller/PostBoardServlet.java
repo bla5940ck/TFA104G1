@@ -57,11 +57,20 @@ public class PostBoardServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer postId = new Integer(req.getParameter("postId").trim());
+				Integer memberId = new Integer(req.getParameter("memberId").trim());
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				PostBoardService pbSvc = new PostBoardService();
-				PostBoardVO pbVO = pbSvc.findByPrimaryKey(postId);
+				List<PostBoardVO> pbVO = pbSvc.getAll();
+//				for(PostBoardVO pdid : pbVO) {
+//					if(pdid.getMemberId()== memberId) {
+//						System.out.println("取到的會員編號 :" + memberId);
+//						System.out.println(pdid.getPostId());
+//						
+//					}
+//				}
+				
+				
 				if (pbVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -96,11 +105,11 @@ public class PostBoardServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				Integer postId = new Integer(req.getParameter("postId"));
+				Integer memberId = new Integer(req.getParameter("memberId"));
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				PostBoardService pbSvc = new PostBoardService();
-				PostBoardVO pbVO = pbSvc.findByPrimaryKey(postId);
+				PostBoardVO pbVO = pbSvc.findByPrimaryKey(memberId);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("pbVO", pbVO); // 資料庫取出的promoVO物件,存入req
@@ -111,7 +120,7 @@ public class PostBoardServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}

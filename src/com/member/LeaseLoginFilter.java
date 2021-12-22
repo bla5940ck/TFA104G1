@@ -41,8 +41,8 @@ public class LeaseLoginFilter implements Filter {
     }
 		*/ 
 		else {
-//			chain.doFilter(request, response);
-			res.sendRedirect((String)(req.getAttribute("location")));
+			chain.doFilter(request, response);
+			//res.sendRedirect((String)(req.getAttribute("location")));
 		}
 	}
 }

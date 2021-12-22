@@ -9,12 +9,22 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class MemberDAO implements MemberDAO_interface {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Member");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = 
 			"INSERT INTO member (bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,	"
@@ -67,8 +77,7 @@ public class MemberDAO implements MemberDAO_interface {
 		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, memberVO.getBankCode());
@@ -95,10 +104,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -129,8 +135,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, memberVO.getBankCode());
@@ -158,10 +163,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -191,8 +193,7 @@ public class MemberDAO implements MemberDAO_interface {
 	
 		try {
 	
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATESTATUS);
 			pstmt.setInt(1, memberVO.getStatus());
 			pstmt.setInt(2, memberVO.getMemberId());
@@ -200,10 +201,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 	
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -236,8 +234,7 @@ public class MemberDAO implements MemberDAO_interface {
 //		System.out.println(UPDATEONEMEMBER.toString());
 		try {
 	
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATEONEMEMBER);
 			pstmt.setInt(1, memberVO.getMemberId());
 			pstmt.setString(2, memberVO.getName());
@@ -249,10 +246,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 	
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -285,8 +279,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 			
 //			System.out.println(GET_ONE_STMT .toString()+ memberId.toString());
@@ -321,10 +314,7 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -365,8 +355,7 @@ public class MemberDAO implements MemberDAO_interface {
 		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_PDR_ONE_STMT);
 			rs = pstmt.executeQuery();
 			
@@ -401,9 +390,7 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+		
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -446,8 +433,7 @@ public class MemberDAO implements MemberDAO_interface {
 		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -480,10 +466,7 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -674,8 +657,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_LOGIN_STMT);
 
 			pstmt.setString(1, loginId);
@@ -708,10 +690,7 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -752,8 +731,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(LOGIN);
 
 			pstmt.setString(1, loginId);
@@ -770,9 +748,7 @@ public class MemberDAO implements MemberDAO_interface {
 				}
 			}
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+	
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -813,18 +789,14 @@ public class MemberDAO implements MemberDAO_interface {
 	
 		try {
 	
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATEPW);
 			pstmt.setString(1, memberVO.getPassword());
 			pstmt.setString(2, memberVO.getLoginId());
 			
 			pstmt.executeUpdate();
 	
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+	
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -856,8 +828,7 @@ public class MemberDAO implements MemberDAO_interface {
 		
 		try {
 //			SQL :"UPDATE member set bank_code =? ,bank_account =?  account_name=? where (member_id = ?)";
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATEACCOUNT);
 			pstmt.setString(1, memberVO.getBankCode());
 			pstmt.setString(2, memberVO.getBankAccount());
@@ -867,10 +838,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 	
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -907,8 +875,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_EMAIL);
 
 			pstmt.setString(1, email);
@@ -925,9 +892,7 @@ public class MemberDAO implements MemberDAO_interface {
 				}
 			}
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+		
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -970,8 +935,7 @@ public class MemberDAO implements MemberDAO_interface {
 		System.out.println("77777744444444");
 		try {
 			System.out.println("888888844444444");
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_ONE_MEM_INF);
 			pstmt.setString(1, memberVO.getNickName());
 			pstmt.setString(2, memberVO.getEmail());
@@ -982,10 +946,7 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 	
 			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
+	
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
