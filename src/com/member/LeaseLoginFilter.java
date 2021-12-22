@@ -29,6 +29,7 @@ public class LeaseLoginFilter implements Filter {
 		if (loginId == null) {
 			session.setAttribute("location", req.getRequestURI());
 			res.sendRedirect(req.getContextPath() + "/front_end/member/LeaseLogin.jsp");
+			
 			return;
 		}
 		/*
@@ -41,6 +42,7 @@ public class LeaseLoginFilter implements Filter {
 		*/ 
 		else {
 			chain.doFilter(request, response);
+			//res.sendRedirect((String)(req.getAttribute("location")));
 		}
 	}
 }

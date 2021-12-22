@@ -123,7 +123,7 @@ if (null == pic || "".equals(pic))
 						<a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp"><i class="tou"></i>更改密碼 </a>
 						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp"><i class="tou"></i>訂單資訊</a>
 						<a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp"><i class="tou"></i>評價訂單</a> 
-						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'><i class="tou"></i>專案專區</a>
+						<a href='<%=request.getContextPath()%>/back_end/PostBoard/articleList.jsp'><i class="tou"></i>我的徵求</a>
 						<a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp"><i class="tou"></i>問題回報查詢</a>
 						<a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid"><i class="tou"></i>我的折價券</a>
 					</h5>					

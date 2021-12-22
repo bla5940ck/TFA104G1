@@ -10,11 +10,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class MemberServiceDAO implements MemberServiceDAO_interface {
-	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String URL = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
-	public static final String USER = "root";
-	public static final String PASSWORD = "password";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/MemberService");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO member_service (prod_id,member_id,manager_id,type_id,ord_id,msg_date,problem_msg,msg_res,pic_1,pic_2,pic_3,problem_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -36,8 +46,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 
 		try {
 //			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			Integer tmp1 = manberServiceVO.getProdID();
@@ -108,8 +117,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			
@@ -176,8 +184,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 
 		try {
 		
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			pstmt.setInt(1, msgID);
 			int executeUpdate = pstmt.executeUpdate();
@@ -214,8 +221,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 		MemberServiceVO msvo = null;
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE_STMT);
 			
 			ps.setInt(1, msgID);
@@ -281,8 +287,7 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL_STMT);
 
 			rs = ps.executeQuery();

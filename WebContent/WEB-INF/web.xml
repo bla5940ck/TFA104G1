@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <filter>
     <filter-name>loginFilter</filter-name>
     <filter-class>com.manager.controller.LoginFilter</filter-class>
@@ -20,6 +21,23 @@
     <url-pattern>/back_end/manager/listOne.jsp</url-pattern>
     <url-pattern>/back_end/manager/addManager.jsp</url-pattern>
     <url-pattern>/back_end/manager/update_manager_input.jsp</url-pattern>    
+    <url-pattern>/back_end/product/productManager.jsp</url-pattern>    
+    <url-pattern>/back_end/member/listAllMember.jsp</url-pattern>    
+    <url-pattern>/back_end/member/listAllPdrMember.jsp</url-pattern>    
+    <url-pattern>/back_end/member/listOneMember.jsp</url-pattern>    
+    <url-pattern>/back_end/member/updateList.jsp</url-pattern>    
+    <url-pattern>/back_end/member/updateOneMember.jsp</url-pattern>    
+    <url-pattern>/back_end/order/listAllOrderMaster.jsp</url-pattern>    
+    <url-pattern>/back_end/order/listOneOrderMaster.jsp</url-pattern>    
+    <url-pattern>/back_end/order/listOrdIDOrderListManager.jsp</url-pattern>    
+    <url-pattern>/back_end/order/listStatusOrderMaster.jsp</url-pattern>    
+    <url-pattern>/back_end/order/updateOrderManager2.jsp</url-pattern>    
+    <url-pattern>/back_end/order/updateOrderProblem.jsp</url-pattern>    
+    <url-pattern>/back_end/promo/*</url-pattern>    
+    <url-pattern>/back_end/promo_list/*</url-pattern>    
+    <url-pattern>/back_end/memberservice/*</url-pattern>    
+    <url-pattern>/back_end/problemtype/*</url-pattern>    
+     
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
@@ -31,9 +49,22 @@
     <filter-class>com.member.LeaseLoginFilter</filter-class>
     
   </filter>
-  <filter-mapping>
+ <filter-mapping>
     <filter-name>LeaseLoginFilter</filter-name>
     <url-pattern>/front_end/member/LeasePage.jsp</url-pattern>
+    <url-pattern>/front_end/getCoupon/*</url-pattern>
+    <url-pattern>/front_end/order/*</url-pattern>
+    <url-pattern>/front_end/mem_Coupon/*</url-pattern> 
+    <url-pattern>/front_end/product/cart.jsp</url-pattern>
+    <url-pattern>/front_end/product/leaseProdPage.jsp</url-pattern>
+    <url-pattern>/front_end/product/modifyProd.jsp</url-pattern>
+    <url-pattern>/front_end/product/showProd.jsp</url-pattern>
+    <url-pattern>/front_end/product/uploadProd.jsp</url-pattern>
+    <url-pattern>/back_end/PostBoard/addArticle.jsp</url-pattern>
+    <url-pattern>/back_end/PostBoard/articleList.jsp</url-pattern>
+    <url-pattern>/back_end/PostBoard/updateArticle.jsp</url-pattern>
+    <url-pattern>/front_end/Chatroom/*</url-pattern>
+    <url-pattern>/front_end/memberservice/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
     <dispatcher>INCLUDE</dispatcher>
