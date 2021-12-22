@@ -186,11 +186,11 @@ background-color: #FFF0AC;
 			<table>
 				<tr>
 					<th>問題編號</th>
+					<th>管理者編號</th>
 					<th>商品編號</th>
 					<th>會員編號</th>
-					<th>管理者編號</th>
-					<th>問題類型編號</th>
 					<th>訂單編號</th>
+					<th>問題類型編號</th>
 					<th>訊息時間</th>
 					<th>問題描述</th>
 					<th>圖片一</th>
@@ -212,12 +212,11 @@ background-color: #FFF0AC;
 
 					<tr>
 						<td>${msVO.msgID}</td>
+						<td>${msVO.managerID}</td>
 						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?prodID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
 						<td><a href="<%=request.getContextPath()%>/back_end/member/listOneMember.jsp?memberID=${msVO.memberID}">${msVO.memberID}</a></td>
-						<td>${msVO.managerID}</td>
-						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
-						
 						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderProblem.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
+						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>						
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td><button id = "class1" class="class1" value="${msVO.problemMsg}">查詢</button></td>
 						<td class="pic"><img alt=""

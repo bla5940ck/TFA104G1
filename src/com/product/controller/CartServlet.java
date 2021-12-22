@@ -117,6 +117,7 @@ public class CartServlet extends HttpServlet {
 			Integer memberID = (Integer) req.getSession().getAttribute("id");
 			Integer prodID = Integer.valueOf(req.getParameter("prodID"));
 			Integer index = Integer.valueOf(req.getParameter("index")) - 1;
+			
 			res.getWriter().print(index);
 //				JedisPool pool = JedisPoolUtil.getJedisPool();
 			Jedis jedis = null;
@@ -127,25 +128,28 @@ public class CartServlet extends HttpServlet {
 				for (String item : cart) {
 					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
 					if (cartVO1.getProdID() == prodID) {
+						System.out.println("商品刪除: " +prodID);
+						System.out.println("商品刪除Redis: " +cartVO1.getProdID());
+						System.out.println("會員編號: " +memberID);
 						jedis.lrem("member" + memberID, 1, item);
+						
 					}
 				}
-
+				
 				jedis.close();
 			}
 
 		}
-		
-		if("directCheckout".equals(req.getParameter("action"))) {
-			System.out.println(req.getParameter("prodID"));
+		//直接結帳動作
+		if ("directCheckout".equals(req.getParameter("action"))) {
 			ProdService prodSvc = new ProdService();
-			ProdVO prodVO= prodSvc.findProductByPK(Integer.valueOf(req.getParameter("prodID")));
+			ProdVO prodVO = prodSvc.findProductByPK(Integer.valueOf(req.getParameter("prodID")));
 			String eDateStr = req.getParameter("eDate");
-			String sDateStr= req.getParameter("sDate");
+			String sDateStr = req.getParameter("sDate");
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			
-			java.util.Date sDate =null;
-			java.util.Date eDate =null;
+
+			java.util.Date sDate = null;
+			java.util.Date eDate = null;
 			try {
 				sDate = sdf.parse(sDateStr);
 				eDate = sdf.parse(eDateStr);
@@ -153,12 +157,11 @@ public class CartServlet extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			long diffDay = (eDate.getTime()-sDate.getTime())/(24*60*60*1000) +1;
-			int totalPrice = (int)diffDay * prodVO.getProdRent();
-			System.out.println(diffDay);
+
+			long diffDay = (eDate.getTime() - sDate.getTime()) / (24 * 60 * 60 * 1000) + 1;
+			int totalPrice = (int) diffDay * prodVO.getProdRent();
 			CartVO cartVO = new CartVO();
-			
+			//存入cartVO 準備登入後給memberID直接取得
 			cartVO.setEstStart(new Date(sDate.getTime()));
 			cartVO.setEstEnd(new Date(eDate.getTime()));
 			cartVO.setProdID(Integer.valueOf(req.getParameter("prodID")));
@@ -166,16 +169,58 @@ public class CartServlet extends HttpServlet {
 			cartVO.setProdName(prodVO.getProdName());
 			cartVO.setLeaseID(prodVO.getMemberID());
 			cartVO.setTotalPrice(totalPrice);
-			
+
 			cartVO.setProdID(prodVO.getProdID());
+
 			
-			List<CartVO> cartList1 = new ArrayList();
-			cartList1.add(cartVO);
 			req.getSession().setAttribute("cartVO", cartVO);
-			req.getRequestDispatcher("/front_end/product/cart.jsp").forward(req, res);
-			
+			res.sendRedirect(req.getContextPath()+"/front_end/product/cart.jsp");
+
 		}
-		
+		//進入cart後 取得Redis cart最新物品
+		if ("cartTest".equals(req.getParameter("action"))) {
+			HttpSession session = req.getSession();
+			Jedis jedis = null;
+			jedis = pool.getResource();
+			Integer memberID = (Integer) session.getAttribute("id");
+			System.out.println("開始" + session.getAttribute("cartVO"));
+
+			if (session.getAttribute("cartVO") != null) {
+				//直接結帳的商品
+				CartVO cartVO = (CartVO) session.getAttribute("cartVO");
+				
+				//redis裡商品
+				List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
+				boolean flag = true;
+				for (String item : cart) {
+					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
+					if (cartVO.getProdID() == cartVO1.getProdID()) {
+						flag = false;
+					}
+				}
+
+				
+				String jsonString = gson.toJson(cartVO);
+				
+				
+				if(flag==true && cartVO.getLeaseID()==memberID) {
+					
+					res.getWriter().print(3);
+					session.removeAttribute("cartVO");
+				}
+				else if (flag == true) {
+					jedis.rpush("member" + memberID, jsonString);
+					//刪除後 下次進來後 則會直接到else
+					session.removeAttribute("cartVO");
+
+					res.getWriter().print(1);
+				} else {
+					res.getWriter().print(0);
+				}
+			}
+
+			jedis.close();
+		}
 
 	}
 
