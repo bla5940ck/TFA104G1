@@ -19,13 +19,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.memberservice.model.MemberServiceDAO;
 import com.memberservice.model.MemberServiceService;
 import com.memberservice.model.MemberServiceVO;
 import com.order.model.OrderMasterDAOImpl;
 import com.order.model.OrderMasterVO;
+import com.problemtype.model.ProblemTypeService;
 import com.product.model.ProdService;
 import com.product.model.ProdVO;
+
+import util.MailService;
 
 @WebServlet("/MemberServiceServlet")
 @MultipartConfig
@@ -126,7 +131,7 @@ if ("update".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();			
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-//			try {
+			try {
 			
 				String msgRes = null;
 				
@@ -183,7 +188,7 @@ if ("update".equals(action)) {
 			
 			
 			Integer problemStatus = new Integer(req.getParameter("problemStatus"));
-			System.out.println("問題狀態"+problemStatus);
+//			System.out.println("問題狀態"+problemStatus);
 			
 				MemberServiceVO msVO = new MemberServiceVO();
 				
@@ -216,16 +221,32 @@ if ("update".equals(action)) {
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("msVO", msVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				MailService mail = new MailService();
+				MemberService memsv = new MemberService();
+				
+				MemberVO memVO = memsv.getOneMember(memberID);
+				memVO.getEmail();
+				memVO.getNickName();
+				
+				MemberServiceService memssv = new MemberServiceService();
+				Timestamp pdate = memssv.getOneMemberService(msgID).getMsgDate();
+				SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd");
+				
+				ProblemTypeService ptsv = new ProblemTypeService();
+				String ptmsg = ptsv.getOneProblemType(typeID).getTypeName();
+				
+				mail.sendMail(memVO.getEmail(), "問題回覆", "親愛的" + memVO.getNickName() + "您好，您在" + sdf.format(pdate) + "時提出的" + ptmsg +"問題，已為您處理，感謝您的來信");
+				
 				String url = "/back_end/memberservice/listAllProblemMsg.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 *************************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("修改資料失敗:" + e.getMessage());
-//				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp");
-//				failureView.forward(req, res);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/memberservice/listAllProblemMsg.jsp");
+				failureView.forward(req, res);
+			}
 		}
 		if ("xxx".equals(action)) { // 來自update_emp_input.jsp的請求
 			
@@ -387,7 +408,7 @@ if ("update".equals(action)) {
 				Part img1 =	req.getPart("pic1");
 				img1 =  img1.getSize()==0 ? null :img1;
 				byte[] pic1 = null;
-				System.out.println("part" +img1);
+//				System.out.println("part" +img1);
 				if(img1!=null) {
 				InputStream in1 = img1.getInputStream();
 				pic1 = new byte[in1.available()];
@@ -456,7 +477,7 @@ if ("detail".equals(req.getParameter("action"))) {
 	
 	OutputStream os = res.getOutputStream();
 	String pic = req.getParameter("pic");
-	System.out.println("picno" +pic);
+//	System.out.println("picno" +pic);
 	try {
 		byte[] pic2 = msVO.getPic2();
 		byte[] pic1 = msVO.getPic1();	
@@ -537,11 +558,11 @@ if ("get_date_manager_order".equals(action)) {
 	req.setAttribute("errorMsgs", errorMsgs);
 
 	DateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-	System.out.println("進到管理員日期");
+//	System.out.println("進到管理員日期");
 	try {
 
 		String startDate = (String) req.getParameter("startDate");
-		System.out.println("選擇開始日"+startDate);
+//		System.out.println("選擇開始日"+startDate);
 		if (startDate == null || (startDate.trim()).length() == 0) {
 			errorMsgs.add("請選擇日期");
 		}
@@ -553,7 +574,7 @@ if ("get_date_manager_order".equals(action)) {
 		
 		
 		String endDate = (String) req.getParameter("endDate");
-		System.out.println("選擇結束日"+endDate);
+//		System.out.println("選擇結束日"+endDate);
 		if (endDate == null || (endDate.trim()).length() == 0) {
 			errorMsgs.add("請選擇日期");
 		}
@@ -572,7 +593,7 @@ if ("get_date_manager_order".equals(action)) {
 		List<MemberServiceVO> list2 = new ArrayList<MemberServiceVO>();
 		for (MemberServiceVO omVO : list) {
 			if (omVO.getMsgDate().before(ed) && omVO.getMsgDate().after(sd)) {
-				System.out.println(omVO.getMsgDate());
+//				System.out.println(omVO.getMsgDate());
 				omVO.getMsgID();
 				list2.add(omVO);
 			}
