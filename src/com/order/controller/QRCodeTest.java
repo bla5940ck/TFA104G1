@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -36,7 +37,7 @@ import com.order.model.OrderMasterVO;
 
 @WebServlet("/QRCodeTest")
 public class QRCodeTest extends HttpServlet {
-
+	
 	private String convert2Byte(InputStream input) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		byte[] buff = new byte[100];
@@ -57,8 +58,11 @@ public class QRCodeTest extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+		
+		
 		req.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=UTF-8");
+		PrintWriter writer = res.getWriter();
 		String action = req.getParameter("action");
 
 		if("toQRcode".equals(action)) {
@@ -98,6 +102,8 @@ public class QRCodeTest extends HttpServlet {
 			omVO.setArrivalDate(qrdate);
 			
 			omdao.updateOrderMaster(omVO);
+			
+			writer.println("<h1>已取貨 !</h1>");
 			
 			System.out.println("這裡");
 		}
