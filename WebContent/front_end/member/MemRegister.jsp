@@ -184,24 +184,7 @@ img.preview {
 </head>
 <body bgcolor='white'>
 <%@ include file="/includeFolder/header.file"%>
-	<%-- -- <table id="table-1">
-		<tr>
-			<td>
-				<h3>會員註冊 - MemRegister.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="<%=request.getContextPath()%>/front_end/member/Suss.jsp"><img
-						src="<%=request.getContextPath()%>/front_end/member//img/LogingPIC.jpg" width="100"
-						height="100" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table> --%>
 
-	
-
-	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -214,8 +197,8 @@ img.preview {
 <section id="aa-myaccount">
 		<div class="container">
 			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
-<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
+				<!-- <div class="col-md-12" id="col-md-12"> -->
+					<div class="aa-myaccount-area" id="aa-myaccount-area"> 
 						<div class="row" id="row2">
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
@@ -225,9 +208,7 @@ img.preview {
 	<FORM class="aa-login-form" METHOD="post" enctype="multipart/form-data"
 		ACTION="<%=request.getContextPath()%>/member/MemRegServlet"
 		name="form1">
-	<%-- 	<FORM METHOD="post" enctype="multipart/form-data"
-		ACTION="<%=request.getContextPath()%>/member/MemRegServlet"
-		name="form1">--%>
+
 		
 
 			<label for="">請輸入姓名<span>*</span></label> 
@@ -285,21 +266,13 @@ img.preview {
 				
 				
 		
-	<!--  <FORM class="aa-login-form" >
-		<div>
 
-			<div id="preview1"
-				style="text-align: center;width:300px; height:250px;border: 3px #cccccc dashed; ">
-				<span class="text" style="text-align: center;">預覽圖</span>
-			</div>
-			<div id="preview2" 
-				style= "text-align: center;width:300px; height:250px;  border: 3px #cccccc dashed; ">
-				<span class="text" style=”text-align: center;” >預覽圖</span>
-			</div>
-		</div>
-	</FORM> -->
 			
 			<hr>
+		
+			<input type="hidden" name="action" value="insert"> <input
+				type="submit" value="註冊">
+			
 			<div class="text-center">
 				<a class="small" href="ForgetPW.jsp" >Forgot Password?</a>
 			</div>
@@ -307,15 +280,13 @@ img.preview {
 				<a class="small" href="LeaseLogin.jsp">Already have an account?
 					Login!</a>
 			</div>
-			<input type="hidden" name="action" value="insert"> <input
-				type="submit" value="註冊">
 	</FORM>
 </div>
-<!-- 						</div> -->
+					</div> 
 						</div>
 					</div>
 				</div>
-			</div>
+	<!--		</div>-->
 <!-- 		</div> -->
 	</section>
 	
