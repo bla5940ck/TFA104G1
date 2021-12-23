@@ -122,6 +122,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -131,18 +135,7 @@ background-color:#FFF0AC;
 	<div class="main_content">
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
-			<table id="table-1">
-				<tr>
-					<td>
-<!-- 						<h3>員工資料修改 - update_manager_input.jsp</h3> -->
-						<h4>
-							<a href="<%=request.getContextPath()%>/back_end/manager/select_page.jsp">
-							回首頁
-							</a>
-						</h4>
-					</td>
-				</tr>
-			</table>
+			
 
 			<h3>資料修改:</h3>
 
@@ -194,9 +187,19 @@ background-color:#FFF0AC;
 				<input type="hidden" name="status" value=<%=managerVO.getStatus()%>> 
 				<input type="submit" value="送出修改">
 			</FORM>
+			<br>
+<button class="back_btn">返回上一頁</button>
 			
 		</main>
 	</div>
 	
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>
