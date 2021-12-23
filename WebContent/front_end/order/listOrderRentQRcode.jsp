@@ -29,8 +29,9 @@
 								stream()
 									.filter(o->o.getRentID()==memID)
 										.filter(o->o.getPayID()==2)
-											.filter(o->o.getPayStatus()==1)
-												.collect(Collectors.toList());
+											.filter(o->o.getShipStatus()!=3)
+												.filter(o->o.getPayStatus()==1)
+													.collect(Collectors.toList());
 
 	pageContext.setAttribute("list", list2);
 %>
@@ -276,15 +277,15 @@ th, td {
 
 								<td>${omVO.ordPrice}</td>
 								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="開始面交"> 
+<%-- 									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode" --%>
+<!-- 										style="margin-bottom: 0px;"> -->
+<!-- 										<input type="submit" value="開始面交">  -->
 <%-- 										<a href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">開始面交</a>  --%>
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-										<input type="hidden" name="memID" value=<%=memID%>>
+<%-- 										<input type="hidden" name="ordID" value="${omVO.ordID}"> --%>
+<%-- 										<input type="hidden" name="memID" value=<%=memID%>> --%>
 <!-- 										<input type="hidden" name="action" value="QRcode"> -->
-										<input type="hidden" name="action" value="toQRcode">
-									</FORM>
+<!-- 										<input type="hidden" name="action" value="toQRcode"> -->
+<!-- 									</FORM> -->
 								</td>
 								<td>
 									<FORM METHOD="post"
