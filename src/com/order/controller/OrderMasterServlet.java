@@ -731,7 +731,7 @@ public class OrderMasterServlet extends HttpServlet {
 				if (payID == 2) {	
 					
 					Integer QRcofeordID = list.get(0).getOrdID();
-					String url = "http://10.2.12.23:8081/TFA104G1/QRCodeTest?action=check&memID="+QRcofeordID;
+					String url = "http://192.168.100.4:8081/TFA104G1/QRCodeTest?action=check&memID="+QRcofeordID;
 					
 					int width = 300;
 					int height = 300;
@@ -838,7 +838,7 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 				obj.setItemName(prodName); // 商品名稱
-				obj.setReturnURL("https://ecb0-1-164-254-212.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+				obj.setReturnURL("https://1d18-119-77-246-24.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
 				obj.setClientBackURL("http://localhost:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");

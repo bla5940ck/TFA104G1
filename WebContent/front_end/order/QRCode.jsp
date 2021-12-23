@@ -1,8 +1,8 @@
-<%@page import="com.order.model.OrderMasterService"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page import="com.order.model.OrderMasterService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 
 
 <%
@@ -33,7 +33,7 @@
 			確認收貨請掃QR CODE
 		</h4>
 
-		<td><img alt="" src="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode&ordID=<%=ordID%>"> </td>
+		<img alt="" src="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode&ordID=<%=ordID%>">
 <!-- 		<input type="hidden" name="action" value="check">  -->
 <%-- 		<input type="hidden" name="memID" value=<%=memID%>>  --%>
 <!-- 		<input type="submit" value="確認收貨"> -->
