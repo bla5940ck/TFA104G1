@@ -8,6 +8,7 @@ import java.util.List;
 public interface OrderMasterDAO_interface {
 	void addLeaseComment(OrderMasterVO orderMaster);
 	void addRentComment(OrderMasterVO orderMaster);
+	void addQRCode(OrderMasterVO omVO);
 	
 	OrderMasterVO findOrderMasterByPK(Integer ordID);
 	
