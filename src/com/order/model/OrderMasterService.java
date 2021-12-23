@@ -14,7 +14,7 @@ public class OrderMasterService {
 
 	public OrderMasterVO addOrderMaster(Integer rentID, Integer leaseID, Integer payID, Integer couponID,
 			Timestamp ordDate, Integer storeCode, Date estStart, Date estEnd, Integer rentDays, Integer prodPrice,
-			Integer shipFee, Integer ordPrice) {
+			Integer shipFee, Integer ordPrice, byte[] qrcode) {
 
 		OrderMasterVO omVO = new OrderMasterVO();
 
@@ -30,6 +30,7 @@ public class OrderMasterService {
 		omVO.setProdPrice(prodPrice);
 		omVO.setShipFee(shipFee);
 		omVO.setOrdPrice(ordPrice);
+		omVO.setQrcode(qrcode);
 		dao.addOrderMaster(omVO);
 		return omVO;
 
