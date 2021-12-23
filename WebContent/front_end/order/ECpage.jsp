@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>綠界科技</title>
 </head>
 <body>
 ${EC}

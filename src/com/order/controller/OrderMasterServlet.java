@@ -40,6 +40,25 @@ import ecpay.payment.integration.domain.InvoiceObj;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.Base64;
+import java.util.Hashtable;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
 @WebServlet("/OrderMasterServlet")
 public class OrderMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -61,6 +80,21 @@ public class OrderMasterServlet extends HttpServlet {
 		dict.put("MerchantID", "2000132");
 		dict.put("CheckMacValue", "50BE3989953C1734E32DD18EB23698241E035F9CBCAC74371CCCF09E0E15BD61");
 		return all.compareCheckMacValue(dict);
+	}
+
+	private String convert2Byte(InputStream input) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] buff = new byte[100];
+		int length = 0;
+		while ((length = input.read(buff, 0, 100)) > 0) {
+			baos.write(buff, 0, length);
+		}
+		byte[] in2b = baos.toByteArray();
+		baos.flush();
+		baos.close();
+		input.close();
+		return new String(Base64.getEncoder().encodeToString(in2b));
+
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -629,7 +663,7 @@ public class OrderMasterServlet extends HttpServlet {
 
 				/******************** 付款資訊 ******************/
 				Integer payID = new Integer(req.getParameter("payID"));
-//			System.out.println("付款方式編碼 : " + payID);
+			System.out.println("付款方式編碼 : " + payID);
 
 				String strcp = req.getParameter("couponID").trim();
 				Integer couponID = null;
@@ -667,6 +701,7 @@ public class OrderMasterServlet extends HttpServlet {
 				omVO.setProdPrice(prodPrice); // 商品小計
 				omVO.setShipFee(shipFee); // 運費
 				omVO.setOrdPrice(ordPrice); // 訂單金額
+//				omVO.setQrcode(in2b);
 
 //				System.out.println("訂單存入");
 
@@ -691,6 +726,61 @@ public class OrderMasterServlet extends HttpServlet {
 				omdao.inesetWithList(omVO, list);
 //				System.out.println("訂單+明細新增");		
 
+				/***********************產生QRcodecode*************************/
+				byte[] in2b = null;
+				if (payID == 2) {	
+					
+					Integer QRcofeordID = list.get(0).getOrdID();
+					String url = "http://10.2.12.23:8081/TFA104G1/QRCodeTest?action=check&memID="+QRcofeordID;
+					
+					int width = 300;
+					int height = 300;
+					String format = "jpg";
+					// 設定編碼格式與容錯率
+					Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
+					hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+					hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+					// 設置QRCode的存放目錄、檔名與圖片格式
+					String filePath = "C:\\javawork";
+					String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
+					Path path = FileSystems.getDefault().getPath(filePath, fileName);
+
+					BitMatrix matrix;
+					try {
+						matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
+						// 把產生的QRCode存到指定的目錄
+						MatrixToImageWriter.writeToPath(matrix, format, path);
+						System.out.println("path=" + path.toString());
+						File file = new File(path.toString());
+						InputStream input = new FileInputStream(file);
+//						result = new OrderMasterServlet().convert2Byte(input);
+						
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						byte[] buff = new byte[100];
+						int length = 0;
+						while ((length = input.read(buff, 0, 100)) > 0) {
+							baos.write(buff, 0, length);
+						}
+						in2b = baos.toByteArray();
+						baos.flush();
+						baos.close();
+						input.close();
+						
+						omdao = new OrderMasterDAOImpl();
+						OrderMasterVO qrcodeOM = omdao.findOrderMasterByPK(QRcofeordID);
+						qrcodeOM.setQrcode(in2b);
+						
+						omdao.addQRCode(qrcodeOM);
+						
+//						System.out.println(in2b);
+						
+//						System.out.println("result=" + result);
+					} catch (WriterException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
 				/*********************** 修改會員折價券狀態 ************************/
 
 				MemcouponDAO mcdao = new MemcouponDAO();
@@ -748,7 +838,7 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 				obj.setItemName(prodName); // 商品名稱
-				obj.setReturnURL("https://48f9-1-164-254-212.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+				obj.setReturnURL("https://ecb0-1-164-254-212.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
 				obj.setClientBackURL("http://localhost:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");
