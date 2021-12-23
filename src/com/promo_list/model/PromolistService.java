@@ -58,6 +58,9 @@ public class PromolistService {
 	public List<PromolistVO> getAmount(Integer amount) {
 		return dao.getAmount(amount);
 	}
+	public List<PromolistVO> gameScore(Integer amount) {
+		return dao.getAmount(amount);
+	}
 	
 //	public PromolistVO getOne_For_Insert(Integer promo_id) {
 //		return dao.getOne_For_Insert(promo_id);
