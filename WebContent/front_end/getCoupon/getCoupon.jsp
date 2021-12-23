@@ -65,7 +65,7 @@ th, td {
 
 	<c:if test="${b==false}">
 			<script>
-			alert("已領取過");
+			alert("您已領取過囉"");
 		</script>
 	</c:if>
 	

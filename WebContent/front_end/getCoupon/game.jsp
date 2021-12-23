@@ -91,7 +91,7 @@ btn1, btn2, btn3, btn4 {
 
 	<c:if test="${b==false}">
 			<script>
-			alert("已領取過");
+			alert("您已領取過囉");
 		</script>
 	</c:if>
 	<main>
