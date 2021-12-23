@@ -125,14 +125,16 @@ a.cart-img>img {
 											<tr>
 												<input type="hidden" value="<%=cartVO1.getProdID()%>">
 												<input type="hidden" value="<%=cartVO1.getTotalPrice()%>">
-												<%--                       	<c:if test="${cartVO1.prodID == param.prodID}"> --%>
-												<%--                       	<td><input class="cart-checkbox" checked="checked" name="cartCheckbox" type="checkbox" value="<%=cartVO1.getProdID()%>" style= "width:25px;height:25px;"></td> --%>
-												<%--                         </c:if> --%>
-												<%--                         <c:if test="${cartVO1.prodID != param.prodID}"> --%>
+												                      	<c:if test="${cartVO1.prodID == prodIDCheck}">
+												                      	<td><input class="cart-checkbox" checked="checked" name="cartCheckbox" type="checkbox" value="<%=cartVO1.getProdID()%>" style= "width:25px;height:25px;"></td>
+												                        	<input type="hidden" class="selectOnePrice" value="<%=cartVO1.getTotalPrice()%>">
+												                        	<input type="hidden" class="selectOneSelect" value="1">
+												                        </c:if>
+												                        <c:if test="${cartVO1.prodID != prodIDCheck}">
 												<td><input class="cart-checkbox" name="cartCheckbox"
 													type="checkbox" value="<%=cartVO1.getProdID()%>"
 													style="width: 25px; height: 25px;"></td>
-												<%--                         </c:if> --%>
+												                        </c:if>
 												<td><a class="cart-img"
 													href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=<%=cartVO1.getProdID()%>"><img
 														src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO1.getProdID()%>"
@@ -188,11 +190,11 @@ a.cart-img>img {
 								<tbody>
 									<tr>
 										<th>已選擇的商品</th>
-										<td id="prod-select"></td>
+										<td id="prod-select">0</td>
 									</tr>
 									<tr>
 										<th>小計</th>
-										<td id="td-total"></td>
+										<td id="td-total">0</td>
 									</tr>
 
 								</tbody>
@@ -419,10 +421,11 @@ $("a.remove").click(function(){
 location.href + " table.aa-totals-table");
 	    	//小購物車顯示數量-1	 
 	    $("span.aa-cart-notify").text($("span.aa-cart-notify").text()-1);
-	  
+	  //先找到出租者數量
 	    var leaseProd = $(that).closest('tbody').find('tr:last').find('input').val();
+	  //在初進行-1的動作
 	   leaseProd = $(that).closest('tbody').find('tr:last').find('input').val(leaseProd-1);
-	   console.log($(that).closest('tbody').find('tr:last').find('input').val());
+// 	   console.log($(that).closest('tbody').find('tr:last').find('input').val());
 	   $("div.aa-cartbox-summary").load(location.href + " div.aa-cartbox-summary");
 	   
 	   //大購物車 數量-1
@@ -468,8 +471,6 @@ location.href + " table.aa-totals-table");
   
   //選單計算
 
-var total =0;
-var prodSelect=0;
 
 
 
@@ -477,7 +478,15 @@ var prodSelect=0;
 
 
 
+//判斷選到的金額
 $("input.cart-checkbox").click(function(){
+	//一開始金額
+	var total =parseInt($('#td-total').text());
+	//一開始數量
+	var prodSelect=parseInt($('#prod-select').text());
+	console.log(total)
+	
+	
     var isChecked = $(this).is(":checked");
     console.log( $(this));
     //被選到的計算總金額
@@ -485,6 +494,7 @@ $("input.cart-checkbox").click(function(){
     	
     	$("#prod-select").text(++prodSelect);
    let prodID = $(this).closest("tr").find("input").eq(0);
+   
   total +=  parseInt($(this).closest("tr").find("input").eq(1).val());
     	$("#td-total").text(total);
     }else{
@@ -514,7 +524,7 @@ $("input.cart-checkbox").click(function(){
 	  history.go(0);
   });
   
-  
+  //讀直接結帳商品
 	$.ajax({
 		url:"/TFA104G1/cart/CartServlet",
 		data:{
@@ -522,9 +532,12 @@ $("input.cart-checkbox").click(function(){
 		},
 		success:function(data){
 			console.log(data);
+			//成功加入商品
 			if(data==1){
 				history.go(0);
+				
 				return;
+				//為自己商品 將自動刪除
 			}else if(data==3){
 				let timerInterval
 				Swal.fire({
@@ -555,7 +568,10 @@ $("input.cart-checkbox").click(function(){
 	
 	});
 window.onload = function () {
-	
+	//當直接結帳 給予數量跟價格
+	  $('#prod-select').text($('input.selectOneSelect').val());
+	  
+      $('#td-total').text($('input.selectOnePrice').val());
 
 }
 
