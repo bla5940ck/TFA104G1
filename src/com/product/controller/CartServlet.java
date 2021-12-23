@@ -202,7 +202,7 @@ public class CartServlet extends HttpServlet {
 				
 				String jsonString = gson.toJson(cartVO);
 				
-				
+				//假如 為自己的商品 將不加入商品
 				if(flag==true && cartVO.getLeaseID()==memberID) {
 					
 					res.getWriter().print(3);
@@ -211,12 +211,20 @@ public class CartServlet extends HttpServlet {
 				else if (flag == true) {
 					jedis.rpush("member" + memberID, jsonString);
 					//刪除後 下次進來後 則會直接到else
+					//給購物車對應直接結帳的prodID
+					session.setAttribute("prodIDCheck", cartVO.getProdID());
+					//刪除按下直接結帳後的seesion避免重複更新
 					session.removeAttribute("cartVO");
 
 					res.getWriter().print(1);
 				} else {
 					res.getWriter().print(0);
+					
+					
 				}
+			}else {
+				//給購物車對應直接結帳的prodID，第二次進入刪除
+				session.removeAttribute("prodIDCheck");
 			}
 
 			jedis.close();
