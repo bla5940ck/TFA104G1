@@ -41,7 +41,7 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-#btn1, #btn2, #btn3, #btn4 {
+btn1, btn2, btn3, btn4 {
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;
