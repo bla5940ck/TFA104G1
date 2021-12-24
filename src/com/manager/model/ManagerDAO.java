@@ -19,7 +19,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Manager");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
