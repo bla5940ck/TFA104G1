@@ -106,11 +106,11 @@ public class PostBoardServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer memberId = new Integer(req.getParameter("memberId"));
-				System.out.println("pbservlet 抓到的 : "+memberId);				
+				//System.out.println("pbservlet 抓到的 : "+memberId);				
 //				System.out.println("會員編號" + memberId);
 				String postId = req.getParameter("postId");
 //				Integer postId = new Integer(req.getParameter("postId").trim());
-				System.out.println("文章編號" + postId);
+				//System.out.println("文章編號" + postId);
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				PostBoardService pbSvc = new PostBoardService();
