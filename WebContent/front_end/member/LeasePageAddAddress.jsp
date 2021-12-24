@@ -76,8 +76,10 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			margin-right: 10px;
-			border: 1px solid #999;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
 		}
 		
 		/*--------------------main區域-------------------- */
@@ -87,7 +89,7 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			border: 1px solid #999;
+			border: 1px solid white;
 			padding: 0px;
 		}
 		
@@ -134,7 +136,6 @@
 		table, th, td {
 			border: 1px solid #CCCCFF;
 		}
-		
 		</style>
 	</head>
 <body bgcolor='white'>
@@ -192,7 +193,7 @@
 						</table>
 					<input type="hidden" name="action" value="insertAddress">
 					<input type="hidden" name="memberId" value="${memberVO.memberId}">
-					<input type="submit" value="增加"></FORM>
+					<input type="submit" value="增加"class="aa-browse-btn" ></FORM>
 						
 						
 					
