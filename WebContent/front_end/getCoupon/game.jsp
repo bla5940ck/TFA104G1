@@ -95,8 +95,6 @@ btn1, btn2, btn3, btn4 {
 									  text: "可以在結帳時使用折價券喔",
 									  icon: "success",
 									  button: "確認",});
-									
-									
 								</script>
 								
 							</c:if>
@@ -109,7 +107,6 @@ btn1, btn2, btn3, btn4 {
 									  icon: "error",
 									  button: "確認",
 									});
-									
 								</script>
 							</c:if>
 
