@@ -4,8 +4,8 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
-<%		
-	Integer memID = (Integer)session.getAttribute("id");
+<%
+	Integer memID = (Integer) session.getAttribute("id");
 %>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
 input.memberId {
 	background-color: lightgray;
@@ -27,6 +27,7 @@ main {
 canvas {
 	border: 2px solid rgb(151, 149, 149);
 }
+
 table {
 	width: 100%;
 	margin-top: 5px;
@@ -41,32 +42,37 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
 btn1, btn2, btn3, btn4 {
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
 }
+
+
 </style>
 
 <%@ include file="/includeFolder/header.file"%>
 <body>
-	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<!-- 錯誤表列 -->
 
 
@@ -82,28 +88,42 @@ btn1, btn2, btn3, btn4 {
 						<!--<div class="col-md-6" id="col-md-6"> -->
 						<div class="aa-myaccount-login" id="aa-myaccount-login">
 
-	
-	<c:if test="${b==true}">
-		<script>
- 			alert("領取成功");
-		</script>
-	</c:if>
+							<c:if test="${b==true}">
+								<script>
+									swal({
+									  title: "領取成功",
+									  text: "可以在結帳時使用折價券喔",
+									  icon: "success",
+									  button: "確認",});
+								</script>
+								
+							</c:if>
 
-	<c:if test="${b==false}">
-			<script>
-			alert("您已領取過囉");
-		</script>
-	</c:if>
-	<main>
-	<br>
-							<h2>小遊戲</h2>
-							<h4>操作方式:上=W，下=S，左=A，右=D</h4>
-							<h3>分數<p id="score" class="score"></p></h3>	
+							<c:if test="${b==false}">
+								<script>
+									swal({
+									  title: "領取失敗",
+									  text: "相同的折價券只能領一次喔",
+									  icon: "error",
+									  button: "確認",
+									});
+								</script>
+							</c:if>
+
+							<main>
 							
-							<input type="hidden" name="finalScore" class="finalScore">
-							<canvas id="stage" height="400" width="520"></canvas>
+								<br>
+								<h2>小遊戲</h2>
+								<h4>操作方式:上=W，下=S，左=A，右=D</h4>
+								<h3>
+									分數
+									<p id="score" class="score"></p>
+								</h3>
 
-							<script>
+								<input type="hidden" name="finalScore" class="finalScore">
+								<canvas id="stage" height="400" width="520"></canvas>
+
+								<script>
 	
 							/**
 							 * Namespace
@@ -381,137 +401,137 @@ btn1, btn2, btn3, btn4 {
 							
 </script>
 
-							<br> <br>
+								<br> <br>
 
-<%-- 							<center> --%>
-<!-- 								<a class="aa-browse-btn" -->
-<!-- 									href="/TFA104G1/front_end/getCoupon/getCoupon.jsp"><span -->
-<!-- 									class="fa fa-long-arrow-left"></span>回上一頁</a> -->
-<%-- 							</center> --%>
-							
-								<a class="aa-browse-btn"
-									href="game.jsp">再挑戰一次</a>
-<!-- 									href="JavaScript:window.location.reload()">再挑戰一次</a> -->
-									
-									
+								<%-- 							<center> --%>
+								<!-- 								<a class="aa-browse-btn" -->
+								<!-- 									href="/TFA104G1/front_end/getCoupon/getCoupon.jsp"><span -->
+								<!-- 									class="fa fa-long-arrow-left"></span>回上一頁</a> -->
+								<%-- 							</center> --%>
+
+								<a class="aa-browse-btn" href="game.jsp">再挑戰一次</a>
+								<!-- 									href="JavaScript:window.location.reload()">再挑戰一次</a> -->
 
 
-<br>
-<br>
-		
-		
-						<center><h2>挑戰成功折價券領取專區</h2></center>
-	<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
 
-	
-<!-- 	/*=====承租方評級=====*/ -->
-<!-- 	var rr = $("#rr"); -->
-<%-- 	if(<%=omVO.getRentRank()%> == 1){ --%>
-<!-- 		rr.text("1"); -->
-<%-- 	}else if(<%=omVO.getRentRank()%> == 2){ --%>
-<!-- 		rr.text("2"); -->
-<%-- 	}else if(<%=omVO.getRentRank()%> == 3){ --%>
-<!-- 		rr.text("3"); -->
-<%-- 	}else if(<%=omVO.getRentRank()%> == 4){ --%>
-<!-- 		rr.text("4"); -->
-<%-- 	}else if(<%=omVO.getRentRank()%> == 5){ --%>
-<!-- 		rr.text("5"); -->
-<!-- 	}else{ -->
-<!-- 		rr.text("尚未評分"); -->
-<!-- 	} -->
 
-			<table>		
+								<br> <br>
 
-				<tr>	
-					<td>滿1分</td>
-					<td>再接再厲</td>
-					<td>5元</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="getcoupon.do"
-							style="margin-bottom: 0px;">
-							<input id="btn1" disabled type="submit" value="領取"> 
-							<input type="hidden" name="member_id" value="<%=memID%>"> 
-							<input type="hidden" name="category_id" value="1"> 
-							<input type="hidden" name="coupon_id" value="1"> 
-							<input type="hidden" name="coupon_name" value="滿1分折5元"> 
-							<input type="hidden" name="discount" value="5"> 
-							<input type="hidden" name="status" value="0"> 
-							<input type="hidden" name="start_date" value=""> 
-							<input type="hidden" name="end_date" value=""> 
-							<input type="hidden" name="action" value="gameInsert">
-						</FORM>
-					</td>
-			</tr>
-				<tr>	
-					<td>滿2分</td>
-					<td>不錯喔</td>
-					<td>10元</td>
-					<td>
-						<FORM METHOD="post"ACTION="getcoupon.do"style="margin-bottom: 0px;">
-							<input id="btn2" disabled type="submit" value="領取"> 
-							<input type="hidden" name="member_id" value="<%=memID%>"> 
-							<input type="hidden" name="category_id" value="1"> 
-							<input type="hidden" name="coupon_id" value="2"> 
-							<input type="hidden" name="coupon_name" value="滿2分折10元"> 
-							<input type="hidden" name="discount" value="10"> 
-							<input type="hidden" name="status" value="0"> 
-							<input type="hidden" name="start_date" value=""> 
-							<input type="hidden" name="end_date" value=""> 
-							<input type="hidden" name="action" value="gameInsert">
-						</FORM>
-					</td>
-			</tr>
-				<tr>	
-					<td>滿3分</td>
-					<td>達人</td>
-					<td>20元</td>
-					<td>
-						<FORM METHOD="post"ACTION="getcoupon.do"style="margin-bottom: 0px;">
-							<input id="btn3" disabled type="submit" value="領取"> 
-							<input type="hidden" name="member_id" value="<%=memID%>"> 
-							<input type="hidden" name="category_id" value="1"> 
-							<input type="hidden" name="coupon_id" value="3"> 
-							<input type="hidden" name="coupon_name" value="滿3分折20元"> 
-							<input type="hidden" name="discount" value="20"> 
-							<input type="hidden" name="status" value="0"> 
-							<input type="hidden" name="start_date" value=""> 
-							<input type="hidden" name="end_date" value=""> 
-							<input type="hidden" name="action" value="gameInsert">
-						</FORM>
-					</td>
-			</tr>
-				<tr>	
-					<td>滿200分</td>
-					<td>神</td>
-					<td>50元</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="getcoupon.do"
-							style="margin-bottom: 0px;">
-							<input id="btn4" disabled type="submit" value="領取"> 
-							<input type="hidden" name="member_id" value="<%=memID%>"> 
-							<input type="hidden" name="category_id" value="1"> 
-							<input type="hidden" name="coupon_id" value="4"> 
-							<input type="hidden" name="coupon_name" value="滿200分折50元"> 
-							<input type="hidden" name="discount" value="50"> 
-							<input type="hidden" name="status" value="0"> 
-							<input type="hidden" name="start_date" value=""> 
-							<input type="hidden" name="end_date" value=""> 
-							<input type="hidden" name="action" value="gameInsert">
-						</FORM>
-					</td>
-			</tr>
-			</table>
 
-	<br> <br>
+								<center>
+									<h2>挑戰成功折價券領取專區</h2>
+								</center>
+								<c:if test="${not empty errorMsgs}">
+									<font style="color: red">請修正以下錯誤:</font>
+									<ul>
+										<c:forEach var="message" items="${errorMsgs}">
+											<li style="color: red">${message}</li>
+										</c:forEach>
+									</ul>
+								</c:if>
+
+
+								<!-- 	/*=====承租方評級=====*/ -->
+								<!-- 	var rr = $("#rr"); -->
+								<%-- 	if(<%=omVO.getRentRank()%> == 1){ --%>
+								<!-- 		rr.text("1"); -->
+								<%-- 	}else if(<%=omVO.getRentRank()%> == 2){ --%>
+								<!-- 		rr.text("2"); -->
+								<%-- 	}else if(<%=omVO.getRentRank()%> == 3){ --%>
+								<!-- 		rr.text("3"); -->
+								<%-- 	}else if(<%=omVO.getRentRank()%> == 4){ --%>
+								<!-- 		rr.text("4"); -->
+								<%-- 	}else if(<%=omVO.getRentRank()%> == 5){ --%>
+								<!-- 		rr.text("5"); -->
+								<!-- 	}else{ -->
+								<!-- 		rr.text("尚未評分"); -->
+								<!-- 	} -->
+
+								<table>
+
+									<tr>
+										<td>滿1分</td>
+										<td>再接再厲</td>
+										<td>5元</td>
+										<td>
+											<FORM METHOD="post" ACTION="getcoupon.do"
+												style="margin-bottom: 0px;">
+												<input id="btn1" disabled type="submit" value="領取">
+												<input type="hidden" name="member_id" value="<%=memID%>">
+												<input type="hidden" name="category_id" value="1"> <input
+													type="hidden" name="coupon_id" value="1"> <input
+													type="hidden" name="coupon_name" value="滿1分折5元"> <input
+													type="hidden" name="discount" value="5"> <input
+													type="hidden" name="status" value="0"> <input
+													type="hidden" name="start_date" value=""> <input
+													type="hidden" name="end_date" value=""> <input
+													type="hidden" name="action" value="gameInsert">
+											</FORM>
+										</td>
+									</tr>
+									<tr>
+										<td>滿2分</td>
+										<td>不錯喔</td>
+										<td>10元</td>
+										<td>
+											<FORM METHOD="post" ACTION="getcoupon.do"
+												style="margin-bottom: 0px;">
+												<input id="btn2" disabled type="submit" value="領取">
+												<input type="hidden" name="member_id" value="<%=memID%>">
+												<input type="hidden" name="category_id" value="1"> <input
+													type="hidden" name="coupon_id" value="2"> <input
+													type="hidden" name="coupon_name" value="滿2分折10元"> <input
+													type="hidden" name="discount" value="10"> <input
+													type="hidden" name="status" value="0"> <input
+													type="hidden" name="start_date" value=""> <input
+													type="hidden" name="end_date" value=""> <input
+													type="hidden" name="action" value="gameInsert">
+											</FORM>
+										</td>
+									</tr>
+									<tr>
+										<td>滿3分</td>
+										<td>達人</td>
+										<td>20元</td>
+										<td>
+											<FORM METHOD="post" ACTION="getcoupon.do"
+												style="margin-bottom: 0px;">
+												<input id="btn3" disabled type="submit" value="領取">
+												<input type="hidden" name="member_id" value="<%=memID%>">
+												<input type="hidden" name="category_id" value="1"> <input
+													type="hidden" name="coupon_id" value="3"> <input
+													type="hidden" name="coupon_name" value="滿3分折20元"> <input
+													type="hidden" name="discount" value="20"> <input
+													type="hidden" name="status" value="0"> <input
+													type="hidden" name="start_date" value=""> <input
+													type="hidden" name="end_date" value=""> <input
+													type="hidden" name="action" value="gameInsert">
+											</FORM>
+										</td>
+									</tr>
+									<tr>
+										<td>滿200分</td>
+										<td>神</td>
+										<td>50元</td>
+										<td>
+											<FORM METHOD="post" ACTION="getcoupon.do"
+												style="margin-bottom: 0px;">
+												<input id="btn4" disabled type="submit" value="領取">
+												<input type="hidden" name="member_id" value="<%=memID%>">
+												<input type="hidden" name="category_id" value="1"> <input
+													type="hidden" name="coupon_id" value="4"> <input
+													type="hidden" name="coupon_name" value="滿200分折50元">
+												<input type="hidden" name="discount" value="50"> <input
+													type="hidden" name="status" value="0"> <input
+													type="hidden" name="start_date" value=""> <input
+													type="hidden" name="end_date" value=""> <input
+													type="hidden" name="action" value="gameInsert">
+											</FORM>
+										</td>
+									</tr>
+								</table>
+
+								<br> <br>
 						</div>
 						<!-- 						</div> -->
 					</div>
@@ -519,9 +539,12 @@ btn1, btn2, btn3, btn4 {
 			</div>
 		</div>
 
-		<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
-								<br>
-	<br>
+		<center>
+			<a class="aa-browse-btn"
+				href="/TFA104G1/front_end/product/homePage.jsp"><span
+				class="fa fa-long-arrow-left"></span>回首頁</a>
+		</center>
+		<br> <br>
 		</main>
 		<!-- 		</div> -->
 	</section>
