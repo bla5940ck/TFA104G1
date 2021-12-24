@@ -4,6 +4,9 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
+<%		
+Integer memID = (Integer)session.getAttribute("id");
+%>
 
 <!DOCTYPE html>
 <html>
@@ -50,23 +53,10 @@ th, td {
 						<div class="row" id="row2">
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
-	<%
-		session.setAttribute("id", 1);
-	%>	
-	<!-- 	<header class="header"> header區域 </header> -->
-	<div class="main_content">
-		<!-- 		<aside class="aside"> -->
-		<!-- 			<nav class="nav"> -->
-		<!-- 				<ul class="nav_list"> -->
-		<!-- 					<h2>出租者專區</h2> -->
-		<%-- 					<h4><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a></h4> --%>
-		<!-- 				</ul> -->
-		<!-- 			</nav> -->
-		<!-- 		</aside> -->
-		<main class="main">
+								
+	
 		
-		
-<c:if test="${b==true }">
+<c:if test="${b==true}">
 
 		<script>
  			alert("領取成功");
@@ -75,18 +65,14 @@ th, td {
 
 	<c:if test="${b==false}">
 			<script>
-			alert("已領取過");
+			alert("您已領取過囉"");
 		</script>
 	</c:if>
 	
-			<table id="table-1">
-				<tr>
-					<td>
-						<h3>折價券領取專區</h3>
-					</td>
-				</tr>
-			</table>
-
+<br>
+		
+						<center><h2>折價券領取專區</h2></center>
+	
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -102,8 +88,8 @@ th, td {
 <!-- 					<th>折價券編號</th> -->
 <!-- 					<th>專案編號</th> -->
 <!-- 					<th>商品類別編號</th> -->
-					<th>折價券名稱</th>
-					<th>折價金額</th>
+<!-- 					<th>折價券名稱</th> -->
+<!-- 					<th>折價金額</th> -->
 <!-- 					<th>數量</th> -->
 					<!-- 					<th>已領取數量</th> -->
 <!-- 										<th>開始日期</th> -->
@@ -111,7 +97,7 @@ th, td {
 				</tr>
 				<jsp:useBean id="promo" class="com.promo_list.model.PromolistService" />
 				
-				<c:forEach var="promolistVO" items="${promo.getAmount(0)}">
+				<c:forEach var="promolistVO" items="${promo.getAmount(1)}">
 
 
 					<tr>
@@ -119,7 +105,7 @@ th, td {
 <%-- 						<td>${promolistVO.promo_id}</td> --%>
 <%-- 						<td>${promolistVO.category_id}</td> --%>
 						<td>${promolistVO.coupon_name}</td>
-						<td>${Math.round(promolistVO.discount)}</td>
+<%-- 						<td>${Math.round(promolistVO.discount)}</td> --%>
 <%-- 						<td>${promolistVO.amount}</td> --%>
 						<%-- 						<td>${promolistVO.used}</td> --%>
 <%-- 												<td>${promolistVO.start_date}</td> --%>
@@ -129,7 +115,7 @@ th, td {
 								ACTION="getcoupon.do"
 								style="margin-bottom: 0px;">
 								<input class="btn" type="submit" value="領取"> 
-								<input type="hidden" name="member_id" value="1"> 
+								<input type="hidden" name="member_id" value="<%=memID%>"> 
 								<input type="hidden" name="category_id" value="${promolistVO.category_id}"> 
 								<input type="hidden" name="coupon_id" value="${promolistVO.coupon_id}"> 
 								<input type="hidden" name="coupon_name" value="${promolistVO.coupon_name}"> 
@@ -138,14 +124,20 @@ th, td {
 								<input type="hidden" name="start_date" value="${promolistVO.start_date}"> 
 								<input type="hidden" name="end_date" value="${promolistVO.end_date}"> 
 								<input type="hidden" name="action" value="insert">
-								 <input type="hidden" name="amount"  value="0">
+<!-- 								<input type="hidden" name="amount"  value="1"> -->
 							</FORM>
 						</td>
 
 		</tr>
 				</c:forEach>
 			</table>
+							<br>
+								
+			     <center><a href="<%=request.getContextPath()%>/front_end/getCoupon/game.jsp">
+                  <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game.jpg" alt="">
+                </a></center>
 
+								
 
 		</main>
 		<br>
@@ -161,6 +153,7 @@ th, td {
 			</div>
 <!-- 		</div> -->
 	</section>
+	
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
 </html>

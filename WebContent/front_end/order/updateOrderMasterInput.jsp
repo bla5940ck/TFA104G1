@@ -174,9 +174,11 @@ a.cart-img > img{
 					</tr>
 
 				</table>
-					<center><input type="button" onclick="ShowShipDate()" value="出貨時間 ">
+					<center>
+					<input type="button" onclick="ShowShipDate()" value="出貨時間 ">
 					<input type="button" onclick="ShowArrivalDate()" value="到貨時間 ">
-					<input type="button" onclick="ShowReturnDate()" value="歸還時間 "></center>
+<!-- 					<input type="button" onclick="ShowReturnDate()" value="歸還時間 "> -->
+					</center>
 				<table>
 					<tr>
 						<th>出貨日期</th>

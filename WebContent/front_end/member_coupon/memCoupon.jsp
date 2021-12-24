@@ -98,13 +98,9 @@ th, td {
 
 
 
-			<table id="table-1">
-				<tr>
-					<td>
-						<h3>我的折價券</h3>
-					</td>
-				</tr>
-			</table>
+
+						<center><h3>我的折價券</h3></center>
+
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -125,8 +121,8 @@ th, td {
 					<th>折價券名稱</th>
 					<th>折價金額</th>
 					<th>折價券狀態</th>
-					<th>開始日期</th>
-					<th>結束日期</th>
+<!-- 					<th>開始日期</th> -->
+<!-- 					<th>結束日期</th> -->
 				</tr>
 				<c:forEach var="memcouponVO" items="${list}">
 
@@ -138,8 +134,8 @@ th, td {
 						<td>${memcouponVO.coupon_name}</td>
 						<td>${Math.round(memcouponVO.discount)}</td>
 						<td>${memcouponVO.status}</td>
-						<td>${memcouponVO.start_date}</td>
-						<td>${memcouponVO.end_date}</td>
+<%-- 						<td>${memcouponVO.start_date}</td> --%>
+<%-- 						<td>${memcouponVO.end_date}</td> --%>
 <!-- 						<td> -->
 <!-- 							<FORM METHOD="post" -->
 <%-- 								ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" --%>
