@@ -4,7 +4,11 @@
 eclipse.preferences.version=1
 encoding//WebContent/back_end/manager=UTF-8
 encoding//WebContent/front_end/product/homePage.jsp=UTF-8
+<<<<<<< HEAD
 encoding//WebContent/includeFolder/rentMemberAside.file=UTF-8
+=======
+encoding//WebContent/front_end/product/productMap.jsp=UTF-8
+>>>>>>> hua
 encoding//src/com/manager/controller=UTF-8
 encoding/<project>=UTF-8
 encoding/src=UTF-8

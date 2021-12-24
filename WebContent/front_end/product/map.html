@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>尋找商品</title>
+
+<style>
+table {font-size: 9pt;}
+input,select{font: 9pt "Arial"; margin: 1px; border: 1px solid; }
+.mycontent { background: #eeeeee; padding: 3px; }
+</style>
+ 
+</head>
+<body onload="gotoplace(0);">
+<script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+if(navigator.geolocation) {
+
+	  // 使用者不提供權限，或是發生其它錯誤
+	  function error() {
+	    alert('無法取得你的位置');
+	  }
+
+	  // 使用者允許抓目前位置，回傳經緯度
+	  function success(position) {
+	    console.log(position.coords.latitude, position.coords.longitude);
+	  }
+
+	  // 跟使用者拿所在位置的權限
+	  navigator.geolocation.getCurrentPosition(success, error);
+
+	} else {
+	  alert('Sorry, 你的裝置不支援地理位置功能。')
+	}
+
+
+
+  var places = new Array;
+  places[0]="台北,25.033493,121.564101";
+  places[1]="台中,24.137288,120.6694156";
+  places[2]="高雄,22.6394973,120.3003943";
+  places[3]="雲林,23.7100323,120.5149184";
+  places[4]="嘉義,23.4796023,120.3537066";
+  places[5]="彰化,24.0836247,120.5370858";
+  places[6]="桃園,24.9889248,121.3122513";
+  places[7]="苗栗,24.5700249,120.8201543";
+  places[8]="新竹,24.8015926,120.9693996";
+  places[9]="屏東,22.6689222,120.4838842";
+  
+
+  
+  
+  
+
+function gotoplace(i)
+{
+
+  var lat, lon;
+  var pdata = places[i].split(",");
+  lat = pdata[1];
+  lon = pdata[2];
+  document.getElementById("lat").value = lat;
+  document.getElementById("lon").value = lon;
+  
+
+  navigatemap();
+}
+function navigatemap()
+{	
+	document.getElementById("gmframe").src="https://maps.google.com/?output=embed&q=" + document.getElementById("lat").value + "," + document.getElementById("lon").value;
+}
+
+</script>
+<div id="main" style="max-width: 1024px;">
+<h1>尋找商品&nbsp;&nbsp;</h1>
+<div style="float: left; width: 640px;" class="mycontent">
+<form id="f1">
+<table border=0 width=640>
+<tr><td width=70>預設地點: </td>
+<td>
+<input type=button onclick="gotoplace(0);" value="台北">
+<input type=button onclick="gotoplace(1);" value="台中">
+<input type=button onclick="gotoplace(2);" value="高雄">
+<input type=button onclick="gotoplace(3);" value="雲林">
+<input type=button onclick="gotoplace(4);" value="嘉義">
+<input type=button onclick="gotoplace(5);" value="彰化">
+<input type=button onclick="gotoplace(6);" value="桃園">
+<input type=button onclick="gotoplace(7);" value="苗栗">
+<input type=button onclick="gotoplace(8);" value="新竹">
+<input type=button onclick="gotoplace(9);" value="屏東">
+</td></tr>
+</table>
+<table >
+<tr><td></td><td><input type=hidden id=lat size=17 value="25.033493"></td></tr>
+<tr><td><input type=hidden id=lon size=17 value="121.564101"></td></tr>
+</table>
+
+
+<input type=hidden id=lat1 size=2><input type=hidden id=lat2 size=2><input type=hidden id=lat3 size=4>
+<input type=hidden id=lon1 size=2><input type=hidden id=lon2 size=2><input type=hidden id=lon3 size=4>
+
+<table border=0>
+</table>
+</form>
+</div>
+<div style="float: left; width: 640px;" class="mycontent">
+<iframe id="gmframe" width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?q=25.033493,121.564101&amp;ie=UTF8&amp;output=embed"></iframe>
+</div>
+<div id="map"></div>
+<div style="margin-left: 650px; width: 160px; height: 600px; ">
+<ins class="scupioadslot" style="display:inline-block;width:160px;height:600px;"
+     data-sca-pub="lQ8FFxEnUSlO"
+     data-sca-web="185"
+     data-sca-category="17"
+     data-sca-cid="17270"
+     data-sca-slot-type="STA"></ins>
+<script async src="https://img.scupio.com/js/ad.js"></script>
+</div>
+
+</body>
+
+</html>

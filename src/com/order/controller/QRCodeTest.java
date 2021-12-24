@@ -118,7 +118,7 @@ public class QRCodeTest extends HttpServlet {
 //			("<h1 style='font-size:100px;>已取貨 !</h1>");
 			pw.println("<h1 style='font-size:100px;'>已取貨 !"
 					+ "<br>"
-					+ "<a href=\"http://192.168.100.4:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp\">回到我的訂單資訊"
+					+ "<a href=\"http://10.2.12.23:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp\">回到我的訂單資訊"
 					+ "</h1>");
 			pw.flush();
 			pw.close();
