@@ -102,12 +102,12 @@
                   </div>
                   <div class="aa-sidebar-widget">
                   	<div class="aa-search-box">
-                		<form action="">
-                  			<input type="text" name="" 
-                  				   action="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp" 
-                  				   size="25" placeholder="健身環大冒險" style= color= >
-                  				<button type="submit"><span class="fa fa-search"></span></button>
-                		</form>
+<!--                 		<form action=""> -->
+<!--                   			<input type="text" name=""  -->
+<%--                   				   action="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp"  --%>
+<!--                   				   size="25" placeholder="健身環大冒險" style= color= > -->
+<!--                   				<button type="submit"><span class="fa fa-search"></span></button> -->
+<!--                 		</form> -->
               	  </div>
                   
                   
