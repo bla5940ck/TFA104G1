@@ -74,8 +74,10 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			margin-right: 10px;
-			border: 1px solid #999;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 #191561 transparent;
 		}
 		
 		/*--------------------main區域-------------------- */
@@ -186,7 +188,7 @@
 						
 					<input type="hidden" name="action" value="updateAccount">
 					<input type="hidden" name="memberId" value="${memberVO.memberId}" >
-					<input type="submit" value="儲存"></FORM>
+					<input type="submit" value="儲存"class="aa-browse-btn" ></FORM>
 					
 				 
 				 </main>

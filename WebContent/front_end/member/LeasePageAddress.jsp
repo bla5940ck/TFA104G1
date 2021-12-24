@@ -76,8 +76,11 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			margin-right: 10px;
-			border: 1px solid #999;
+			margin-right: 4px;
+			margin-left: 4px;
+			padding: 0px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
 		}
 		
 		/*--------------------main區域-------------------- */
@@ -87,7 +90,7 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			border: 1px solid #999;
+			border: 1px solid white;
 			padding: 0px;
 		}
 		
@@ -134,8 +137,6 @@
 		table, th, td {
 			border: 1px solid #CCCCFF;
 		}
-		
-		
 		</style>
 	</head>
 	<body bgcolor='white'>
@@ -158,7 +159,6 @@
 				%>
 				<main class="main">
 				
-					
 						<h1>地址</h1>
 						<div>管理你的寄送相關資訊</div>
 						
@@ -176,10 +176,11 @@
 						</ul>
 						<input type="hidden" name="action" value="delete">
 						<input type="hidden" name="def711" value="${defAddressVO.def711}">
-					<input type="submit" value="刪除"></FORM>
+					<input type="submit" value="刪除"class="aa-browse-btn" ></FORM>
 						<hr>
 						</c:forEach> 
-						
+				
+
 						
 					
 				 
