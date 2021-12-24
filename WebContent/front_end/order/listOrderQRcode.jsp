@@ -30,7 +30,8 @@
 									.filter(o->o.getLeaseID()==memID)
 										.filter(o->o.getPayID()==2)
 											.filter(o->o.getPayStatus()==1)
-												.collect(Collectors.toList());
+												.filter(o->o.getShipStatus()!=3)
+													.collect(Collectors.toList());
 
 	pageContext.setAttribute("list", list2);
 %>
@@ -288,7 +289,7 @@ th, td {
 										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
 										<input type="submit" value="查看明細"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
+										<input type="hidden" name="ordID" value="${omVO.ordID}">
 										<input type="hidden" name="action" value="getlist_For_Rent">
 									</FORM>
 								</td>
@@ -302,4 +303,7 @@ th, td {
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
 </html>

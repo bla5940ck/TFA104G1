@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+
+import org.apache.jasper.tagplugins.jstl.core.Out;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -15,7 +18,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -62,7 +68,7 @@ public class QRCodeTest extends HttpServlet {
 		
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("text/html; charset=UTF-8");
-		PrintWriter writer = res.getWriter();
+//		PrintWriter writer = res.getWriter();
 		String action = req.getParameter("action");
 
 		if("toQRcode".equals(action)) {
@@ -78,8 +84,9 @@ public class QRCodeTest extends HttpServlet {
 			
 			byte[] qrcode = omVO.getQrcode();
 //			System.out.println(qrcode);
-			
+		
 			os.write(qrcode);
+			os.flush();
 			os.close();
 			
 		}
@@ -102,8 +109,19 @@ public class QRCodeTest extends HttpServlet {
 			omVO.setArrivalDate(qrdate);
 			
 			omdao.updateOrderMaster(omVO);
+//			OutputStream os = res.getOutputStream();
+//			PrintWriter pw = new PrintWriter(os);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(
+				    res.getOutputStream(), StandardCharsets.UTF_8), true);
 			
-			writer.println("<h1>已取貨 !</h1>");
+			
+//			("<h1 style='font-size:100px;>已取貨 !</h1>");
+			pw.println("<h1 style='font-size:100px;'>已取貨 !"
+					+ "<br>"
+					+ "<a href=\"http://10.2.12.23:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp\">回到我的訂單資訊"
+					+ "</h1>");
+			pw.flush();
+			pw.close();
 			
 			System.out.println("這裡");
 		}
