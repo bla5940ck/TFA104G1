@@ -20,7 +20,7 @@ public class DefAddressDAO implements DefAddressDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Defaddress");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

@@ -4,9 +4,11 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 <%
- 	System.out.println("11111 " +request.getAttribute("pbVO"));
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
-// 	System.out.print(pbVO.getPostId());
+	System.out.println("11111 " +request.getAttribute("pbVO"));
+	
+	
+	System.out.print(pbVO);
 %>
   
 <!DOCTYPE html>

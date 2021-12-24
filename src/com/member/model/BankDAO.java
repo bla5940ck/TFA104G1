@@ -21,7 +21,7 @@ public class BankDAO implements BankDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Bank");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
