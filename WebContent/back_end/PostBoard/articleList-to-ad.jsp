@@ -65,9 +65,9 @@
                           <th>刪除</th>
                         <!-- <th></th> -->
                       </tr>
-                      <%@ include file="page1.file"%>
-					  <c:forEach var="postBoardVO" items="${list}" begin="<%=pageIndex%>"
-			                     end="<%=pageIndex+rowsPerPage-1%>">
+<%--                       <%@ include file="page1.file"%> --%>
+<%-- 					  <c:forEach var="postBoardVO" items="${list}" begin="<%=pageIndex%>" --%>
+<%-- 			                     end="<%=pageIndex+rowsPerPage-1%>"> --%>
                     </thead>
                       
             
@@ -99,9 +99,9 @@
 
                       </tr>                   
                       </tbody>
-                      </c:forEach>
+<%--                       </c:forEach> --%>
                   </table>
-                  <%@ include file="page2.file"%>
+<%--                   <%@ include file="page2.file"%> --%>
                 </div>
              </FORM>             
            </div>

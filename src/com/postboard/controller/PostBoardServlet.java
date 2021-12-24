@@ -106,13 +106,16 @@ public class PostBoardServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer memberId = new Integer(req.getParameter("memberId"));
+				
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				PostBoardService pbSvc = new PostBoardService();
 				PostBoardVO pbVO = pbSvc.findByPrimaryKey(memberId);
+				System.out.println(pbVO);
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("pbVO", pbVO); // 資料庫取出的promoVO物件,存入req
+				System.out.println("servlet "+req.getAttribute("pbVO"));
 				String url = "/back_end/PostBoard/updateArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updatearticle.jsp
 				successView.forward(req, res);
@@ -211,11 +214,11 @@ public class PostBoardServlet extends HttpServlet {
 				
 				PostBoardService pbSvc = new PostBoardService();
 				PostBoardVO pbVO2 = pbSvc.findByPrimaryKey(postId);
-				System.out.println("2: "+pbVO2.getPic().length);
-				System.out.println("1: "+pbVO.getPic().length);
+				//System.out.println("2: "+pbVO2.getPic().length);
+				//System.out.println("1: "+pbVO.getPic().length);
 				
 			    byte[] pic1 = pbVO.getPic().length == 0?  pbVO2.getPic() : pbVO.getPic();	
-			    System.out.println(pic1.length);
+			    //System.out.println(pic1.length);
 			    pbSvc.updatearticle(postId, categoryId, memberId, postTitle, postCont, 
 					postTime, replyCount,pic1);
 			    req.getSession().setAttribute("postId",postId);
