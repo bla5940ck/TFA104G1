@@ -740,10 +740,6 @@ public class OrderMasterServlet extends HttpServlet {
 					Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 					hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 					hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-					// 設置QRCode的存放目錄、檔名與圖片格式
-					String filePath = "C:\\javawork";
-					String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
-					Path path = FileSystems.getDefault().getPath(filePath, fileName);
 
 					BitMatrix matrix;
 					
@@ -751,34 +747,19 @@ public class OrderMasterServlet extends HttpServlet {
 						matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
 						
 						// 把產生的QRCode存到指定的目錄
-//						MatrixToImageWriter.writeToPath(matrix, format, path);
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
-						MatrixToImageWriter.writeToStream(matrix, format, baos);
-//						System.out.println("path=" + path.toString());
-//						File file = new File(path.toString());
-//						InputStream input = new FileInputStream(file);
-//						result = new OrderMasterServlet().convert2Byte(input);
-						
-//						byte[] buff = new byte[100];
-//						int length = 0;
-//						while ((length = input.read(buff, 0, 100)) > 0) {
-//							baos.write(buff, 0, length);
-//						}
+						MatrixToImageWriter.writeToStream(matrix, format, new ByteArrayOutputStream());
+
 						in2b = baos.toByteArray();
 						baos.close();
-//						input.close();
 						
 						omdao = new OrderMasterDAOImpl();
 						OrderMasterVO qrcodeOM = omdao.findOrderMasterByPK(QRcofeordID);
 						qrcodeOM.setQrcode(in2b);
 						
 						omdao.addQRCode(qrcodeOM);
-						
-//						System.out.println(in2b);
-						
-//						System.out.println("result=" + result);
+
 					} catch (WriterException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -840,10 +821,10 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 				obj.setItemName(prodName); // 商品名稱
-				obj.setReturnURL("https://6c5d-1-164-254-212.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+				obj.setReturnURL(" https://b568-1-164-226-50.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
-				obj.setClientBackURL("http://localhost:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");
+				obj.setClientBackURL(req.getContextPath()+"/front_end/order/listAllOrderForRent.jsp");
 
 				String form = all.aioCheckOut(obj, null);
 
