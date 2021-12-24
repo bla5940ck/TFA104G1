@@ -15,7 +15,7 @@
 <%@page import="com.google.gson.Gson"%>
 
 <%
-	System.out.println("進入新增");
+// 	System.out.println("進入新增");
 %>
 
 <html>
@@ -58,7 +58,7 @@ a.cart-img>img {
 										boolean flag = true;
 
 										List<CartVO> checkoutList = (List<CartVO>) request.getAttribute("checkoutList");
-											System.out.println(checkoutList.size());
+// 											System.out.println(checkoutList.size());
 										// 				Set<CartVO> treeSet = new TreeSet();
 										List<OrderListVO> orderList = new ArrayList();
 										for (CartVO cartVO : checkoutList) {
@@ -69,7 +69,7 @@ a.cart-img>img {
 											// 					}
 
 											Integer memID = (Integer) session.getAttribute("id");
-											// 					System.out.println("承租者編號 : " + memID);
+// 																System.out.println("承租者編號 : " + memID);
 											//會員名稱
 											MemberService memSVC = new MemberService();
 // 											System.out.println("這裡");
@@ -78,8 +78,8 @@ a.cart-img>img {
 											// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
 											String leaseName = memVO.getName();
 											//起訖日
-											System.out.println("起始日 : " + cartVO.getEstStart());
-											System.out.println("結束日 : " + cartVO.getEstEnd());
+// 											System.out.println("起始日 : " + cartVO.getEstStart());
+// 											System.out.println("結束日 : " + cartVO.getEstEnd());
 											Date esstr = cartVO.getEstStart();
 											Date eestr = cartVO.getEstEnd();
 											long rd = ((eestr.getTime()) - (esstr.getTime()));
@@ -194,14 +194,15 @@ a.cart-img>img {
 														</tr>
 
 														<jsp:useBean id="daDAO"
-															class="com.member.model.DefAddressJDBCDAO" />
+															class="com.member.model.DefAddressDAO" />
 														<jsp:useBean id="meDAO"
-															class="com.member.model.MemberJDBCDAO" />
+															class="com.member.model.MemberDAO" />
 
 														<tr>
 															<td>選擇超商:</td>
 															<td><select size="1" name="code711"
 																style="width: 230px">
+																				<option value=0>面交
 																	<c:forEach var="daVO" items="${daDAO.getAll()}">
 																		<c:choose>
 																			<c:when test="${daVO.memberId == id}">
