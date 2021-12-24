@@ -31,7 +31,7 @@ public class ProdDAO implements ProdDAO_Interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Product");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
