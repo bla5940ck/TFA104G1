@@ -121,6 +121,8 @@ if (null == pic || "".equals(pic))
 					<h3 style="background-color:yellow;">出租專區<br><span class="nav-title">${memberVO.loginId}</span></center></h3>
 					<h5>
 						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp"><i class="tou"></i>訂單資訊</a>
+						<a href="<%=request.getContextPath()%>/front_end/order/listOrderQRcode.jsp"><i class="tou"></i>面交訂單</a>
+						
 						<a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp"><i class="tou"></i>商品管理</a>
 						<a href=""><svg class="nav-icon nav-icon-notification" width="22"
 									height="22" viewBox="0 0 24 24" data-icon="ec-notification">

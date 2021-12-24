@@ -32,7 +32,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String UPDATE = "UPDATE ORDER_MASTER SET "
 			+ "SHIP_STATUS = ?, ORD_STATUS = ?, PAY_STATUS = ?, SHIP_CODE = ?, RETURN_CODE = ?, "
 			+ "SHIP_DATE = ?, ARRIVAL_DATE = ?, RETURN_DATE = ?, RENT_RANK = ?, LEASE_RANK = ?, "
-			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ?, EST_TRF_DA = ?, TRF_STATUS = ?, PAY_DATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
+			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ?, EST_TRF_DA = ?, TRF_STATUS = ?,PAY_DATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
 	private static final String FIND_BY_PK = "SELECT * FROM ORDER_MASTER WHERE ORD_ID = ?";
 	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_MASTER WHERE  ORD_STATUS = ? ORDER BY ORD_ID DESC";
 	private static final String GET_ALL = "SELECT * FROM ORDER_MASTER ORDER BY ORD_ID DESC";
@@ -40,7 +40,9 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String INSERT_STMT_ORDERLIST = "INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String UPDATE_ORDERLIST = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
 	private static final String UPDATE2 = "UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?";
+	private static final String QRCODE = "UPDATE ORDER_MASTER SET QRCODE = ? WHERE ORD_ID = ?";
 
+	
 	private static final String INSERT_RENT_COMMENT = "UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String INSERT_LEASE_COMMENT = "UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 
@@ -109,6 +111,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				omVO.setEstTrfDa(rs.getTimestamp("EST_TRF_DA"));
 				omVO.setTrfStatus(rs.getInt("TRF_STATUS"));
 				omVO.setPayDate(rs.getTimestamp("PAY_DATE"));
+				omVO.setQrcode(rs.getBytes("QRCODE"));
 				
 
 				list.add(omVO);
@@ -302,6 +305,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setInt(16, orderMaster.getTrfStatus());
 			pstmt.setTimestamp(17, orderMaster.getPayDate());
 			pstmt.setInt(18, orderMaster.getOrdID());
+
 			pstmt.executeUpdate();
 
 //			"UPDATE ORDER_MASTER SET "
@@ -378,6 +382,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				orderMasterVO.setEstTrfDa(rs.getTimestamp("EST_TRF_DA"));
 				orderMasterVO.setTrfStatus(rs.getInt("TRF_STATUS"));
 				orderMasterVO.setPayDate(rs.getTimestamp("PAY_DATE"));
+				orderMasterVO.setQrcode(rs.getBytes("QRCODE"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -454,6 +459,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				orderMasterVO.setEstTrfDa(rs.getTimestamp("EST_TRF_DA"));
 				orderMasterVO.setTrfStatus(rs.getInt("TRF_STATUS"));
 				orderMasterVO.setPayDate(rs.getTimestamp("PAY_DATE"));
+				orderMasterVO.setQrcode(rs.getBytes("QRCODE"));
 				list.add(orderMasterVO);
 			}
 		} catch (SQLException e) {
@@ -776,6 +782,40 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		}
 	}
 
+	@Override
+	public void addQRCode(OrderMasterVO omVO) {
+//		"UPDATE ORDER_MASTER SET QRCODE = ? WHERE ORD_ID = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(QRCODE);
+			pstmt.setBytes(1, omVO.getQrcode());
+			pstmt.setInt(2, omVO.getOrdID());
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		
@@ -784,7 +824,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		
 		System.out.println(substring);
 		
-		
+		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+		OrderMasterVO omVO = omdao.findOrderMasterByPK(1007);
+		System.out.println(omVO.getQrcode());
+
 		
 		
 		

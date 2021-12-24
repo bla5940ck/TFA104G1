@@ -274,12 +274,17 @@ public class ManagerServlet extends HttpServlet {
 		if ("login".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
+			System.out.println("進來1234");
+			
 			ManagerDAO dao = new ManagerDAO();
 			List<ManagerVO> list = dao.getAll();
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String managerUser = req.getParameter("managerUser");
+				
+				System.out.println(managerUser);
+				
 				if (managerUser == null || managerUser.trim().length() == 0) {
 					errorMsgs.add("管理員帳號: 請勿空白");
 				}
@@ -289,20 +294,20 @@ public class ManagerServlet extends HttpServlet {
 					errorMsgs.add("管理員姓名: 請勿空白");
 				}
 
-				System.out.println(managerUser);
-				System.out.println(managerPassword);
-				System.out.println("共有幾位管理員 : " + list.size());
+//				System.out.println(managerUser);
+//				System.out.println(managerPassword);
+//				System.out.println("共有幾位管理員 : " + list.size());
 
 				for (int i = 0; i < list.size(); i++) {
 
-					System.out.println(list.get(i));
+//					System.out.println(list.get(i));
 
 					String user = list.get(i).getManagerUser();
 					String password = list.get(i).getManagerPassword();
 					Integer id = list.get(i).getManagerID();
 
-					System.out.println("帳號 : " + user);
-					System.out.println("密碼 : " + password);
+//					System.out.println("帳號 : " + user);
+//					System.out.println("密碼 : " + password);
 
 					if ((managerUser.trim().equals(user)) && (managerPassword.trim().equals(password))) {
 
