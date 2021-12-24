@@ -5,7 +5,7 @@
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
-	System.out.println("11111 " +request.getAttribute("pbVO"));
+	System.out.println("catchyou" +request.getAttribute("pbVO"));
 	
 	
 	System.out.print(pbVO);
