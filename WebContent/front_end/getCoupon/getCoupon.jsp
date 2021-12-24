@@ -39,6 +39,9 @@ th, td {
 
 <body>
 		<%@ include file="/includeFolder/header.file"%>
+		<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- 錯誤表列 -->
 
 
@@ -55,19 +58,26 @@ th, td {
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
 								
 	
-		
-<c:if test="${b==true}">
-
-		<script>
- 			alert("領取成功");
-		</script>
-	</c:if>
-
-	<c:if test="${b==false}">
-			<script>
-			alert("您已領取過囉"");
-		</script>
-	</c:if>
+							<c:if test="${b==true}">
+								<script>
+									swal({
+									  title: "領取成功",
+									  text: "可以在結帳時使用折價券喔",
+									  icon: "success",
+									  button: "確認",});
+								</script>	
+							</c:if>
+							
+							<c:if test="${b==false}">
+								<script>
+									swal({
+									  title: "領取失敗",
+									  text: "相同的折價券只能領一次喔",
+									  icon: "error",
+									  button: "確認",
+									});
+								</script>
+							</c:if>
 	
 <br>
 		
