@@ -18,7 +18,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Pbreply");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

@@ -7,6 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 public class PaymentOptionsDAOImpl implements PaymentOptionsDAO_interface {
@@ -21,14 +27,22 @@ public class PaymentOptionsDAOImpl implements PaymentOptionsDAO_interface {
 			"UPDATE PAY_OPTIONS SET PAY_NAME = ? WHERE PAY_ID = ?";
 	private static final String DELETE = 
 			"DELETE FROM PAY_OPTIONS WHERE PAY_ID = ?";
+//	static {
+//		try {
+//			Class.forName(Util.DRIVER);
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException e) {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-
 	@Override
 	public void addPaymentOptions(PaymentOptionsVO paymentOptions) {
 

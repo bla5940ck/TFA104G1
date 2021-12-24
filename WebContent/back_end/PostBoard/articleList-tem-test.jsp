@@ -65,9 +65,9 @@
                           <th>§R°£</th>
                         <!-- <th></th> -->
                       </tr>
-                      <%@ include file="page1.file"%>
-					  <c:forEach var="postBoardVO" items="${list}" begin="<%=pageIndex%>"
-			                     end="<%=pageIndex+rowsPerPage-1%>"></c:forEach>
+<%--                       <%@ include file="page1.file"%> --%>
+<%-- 					  <c:forEach var="postBoardVO" items="${list}" begin="<%=pageIndex%>" --%>
+<%-- 			                     end="<%=pageIndex+rowsPerPage-1%>"></c:forEach> --%>
                     </thead>
                       
             
@@ -100,7 +100,7 @@
                       </tr>                   
                       </tbody>
                   </table>
-                  <%@ include file="page2.file"%>
+<%--                   <%@ include file="page2.file"%> --%>
                 </div>
              </FORM>             
            </div>
