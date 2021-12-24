@@ -81,11 +81,13 @@ main.main {
 	font-size: 1rem;
 	border: 1px solid #999;
 	padding: 10px;
-	text-align: center;
-
 }
 
-
+table {
+	width: 80%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 
 table, th, td {
 	border: 1px solid lightgrey;
@@ -114,12 +116,10 @@ h4 {
 }
 
 table {
-	width: 90%;
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	margin: auto;
-	text-align: cen
 }
 
 table, th, td {

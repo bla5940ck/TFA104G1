@@ -123,7 +123,6 @@ table {
 table, th, td {
 	font-size: 10px;
 	border: 1px solid #CCCCFF;
-	
 }
 
 th, td {
@@ -186,18 +185,18 @@ background-color: #FFF0AC;
 
 			<table>
 				<tr>
-					<th style="text-align: center;">問題編號</th>
-<!-- 					<th>管理者編號</th> -->
-					<th style="text-align: center;">商品編號</th>
-					<th style="text-align: center;">會員編號</th>
-					<th style="text-align: center;">訂單編號</th>
-					<th style="text-align: center;">問題類型編號</th>
-					<th style="text-align: center;">訊息時間</th>
-					<th style="text-align: center;">問題描述</th>
-					<th style="text-align: center;">圖片一</th>
-					<th style="text-align: center;">圖片二</th>
-					<th style="text-align: center;">圖片三</th>
-					<th style="text-align: center;">問題狀態</th>
+					<th>問題編號</th>
+					<th>管理者編號</th>
+					<th>商品編號</th>
+					<th>會員編號</th>
+					<th>訂單編號</th>
+					<th>問題類型編號</th>
+					<th>訊息時間</th>
+					<th>問題描述</th>
+					<th>圖片一</th>
+					<th>圖片二</th>
+					<th>圖片三</th>
+					<th>問題狀態</th>
 					
 
 				</tr>
@@ -215,7 +214,7 @@ background-color: #FFF0AC;
 						<td>${msVO.msgID}</td>
 						<td>${msVO.managerID}</td>
 						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?prodID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
-<%-- 						<td><a href="<%=request.getContextPath()%>/back_end/member/listOneMember.jsp?memberID=0">${msVO.memberID}</a></td> --%>
+						<td><a href="<%=request.getContextPath()%>/back_end/member/listOneMember.jsp?memberID=${msVO.memberID}">${msVO.memberID}</a></td>
 						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderProblem.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>						
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
