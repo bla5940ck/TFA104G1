@@ -746,25 +746,27 @@ public class OrderMasterServlet extends HttpServlet {
 					Path path = FileSystems.getDefault().getPath(filePath, fileName);
 
 					BitMatrix matrix;
+					
 					try {
 						matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
+						
 						// 把產生的QRCode存到指定的目錄
-						MatrixToImageWriter.writeToPath(matrix, format, path);
-						System.out.println("path=" + path.toString());
-						File file = new File(path.toString());
-						InputStream input = new FileInputStream(file);
+//						MatrixToImageWriter.writeToPath(matrix, format, path);
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						MatrixToImageWriter.writeToStream(matrix, format, baos);
+//						System.out.println("path=" + path.toString());
+//						File file = new File(path.toString());
+//						InputStream input = new FileInputStream(file);
 //						result = new OrderMasterServlet().convert2Byte(input);
 						
-						ByteArrayOutputStream baos = new ByteArrayOutputStream();
-						byte[] buff = new byte[100];
-						int length = 0;
-						while ((length = input.read(buff, 0, 100)) > 0) {
-							baos.write(buff, 0, length);
-						}
+//						byte[] buff = new byte[100];
+//						int length = 0;
+//						while ((length = input.read(buff, 0, 100)) > 0) {
+//							baos.write(buff, 0, length);
+//						}
 						in2b = baos.toByteArray();
-						baos.flush();
 						baos.close();
-						input.close();
+//						input.close();
 						
 						omdao = new OrderMasterDAOImpl();
 						OrderMasterVO qrcodeOM = omdao.findOrderMasterByPK(QRcofeordID);
