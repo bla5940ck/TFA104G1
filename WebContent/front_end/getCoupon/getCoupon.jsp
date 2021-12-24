@@ -4,10 +4,8 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
-<%
-		
+<%		
 Integer memID = (Integer)session.getAttribute("id");
-
 %>
 
 <!DOCTYPE html>
@@ -58,7 +56,7 @@ th, td {
 								
 	
 		
-<c:if test="${b==true }">
+<c:if test="${b==true}">
 
 		<script>
  			alert("領取成功");
@@ -67,7 +65,7 @@ th, td {
 
 	<c:if test="${b==false}">
 			<script>
-			alert("已領取過");
+			alert("您已領取過囉"");
 		</script>
 	</c:if>
 	
@@ -99,7 +97,7 @@ th, td {
 				</tr>
 				<jsp:useBean id="promo" class="com.promo_list.model.PromolistService" />
 				
-				<c:forEach var="promolistVO" items="${promo.getAmount(0)}">
+				<c:forEach var="promolistVO" items="${promo.getAmount(1)}">
 
 
 					<tr>
@@ -126,7 +124,7 @@ th, td {
 								<input type="hidden" name="start_date" value="${promolistVO.start_date}"> 
 								<input type="hidden" name="end_date" value="${promolistVO.end_date}"> 
 								<input type="hidden" name="action" value="insert">
-								 <input type="hidden" name="amount"  value="0">
+<!-- 								<input type="hidden" name="amount"  value="1"> -->
 							</FORM>
 						</td>
 

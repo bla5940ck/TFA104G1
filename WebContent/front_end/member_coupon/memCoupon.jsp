@@ -98,13 +98,9 @@ th, td {
 
 
 
-			<table id="table-1">
-				<tr>
-					<td>
-						<h3>我的折價券</h3>
-					</td>
-				</tr>
-			</table>
+
+						<center><h3>我的折價券</h3></center>
+
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
