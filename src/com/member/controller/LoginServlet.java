@@ -57,11 +57,11 @@ public class LoginServlet extends HttpServlet {
 		if (!allowUser(loginId, password)) { // 【帳號 , 密碼無效時】
 			out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
 			out.println("<BODY>你的帳號 , 密碼無效或尚未開通!<BR>");
-			out.println("請按此重新登入 <A HREF=" + req.getContextPath() + "/front_end/member/LeaseLogin.jsp>重新登入</A>");
+			out.println("請按此重新登入 <A HREF=" + req.getContextPath() + "/front_end/member/LoginForgetPW.jsp>重新登入</A>");
 			out.println("<BR>或10秒後自動回到登入畫面 ");
 			out.println("</BODY></HTML>");
 //			設定10秒鐘後自動導回登入畫面
-			res.setHeader("Refresh", "10; URL=" + req.getContextPath() + "/front_end/member/LeaseLogin.jsp");
+			res.setHeader("Refresh", "10; URL=" + req.getContextPath() + "/front_end/member/LoginForgetPW.jsp");
 //       res.sendRedirect(req.getContextPath()+"/front_end/member/LeaseLogin.jsp");  
 		} else { // 【帳號 , 密碼有效時, 才做以下工作】
 			HttpSession session = req.getSession();
@@ -105,11 +105,11 @@ public class LoginServlet extends HttpServlet {
 //				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交listAllEmp2_getFromSession.jsp
 //				successView.forward(req, res);
 //				return;
-				res.sendRedirect(req.getContextPath() + "/front_end/member/LeasePage.jsp");
+				res.sendRedirect(req.getContextPath() + "/front_end/product/homePage.jsp");
 
 			}
 			if ("RentLogin".equals(action)) {
-				res.sendRedirect(req.getContextPath() + "/front_end/member/RentPage.jsp");
+				res.sendRedirect(req.getContextPath() + "/front_end/product/homePage.jsp");
 
 			}
 		}

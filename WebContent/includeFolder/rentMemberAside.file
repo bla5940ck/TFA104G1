@@ -124,6 +124,7 @@ if (null == pic || "".equals(pic))
 						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp"><i class="tou"></i>訂單資訊</a>
 						<a href="<%=request.getContextPath()%>/front_end/order/listOrderRentQRcode.jsp"><i class="tou"></i>面交訂單</a>
 						<a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp"><i class="tou"></i>評價訂單</a> 
+						<a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp"><i class="tou"></i>款項通知</a>
 						<a href='<%=request.getContextPath()%>/back_end/PostBoard/articleList.jsp'><i class="tou"></i>我的徵求</a>
 						<a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp"><i class="tou"></i>問題回報查詢</a>
 						<a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid"><i class="tou"></i>我的折價券</a>
