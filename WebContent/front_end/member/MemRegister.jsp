@@ -268,12 +268,13 @@ img.preview {
 			</div>
 			<div style="width: 20px; height: 250px; "></div>
 			<hr>
+			<!--  
 			<div class="text-center">
 				<a class="small" href="ForgetPW.jsp" style="color:#191561;">Forgot Password?</a>
 			</div>
+			-->
 			<div class="text-center">
-				<a class="small" href="LeaseLogin.jsp" style="color:#191561;">Already have an account?
-					Login!</a>
+				<a class="small" href="LoginForgetPW.jsp" style="color:#191561;">已經有帳號?登入!</a>
 			</div>
 			<input   type="hidden" name="action" value="insert"> 
 			<input class="aa-browse-btn"	type="submit" value="註冊">

@@ -20,8 +20,8 @@
                     <input type=submit  value=" Login" class="aa-browse-btn">
                    	<input type="hidden" name="action"	value="LeaseLogin">
  <!--                     <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember Me </label>-->
-                    <div class="attxt"><a href="<%=request.getContextPath()%>/front_end/member/MemRegister.jsp"style="color:#191561;">Register !</a></div>
-					<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/ForgetPW.jsp"style="color:#191561;">Forget Password ?</a></div>
+                    <div class="attxt"><a href="<%=request.getContextPath()%>/front_end/member/MemRegister.jsp"style="color:#191561;">立刻註冊 !</a></div>
+					<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/LoginForgetPW.jsp"style="color:#191561;">忘記密碼 ?</a></div>
                   </form>
                 </div>
         
