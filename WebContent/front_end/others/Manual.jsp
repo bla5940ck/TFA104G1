@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<title>使用說明</title>
 <style>
 
 	input.memberId {

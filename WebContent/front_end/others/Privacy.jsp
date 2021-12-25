@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<title>隱私權政策</title>
 <style>
 
 	input.memberId {

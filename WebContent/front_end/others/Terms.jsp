@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<title>服務條款及會員契約</title>
 <style>
 input.memberId {
 	background-color: lightgray;
