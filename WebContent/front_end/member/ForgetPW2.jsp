@@ -6,29 +6,36 @@
 
 <head>
 
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title> Forgot Password</title>
-<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"
-    type="text/javascript"></script>
+
+    
 
 </head>
 
 <body class="bg-gradient-primary">
-<%@ include file="/includeFolder/header.file"%>
-<section id="aa-myaccount">
-		<div class="container">
-			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
-					<div class="aa-myaccount-area" id="aa-myaccount-area"> 
-						<div class="row" id="row2">
-							<!--<div class="col-md-6" id="col-md-6"> -->
-								<div class="aa-myaccount-login" id="aa-myaccount-login">
-								<h1>忘記密碼</h1>
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
                                         <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                             and we'll send you a new password!</p>
                                     </div>
@@ -55,11 +62,13 @@
                         </div>
                     </div>
                 </div>
-</section>
-     
 
-<%@ include file="/includeFolder/footer2.file"%>
-</body>
+            </div>
+
+        </div>
+
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -69,5 +78,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+</body>
 
 </html>
