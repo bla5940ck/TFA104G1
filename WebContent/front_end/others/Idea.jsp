@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<title>網站理念</title>
 <style>
 input.memberId {
 	background-color: lightgray;
