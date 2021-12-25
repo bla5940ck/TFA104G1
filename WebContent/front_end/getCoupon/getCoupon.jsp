@@ -12,11 +12,12 @@ Integer memID = (Integer)session.getAttribute("id");
 <html>
 <head>
 <meta charset="UTF-8">
+<title>折價券領取專區</title>
 </head>
 
 <style>
 table {
-	width: 100%;
+	width: 50%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -62,7 +63,7 @@ th, td {
 								<script>
 									swal({
 									  title: "領取成功",
-									  text: "可以在結帳時使用折價券喔",
+									  text: "可以在結帳時使用折價券",
 									  icon: "success",
 									  button: "確認",});
 								</script>	
@@ -72,7 +73,7 @@ th, td {
 								<script>
 									swal({
 									  title: "領取失敗",
-									  text: "相同的折價券只能領一次喔",
+									  text: "相同的折價券只能領一次",
 									  icon: "error",
 									  button: "確認",
 									});
@@ -93,6 +94,7 @@ th, td {
 				</ul>
 			</c:if>
 			<!-- coupon_id, promo_id, category_id, coupon_name, discount, amount, used, start_date, end_date -->
+			<center>
 			<table>
 				<tr>
 <!-- 					<th>折價券編號</th> -->
@@ -141,10 +143,10 @@ th, td {
 		</tr>
 				</c:forEach>
 			</table>
-							<br>
+			</center>				<br>
 								
 			     <center><a href="<%=request.getContextPath()%>/front_end/getCoupon/game.jsp">
-                  <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game.jpg" alt="">
+                  <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game1.jpg" alt="">
                 </a></center>
 
 								

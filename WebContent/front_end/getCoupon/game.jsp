@@ -3,27 +3,56 @@
 <%@ page import="com.postboard.model.*"%>
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
-
-<%
+    <%
 	Integer memID = (Integer) session.getAttribute("id");
-%>
-
+	%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<title>遊戲挑戰</title>
 </head>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
+
 input.memberId {
 	background-color: lightgray;
 }
 
-main {
-	text-align: center;
-	font-family: helvetica;
+body { 
+	display: grid;
+	grid-template-areas: 
+    "header header header"
+    "nav section aside"
+    "footer footer footer";
+/* 	grid-template-rows: 80px 1fr 50px; */
+grid-template-columns: 25% 50% 25%;
+	grid-gap: 5px;
+  height: 100vh;
+  margin: 10px;  
 }
 
+header {
+	grid-area: header;
+}
+
+nav {
+	grid-area: nav; 
+}
+
+section {
+	grid-area: section;
+	text-align: center;
+	font-family: helvetica;    
+}
+
+aside {
+	grid-area: aside; 
+	margin-right:20px;
+}
+
+footer {
+	grid-area: footer;
+}
 canvas {
 	border: 2px solid rgb(151, 149, 149);
 }
@@ -65,34 +94,38 @@ btn1, btn2, btn3, btn4 {
 	border-radius: 4px;
 }
 
+.btnrestart {
+    display: inline-block;
+    font-size: 16px;
+    padding: 12px 18px;
+    color: #fff;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.btnrestart {
+    background-color: #191561;
+    border: 1px solid #191561;
+}
 
 </style>
 
-<%@ include file="/includeFolder/header.file"%>
 <body>
-	<script
+    <header>
+    <%@ include file="/includeFolder/header.file"%>
+    </header>
+    				
+    <script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<!-- 錯誤表列 -->
-
-
-	<!-- / catg header banner section -->
-
-	<!-- Cart view section -->
-	<section id="aa-myaccount">
-		<div class="container">
-			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
-					<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
-					<div class="row" id="row2">
-						<!--<div class="col-md-6" id="col-md-6"> -->
-						<div class="aa-myaccount-login" id="aa-myaccount-login">
-
-							<c:if test="${b==true}">
+		<c:if test="${b==true}">
 								<script>
 									swal({
 									  title: "領取成功",
-									  text: "可以在結帳時使用折價券喔",
+									  text: "可以在結帳時使用折價券",
 									  icon: "success",
 									  button: "確認",});
 								</script>
@@ -103,27 +136,45 @@ btn1, btn2, btn3, btn4 {
 								<script>
 									swal({
 									  title: "領取失敗",
-									  text: "相同的折價券只能領一次喔",
+									  text: "相同的折價券只能領一次",
 									  icon: "error",
 									  button: "確認",
 									});
 								</script>
 							</c:if>
-
-							<main>
-							
-								<br>
-								<h2>小遊戲</h2>
-								<h4>操作方式:上=W，下=S，左=A，右=D</h4>
-								<h3>
+		
+<nav>
+<h1></h1>
+								<center>
+								<br>							
+								<h2>
 									分數
 									<p id="score" class="score"></p>
+								</h2>
+								<h3>操作方式
+								<br>上=W
+								<br>下=S
+								<br>左=A
+								<br>右=D
 								</h3>
-
+									<br>
 								<input type="hidden" name="finalScore" class="finalScore">
-								<canvas id="stage" height="400" width="520"></canvas>
-
+								
+								<a id="restart" class="aa-browse-btn">遊戲開始</a>
+								</center>
+								
+								
 								<script>
+								</script>
+								
+								
+								
+</nav>
+<section>
+<h1></h1>
+
+<canvas id="stage" height="400" width="520"></canvas>
+	<script>
 	
 							/**
 							 * Namespace
@@ -142,6 +193,7 @@ btn1, btn2, btn3, btn4 {
 									  83: 'down'
 									};
 
+							
 							/**
 							 * Keyboard Events
 							 */
@@ -291,7 +343,13 @@ btn1, btn2, btn3, btn4 {
 							    	
 // 							    	return;
 // 							    }
-							 	if (this.collision(nx, ny) == true && snake.stage.score > 2) {
+							    if (this.collision(nx, ny) == true && snake.stage.score > 199) {
+							    	console.log("結束了");
+									document.getElementById("btn4").disabled = false
+									return;
+							    }
+							    
+							 	if (this.collision(nx, ny) == true && snake.stage.score > 99) {
 							    	console.log("結束了");
 									document.getElementById("btn3").disabled = false
 									return;
@@ -393,33 +451,37 @@ btn1, btn2, btn3, btn4 {
 							/**
 							 * Window Load
 							 */
-							window.onload = function() {
-							  var snake = new Game.Snake('stage', {fps: 100, size: 4});
-							};
+// 							window.onload = function() {
+// 							  var snake = new Game.Snake('stage', {fps: 100, size: 4});
+// 							};
 							
-					
+							// 遊戲開始					
+							 var btnre = document.getElementById('restart');
+
+								btnre.onclick = function(elementId, conf){
+									 var snake = new Game.Snake('stage', {fps: 100, size: 4});
+								};
+							
 							
 </script>
-
-								<br> <br>
-
-								<%-- 							<center> --%>
-								<!-- 								<a class="aa-browse-btn" -->
-								<!-- 									href="/TFA104G1/front_end/getCoupon/getCoupon.jsp"><span -->
-								<!-- 									class="fa fa-long-arrow-left"></span>回上一頁</a> -->
-								<%-- 							</center> --%>
-
-								<a class="aa-browse-btn" href="game.jsp">再挑戰一次</a>
-								<!-- 									href="JavaScript:window.location.reload()">再挑戰一次</a> -->
+<h1></h1>
+		<center>
+			<a class="aa-browse-btn"
+				href="/TFA104G1/front_end/product/homePage.jsp"><span
+				class="fa fa-long-arrow-left"></span>回首頁</a>
+		</center>
+		<br>
+</section>
+<aside>
 
 
-
-
-								<br> <br>
+															<br> <br>
 
 
 								<center>
-									<h2>挑戰成功折價券領取專區</h2>
+									<h2>遊戲獎勵</h2>
+									<h2>領取專區</h2>
+									<br>
 								</center>
 								<c:if test="${not empty errorMsgs}">
 									<font style="color: red">請修正以下錯誤:</font>
@@ -490,7 +552,7 @@ btn1, btn2, btn3, btn4 {
 										</td>
 									</tr>
 									<tr>
-										<td>滿3分</td>
+										<td>滿100分</td>
 										<td>達人</td>
 										<td>20元</td>
 										<td>
@@ -500,7 +562,7 @@ btn1, btn2, btn3, btn4 {
 												<input type="hidden" name="member_id" value="<%=memID%>">
 												<input type="hidden" name="category_id" value="1"> <input
 													type="hidden" name="coupon_id" value="3"> <input
-													type="hidden" name="coupon_name" value="滿3分折20元"> <input
+													type="hidden" name="coupon_name" value="滿100分折20元"> <input
 													type="hidden" name="discount" value="20"> <input
 													type="hidden" name="status" value="0"> <input
 													type="hidden" name="start_date" value=""> <input
@@ -532,22 +594,13 @@ btn1, btn2, btn3, btn4 {
 								</table>
 
 								<br> <br>
-						</div>
-						<!-- 						</div> -->
-					</div>
-				</div>
-			</div>
-		</div>
+<center><a class="aa-browse-btn" href="game.jsp">再挑戰一次</a></center>
 
-		<center>
-			<a class="aa-browse-btn"
-				href="/TFA104G1/front_end/product/homePage.jsp"><span
-				class="fa fa-long-arrow-left"></span>回首頁</a>
-		</center>
-		<br> <br>
-		</main>
-		<!-- 		</div> -->
-	</section>
-	<%@ include file="/includeFolder/footer2.file"%>
+
+
+</aside>
+<footer>
+<%@ include file="/includeFolder/footer2.file"%>
+</footer>
 </body>
 </html>
