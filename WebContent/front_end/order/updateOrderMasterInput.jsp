@@ -24,73 +24,132 @@
 <title>訂單資料更新:</title>
 
 <style>
- body { 
- 	margin: 0; 
- 	padding: 10px; 
- 	z-index: 1001;
- 	
- } 
-
-img {
-	max-width: 100%;
-}
-
- div.main_content { 
- 	width: 100%; 
- 	margin: 0 auto; 
- 	font-size: 0; 
- } 
-
-/*-------------------aside區域------------------- */
-aside.aside {
-	width: 200px;
-	height:620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-	text-align:center;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: calc(100% - 200px - 10px);
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-table {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left: 100px;	
-	
-}
-
-table, th, td {
-	border: 1px solid lightgrey;
-	width: 800px; 
-	text-align:center;
-	
-}
-
-th, td {
-	padding: 5px;
-}
-
-th{
-width: 180px;
-}
-a.cart-img > img{
-	object-fit: contain;
-	width: 185px;
-	height: 140px;
-}
-</style>
+		* {
+			box-sizing: border-box;
+			text-decoration: none;
+			list-style: none;
+		}
+		
+		body {
+			margin: 0;
+			padding: 0px;
+		}
+		
+		img {
+			max-width: 100%;
+		}
+		
+		header.header {
+			background-color: #ddd;
+			width: 100%;
+			margin: 0 auto 0px auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			header.header {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			header.header {
+				width: 100%;
+			}
+		}
+		
+		div.main_content {
+			width: 100%;
+			margin: 0 auto;
+			font-size: 0;
+			/*   border:1px solid red; */
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			div.main_content {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			div.main_content {
+				width: 100%;
+			}
+		}
+		/*-------------------aside區域------------------- */
+		aside.aside {
+			
+			width: 200px;
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
+		}
+		
+		/*--------------------main區域-------------------- */
+		main.main {
+			background-color: white;
+			width: calc(100% - 200px - 10px);
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			border: 1px solid white;
+			padding: 0px;
+		}
+		
+		@media ( max-width : 575.98px) {
+			aside.aside, main.main {
+				display: block;
+			}
+			aside.aside {
+				width: 100%;
+				margin: 0 0 10px 0;
+			}
+			main.main {
+				width: 100%;
+			}
+		}
+		
+		footer.footer {
+			background-color: #ddd;
+			width: 100%;
+			margin: 10px auto 0 auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			footer.footer {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			footer.footer {
+				width: 100%;
+			}
+		}
+		
+		/*--------------------table區域-------------------- */
+		table {
+			width: 100%;
+			background-color: white;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		
+		table, th, td {
+			border: 1px solid #CCCCFF;
+		}
+		
+		.cart-img{
+			height: 120px;
+			width: 120px;
+			
+		}
+		</style>
 </head>
 
 <body bgcolor='white'>
@@ -121,7 +180,7 @@ a.cart-img > img{
 				
 					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
-							<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
+							<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
 					</c:forEach>
 			
 					</tr>
@@ -197,35 +256,35 @@ a.cart-img > img{
 					</tr>
 				</table>
 				<table>
-					<tr>
-						<th>承租方評價</th>
-						<td>
+<!-- 					<tr> -->
+<!-- 						<th>承租方評價</th> -->
+<!-- 						<td> -->
 						<input type="hidden" name="rentRank" value="<%=omVO.getRentRank() == null?"":omVO.getRentRank()%>">						
-						<p id="rr"><%=omVO.getRentRank()%></p></td>
+<%-- 						<p id="rr"><%=omVO.getRentRank()%></p></td> --%>
 
-					</tr>
-					<tr>
-						<th>出租方評價</th>
-						<td>
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th>出租方評價</th> -->
+<!-- 						<td> -->
 						<input type="hidden" name="leaseRank" value="<%=omVO.getLeaseRank() == null?"":omVO.getLeaseRank()%>">
-						<p id="lr"><%=omVO.getLeaseRank()%></p>
-						</td>
+<%-- 						<p id="lr"><%=omVO.getLeaseRank()%></p> --%>
+<!-- 						</td> -->
 
-					</tr>
-					<tr>
-						<th>承租方評論</th>
-						<td>
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th>承租方評論</th> -->
+<!-- 						<td> -->
 						<input type="hidden" name="rentComt" value="<%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt() %>">					
-						<p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td>
+<%-- 						<p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td> --%>
 
-					</tr>
-					<tr>
-						<th>出租方評論</th>
-						<td>
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th>出租方評論</th> -->
+<!-- 						<td> -->
 						<input type="hidden" name="leaseComt" value="<%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %>">
-						<p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td>
+<%-- 						<p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td> --%>
 
-					</tr>
+<!-- 					</tr> -->
 				</table>
 				<input type="hidden" name="action" value="update_for_Lease"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">

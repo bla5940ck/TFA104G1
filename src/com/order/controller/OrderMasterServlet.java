@@ -663,7 +663,7 @@ public class OrderMasterServlet extends HttpServlet {
 
 				/******************** 付款資訊 ******************/
 				Integer payID = new Integer(req.getParameter("payID"));
-			System.out.println("付款方式編碼 : " + payID);
+				System.out.println("付款方式編碼 : " + payID);
 
 				String strcp = req.getParameter("couponID").trim();
 				Integer couponID = null;
@@ -726,13 +726,13 @@ public class OrderMasterServlet extends HttpServlet {
 				omdao.inesetWithList(omVO, list);
 //				System.out.println("訂單+明細新增");		
 
-				/***********************產生QRcodecode*************************/
+				/*********************** 產生QRcodecode *************************/
 				byte[] in2b = null;
-				if (payID == 2) {	
-					
+				if (payID == 2) {
+
 					Integer QRcofeordID = list.get(0).getOrdID();
-					String url = "http://10.2.12.23:8081/TFA104G1/QRCodeTest?action=check&memID="+QRcofeordID;
-					
+					String url = "http://10.2.12.23:8081/TFA104G1/QRCodeTest?action=check&memID=" + QRcofeordID;
+
 					int width = 300;
 					int height = 300;
 					String format = "jpg";
@@ -742,28 +742,28 @@ public class OrderMasterServlet extends HttpServlet {
 					hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
 					BitMatrix matrix;
-					
+
 					try {
 						matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height, hints);
-						
+
 						// 把產生的QRCode存到指定的目錄
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
 						MatrixToImageWriter.writeToStream(matrix, format, new ByteArrayOutputStream());
 
 						in2b = baos.toByteArray();
 						baos.close();
-						
+
 						omdao = new OrderMasterDAOImpl();
 						OrderMasterVO qrcodeOM = omdao.findOrderMasterByPK(QRcofeordID);
 						qrcodeOM.setQrcode(in2b);
-						
+
 						omdao.addQRCode(qrcodeOM);
 
 					} catch (WriterException e) {
 						e.printStackTrace();
 					}
 				}
-				
+
 				/*********************** 修改會員折價券狀態 ************************/
 
 				MemcouponDAO mcdao = new MemcouponDAO();
@@ -824,7 +824,7 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setReturnURL(" https://b568-1-164-226-50.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
-				obj.setClientBackURL(req.getContextPath()+"/front_end/order/listAllOrderForRent.jsp");
+				obj.setClientBackURL(req.getContextPath() + "/front_end/order/listAllOrderForRent.jsp");
 
 				String form = all.aioCheckOut(obj, null);
 
@@ -856,50 +856,53 @@ public class OrderMasterServlet extends HttpServlet {
 
 			}
 		}
-
-		if ("get_Status_Display".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
-
-			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
-
-			if (omVO == null) {
-				errorMsgs.add("查無資料");
-			}
-
-			for (OrderMasterVO oms : omVO) {
-				req.setAttribute("OrderMasterVO", oms);
-				String url = "/front_end/order/listStatusOrderMaster.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-				return;
-			}
-		}
-
-		if ("get_Status_Display_ForRent".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
-
-			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
-
-			if (omVO == null) {
-				errorMsgs.add("查無資料");
-			}
-
-			for (OrderMasterVO oms : omVO) {
-				req.setAttribute("OrderMasterVO", oms);
-				String url = "/front_end/order/listStatusOrderMasterForRent.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-				return;
-			}
-		}
+//
+//		if ("get_Status_Display".equals(action)) {
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
+//
+//			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+//			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
+//
+//			for (OrderMasterVO oms : omVO) {
+//
+//				req.setAttribute("OrderMasterVO", oms);
+//				String url = "/front_end/order/listStatusOrderMaster.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url);
+//				successView.forward(req, res);
+//				return;
+//			}
+//		}
+//
+//		if ("get_Status_Display_ForRent".equals(action)) {
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			
+//			try {
+//				Integer ordStatus = new Integer(req.getParameter("ordStatus"));
+//				System.out.println(ordStatus);
+//				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+//				List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
+//				
+//			if (omVO == null) {
+//				errorMsgs.add("查無資料");
+//			}
+//				
+//				for (OrderMasterVO oms : omVO) {
+//					req.setAttribute("OrderMasterVO", oms);
+//					String url = "/front_end/order/listStatusOrderMasterForRent.jsp";
+//					RequestDispatcher successView = req.getRequestDispatcher(url);
+//					successView.forward(req, res);
+//					return;
+//				}
+//				
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//			}
+//			
+//		}
 
 		if ("get_Status_Display_Manager".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
