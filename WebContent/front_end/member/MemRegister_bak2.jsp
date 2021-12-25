@@ -233,19 +233,17 @@ img.preview {
 				placeholder="請輸入手機號碼"> <br> 
 			<label for="">請輸入Email<span>*</span></label>
 			<input type="text" name="email" placeholder="請輸入Email"> <br>
-		<!--	
-		<label for="">請輸入郵遞區號<span>*</span></label> 
+			<label for="">請輸入郵遞區號<span>*</span></label> 
 			<input type="text"
-				name="zipcodeName" placeholder="請輸入郵遞區號"> <br> 
+				name="addNum" placeholder="請輸入郵遞區號"> <br> 
 			<label for="">縣市行政區<span>*</span></label>
 			<input type="text" name="add" placeholder="關聯郵遞區號預設帶入"> <br>
-			  -->	
-			  <div id="twzipcode"></div> 
-			<label for="">縣市行政區<span>*</span></label>	 <br>
 			<label for="">請輸入地址<span>*</span></label> 
 			<input type="text"
 				name="address" placeholder="請輸入地址"> <br>
 				
+				<div id="twzipcode"></div> 
+			<label for="">縣市行政區<span>*</span></label>	 <br>
 				 	
 				  
 				 請上傳身分證正面:
@@ -254,32 +252,31 @@ img.preview {
 				請上傳身分證反面:
 				<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="idc_B"id='file_id2' name='file_name2'><br> <br>
 		</div>
-			<div><h1>圖片預覽</h1></div>
+			
+			<hr>
+			<div class="text-center">
+				<a class="small" href="ForgetPW.jsp">Forgot Password?</a>
+			</div>
+			<div class="text-center">
+				<a class="small" href="LeaseLogin.jsp">Already have an account?
+					Login!</a>
+			</div>
+			<input type="hidden" name="action" value="insert"> <input
+				type="submit" value="註冊">
+	</FORM>
+	
+			<div><h4>圖片預覽</h4></div>
 
 			<div id="preview1"
 				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
-				<span class="text"style=”text-align: center;”>預覽圖 </span>
+				<span class="text"style=”text-align: center;”>預覽圖 1</span>
 			</div>
-			<div style="width: 20px; height: 250px; float:left; display:inline"></div>
+			<div style="width: 300px; height: 250px; float:left; display:inline"></div>
 			
 			<div id="preview2"
-				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
-				<span class="text"style=”text-align: center;”>預覽圖 </span>
+				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
+				<span class="text"style=”text-align: center;”>預覽圖 2</span>
 			</div>
-			<div style="width: 20px; height: 250px; "></div>
-			<hr>
-			<div class="text-center">
-				<a class="small" href="ForgetPW.jsp" style="color:#191561;">Forgot Password?</a>
-			</div>
-			<div class="text-center">
-				<a class="small" href="LeaseLogin.jsp" style="color:#191561;">Already have an account?
-					Login!</a>
-			</div>
-			<input   type="hidden" name="action" value="insert"> 
-			<input class="aa-browse-btn"	type="submit" value="註冊">
-	</FORM>
-	
-			
 	
 	 							</div>
 				<!--		</div> -->
@@ -437,18 +434,6 @@ img.preview {
 					}
 
 				});
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-<script>
-$("#twzipcode").twzipcode({
-//	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
-	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
-	countyName: "city", // 自訂城市 select 標籤的 name 值
-	districtName: "town" // 自訂地區 select 標籤的 name 值
-	});
-
-
 </script>
 
 </html>
