@@ -22,7 +22,7 @@
 		
 		body {
 			margin: 0;
-			padding: 10px;
+			padding: 0px;
 		}
 		
 		img {
@@ -32,7 +32,7 @@
 		header.header {
 			background-color: #ddd;
 			width: 100%;
-			margin: 0 auto 10px auto;
+			margin: 0 auto 0px auto;
 			border: 1px solid #999;
 		}
 		
@@ -68,13 +68,15 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			background-color: white;
+			
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			margin-right: 10px;
-			border: 1px solid #999;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 #191561 transparent;
 		}
 		
 		/*--------------------main區域-------------------- */
@@ -84,8 +86,8 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			border: 1px solid #999;
-			padding: 10px;
+			border: 1px solid white;
+			padding: 0px;
 		}
 		
 		@media ( max-width : 575.98px) {
@@ -131,8 +133,6 @@
 		table, th, td {
 			border: 1px solid #CCCCFF;
 		}
-		
-		
 		</style>
 	</head>
 <body bgcolor='white'>
@@ -197,7 +197,7 @@
 				<main class="main">
 				
 					
-						<h1>款項通知</h1>
+						<h1>承租款項通知</h1>
 						<div>可以留意您的帳務相關資訊</div>
 						
 						<hr>
