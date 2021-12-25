@@ -17,7 +17,7 @@ Integer memID = (Integer)session.getAttribute("id");
 
 <style>
 table {
-	width: 50%;
+	width: 30%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -26,7 +26,9 @@ table, th, td {
 	border: 1px solid lightgrey;
 }
 
+
 th, td {
+	height: 50px;
 	padding: 5px;
 	text-align: center;
 }
@@ -81,8 +83,10 @@ th, td {
 							</c:if>
 	
 <br>
+<br>
 		
 						<center><h2>折價券領取專區</h2></center>
+						<br>
 	
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -144,7 +148,7 @@ th, td {
 				</c:forEach>
 			</table>
 			</center>				<br>
-								
+								<br>
 			     <center><a href="<%=request.getContextPath()%>/front_end/getCoupon/game.jsp">
                   <img src="<%=request.getContextPath()%>/front_end/getCoupon/img/game1.jpg" alt="">
                 </a></center>
@@ -154,7 +158,7 @@ th, td {
 		</main>
 		<br>
 	<br>
-		<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
+		<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a></center>
 								<br>
 	<br>
 				</div>

@@ -245,7 +245,7 @@
 		</p>
 		<br>
 		<br>
-		<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
+		<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a></center>
 								<br>
 	<br>
 			
