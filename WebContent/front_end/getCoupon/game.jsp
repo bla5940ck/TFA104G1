@@ -25,7 +25,7 @@ body {
     "nav section aside"
     "footer footer footer";
 /* 	grid-template-rows: 80px 1fr 50px; */
-grid-template-columns: 25% 50% 25%;
+grid-template-columns: 28% 44% 28%;
 	grid-gap: 5px;
   height: 100vh;
   margin: 10px;  
@@ -47,7 +47,7 @@ section {
 
 aside {
 	grid-area: aside; 
-	margin-right:20px;
+	margin-right: 10px
 }
 
 footer {
@@ -58,7 +58,7 @@ canvas {
 }
 
 table {
-	width: 100%;
+	width: 90%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -68,6 +68,7 @@ table, th, td {
 }
 
 th, td {
+	height: 50px;
 	padding: 5px;
 	text-align: center;
 }
@@ -146,6 +147,8 @@ btn1, btn2, btn3, btn4 {
 <nav>
 <h1></h1>
 								<center>
+								<br>
+								<br>		
 								<br>							
 								<h2>
 									分數
@@ -171,7 +174,8 @@ btn1, btn2, btn3, btn4 {
 								
 </nav>
 <section>
-<h1></h1>
+<br>
+<h2>遊戲挑戰</h2>
 
 <canvas id="stage" height="400" width="520"></canvas>
 	<script>
@@ -395,7 +399,7 @@ btn1, btn2, btn3, btn4 {
 							    this.drawCell(snake.stage.food.x, snake.stage.food.y);
 							    
 							    // Draw Score
-							    context.fillText('Score: ' + snake.stage.score, 5, (snake.stage.height - 5));
+// 							    context.fillText('Score: ' + snake.stage.score, 5, (snake.stage.height - 5));
 							  	
 							    // 分數
 							    console.log(snake.stage.score);
@@ -403,15 +407,6 @@ btn1, btn2, btn3, btn4 {
 							    $(".score").text(endScore);
 							    							  						    
 							  };			
-							  
-							  
-							  
-// 							 var endScore = snake.stage.score;
-// 							 console.log(endScore);  
-							  
-							  
-							  
-							  
 							  
 							  
 							  // Draw Cell
@@ -468,21 +463,23 @@ btn1, btn2, btn3, btn4 {
 		<center>
 			<a class="aa-browse-btn"
 				href="/TFA104G1/front_end/product/homePage.jsp"><span
-				class="fa fa-long-arrow-left"></span>回首頁</a>
+				class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
 		</center>
 		<br>
 </section>
 <aside>
 
 
-															<br> <br>
+															
 
 
 								<center>
-									<h2>遊戲獎勵</h2>
-									<h2>領取專區</h2>
-									<br>
-								</center>
+								<br>
+								<br>	
+								<br>	
+								<br>
+									<h2>獎勵領取</h2>
+					
 								<c:if test="${not empty errorMsgs}">
 									<font style="color: red">請修正以下錯誤:</font>
 									<ul>
@@ -514,7 +511,7 @@ btn1, btn2, btn3, btn4 {
 									<tr>
 										<td>滿1分</td>
 										<td>再接再厲</td>
-										<td>5元</td>
+										<td>折5元</td>
 										<td>
 											<FORM METHOD="post" ACTION="getcoupon.do"
 												style="margin-bottom: 0px;">
@@ -534,7 +531,7 @@ btn1, btn2, btn3, btn4 {
 									<tr>
 										<td>滿2分</td>
 										<td>不錯喔</td>
-										<td>10元</td>
+										<td>折10元</td>
 										<td>
 											<FORM METHOD="post" ACTION="getcoupon.do"
 												style="margin-bottom: 0px;">
@@ -554,7 +551,7 @@ btn1, btn2, btn3, btn4 {
 									<tr>
 										<td>滿100分</td>
 										<td>達人</td>
-										<td>20元</td>
+										<td>折20元</td>
 										<td>
 											<FORM METHOD="post" ACTION="getcoupon.do"
 												style="margin-bottom: 0px;">
@@ -574,7 +571,7 @@ btn1, btn2, btn3, btn4 {
 									<tr>
 										<td>滿200分</td>
 										<td>神</td>
-										<td>50元</td>
+										<td>折50元</td>
 										<td>
 											<FORM METHOD="post" ACTION="getcoupon.do"
 												style="margin-bottom: 0px;">
@@ -593,8 +590,8 @@ btn1, btn2, btn3, btn4 {
 									</tr>
 								</table>
 
-								<br> <br>
-<center><a class="aa-browse-btn" href="game.jsp">再挑戰一次</a></center>
+								<br>
+<a class="aa-browse-btn" href="game.jsp">再挑戰一次</a></center>
 
 
 
