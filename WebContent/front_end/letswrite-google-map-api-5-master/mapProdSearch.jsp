@@ -265,46 +265,11 @@
         title: '自己',
         map: this.map
       });
-
-//             var f =' {type: Feature,geometry: {type: Point,coordinates: [25.0374865, 121.5647688]},properties: {id: 1,name: 臺北市政府親子劇場,site: 110台北市信義區市府路1號市府大樓}}';
-//             features.put(f);
-            
-//             const vicDummyDatas = [
-//   {
-//     "geometry": {
-//       "coordinates": [
-//         "25.0405919",
-//         "121.5647644"
-//       ],
-//       "type": "Point"
-//     },
-//     "type": "Feature",
-//     "properties": {
-//       "site": "110台北市信義區市府路1號市府大樓",
-//       "name": "會員編號1",
-//       "id": "1"
-//     }
-//   },
-//   {
-//     "geometry": {
-//       "coordinates": [
-//         "25.0405919",
-//         "121.5547644"
-//       ],
-//       "type": "Point"
-//     },
-//     "type": "Feature",
-//     "properties": {
-//       "site": "110台北市信義區市府路2號市府大樓",
-//       "name": "會員編號2",
-//       "id": "2"
-//     }
-//   }
-// ]
+          
 
             
             // 放置marker
-            fetch('/TFA104G1/MapServelt?action=getMapDate')
+            fetch('/TFA104G1/MapServelt?action=getMapData')
               .then(res => res.json())
               .then(result => {
                 this.features = result.features;

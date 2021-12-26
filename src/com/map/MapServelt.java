@@ -92,7 +92,7 @@ public class MapServelt extends HttpServlet {
 			req.getSession().setAttribute("mapDate", jsonObject4);
 		}
 		// 當搜尋完後跳轉 得到session存的資料
-		if ("getMapDate".equals(req.getParameter("action"))) {
+		if ("getMapData".equals(req.getParameter("action"))) {
 			req.getSession().getAttribute("mapDate");
 			if (req.getSession().getAttribute("mapDate") != null) {
 //				System.out.println(req.getSession().getAttribute("mapDate"));
