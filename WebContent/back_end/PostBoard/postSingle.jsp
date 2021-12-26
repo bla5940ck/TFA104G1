@@ -109,7 +109,7 @@
                         <li>
                           <div class="media">
                             <div class="media-left">    
-                                <img class="media-object news-img" src="" alt="img">      
+<!--                                 <img class="media-object news-img" src="" alt="img">       -->
                             </div>
                             <div class="media-body">
                              <h4 class="author-name">${pbrVO.memberId}</h4><!--留言會員編號-->
