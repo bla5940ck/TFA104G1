@@ -34,7 +34,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>訂單狀態查詢</title>
+<title>歷史訂單</title>
 <style>
 		* {
 			box-sizing: border-box;
@@ -169,7 +169,7 @@
 	<div class="main_content">
 		<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">
-		<h3>評價訂單</h3>
+		<h3>歷史訂單</h3>
 			<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
 			<c:if test="${not empty errorMsgs}">
@@ -185,7 +185,7 @@
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
 					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
-							<input type="button" class="dateBtn" value="確認">
+							<input class="aa-browse-btn" type="button" class="dateBtn" value="確認">
 						     <input type="hidden" name="action" value="get_date_forLease_order">
 				</FORM>
 			</div>
@@ -275,7 +275,7 @@
 						<td>$${omVO.ordPrice}元</td>
 						<td>
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
-								<input type="submit" value="評價"> 
+								<input class="aa-browse-btn" type="submit" value="評價"> 
 								<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 								<input type="hidden" class="shipFee" name="shipFee" value="${omVO.shipFee}">
 								<input type="hidden" class="price" name="price" value="${omVO.ordPrice}"> 

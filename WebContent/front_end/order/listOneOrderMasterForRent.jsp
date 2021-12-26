@@ -161,7 +161,7 @@
 		<main class="main">			
 		<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/BackEndOrderServlet" style="margin-bottom: 0px;">
 			<h4>訂單編號 :<%=omVO.getOrdID()%></h4>
-				<input type="submit" value="更新">
+				<input class="aa-browse-btn" type="submit" value="更新">
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
 				<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
 				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">

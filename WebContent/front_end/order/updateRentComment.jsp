@@ -79,7 +79,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			
+			height:650px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -409,12 +409,12 @@
               														<input type="hidden" name="rentRank" id="rentRank">
 																	<input type="hidden" name="action" value="update_rent_comment"> 
 																	<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-              														<input type="submit" value="送出評價 !">
+              														<input class="aa-browse-btn" type="submit" value="送出評價 !">
            														</div>
 															</td>													
 														</tr>
 													</table>
-													<center><a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp">回前頁</a></center>
+													<center><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp">回前頁</a></center>
 												</div>
 											</table>
 										</div>

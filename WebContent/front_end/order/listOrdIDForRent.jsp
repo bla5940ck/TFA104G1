@@ -215,8 +215,8 @@
 						</td>
 				</c:forEach>
 				</table>
-				<input type="submit" value="提出問題">
-				<center><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">回上頁</a></center>
+				<input class="aa-browse-btn" type="submit" value="提出問題">
+				<center><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">回上頁</a></center>
 			</FORM>
 <%-- 			<%@ include file="page2.file"%> --%>
 		</main>

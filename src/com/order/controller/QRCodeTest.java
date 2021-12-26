@@ -72,7 +72,8 @@ public class QRCodeTest extends HttpServlet {
 		String action = req.getParameter("action");
 
 		if("toQRcode".equals(action)) {
-			
+			req.setCharacterEncoding("UTF-8");
+			res.setContentType("text/html; charset=UTF-8");
 			System.out.println("進來了");
 			Integer ordID = Integer.valueOf(req.getParameter("ordID"));
 //			String memID = req.getParameter("memID");

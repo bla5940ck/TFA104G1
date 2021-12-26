@@ -188,7 +188,7 @@
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
+					<input class="aa-browse-btn" type="submit" value="送出">
 				</FORM>
 				<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 <!-- 				<FORM METHOD="post" -->
@@ -217,11 +217,11 @@
 				<div>
 <%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">全部</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=0">已成立</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=1">待歸還</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=2">已完成</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=9">已取消</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">全部</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=0">已成立</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=1">待歸還</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=2">已完成</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=9">已取消</a></td>
 						</tr>
 <!-- 						<input type="hidden" name="action" value="get_Status_Display_ForRent"> -->
 <!-- 					</FORM> -->
@@ -338,7 +338,7 @@
 								<td>${omVO.ordPrice}</td>
 								<td>
 									<FORM METHOD="post"ACTION="<%=request.getContextPath()%>/OrderListServlet"style="margin-bottom: 0px;">
-										<input type="submit" value="查看明細"> 
+										<input class="aa-browse-btn" type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 <%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
 										<input type="hidden" name="action" value="getlist_For_Rent">
