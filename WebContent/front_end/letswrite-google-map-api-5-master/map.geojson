@@ -10,6 +10,7 @@
       "properties": {
         "id": 1,
         "name": "會員編號1",
+        "productName":馬力歐賽車,
         "site": "110台北市信義區市府路1號市府大樓"
       }
     },
