@@ -69,7 +69,7 @@
                   <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
                   <c:choose>
                   	<c:when test="${id == null}">
-                     	<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseLogin.jsp" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
+                     	<li><a href="<%=request.getContextPath()%>/front_end/member/Login.jsp" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
                  	</c:when>
                  	<c:otherwise>
                   		<li><a href="<%=request.getContextPath()%>/LogoutServlet" data-toggle="modal">會員登出</a></li>				
