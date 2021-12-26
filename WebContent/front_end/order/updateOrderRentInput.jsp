@@ -144,8 +144,8 @@
 		}
 		
 		.cart-img{
-			height: 120px;
-			width: 120px;
+			height: 30%;
+			width: 30%;
 			
 		}
 		</style>
@@ -179,7 +179,7 @@
 				
 					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
-							<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
+							<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
 					</c:forEach>
 			
 					</tr>

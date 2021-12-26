@@ -731,7 +731,7 @@ public class OrderMasterServlet extends HttpServlet {
 				if (payID == 2) {
 
 					Integer QRcofeordID = list.get(0).getOrdID();
-					String url = "http://10.2.12.23:8081/TFA104G1/QRCodeTest?action=check&memID=" + QRcofeordID;
+					String url = "http://192.168.100.4:8081/TFA104G1/QRCodeTest?action=check&memID=" + QRcofeordID;
 
 					int width = 300;
 					int height = 300;
@@ -740,7 +740,10 @@ public class OrderMasterServlet extends HttpServlet {
 					Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 					hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 					hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-
+					String filePath = "C:\\javawork";
+					String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
+					Path path = FileSystems.getDefault().getPath(filePath, fileName);
+					
 					BitMatrix matrix;
 
 					try {
@@ -748,15 +751,28 @@ public class OrderMasterServlet extends HttpServlet {
 
 						// 把產生的QRCode存到指定的目錄
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
-						MatrixToImageWriter.writeToStream(matrix, format, new ByteArrayOutputStream());
-
+//						MatrixToImageWriter.writeToStream(matrix, format, new ByteArrayOutputStream());
+						MatrixToImageWriter.writeToPath(matrix, format, path);					
+						
+						File file = new File(path.toString());
+						InputStream input = new FileInputStream(file);
+						
+						byte[] buff = new byte[100];
+						int length = 0;
+						while ((length = input.read(buff, 0, 100)) > 0) {
+							baos.write(buff, 0, length);
+						}
+						
 						in2b = baos.toByteArray();
+						baos.flush();
 						baos.close();
+						input.close();
 
 						omdao = new OrderMasterDAOImpl();
 						OrderMasterVO qrcodeOM = omdao.findOrderMasterByPK(QRcofeordID);
 						qrcodeOM.setQrcode(in2b);
-
+						System.out.println(in2b);
+						
 						omdao.addQRCode(qrcodeOM);
 
 					} catch (WriterException e) {
@@ -821,10 +837,10 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 				obj.setItemName(prodName); // 商品名稱
-				obj.setReturnURL(" https://b568-1-164-226-50.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+				obj.setReturnURL("https://a5b5-119-77-246-24.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
-				obj.setClientBackURL(req.getContextPath() + "/front_end/order/listAllOrderForRent.jsp");
+				obj.setClientBackURL("http://192.168.100.4:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");
 
 				String form = all.aioCheckOut(obj, null);
 
@@ -856,53 +872,7 @@ public class OrderMasterServlet extends HttpServlet {
 
 			}
 		}
-//
-//		if ("get_Status_Display".equals(action)) {
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			Integer ordStatus = new Integer(req.getParameter("ordStatus"));
-//
-//			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-//			List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
-//
-//			for (OrderMasterVO oms : omVO) {
-//
-//				req.setAttribute("OrderMasterVO", oms);
-//				String url = "/front_end/order/listStatusOrderMaster.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-//				return;
-//			}
-//		}
-//
-//		if ("get_Status_Display_ForRent".equals(action)) {
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//			
-//			try {
-//				Integer ordStatus = new Integer(req.getParameter("ordStatus"));
-//				System.out.println(ordStatus);
-//				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-//				List<OrderMasterVO> omVO = omdao.findOrderMasterByStatus(ordStatus);
-//				
-//			if (omVO == null) {
-//				errorMsgs.add("查無資料");
-//			}
-//				
-//				for (OrderMasterVO oms : omVO) {
-//					req.setAttribute("OrderMasterVO", oms);
-//					String url = "/front_end/order/listStatusOrderMasterForRent.jsp";
-//					RequestDispatcher successView = req.getRequestDispatcher(url);
-//					successView.forward(req, res);
-//					return;
-//				}
-//				
-//			}catch(Exception e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
+
 
 		if ("get_Status_Display_Manager".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();

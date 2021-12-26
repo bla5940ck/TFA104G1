@@ -145,8 +145,8 @@
 		}
 		
 		.cart-img{
-			height: 120px;
-			width: 120px;
+			height: 30%;
+			width: 30%;
 			
 		}
 		</style>

@@ -136,7 +136,7 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 90%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
@@ -349,7 +349,8 @@
 													<td><a id="prodName" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=olVO.getProdID()%>"><%=prodVO.getProdName()%></a></td>
 													<td><%=memVO.getName()%></td>
 													<td><p id="prodPrice"><%=olVO.getProdPrice()%></p></td>
-													<td><fmt:formatDate value="<%=omVO.getOrdDate()%>"pattern="yyyy-MM-dd" /></td>
+													<td><fmt:formatDate value="<%=omVO.getOrdDate()%>" pattern="yyyy-MM-dd" /></td>
+<%-- 													<td><%=omVO.getOrdDate()%></td> --%>
 													<td><p id="rentDays"><%=omVO.getRentDays()%></p></td>
 													<td><p id="total"><%=olVO.getProdPrice() * omVO.getRentDays()%></p></td>
 												</tbody>
@@ -470,10 +471,6 @@ test.change(function () {
 });
 
 console.log($("#leaseRank").val());
-
-
-
-
 
 	var shipDate = $("#shipDate");
 	var getShipDate = $("#getShipDate");

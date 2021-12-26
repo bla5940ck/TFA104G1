@@ -183,7 +183,7 @@
 					<b>選擇訂單編號:</b> 
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.leaseID == id && OrderMaster.payID == 2}">
+							<c:if test="${OrderMasterVO.leaseID == id && OrderMasterVO.payID == 2 && OrderMasterVO.shipStatus == 0}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>
@@ -192,12 +192,12 @@
 					<input type="submit" value="送出">
 				</FORM>
 
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					<b>輸入訂單編號 (如1):</b> 
-					<input type="text" name="ordID"> 
-					<input type="hidden" name="action" value="getOne_For_Display"> 
-					<input type="submit" value="送出">
-				</FORM>
+<%-- 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
+<!-- 					<b>輸入訂單編號 (如1):</b>  -->
+<!-- 					<input type="text" name="ordID">  -->
+<!-- 					<input type="hidden" name="action" value="getOne_For_Display">  -->
+<!-- 					<input type="submit" value="送出"> -->
+<!-- 				</FORM> -->
 			</div>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>

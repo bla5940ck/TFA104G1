@@ -6,7 +6,6 @@
 <%@ page import="com.order.model.*"%>
 
 <%
-	out.print("承租者評價頁面");
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 	// 	OrderListVO olVO = new OrderListVO();
@@ -136,7 +135,7 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 90%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;

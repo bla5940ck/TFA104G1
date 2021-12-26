@@ -216,7 +216,7 @@
 				</c:forEach>
 				</table>
 				<input type="submit" value="提出問題">
-				<center><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">回上頁</a></center>
+				<center><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">回上頁</a></center>
 			</FORM>
 <%-- 			<%@ include file="page2.file"%> --%>
 		</main>
