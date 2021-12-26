@@ -140,6 +140,16 @@ btn1, btn2, btn3, btn4 {
 									});
 								</script>
 	</c:if>
+	
+	<c:if test="${b==null}">
+		<script>
+								swal({
+								  title: "挑戰高分獲取更多折價券吧！",
+								  text: "點擊畫面左邊'遊戲開始'即可開始挑戰",
+								  icon: "info",
+								  button: "確認",});
+								</script>
+	</c:if>
 
 	<nav>
 		<h1></h1>
@@ -433,7 +443,11 @@ btn1, btn2, btn3, btn4 {
 							 * Window Load
 							 */
 // 							window.onload = function() {
-// 							  var snake = new Game.Snake('stage', {fps: 100, size: 4});
+// 								swal({
+// 									  title: "挑戰高分獲取更多折價券吧！",
+// 									  text: "點擊畫面左邊'遊戲開始'即可開始挑戰",
+// 									  icon: "info",
+// 									  button: "確認",});
 // 							};
 							
 							// 遊戲開始					
@@ -523,7 +537,7 @@ btn1, btn2, btn3, btn4 {
 								type="hidden" name="member_id" value="<%=memID%>"> <input
 								type="hidden" name="category_id" value="1"> <input
 								type="hidden" name="coupon_id" value="2"> <input
-								type="hidden" name="coupon_name" value="滿2分折10元"> <input
+								type="hidden" name="coupon_name" value="滿3分折10元"> <input
 								type="hidden" name="discount" value="10"> <input
 								type="hidden" name="status" value="0"> <input
 								type="hidden" name="start_date" value=""> <input
@@ -543,7 +557,7 @@ btn1, btn2, btn3, btn4 {
 								type="hidden" name="member_id" value="<%=memID%>"> <input
 								type="hidden" name="category_id" value="1"> <input
 								type="hidden" name="coupon_id" value="3"> <input
-								type="hidden" name="coupon_name" value="滿100分折20元"> <input
+								type="hidden" name="coupon_name" value="滿5分折20元"> <input
 								type="hidden" name="discount" value="20"> <input
 								type="hidden" name="status" value="0"> <input
 								type="hidden" name="start_date" value=""> <input
