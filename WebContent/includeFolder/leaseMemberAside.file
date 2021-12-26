@@ -6,11 +6,11 @@
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
-  MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
-  pageContext.setAttribute("memberVO",memberVO);
+  MemberVO memberVO1 = (MemberVO) session.getAttribute("MemberVO"); 
+  pageContext.setAttribute("memberVO1",memberVO1);
 %>
 
-<c:set var="img" value="${memberVO.pic}" />
+<c:set var="img" value="${memberVO1.pic}" />
 
 <%
 byte b[] = (byte[]) pageContext.getAttribute("img");
@@ -108,7 +108,7 @@ if (null == pic || "".equals(pic))
 				<ul class="nav_list" style="list-style-type:none;">
 					<i class="mh-avatar-wrap">
 					<c:choose>
-					<c:when test="${fn:length(memberVO.pic)!=0 and memberVO.pic!=null}">
+					<c:when test="${fn:length(memberVO1.pic)!=0 and memberVO1.pic!=null}">
 			
 						<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
 						</c:when>
@@ -121,16 +121,14 @@ if (null == pic || "".equals(pic))
 					<h3 style="background-color:yellow;">出租專區<br><span class="nav-title">${memberVO.loginId}</span></center></h3>
 					<h5>
 						<a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp"><i class="tou"></i>商品管理</a>
+						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp"><i class="tou"></i>我的訂單</a>
+						<a href="<%=request.getContextPath()%>/front_end/order/listOrderQRcode.jsp"><i class="tou"></i>待面交訂單</a>
+						<a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp"><i class="tou"></i>歷史訂單</a> 
 						<a href=""><svg class="nav-icon nav-icon-notification" width="22"
 									height="22" viewBox="0 0 24 24" data-icon="ec-notification">
 								<path
 									d="M21.383 17.817c.262.205.375.36.375.36.15.192.242.433.242.696 0 .622-.505 1.127-1.128 1.127-.03 0-.062-.003-.093-.005H3.22c-.03.002-.06.005-.09.005C2.505 20 2 19.495 2 18.873c0-.263.09-.504.242-.696 0 0 .114-.155.376-.36.075-.06.677-.562 1.163-1.44.095-.172.374-.777.418-.9.12-.332.204-.734.333-1.31.308-1.977.287-4.796.287-4.796l-.002-.19c0-3.45 2.437-6.328 5.685-7.02V2c0-.83.672-1.5 1.5-1.5s1.5.67 1.5 1.5v.16c3.25.69 5.688 3.57 5.688 7.02 0 .064-.002.127-.003.19 0 .002-.022 2.82.284 4.797.128.576.212.98.332 1.31.044.123.323.728.418.9.486.878 1.088 1.38 1.163 1.44zM12 17.995h6.875c-.137-.198-.274-.415-.405-.652-.13-.235-.458-.936-.548-1.184-.15-.415-.244-.834-.362-1.364l-.043-.19-.014-.067-.01-.067c-.328-2.113-.31-4.996-.308-5.117V9.327c.002-.05.003-.097.003-.146 0-2.854-2.326-5.177-5.187-5.18-2.858.003-5.185 2.326-5.185 5.18 0 .046 0 .092.002.138l.023.857-.03.03c-.016 1.058-.08 2.832-.302 4.268l-.01.066-.014.065-.043.19c-.118.53-.21.95-.362 1.365-.09.247-.417.948-.547 1.183-.13.238-.268.455-.405.652H12zM14.5 21c0 1.38-1.12 2.5-2.5 2.5S9.5 22.38 9.5 21h5z"></path>
 								</svg><i class="tou"></i>通知</a>
-						<a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp"><i class="tou"></i>地址 </a>
-						<a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp"><i class="tou"></i>更改密碼 </a>
-						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp"><i class="tou"></i>訂單資訊</a>
-						<a href="<%=request.getContextPath()%>/front_end/order/listOrderQRcode.jsp"><i class="tou"></i>面交訂單</a>
-						<a href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp"><i class="tou"></i>訂單評價</a> 
 						<a href="<%=request.getContextPath()%>/front_end/member/RentAccountNotice.jsp"><i class="tou"></i>款項通知</a>
 						<a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp"><i class="tou"></i>問題回報查詢</a>
 					</h5>					

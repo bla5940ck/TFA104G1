@@ -1,3 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="com.product.model.*"%>
+<%@page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,7 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
-      .container {
+      .container1 {
         padding-top: 30px;
         padding-bottom: 30px;
       }
@@ -46,7 +54,111 @@
 
   </head>
   <body>
+  <link href="<%=request.getContextPath()%>/includeFolder/css/font-awesome.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/bootstrap.css" rel="stylesheet">
+  <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+  <!-- Product view slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/jquery.simpleLens.css">
+  <!-- slick slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/slick.css">
+  <!-- price picker slider -->
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/includeFolder/css/nouislider.css">
+  <!-- Theme color -->
+  <link id="switcher" href="<%=request.getContextPath()%>/includeFolder/css/theme-color/dark-navy-theme.css" rel="stylesheet">
+  <!-- <link id="switcher" href="<%=request.getContextPath()%>/includeFolder/css/theme-color/bridge-theme.css" rel="stylesheet"> -->
+  <!-- Top Slider CSS -->
+  <link href="<%=request.getContextPath()%>/includeFolder/css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
 
+  <!-- Main style sheet -->	
+ <link href="<%=request.getContextPath()%>/includeFolder/css/style copy.css" rel="stylesheet">
+
+
+  <!-- Google Font -->
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  </div>
+  <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+  <!-- END SCROLL TOP BUTTON -->
+  <!-- Start header section -->
+  <header id="aa-header">
+    <!-- start header top  -->
+    <div class="aa-header-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-top-area">
+              <!-- start header top left -->
+              <div class="aa-header-top-left">
+                <p style="font-size: 20px; margin:0;font-weight:normal;">JoyLease</p>
+              </div>
+              <!-- Navbar -->
+              <div class="aa-header-top-right">
+       
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header top  -->
+    <!-- start header bottom  -->
+    <div class="aa-header-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="aa-header-bottom-area">
+              <div class="aa-logo">
+                  <a href="<%=request.getContextPath()%>/front_end/product/homePage.jsp">
+                  <img src="<%=request.getContextPath()%>/includeFolder/img/logo_org_noframe_191561.png" alt="">
+                </a>
+              </div>
+              <!--  cart box -->
+            <%@ include file="/includeFolder/cartInclude.file" %> 
+              <!-- / cart box -->
+              <!-- search box -->
+              <div class="aa-search-box">
+                 <form action="<%=path %>/prod/ProdServlet" method="post">
+                <input type="text" name="searchCot" id="" placeholder="健身環大冒險">
+                  <input type="hidden" name="action" value="search">
+                  <button type="submit"><span class="fa fa-search"></span></button>
+                </form>
+              </div>
+              <!-- / search box -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- / header bottom  -->
+ 
+  <section id="menu">
+    <div class="container">
+      <div class="menu-area">
+        <!-- Navbar -->
+        <div class="navbar navbar-default" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+         
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+  
     <!-- Google Tag Manager (noscript)-->
     <noscript>
       <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
@@ -54,13 +166,15 @@
 
     
 
-    <div id="app" class="container">
+    <div id="app" class="container1">
 
       <!-- 找目前地點 -->
       <section class="row">
         <div class="col google-map">
           <form action="/TFA104G1/MapServelt">
+          <br><br>
           商品搜尋:
+          
           <input type="hidden" name="action" value="search">
           <input type="text" class="search" name=search>
           <input class ="search-btn"type="submit">
