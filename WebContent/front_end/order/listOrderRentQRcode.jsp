@@ -212,20 +212,20 @@
 				</ul>
 			</c:if>
 
-			<table id="table-1">
-				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMasterForRent.jsp">全部</a></td>
-							<td><button name="ordStatus" value="0">已成立</button></td>
-							<td><button name="ordStatus" value="1">待歸還</button></td>
-							<td><button name="ordStatus" value="2">已完成</button></td>
-							<td><button name="ordStatus" value="9">已取消</button></td>
-						</tr>
-						<input type="hidden" name="action" value="get_Status_Display_ForRent">
-					</FORM>
-				</div>
-			</table>
+<!-- 			<table id="table-1"> -->
+<!-- 				<div> -->
+<%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
+<!-- 						<tr> -->
+<%-- 							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMasterForRent.jsp">全部</a></td> --%>
+<!-- 							<td><button name="ordStatus" value="0">已成立</button></td> -->
+<!-- 							<td><button name="ordStatus" value="1">待歸還</button></td> -->
+<!-- 							<td><button name="ordStatus" value="2">已完成</button></td> -->
+<!-- 							<td><button name="ordStatus" value="9">已取消</button></td> -->
+<!-- 						</tr> -->
+<!-- 						<input type="hidden" name="action" value="get_Status_Display_ForRent"> -->
+<!-- 					</FORM> -->
+<!-- 				</div> -->
+<!-- 			</table> -->
 
 			<table id="table-1">
 				<tr>
