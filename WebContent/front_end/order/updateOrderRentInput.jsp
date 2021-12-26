@@ -330,7 +330,7 @@
 				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
 				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
 <%-- 				<center><%@ include file="/includeFolder/comment.file" %></center> --%>
-				<center><input type="submit" value="確認更新"></center>
+				<center><input class="aa-browse-btn" type="submit" value="確認更新"></center>
 			</main>
 		</div>
 	<%@ include file="/includeFolder/footer2.file" %>

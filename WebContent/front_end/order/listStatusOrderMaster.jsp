@@ -186,7 +186,7 @@
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
+					<input class="aa-browse-btn" type="submit" value="送出">
 					</h5> 
 				</FORM>
 
@@ -214,17 +214,15 @@
 				</ul>
 			</c:if>
 			<table id="table-1">
-<!-- 				<div> -->
-<%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
+				<div>
 						<tr>
-							<td><a class="status" href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
-							<td><a class="status" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=0">已成立</a></td>
-							<td><a class="status" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=1">待歸還</a></td>
-							<td><a class="status" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=2">已完成</a></td>
-							<td><a class="status" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=9">已取消</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=0">已成立</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=1">待歸還</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=2">已完成</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=9">已取消</a></td>
 						</tr>
-<!-- 						<input type="hidden" name="action" value="get_Status_Display"> -->
-<!-- 					</FORM> -->
+
 				</div>
 			</table>
 			<table id="table-1">
@@ -341,7 +339,7 @@
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="查看明細"> 
+										<input class="aa-browse-btn" type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 <%-- 										<input type="hidden" name="listID" value="${olVO.listID}">  --%>
 										<input type="hidden" name="action" value="getlist_For_Display">

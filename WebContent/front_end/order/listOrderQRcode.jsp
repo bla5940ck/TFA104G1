@@ -189,7 +189,7 @@
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
+					<input class="aa-browse-btn" type="submit" value="送出">
 				</FORM>
 
 <%-- 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
@@ -340,7 +340,8 @@
 								<td>${omVO.ordPrice}</td>
 								<td>
 									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode"style="margin-bottom: 0px;">
-										<button><a href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">開始面交</a></button> 
+<%-- 										<button><a href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">開始面交</a></button>  --%>
+										<a class="aa-browse-btn" type="submit" href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">面交</a>
 										<input type="hidden" name="ordID" value="${omVO.ordID}">
 										<input type="hidden" name="memID" value=<%=memID%>>
 										<input type="hidden" name="action" value="toQRcode">
@@ -350,7 +351,7 @@
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="查看明細"> 
+										<input class="aa-browse-btn" type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}">
 										<input type="hidden" name="action" value="getlist_For_Rent">
 									</FORM>

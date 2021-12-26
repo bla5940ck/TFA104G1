@@ -199,7 +199,7 @@
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
+					<input class="aa-browse-btn" type="submit" value="送出">
 					</h5>
 				</FORM>				
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
@@ -224,7 +224,7 @@
 					</select>
 				
 					<input type="hidden" name="action" value="get_Date_Display"> 
-					<input type="submit" value="送出">
+					<input class="aa-browse-btn" type="submit" value="送出">
 				</FORM>
 				</h5>
 			</div>
@@ -384,7 +384,7 @@
 								<td>
 									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="狀態修改"> 
+										<input class="aa-browse-btn" type="submit" value="狀態修改"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}">
 										<%-- 								<input type="hidden" name="listID" value="${omVO.ordID}">  --%>
 										<input type="hidden" name="action" value="getOne_For_Update">
@@ -394,7 +394,7 @@
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="查看明細"> 
+										<input class="aa-browse-btn" type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 										<input type="hidden" name="action" value="getlist_For_Display">
 									</FORM>
