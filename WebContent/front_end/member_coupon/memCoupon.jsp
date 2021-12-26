@@ -12,7 +12,7 @@
 
 <html>
 <head>
-<title>所有訂單資料 - listAllOrderMaster.jsp</title>
+<title>我的折價券</title>
 <style>
 body {
 	margin: 0;
@@ -60,10 +60,9 @@ main.main {
 }
 
 table {
-	width: 90%;
+	width: 50%;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	font-size: 12px;
 }
 
 table, th, td {
@@ -71,8 +70,9 @@ table, th, td {
 }
 
 th, td {
+	height: 50px;
 	padding: 5px;
-	text-align: left;
+	text-align: center;
 }
 </style>
 
@@ -95,12 +95,10 @@ th, td {
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
 
-
-
-
-
-						<center><h3>我的折價券</h3></center>
-
+<br>
+<br>
+						<center><h2>我的折價券</h2>
+<br>
 
 			<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
@@ -132,8 +130,8 @@ th, td {
 <%-- 						<td>${memcouponVO.category_id}</td> --%>
 <%-- 						<td>${memcouponVO.coupon_id}</td> --%>
 						<td>${memcouponVO.coupon_name}</td>
-						<td>${Math.round(memcouponVO.discount)}</td>
-						<td>${memcouponVO.status}</td>
+						<td>${Math.round(memcouponVO.discount)}元</td>
+						<td>${(memcouponVO.status==0)?'未使用':'已使用'}</td>
 <%-- 						<td>${memcouponVO.start_date}</td> --%>
 <%-- 						<td>${memcouponVO.end_date}</td> --%>
 <!-- 						<td> -->
@@ -149,7 +147,14 @@ th, td {
 				</c:forEach>
 			</table>
 
-
+							<br> <br>
+							
+								<a class="aa-browse-btn"
+									href="/TFA104G1/front_end/product/homePage.jsp"><span
+									class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
+							
+							<br> <br>
+</center>
 	</div>
 	<!-- 	<footer class="footer"> footer區域 </footer> -->
 	

@@ -59,67 +59,126 @@
 <head>
 <title>所有訂單資料 - listAllOrderMaster.jsp</title>
 <style>
-body {
-	margin: 0;
-	padding: 10px;
-}
-
-img {
-	max-width: 100%;
-}
-
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
-
-/*-------------------aside區域------------------- */
-aside.aside {
-	width: 150px;
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-	text-align: center;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: calc(100% - 200px);
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-table {
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font-size: 12px;
-}
-
-table, th, td {
-	border: 1px solid lightgrey;
-}
-
-th, td {
-	padding: 5px;
-	text-align: left;
-}
-</style>
+		* {
+			box-sizing: border-box;
+			text-decoration: none;
+			list-style: none;
+		}
+		
+		body {
+			margin: 0;
+			padding: 0px;
+		}
+		
+		img {
+			max-width: 100%;
+		}
+		
+		header.header {
+			background-color: #ddd;
+			width: 100%;
+			margin: 0 auto 0px auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			header.header {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			header.header {
+				width: 100%;
+			}
+		}
+		
+		div.main_content {
+			width: 100%;
+			margin: 0 auto;
+			font-size: 0;
+			/*   border:1px solid red; */
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			div.main_content {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			div.main_content {
+				width: 100%;
+			}
+		}
+		/*-------------------aside區域------------------- */
+		aside.aside {
+			
+			width: 200px;
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
+		}
+		
+		/*--------------------main區域-------------------- */
+		main.main {
+			background-color: white;
+			width: calc(100% - 200px - 10px);
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			border: 1px solid white;
+			padding: 0px;
+		}
+		
+		@media ( max-width : 575.98px) {
+			aside.aside, main.main {
+				display: block;
+			}
+			aside.aside {
+				width: 100%;
+				margin: 0 0 10px 0;
+			}
+			main.main {
+				width: 100%;
+			}
+		}
+		
+		footer.footer {
+			background-color: #ddd;
+			width: 100%;
+			margin: 10px auto 0 auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			footer.footer {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			footer.footer {
+				width: 100%;
+			}
+		}
+		
+		/*--------------------table區域-------------------- */
+		table {
+			width: 100%;
+			background-color: white;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		
+		table, th, td {
+			border: 1px solid #CCCCFF;
+		}
+		</style>
 
 </head>
 <body bgcolor='white'>
@@ -127,10 +186,11 @@ th, td {
 	<div class="main_content">
 	<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">
+		<h3>訂單資訊</h3>
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					<b>選擇訂單編號:</b> 
+					<h5>選擇訂單編號: 
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
 							<c:if test="${OrderMasterVO.leaseID == id}">
@@ -139,18 +199,11 @@ th, td {
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
-				</FORM>
-
+					<input class="aa-browse-btn" type="submit" value="送出">
+					</h5>
+				</FORM>				
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					<b>輸入訂單編號 (如1):</b> 
-					<input type="text" name="ordID"> 
-					<input type="hidden" name="action" value="getOne_For_Display"> 
-					<input type="submit" value="送出">
-				</FORM>
-				
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					<b>依月份查詢 :</b> 
+					<h5>依月份查詢 : 
 					<select  name="month">
 					<option value="1">1月</option>
 					<option value="2">2月</option>
@@ -171,8 +224,9 @@ th, td {
 					</select>
 				
 					<input type="hidden" name="action" value="get_Date_Display"> 
-					<input type="submit" value="送出">
+					<input class="aa-browse-btn" type="submit" value="送出">
 				</FORM>
+				</h5>
 			</div>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -185,16 +239,16 @@ th, td {
 
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
+<%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
 						<tr>
 							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a></td>
-							<td><button name="ordStatus" value="0">已成立</button></td>
-							<td><button name="ordStatus" value="1">待歸還</button></td>
-							<td><button name="ordStatus" value="2">已完成</button></td>
-							<td><button name="ordStatus" value="9">已取消</button></td>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=0">已成立</a></td>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=1">待歸還</a></td>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=2">已完成</a></td>
+							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=9">已取消</a></td>
 						</tr>
-						<input type="hidden" name="action" value="get_Status_Display">
-					</FORM>
+<!-- 						<input type="hidden" name="action" value="get_Status_Display"> -->
+<!-- 					</FORM> -->
 				</div>
 			</table>
 
@@ -330,7 +384,7 @@ th, td {
 								<td>
 									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="狀態修改"> 
+										<input class="aa-browse-btn" type="submit" value="狀態修改"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}">
 										<%-- 								<input type="hidden" name="listID" value="${omVO.ordID}">  --%>
 										<input type="hidden" name="action" value="getOne_For_Update">
@@ -340,7 +394,7 @@ th, td {
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/OrderListServlet"
 										style="margin-bottom: 0px;">
-										<input type="submit" value="查看明細"> 
+										<input class="aa-browse-btn" type="submit" value="查看明細"> 
 										<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 										<input type="hidden" name="action" value="getlist_For_Display">
 									</FORM>
