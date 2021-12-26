@@ -38,13 +38,6 @@ public class ECreturn extends HttpServlet {
 //			System.out.println(nextElement);
 //
 //		}
-//		System.out.println("=========================");
-//		System.out.println(req.getParameter("MerchantTradeNo"));
-//		System.out.println(req.getParameter("RtnMsg"));
-//		System.out.println(req.getParameter("PaymentDate"));
-//		System.out.println(req.getParameter("RtnCode"));
-//		System.out.println(req.getParameter("CheckMacValue"));
-//		System.out.println("======================================");
 
 		String paymentDate = req.getParameter("PaymentDate");
 		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");

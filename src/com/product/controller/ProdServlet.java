@@ -463,10 +463,10 @@ public class ProdServlet extends HttpServlet {
 					picAmount++;
 			}
 
+			jedis.close();
 			req.setAttribute("picAmount", picAmount);
 			req.setAttribute("product", product);
 			req.setAttribute("prodID", prodID);
-			jedis.close();
 //			res.sendRedirect(req.getContextPath()+"/front_end/product/showProd.jsp");
 			req.getRequestDispatcher("/front_end/product/showProd.jsp").forward(req, res);
 		}
