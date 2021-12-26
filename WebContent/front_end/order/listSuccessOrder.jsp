@@ -90,7 +90,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			
+			height:650px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -161,6 +161,11 @@
 			width: 120px;
 			
 		}
+		.dateBtn{
+		    background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
 		</style>
 </head>
 
@@ -185,7 +190,7 @@
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
 					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
-							<input class="aa-browse-btn" type="button" class="dateBtn" value="確認">
+							<input type="button" class="dateBtn" value="確認">
 						     <input type="hidden" name="action" value="get_date_forLease_order">
 				</FORM>
 			</div>

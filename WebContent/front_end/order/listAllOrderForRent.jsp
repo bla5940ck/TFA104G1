@@ -208,11 +208,11 @@
 				<div>
 <%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
 						<tr>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">全部</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=0">已成立</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=1">待歸還</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=2">已完成</a></td>
-							<td><a href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=9">已取消</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">全部</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=0">已成立</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=1">待歸還</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=2">已完成</a></td>
+							<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMasterForRent.jsp?ordStatus=9">已取消</a></td>
 						</tr>
 <!-- 						<input type="hidden" name="action" value="get_Status_Display_ForRent"> -->
 <!-- 					</FORM> -->
