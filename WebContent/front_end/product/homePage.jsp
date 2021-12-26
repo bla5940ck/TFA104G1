@@ -159,10 +159,11 @@
   </section>
   <!-- / Promo section -->
   <!-- Products section -->
-  <center><FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/getCoupon/getcoupon.do" style="margin-bottom: 0px;">
-			     <input type="image" src="<%=request.getContextPath()%>/includeFolder/img/coupon_2.jpg">
-			     <input type="hidden" name="amount"  value="0">
-			     <input type="hidden" name="action"	value="getAmount"></FORM></center>
+   <center>
+	 <a href="<%=request.getContextPath()%>/front_end/getCoupon/getCoupon.jsp">
+	<img src="<%=request.getContextPath()%>/includeFolder/img/coupon_2.jpg"">
+	</a>
+ </center>
   <section id="aa-product">
     <div class="container">
       <div class="row">

@@ -327,21 +327,27 @@ btn1, btn2, btn3, btn4 {
 // 							    	return;
 // 							    }
 							    
-							    if (this.collision(nx, ny) == true && snake.stage.score > 199) {
+							    if (this.collision(nx, ny) == true && snake.stage.score > 99) {
 							    	console.log("結束了");
 									document.getElementById("btn4").disabled = false
+// 									document.getElementById("btn3").disabled = false
+// 									document.getElementById("btn2").disabled = false
+// 									document.getElementById("btn1").disabled = false
 									return;
 							    }
 							    
-							 	if (this.collision(nx, ny) == true && snake.stage.score > 99) {
+							 	if (this.collision(nx, ny) == true && snake.stage.score > 4) {
 							    	console.log("結束了");
 									document.getElementById("btn3").disabled = false
+// 									document.getElementById("btn2").disabled = false
+// 									document.getElementById("btn1").disabled = false
 									return;
 							    }
 							    
-							     if (this.collision(nx, ny) == true && snake.stage.score > 1) {
+							     if (this.collision(nx, ny) == true && snake.stage.score > 2) {
 							    	console.log("結束了");
 									document.getElementById("btn2").disabled = false
+// 									document.getElementById("btn1").disabled = false
 									return;
 							    }
 							     
@@ -435,9 +441,10 @@ btn1, btn2, btn3, btn4 {
 
 								btnre.onclick = function(elementId, conf){
 									 var snake = new Game.Snake('stage', {fps: 100, size: 4});
+									 btnre.onclick = null;
 								};
-							
-							
+							 
+							 
 </script>
 		<h1></h1>
 		<center>
@@ -506,7 +513,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿2分</td>
+					<td>滿3分</td>
 					<td>不錯喔</td>
 					<td>折10元</td>
 					<td>
@@ -526,7 +533,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿100分</td>
+					<td>滿5分</td>
 					<td>達人</td>
 					<td>折20元</td>
 					<td>
@@ -546,7 +553,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿200分</td>
+					<td>滿100分</td>
 					<td>神</td>
 					<td>折50元</td>
 					<td>
