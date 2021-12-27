@@ -101,10 +101,6 @@ a.cart-img>img {
 											orderList.add(olVO);
 									%>
 									<div id="lease-div">
-<!-- 										<label class="cart-lable" -->
-<!-- 											style="color: Navy; font-size: 30px; border-color: blue; border-style: dotted;">賣場編號: -->
-<%-- 											shop1000<%=cartVO.getLeaseID()%> <%=leaseName%> --%>
-<!-- 										</label> -->
 										<div class="table-responsive">
 											<table class="table">
 												<thead>
@@ -120,23 +116,14 @@ a.cart-img>img {
 												</thead>
 												<tbody>
 													<tr>
-														<td><a class="cart-img"
-															href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?cookie=y&prodID=<%=cartVO.getProdID()%>"><img
-																src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO.getProdID()%>"
-																alt="img"></a></td>
-														<td><a id="prodName"
-															href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO.getProdID()%>"><%=cartVO.getProdName()%></a></td>
-														<td><input type="hidden" name="prodPrice"
-															value="<%=rent%>"><%=rent%> 元</td>
-														<td><input type="hidden" name="estStart"
-															value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
-														<td><input type="hidden" name="estEnd" class="estEnd"
-															value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
-														<td><input type="hidden" name="rentDays"
-															value="<%=rentDays%>"><%=rentDays%> 天</td>
-														<td><input type="hidden" class="prodPrice"
-															name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%>
-															元</td>
+														<td><a class="cart-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?cookie=y&prodID=<%=cartVO.getProdID()%>">
+														<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=cartVO.getProdID()%>" alt="img"></a></td>
+														<td><a id="prodName" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=cartVO.getProdID()%>"><%=cartVO.getProdName()%></a></td>
+														<td><input type="hidden" name="prodPrice" value="<%=rent%>"><%=rent%> 元</td>
+														<td><input type="hidden" name="estStart" value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
+														<td><input type="hidden" name="estEnd" class="estEnd" value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
+														<td><input type="hidden" name="rentDays" value="<%=rentDays%>"><%=rentDays%> 天</td>
+														<td><input type="hidden" class="prodPrice"name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%>元</td>
 														<input type="hidden" name="rentID" value="<%=memID%>">
 														<input type="hidden" name="leaseID"	class="leaseID" value="<%=cartVO.getLeaseID()%>">
 														<input type="hidden" name="prodID"	value="<%=cartVO.getProdID()%>">
@@ -165,24 +152,21 @@ a.cart-img>img {
 															</select></td>
 														</tr>
 
-														<jsp:useBean id="daDAO"
-															class="com.member.model.DefAddressDAO" />
-														<jsp:useBean id="meDAO"
-															class="com.member.model.MemberDAO" />
+														<jsp:useBean id="daDAO" class="com.member.model.DefAddressDAO" />
+														<jsp:useBean id="meDAO" class="com.member.model.MemberDAO" />
 
 														<tr>
 															<td>取貨資訊:</td>
-															<td><select size="1" name="code711"
-																style="width: 230px">
-																				<option value=0>面交自取
-																	<c:forEach var="daVO" items="${daDAO.getAll()}">
-																		<c:choose>
-																			<c:when test="${daVO.memberId == id}">
-																				<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
-																			</c:when>
-																		</c:choose>
-																	</c:forEach>
-															</select></td>
+															<td><select size="1" name="code711" style="width: 230px">
+																<option value=0>面交自取
+																<c:forEach var="daVO" items="${daDAO.getAll()}">
+																	<c:choose>
+																		<c:when test="${daVO.memberId == id}">
+																			<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
+																		</c:when>
+																	</c:choose>
+																</c:forEach>
+																</select></td>
 														</tr>
 														<jsp:useBean id="plDAO"	class="com.promo_list.model.PromolistDAO" />
 														<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
