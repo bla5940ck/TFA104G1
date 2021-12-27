@@ -204,10 +204,12 @@ public class ProdServlet extends HttpServlet {
 			// 更新並取得剛插入的自增
 			Integer key = prodService.AddProd(cate, name, cot, rent, price, comt, prod.getPic1(), prod.getPic2(),
 					prod.getPic3(), prod.getShelfDate(),memberID);
-
-			for (int k = 0; k < labels.length; k++) {
-				jedis.rpush("prod" + key, labels[k]);
-
+			if (labels != null && labels.length != 0) {
+			
+				for (int k = 0; k < labels.length; k++) {
+				
+					jedis.rpush("prod" + key, labels[k]);
+				}
 			}
 			jedis.close();
 			ProdService prodSvc = new ProdService();
@@ -461,10 +463,10 @@ public class ProdServlet extends HttpServlet {
 					picAmount++;
 			}
 
+			jedis.close();
 			req.setAttribute("picAmount", picAmount);
 			req.setAttribute("product", product);
 			req.setAttribute("prodID", prodID);
-			jedis.close();
 //			res.sendRedirect(req.getContextPath()+"/front_end/product/showProd.jsp");
 			req.getRequestDispatcher("/front_end/product/showProd.jsp").forward(req, res);
 		}
@@ -523,7 +525,7 @@ public class ProdServlet extends HttpServlet {
 				return;
 
 			}
-			// 遞增排列 以及回傳得到的類別ID
+			// 遞減排列 以及回傳得到的類別ID
 			else if (req.getParameter("prodSelect").equals("3")) {
 				List<ProdVO> list = prodSvc.getSortDesc();
 				req.setAttribute("flag", "desc");

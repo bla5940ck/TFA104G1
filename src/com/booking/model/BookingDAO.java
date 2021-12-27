@@ -16,6 +16,11 @@ import java.util.TreeMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 public class BookingDAO implements BookingDAO_interface {
@@ -26,11 +31,12 @@ public class BookingDAO implements BookingDAO_interface {
 	private static final String DELETE = "DELETE FROM BOOKING WHERE `BK_ID` = ?;";
 	private static final String ALL = "SELECT * FROM BOOKING";
 	
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -39,7 +45,7 @@ public class BookingDAO implements BookingDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT);
 			pstmt.setInt(1,bk.getProdID());
 			pstmt.setInt(2,bk.getStatus());
@@ -66,7 +72,7 @@ public class BookingDAO implements BookingDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, bk.getStatus());
 			pstmt.setInt(2, bk.getBkID());
@@ -92,7 +98,7 @@ public class BookingDAO implements BookingDAO_interface {
 	PreparedStatement pstmt = null;
 	
 	try {
-		con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+		con = ds.getConnection();
 		pstmt = con.prepareStatement(DELETE);
 		pstmt.setInt(1, bkID);
 		pstmt.executeUpdate();
@@ -117,7 +123,7 @@ public class BookingDAO implements BookingDAO_interface {
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDDATEBYPRODID);
 			pstmt.setInt(1, prodID);
 			
@@ -154,7 +160,7 @@ public class BookingDAO implements BookingDAO_interface {
 		BookingVO bk = null;
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FINDBOOKINGBYPK);
 			pstmt.setInt(1, bkID);
 			
@@ -197,7 +203,7 @@ public class BookingDAO implements BookingDAO_interface {
 		List<BookingVO> list = new ArrayList<BookingVO>();
 		
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(ALL);
 			rs = pstmt.executeQuery();
 		
@@ -238,7 +244,7 @@ public class BookingDAO implements BookingDAO_interface {
 		Map<Integer,Integer> map = new LinkedHashMap<Integer, Integer>();
 		
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			

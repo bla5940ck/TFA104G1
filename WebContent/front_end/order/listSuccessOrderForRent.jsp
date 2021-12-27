@@ -16,8 +16,10 @@
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
 
-	List<OrderMasterVO> list2 = list.stream().filter(o -> o.getRentID() == memID)
-			.filter(o -> o.getOrdStatus() == 2).collect(Collectors.toList());
+	List<OrderMasterVO> list2 = 
+						list.stream().filter(o -> o.getRentID() == memID)
+							.filter(o -> o.getOrdStatus() == 2)
+								.collect(Collectors.toList());
 
 	if (request.getAttribute("list") != null) {
 		list2 = (List) request.getAttribute("list");
@@ -33,84 +35,143 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>訂單狀態查詢</title>
+<title>歷史訂單</title>
 <style>
-body {
-	margin: 0;
-	padding: 10px;
-}
-
-img {
-	max-width: 100%;
-}
-
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
-
-/*-------------------aside區域------------------- */
-aside.aside {
-	width: 150px;
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-	text-align: center;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: calc(100% - 150px - 10px);
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-table {
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font-size: 12px;
-}
-
-table, th, td {
-	border: 1px solid lightgrey;
-}
-
-th, td {
-	padding: 5px;
-	text-align: left;
-}
-
-div.getTotal {
-	/* 	border: 1px solid black; */
-	text-align: right;
-	font-size: 20px;
-	padding: 0 80px 0 0;
-}
-</style>
+		* {
+			box-sizing: border-box;
+			text-decoration: none;
+			list-style: none;
+		}
+		
+		body {
+			margin: 0;
+			padding: 0px;
+		}
+		
+		img {
+			max-width: 100%;
+		}
+		
+		header.header {
+			background-color: #ddd;
+			width: 100%;
+			margin: 0 auto 0px auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			header.header {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			header.header {
+				width: 100%;
+			}
+		}
+		
+		div.main_content {
+			width: 100%;
+			margin: 0 auto;
+			font-size: 0;
+			/*   border:1px solid red; */
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			div.main_content {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			div.main_content {
+				width: 100%;
+			}
+		}
+		/*-------------------aside區域------------------- */
+		aside.aside {
+			
+			width: 200px;
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
+		}
+		
+		/*--------------------main區域-------------------- */
+		main.main {
+			background-color: white;
+			width: calc(100% - 200px - 10px);
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			border: 1px solid white;
+			padding: 0px;
+		}
+		
+		@media ( max-width : 575.98px) {
+			aside.aside, main.main {
+				display: block;
+			}
+			aside.aside {
+				width: 100%;
+				margin: 0 0 10px 0;
+			}
+			main.main {
+				width: 100%;
+			}
+		}
+		
+		footer.footer {
+			background-color: #ddd;
+			width: 100%;
+			margin: 10px auto 0 auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			footer.footer {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			footer.footer {
+				width: 100%;
+			}
+		}
+		
+		/*--------------------table區域-------------------- */
+		table {
+			width: 100%;
+			background-color: white;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		
+		table, th, td {
+			border: 1px solid #CCCCFF;
+		}
+		
+		.cart-img{
+			height: 120px;
+			width: 120px;
+			
+		}
+		</style>
 </head>
 
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
-	<div class="main_content"> 
+	<div class="main_content">
 		<%@ include file="/includeFolder/rentMemberAside.file"%>
 
 		<main class="main">
+	<h3>歷史訂單</h3>
 
 			<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
 
@@ -127,7 +188,7 @@ div.getTotal {
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
 					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
-							<input type="button" class="dateBtn" value="確認">
+							<input class="aa-browse-btn" type="button" class="dateBtn" value="確認">
 						     <input type="hidden" name="action" value="get_date_forRent_order">
 				</FORM>
 			</div>
@@ -216,7 +277,7 @@ div.getTotal {
 						<td>${omVO.ordPrice}</td>
 						<td>
 							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
-								<input type="submit" value="評價"> 
+								<input class="aa-browse-btn" type="submit" value="評價"> 
 								<input class="ordID" type="hidden" name="ordID" value="${omVO.ordID}">
 								<input class="price" type="hidden" name="price" value="${omVO.ordPrice}"> 
 								<input type="hidden" name="action" value="getRentComment_For_Display">

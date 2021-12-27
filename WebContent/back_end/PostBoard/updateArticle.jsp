@@ -4,9 +4,11 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 <%
- 	System.out.println("11111 " +request.getAttribute("pbVO"));
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
-// 	System.out.print(pbVO.getPostId());
+	System.out.println("catchyou" +request.getAttribute("pbVO"));
+	
+	
+	System.out.print(pbVO);
 %>
   
 <!DOCTYPE html>
@@ -31,7 +33,7 @@ input:read-only {
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="/includeFolder/header.file" %>
 
 <%-- 錯誤表列 --%>
 
@@ -87,7 +89,7 @@ input:read-only {
 											<div>
 												<select size="1" name="categoryId">
 													<c:forEach var="prodCategoryVO" items="${cateSvc.allCategory}">
-															<option value="${prodCategoryVO.categoryID}" ${(param.cateNo==prodCategoryVO.categoryID)? 'selected':'' } >${prodCategoryVO.categoryName}
+															<option value="${prodCategoryVO.categoryID}" ${(pbVO.categoryId==prodCategoryVO.categoryID)? 'selected':'' } >${prodCategoryVO.categoryName}
 													</c:forEach>
 												</select>
 											</div>
@@ -119,6 +121,6 @@ input:read-only {
 	<!-- / Cart view section -->
 
 </body>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </html>
 

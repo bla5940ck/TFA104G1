@@ -13,6 +13,8 @@
 <title>會員註冊 MemRegister.jsp</title>
 <script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"
 	"type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 <style>
 * {
 	box-sizing: border-box;
@@ -27,7 +29,9 @@ body {
 
 img {
 	max-width: 100%;
+	
 }
+
 
 header.header {
 	background-color: #ddd;
@@ -183,23 +187,18 @@ img.preview {
 
 </head>
 <body bgcolor='white'>
+<%@ include file="/includeFolder/header.file" %>
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>會員註冊 - MemRegister.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="<%=request.getContextPath()%>/front_end/member/Suss.jsp"><img
-						src="<%=request.getContextPath()%>/front_end/member//img/LogingPIC.jpg" width="100"
-						height="100" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<h3>會員註冊:</h3>
+<section id="aa-myaccount">
+		<div class="container">
+			<div class="row" id="row1">
+			<div class="col-md-12" id="col-md-12">
+					<div class="aa-myaccount-area" id="aa-myaccount-area">
+						<div class="row" id="row2">
+							<!--<div class="col-md-6" id="col-md-6"> -->
+								<div class="aa-myaccount-login" id="aa-myaccount-login">
+								
+	<h1>會員註冊:</h1>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -211,13 +210,11 @@ img.preview {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" enctype="multipart/form-data"
+	<FORM  class="aa-login-form" METHOD="post" enctype="multipart/form-data"
 		ACTION="<%=request.getContextPath()%>/member/MemRegServlet"
 		name="form1">
-	<%-- 	<FORM METHOD="post" enctype="multipart/form-data"
-		ACTION="<%=request.getContextPath()%>/member/MemRegServlet"
-		name="form1">--%>
-		<aside class="aside">
+
+
 
 			<label for="">請輸入姓名<span>*</span></label> 
 			<input type="text"
@@ -235,53 +232,69 @@ img.preview {
 				for="">手機號碼<span>*</span></label> <input type="text" name="phoneNum"
 				placeholder="請輸入手機號碼"> <br> 
 			<label for="">請輸入Email<span>*</span></label>
-			<input type="email" name="email" placeholder="請輸入Email"> <br>
-			<label for="">請輸入郵遞區號<span>*</span></label> 
+			<input type="text" name="email" placeholder="請輸入Email"> <br>
+		<!--	
+		<label for="">請輸入郵遞區號<span>*</span></label> 
 			<input type="text"
-				name="addNum" placeholder="請輸入郵遞區號"> <br> 
+				name="zipcodeName" placeholder="請輸入郵遞區號"> <br> 
 			<label for="">縣市行政區<span>*</span></label>
 			<input type="text" name="add" placeholder="關聯郵遞區號預設帶入"> <br>
+			  -->	
+			  <div id="twzipcode"></div> 
+			<label for="">縣市行政區<span>*</span></label>	 <br>
 			<label for="">請輸入地址<span>*</span></label> 
 			<input type="text"
 				name="address" placeholder="請輸入地址"> <br>
+				
+				 	
 				  
 				 請上傳身分證正面:
 				 <input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="idc_F"id='file_id1' name='file_name1'><br> <br> 
+		<div>
 				請上傳身分證反面:
 				<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="idc_B"id='file_id2' name='file_name2'><br> <br>
-			
-			<hr>
-			<div class="text-center">
-				<a class="small" href="ForgetPW.jsp">Forgot Password?</a>
-			</div>
-			<div class="text-center">
-				<a class="small" href="LeaseLogin.jsp">Already have an account?
-					Login!</a>
-			</div>
-			<input type="hidden" name="action" value="insert"> <input
-				type="submit" value="註冊">
-	</FORM>
-	<FORM>
-		<div>
-			<h4>圖片預覽</h4>
+		</div>
+			<div><h1>圖片預覽</h1></div>
 
 			<div id="preview1"
-				style="width: 180px; height: 120px; border: 3px #cccccc dashed;">
-				<span class="text">預覽圖</span>
+				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
+				<span class="text"style=”text-align: center;”>預覽圖 </span>
 			</div>
+			<div style="width: 20px; height: 250px; float:left; display:inline"></div>
+			
 			<div id="preview2"
-				style="width: 180px; height: 120px; border: 3px #cccccc dashed;">
-				<span class="text">預覽圖</span>
+				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
+				<span class="text"style=”text-align: center;”>預覽圖 </span>
+			</div>
+			<div style="width: 20px; height: 250px; "></div>
+			<hr>
+			<div class="text-center">
+				<a class="small" href="ForgetPW.jsp" style="color:#191561;">Forgot Password?</a>
+			</div>
+			<div class="text-center">
+				<a class="small" href="LeaseLogin.jsp" style="color:#191561;">Already have an account?
+					Login!</a>
+			</div>
+			<input   type="hidden" name="action" value="insert"> 
+			<input class="aa-browse-btn"	type="submit" value="註冊">
+	</FORM>
+	
+			
+	
+	 							</div>
+				<!--		</div> -->
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</FORM>
+	</section>
 
-	</aside>
-	<main class="main"></main>
+
 
 	<br>
 
-
+<%@ include file="/includeFolder/footer2.file" %>
 </body>
 
 
@@ -425,4 +438,17 @@ img.preview {
 
 				});
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+<script>
+$("#twzipcode").twzipcode({
+//	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+	countyName: "city", // 自訂城市 select 標籤的 name 值
+	districtName: "town" // 自訂地區 select 標籤的 name 值
+	});
+
+
+</script>
+
 </html>

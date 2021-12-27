@@ -17,17 +17,22 @@
 
 
 <body>
-<%@ include file="header2.file" %>
+<%@ include file="/includeFolder/header.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
+	Integer memberId = (Integer) session.getAttribute("id");
 	PostBoardService pbSvc = new PostBoardService();
 	PostBoardVO  pb = pbSvc.findByPrimaryKey(Integer.valueOf(request.getParameter("postId")));
 	pageContext.setAttribute("pb", pb );
 	
+	
+	
 	pbReplyVO pbrVO = (pbReplyVO) request.getAttribute("pbrVO");
 	//pbReplyService pbrSvc = new pbReplyService();
 	pageContext.setAttribute("pbr",pbrVO);
+	
+	
 	
 	
 %>
@@ -107,7 +112,7 @@
                                 <img class="media-object news-img" src="" alt="img">      
                             </div>
                             <div class="media-body">
-                             <h4 class="author-name">${pb.memberId}</h4><!--留言會員編號-->
+                             <h4 class="author-name">${pbrVO.memberId}</h4><!--留言會員編號-->
                              <span class="comments-date"></span>
                              <p style="font-size:8px;">${pb.postTime}</p>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
@@ -145,14 +150,14 @@
                   
                   <!-- blog comments form -->
                   <div id="respond">
-                    <h3 class="reply-title">留言</h3>
+                    <h3 class="reply-title">留言區</h3>
                     <form id="commentform" method="post" name="form1" 
                     	  action="<%=request.getContextPath()%>/pbReplyServlet?postId=${pb.postId}">
                       
                       <p class="comment-form-author">
 						
-                        <label for="author">會員編號<span class="required">*</span></label>
-                        <input type="text" name="memberId" value="" size="30" required="required">
+<!--                         <label for="author">會員編號<span class="required">*</span></label> -->
+                        <input type="hidden" name="memberId" value="<%=memberId%>"/>
                         
 <!--                         <label for="">留言編號<span>*</span></label> -->
 <!-- 						<input type="Text" name="replyId" value=""/> -->
@@ -199,12 +204,12 @@
                   
                   <div class="aa-sidebar-widget">
                   <div class="aa-search-box">
-                		<form action="">
-                  			<input type="text" name="" 
-                  				   action="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp" 
-                  				   size="25" placeholder="健身環大冒險" >
-                  				<button type="submit"><span class="fa fa-search"></span></button>
-                		</form>
+<!--                 		<form action=""> -->
+<!--                   			<input type="text" name=""  -->
+<%--                   				   action="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp"  --%>
+<!--                   				   size="25" placeholder="健身環大冒險" > -->
+<!--                   				<button type="submit"><span class="fa fa-search"></span></button> -->
+<!--                 		</form> -->
               	  </div>
               		
                     <h3>關鍵字</h3>
@@ -272,7 +277,7 @@
 
 
 </body>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 
 
 </html>

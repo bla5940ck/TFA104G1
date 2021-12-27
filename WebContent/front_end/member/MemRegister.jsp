@@ -13,6 +13,8 @@
 <title>會員註冊 MemRegister.jsp</title>
 <script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"
 	"type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
 <style>
 * {
 	box-sizing: border-box;
@@ -22,17 +24,19 @@
 
 body {
 	margin: 0;
-	padding: 10px;
+	padding: 0px;
 }
 
 img {
 	max-width: 100%;
+	
 }
+
 
 header.header {
 	background-color: #ddd;
 	width: 100%;
-	margin: 0 auto 10px auto;
+	margin: 0 auto 0px auto;
 	border: 1px solid #999;
 }
 
@@ -183,23 +187,18 @@ img.preview {
 
 </head>
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header.file"%>
-	<%-- -- <table id="table-1">
-		<tr>
-			<td>
-				<h3>會員註冊 - MemRegister.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="<%=request.getContextPath()%>/front_end/member/Suss.jsp"><img
-						src="<%=request.getContextPath()%>/front_end/member//img/LogingPIC.jpg" width="100"
-						height="100" border="0">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table> --%>
+<%@ include file="/includeFolder/header.file" %>
 
-	
+<section id="aa-myaccount">
+		<div class="container">
+			<div class="row" id="row1">
+			<div class="col-md-12" id="col-md-12">
+					<div class="aa-myaccount-area" id="aa-myaccount-area">
+						<div class="row" id="row2">
+							<!--<div class="col-md-6" id="col-md-6"> -->
+								<div class="aa-myaccount-login" id="aa-myaccount-login">
+								
+	<h1>會員註冊</h1>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -211,119 +210,92 @@ img.preview {
 		</ul>
 	</c:if>
 
-<section id="aa-myaccount">
-		<div class="container">
-			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
-<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
-						<div class="row" id="row2">
-							<!--<div class="col-md-6" id="col-md-6"> -->
-								<div class="aa-myaccount-login" id="aa-myaccount-login">
-								<h1>會員註冊</h1>
-
-
-	<FORM class="aa-login-form" METHOD="post" enctype="multipart/form-data"
+	<FORM  class="aa-login-form" METHOD="post" enctype="multipart/form-data"
 		ACTION="<%=request.getContextPath()%>/member/MemRegServlet"
 		name="form1">
-	<%-- 	<FORM METHOD="post" enctype="multipart/form-data"
-		ACTION="<%=request.getContextPath()%>/member/MemRegServlet"
-		name="form1">--%>
-		
 
-			<label for="">請輸入姓名<span>*</span></label> 
+
+
+			<label for="">姓名<span>*</span></label> 
 			<input type="text"
 				name="name" placeholder="請輸入姓名"> <br> 
-			<label for="">請輸入帳號<span>*</span></label>
-			<input type="text" name="loginId" placeholder="請輸入帳號"> <br>
-			<label for="">請輸入密碼<span>*</span></label> 
+			<label for="">登入帳號<span>*</span></label>
+			<input type="text" name="loginId" placeholder="請設置登入帳號"> <br>
+			<label for="">登入密碼<span>*</span></label> 
 			<input type="password"
 				name="password" placeholder="請輸入密碼"> <br> 
-			<label for="">身分證字號<span>*</span></label>
-			<input type="text" name="idcn" placeholder="請輸入身分證字號"> <br>
+			<label for="">身分證號<span>*</span></label>
+			<input type="text" name="idcn" placeholder="請輸入身分證號"> <br>
 			<label for="">生日<span>*</span></label> 
 			<input name="birthday"
 				name="birthday" id="f_date1" type="text"> <br> <label
 				for="">手機號碼<span>*</span></label> <input type="text" name="phoneNum"
-				placeholder="請輸入手機號碼"> <br>
-
-		
-			<label for="">請輸入Email<span>*</span><br></label>
-			<input type="text"  name="email" placeholder="請輸入Email"> 
-			
-			
-			<label for="">請輸入郵遞區號<span>*</span></label> 
+				placeholder="請輸入手機號碼"> <br> 
+			<label for="">請輸入Email<span>*</span></label>
+			<input type="text" name="email" placeholder="請輸入Email"> <br>
+		<!--	
+		<label for="">請輸入郵遞區號<span>*</span></label> 
 			<input type="text"
-				name="addNum" placeholder="請輸入郵遞區號">
-			
-				 <br> 
-			<div id="twzipcode"></div>
+				name="zipcodeName" placeholder="請輸入郵遞區號"> <br> 
 			<label for="">縣市行政區<span>*</span></label>
 			<input type="text" name="add" placeholder="關聯郵遞區號預設帶入"> <br>
+			  -->	
+			<label for="">縣市行政區<span>*</span></label>	 <br>
+			  <div id="twzipcode"></div> 
 			<label for="">請輸入地址<span>*</span></label> 
 			<input type="text"
 				name="address" placeholder="請輸入地址"> <br>
-			
-			
-			
-			
-			<div id="T" style="width:600px; height:auto; float:left; display:inline">
+				
+				 	
+				  
 				 請上傳身分證正面:
 				 <input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="idc_F"id='file_id1' name='file_name1'><br> <br> 
-				<div id="preview1"
-				style="text-align: center;width:300px; height:250px;border: 3px #cccccc dashed; ">
-				<span class="text" style="text-align: center;">預覽圖</span>
-				</div>
-			</div>
-			<div id="T" style="width:600px; height:auto; float:left; display:inline">
+		<div>
 				請上傳身分證反面:
 				<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="idc_B"id='file_id2' name='file_name2'><br> <br>
-				<div id="preview2" 
-				style= "text-align: center;width:300px; height:250px;  border: 3px #cccccc dashed; ">
-				<span class="text" style=”text-align: center;” >預覽圖</span>
-				</div>
-			</div>
-				
-				
-		
-	<!--  <FORM class="aa-login-form" >
-		<div>
+		</div>
+			<div><h1>圖片預覽</h1></div>
 
 			<div id="preview1"
-				style="text-align: center;width:300px; height:250px;border: 3px #cccccc dashed; ">
-				<span class="text" style="text-align: center;">預覽圖</span>
+				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
+				<span class="text"style=”text-align: center;”>預覽圖 </span>
 			</div>
-			<div id="preview2" 
-				style= "text-align: center;width:300px; height:250px;  border: 3px #cccccc dashed; ">
-				<span class="text" style=”text-align: center;” >預覽圖</span>
-			</div>
-		</div>
-	</FORM> -->
+			<div style="width: 20px; height: 250px; float:left; display:inline"></div>
 			
+			<div id="preview2"
+				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
+				<span class="text"style=”text-align: center;”>預覽圖 </span>
+			</div>
+			<div style="width: 20px; height: 250px; "></div>
 			<hr>
+			<!--  
 			<div class="text-center">
-				<a class="small" href="ForgetPW.jsp" >Forgot Password?</a>
+				<a class="small" href="ForgetPW.jsp" style="color:#191561;">Forgot Password?</a>
 			</div>
+			-->
 			<div class="text-center">
-				<a class="small" href="LeaseLogin.jsp">Already have an account?
-					Login!</a>
+				<a class="small" href="LoginForgetPW.jsp" style="color:#191561;">已經有帳號?登入!</a>
 			</div>
-			<input type="hidden" name="action" value="insert"> <input
-				type="submit" value="註冊">
+			<input   type="hidden" name="action" value="insert"> 
+			<input class="aa-browse-btn"	type="submit" value="註冊">
 	</FORM>
-</div>
-<!-- 						</div> -->
+	
+			
+	
+	 							</div>
+				<!--		</div> -->
 						</div>
 					</div>
 				</div>
 			</div>
-<!-- 		</div> -->
+		</div>
 	</section>
-	
+
 
 
 	<br>
 
-<%@ include file="/includeFolder/footer2.file"%>
+<%@ include file="/includeFolder/footer2.file" %>
 </body>
 
 
@@ -355,11 +327,7 @@ img.preview {
 </style>
  <!-- jQuery library -->
   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
--->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-<script>
-$("#twzipcode").twzipcode();
+--><script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
@@ -470,7 +438,18 @@ $("#twzipcode").twzipcode();
 					}
 
 				});
-		
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+<script>
+$("#twzipcode").twzipcode({
+//	zipcodeIntoDistrict: true, // 郵遞區號自動顯示在地區
+	css: ["city form-control", "town form-control"], // 自訂 "城市"、"地區" class 名稱 
+	countyName: "city", // 自訂城市 select 標籤的 name 值
+	districtName: "town" // 自訂地區 select 標籤的 name 值
+	});
+
 
 </script>
+
 </html>

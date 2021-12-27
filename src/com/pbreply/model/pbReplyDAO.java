@@ -14,9 +14,15 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class pbReplyDAO implements pbReplyDAOIpml {
-	String url = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT = 
 		"INSERT INTO pb_reply (post_id,member_id,reply_cont,reply_time) VALUES (?, ?, ?, ?)";
@@ -35,7 +41,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 			PreparedStatement pstmt = null;
 
 			try {
-				con = DriverManager.getConnection(url, userid, passwd);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(INSERT_STMT);
 				
 				
@@ -77,7 +83,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = DriverManager.getConnection(url, userid, passwd);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 
 				
@@ -119,7 +125,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = DriverManager.getConnection(url, userid, passwd);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(DELETE);
 
 				pstmt.setInt(1, replyId);
@@ -160,7 +166,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = DriverManager.getConnection(url, userid, passwd);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_STMT);
 
 
@@ -219,7 +225,7 @@ public class pbReplyDAO implements pbReplyDAOIpml {
 
 			try {
 
-				con = DriverManager.getConnection(url, userid, passwd);
+				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
 

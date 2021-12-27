@@ -7,7 +7,7 @@ public class DefAddressService {
 	private DefAddressDAO_interface dao;
 	
 	public DefAddressService() {
-		dao = new DefAddressJDBCDAO();
+		dao = new DefAddressDAO();
 	}
 	
 	public DefAddressVO addDefaddress(Integer memberId, Integer code711, String name711, String add711

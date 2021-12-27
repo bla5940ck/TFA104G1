@@ -9,11 +9,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class ManagerDAO implements ManagerDAO_interface {
-	public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	public static final String URL = "jdbc:mysql://localhost:3306/JoyLease?serverTimezone=Asia/Taipei";
-	public static final String USER = "root";
-	public static final String PASSWORD = "password";
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO Manager (manager_user,manager_name,manager_password,status) VALUES (?, ?, ?, ?)";
@@ -36,8 +46,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setString(1, managerVO.getManagerUser());
@@ -78,8 +87,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, managerVO.getManagerUser());
@@ -122,8 +130,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 
 		try {
 
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			
 			pstmt.setInt(1, managerID);
@@ -163,8 +170,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE_STMT);
 			
 			ps.setInt(1, managerID);
@@ -224,8 +230,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL_STMT);
 			rs = ps.executeQuery();
 			
@@ -283,8 +288,7 @@ public class ManagerDAO implements ManagerDAO_interface {
 		
 		try {
 			
-			Class.forName(DRIVER);
-			con = DriverManager.getConnection(URL,USER,PASSWORD);
+			con = ds.getConnection();
 			ps = con.prepareStatement(LOGIN);
 			
 			ps.setString(1, managerUser);

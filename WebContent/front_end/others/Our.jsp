@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<title>關於我們</title>
 <style>
 
 	input.memberId {
@@ -38,10 +38,10 @@
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
 		<br>
 		<br>
-		廖勁驊　<br>王勝平　<br>江宇晟　<br>林家祥　<br>孫浣茗　<br>林昊葳
+		<h2>廖勁驊　<br>王勝平　<br>江宇晟　<br>林家祥　<br>孫浣茗　<br>林昊葳</h2>
 		<br>
 	<br>
-	<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
+	<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a></center>
 								<br>
 	<br>
 								</div>

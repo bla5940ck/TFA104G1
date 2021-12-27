@@ -4,11 +4,11 @@
 <!DOCTYPE html>
 
 
-
+<%System.out.println("ECpage " + session.getAttribute("ordIDForEC")); %>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>綠界科技</title>
 </head>
 <body>
 ${EC}

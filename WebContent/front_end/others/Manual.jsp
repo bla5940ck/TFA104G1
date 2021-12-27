@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 </head>
-
+<title>使用說明</title>
 <style>
 
 	input.memberId {
@@ -47,9 +47,12 @@
 		<img alt="出租流程" src="img/lease.jpg">
 		<br>
 	<br>
-	<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>回首頁</a></center>
-								<br>
+		<br>
 	<br>
+	<center><a class="aa-browse-btn" href="/TFA104G1/front_end/product/homePage.jsp"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a></center>
+								<br>
+									<br>
+
 								</div>
 <!-- 						</div> -->
 						</div>

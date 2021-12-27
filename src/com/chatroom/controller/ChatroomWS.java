@@ -69,11 +69,9 @@ public class ChatroomWS  {
 		Session receiverSession = sessionsMap.get(receiver);
 		if (receiverSession != null && receiverSession.isOpen()) {
 			receiverSession.getAsyncRemote().sendText(message);
-			userSession.getAsyncRemote().sendText(message);
-			ChatroomJedisM.saveChatMessage(sender, receiver, message);
-			
 		}
-//		ChatroomJedisM.saveChatMessage(sender, receiver, message);
+		userSession.getAsyncRemote().sendText(message);
+		ChatroomJedisM.saveChatMessage(sender, receiver, message);
 		//接收方不再線上，可把訊息存於資料庫
 		System.out.println("Message received: " + message);
 	}

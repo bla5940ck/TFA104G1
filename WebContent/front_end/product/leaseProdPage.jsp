@@ -360,7 +360,7 @@ div.overlay > article{
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'
@@ -450,7 +450,7 @@ div.overlay > article{
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'
@@ -544,7 +544,7 @@ div.overlay > article{
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'

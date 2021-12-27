@@ -8,18 +8,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import util.Util;
 
 public class ProdCategoryDAO implements ProdCategory_Interface{
 		
-		static {
-			try {
-				Class.forName(Util.DRIVER);
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
+	}
 	@Override
 	public ProdCategoryVO findCategoryByPK(int id) {
 		Connection con = null;
@@ -29,7 +35,7 @@ public class ProdCategoryDAO implements ProdCategory_Interface{
 		String sql = "SELECT * FROM PRODUCT_CATEGORY WHERE CATEGORY_ID = ?";
 		try {
 			
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, id);
@@ -80,7 +86,7 @@ public class ProdCategoryDAO implements ProdCategory_Interface{
 		String sql = "SELECT * FROM PRODUCT_CATEGORY";
 		List<ProdCategoryVO> list = new ArrayList<ProdCategoryVO>();
 		try {
-			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			

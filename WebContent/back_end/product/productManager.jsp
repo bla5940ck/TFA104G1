@@ -150,6 +150,10 @@ a.aa-add-to-cart-btn {
 	height: 100%;
 	margin: 0px;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -159,14 +163,7 @@ a.aa-add-to-cart-btn {
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main">
 			
-				<tr>
-					<td>
-
-						<h4>
-							<button><a href="<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp">回首頁</a></button>
-						</h4>
-					</td>
-				</tr>
+				
 			<table id="table2">
 				<div>
 
@@ -235,7 +232,9 @@ a.aa-add-to-cart-btn {
 									</c:choose>
 
 							</span>&nbsp&nbsp&nbsp <input type="hidden" name="prodID"
-								value="${prodVO.prodID}"> <select name="prodStatus"
+								value="${prodVO.prodID}">
+								<input type="hidden" name="memberID" value="${prodVO.memberID}">
+								 <select name="prodStatus"
 								size="1" class="prodStatus">
 
 									<c:if test="${prodVO.prodStatus==0 }">
@@ -267,7 +266,7 @@ a.aa-add-to-cart-btn {
 									<c:if test="${count== 0}">
 										<td><a class=""
 											href="<%=request.getContextPath()%>/back_end/memberservice/listOneProblemMsg.jsp?prodID=${prodVO.prodID}"><img
-												style="height: 40px"
+												style="height: 20px"
 												src="https://i.pinimg.com/originals/0c/50/95/0c509522f742e45c2c505033458a4791.png"></a></td>
 										<c:set var="count" value="1" />
 									</c:if>
@@ -283,7 +282,8 @@ a.aa-add-to-cart-btn {
 
 			</FORM>
 			<%@ include file="page2.file"%>
-
+			<br>
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 
@@ -306,7 +306,11 @@ a.aa-add-to-cart-btn {
 						function() {
 
 							var that = $(this).closest('td').find('input')
-									.eq(0).val()
+									.eq(0).val();
+							var memberID =$(this).closest('td').find('input')
+							.eq(1).val();
+							console.log("m: "+memberID);
+							console.log("p "+that)
 							// 		alert("123")
 							var status = $(this).val();
 							console.log(status)
@@ -321,7 +325,8 @@ a.aa-add-to-cart-btn {
 										data : {
 											prodID : that,
 											action : "offShelf",
-											status : status
+											status : status,
+											memberID: memberID
 										},
 										success : function(data) {
 											console.log(data);
@@ -348,5 +353,11 @@ a.aa-add-to-cart-btn {
 						});
 	</script>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
 
+</script>
 </html>

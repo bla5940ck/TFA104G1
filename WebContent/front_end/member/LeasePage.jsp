@@ -23,7 +23,7 @@
 		
 		body {
 			margin: 0;
-			padding: 10px;
+			padding: 0px;
 		}
 		
 		img {
@@ -33,7 +33,7 @@
 		header.header {
 			background-color: #ddd;
 			width: 100%;
-			margin: 0 auto 10px auto;
+			margin: 0 auto 0px auto;
 			border: 1px solid #999;
 		}
 		
@@ -74,8 +74,10 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			margin-right: 10px;
-			border: 1px solid #999;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
 		}
 		
 		/*--------------------main區域-------------------- */
@@ -85,8 +87,8 @@
 			display: inline-block;
 			vertical-align: top;
 			font-size: 1rem;
-			border: 1px solid #999;
-			padding: 10px;
+			border: 1px solid white;
+			padding: 0px;
 		}
 		
 		@media ( max-width : 575.98px) {
@@ -132,10 +134,6 @@
 		table, th, td {
 			border: 1px solid #CCCCFF;
 		}
-		#nav_list2{
-			float:right;
-		}
-		
 		</style>
 	</head>
 	<body bgcolor='white'>
@@ -150,7 +148,8 @@
 					</ul>
 			</c:if>
 		<div class="main_content">
-				<aside class="aside">
+		<%@ include file="/includeFolder/rentMemberAside.file"%>
+			<%-- 	<aside class="aside">
 						<nav class="nav">
 								<div>
 									<a class="" href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">
@@ -166,9 +165,8 @@
 														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
 													</td>
 												    <td>${memberVO.loginId}</td>
-											<%-- <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> --%>
-										</div>
-									</a>
+									
+										</div>									</a>
 								</div>
 								<h1>承租專區</h1>
 								<ul class="nav_list">
@@ -191,7 +189,7 @@
 									<li><a href="<%=request.getContextPath()%>/front_end/getCoupon/getmemid.do?member_id=${id}&action=getMemberid">我的折價券</a></li>
 								</ul>
 						</nav>
-				</aside>
+				</aside> --%>
 				<main class="main">
 				
 					<%-- <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet"   name="form1">--%>
@@ -225,12 +223,12 @@
 								</tr>
 						</table>
 						
+					<input type="submit" value="儲存"class="aa-browse-btn" ></FORM>					
 					<input type="hidden" name="action" value="updateBasic">
 					<input type="hidden" name="memberId" value="${memberVO.memberId}">
 					<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="pic"id='file_id1' name='file_name1'>
-					<!--  <img src="http://www2.blogger.com/" />-->
+				
 					
-					<input type="submit" value="儲存"></FORM>					
 					<FORM>
 					<div >
 						<h4>圖片預覽</h4>

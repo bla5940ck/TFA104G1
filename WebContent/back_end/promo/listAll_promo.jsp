@@ -128,6 +128,10 @@ background-color:#FFF0AC;
 input{
 background-color:#FFF0AC;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 
 </head>
@@ -166,6 +170,24 @@ background-color:#FFF0AC;
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="promoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<!-- 			/*=====訂單狀態=====*/ -->
+
+<!-- 	var ordS = $("#ordS"); -->
+<!-- 	if ( -->
+<%-- <%=omVO.getOrdStatus()%> --%>
+<!-- 	== 0) { -->
+<!-- 		ordS.text("已成立"); -->
+<!-- 	} else if ( -->
+<%-- <%=omVO.getOrdStatus()%> --%>
+<!-- 	== 1) { -->
+<!-- 		ordS.text("待歸還"); -->
+<!-- 	} else if ( -->
+<%-- <%=omVO.getOrdStatus()%> --%>
+<!-- 	== 2) { -->
+<!-- 		ordS.text("已完成"); -->
+<!-- 	} else { -->
+<!-- 		ordS.text("已取消"); -->
+<!-- 	}; -->
 		
 		<tr>
 			<td>${promoVO.promo_id}</td>

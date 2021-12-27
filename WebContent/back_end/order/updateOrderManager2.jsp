@@ -163,6 +163,10 @@ background-color:white;
 width: 200px;
 	height: 180px;
 }
+
+button{
+background-color: #FFF0AC;
+}
 </style>
 </head>
 <body bgcolor='white'>
@@ -298,6 +302,8 @@ width: 200px;
 <%-- 				<center><button type="button" class="btn" value="確認更新"></button></center> --%>
 				<input type="submit" value="確認更新"> 
 	</FORM>
+	<br>
+<button class="back_btn">返回上一頁</button>
 			</main>
 		</div>
 
@@ -437,5 +443,12 @@ function ShowReturnDate(){
 		lr.text("尚未評分");
 	}
 	
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
 </script>
 </html>

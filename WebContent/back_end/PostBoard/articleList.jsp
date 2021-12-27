@@ -3,12 +3,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.postboard.model.*"%>
+<%@page import="java.util.stream.Collectors"%>
 
 <%
 	PostBoardService pbSvc = new PostBoardService();
 	List<PostBoardVO> list = pbSvc.getAll();
-	pageContext.setAttribute("list", list);
+	
+	Integer memberId = (Integer) session.getAttribute("id");
+	
+	System.out.println("會員編號"+memberId);
+	
+	List<PostBoardVO> list2 = list.stream()
+								.filter(p->p.getMemberId()==memberId)
+			                    .collect(Collectors.toList());
+	
+// 		if(request.getAttribute("list") !=null){
+// 			list2 = (List) request.getAttribute("list");
+// 		}
+	
+	pageContext.setAttribute("list", list2);
+	
 %>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -34,7 +51,7 @@
 </head>
 
 <body bgcolor='white'>
-<%@ include file="header2.file" %>
+<%@ include file="/includeFolder/header.file" %>
 	<%-- 錯誤表列 --%>
 	
 <%-- 	<c:if test="${not empty errorMsgs}"> --%>
@@ -61,7 +78,7 @@
                         <th></th> -->
 <!--                           <th>文章序號</th> -->
                           <th style="font-size:14px;">類別編號</th>
-<!--                           <th>發文者編號</th> -->
+                          <th style="font-size:14px;">發文者編號</th>
                           <th style="font-size:14px;">徵求標題</th>
                           <th style="font-size:14px;">徵求內容</th>
                           <th style="font-size:14px;">日期時間</th>
@@ -74,6 +91,7 @@
                       <%@ include file="page1.file"%>
 					  <c:forEach var="postBoardVO" items="${list}" begin="<%=pageIndex%>"
 			                     end="<%=pageIndex+rowsPerPage-1%>">
+<%-- 			                     <c:if test="${postBoardVO.memberId == memberId} "> --%>
                     </thead>
                       
             
@@ -82,7 +100,7 @@
                       <tr>
 <%--                         <td>${postBoardVO.postId}</td> --%>
 						<td>${postBoardVO.categoryId}</td>
-<%-- 						<td>${postBoardVO.memberId}</td> --%>
+						<td>${postBoardVO.memberId}</td>
 						<td><a href="<%=request.getContextPath()%>/back_end/PostBoard/postSingle.jsp?postId=${postBoardVO.postId}">${postBoardVO.postTitle}</a></td>
 						<td>${postBoardVO.postCont}</td>
 						<td>${postBoardVO.postTime}</td>
@@ -93,6 +111,7 @@
 	                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" style="margin-bottom: 0px;">
 		                        <input type="submit" class="aa-browse-btn" value="修改" style="font-size:14px;"/> 
 		                        <input type="hidden" class="aa-browse-btn" name="postId" value="${postBoardVO.postId}" > 
+		                        <input type="hidden" class="aa-browse-btn" name="memberId" value=<%=memberId%>> 
 								<input type="hidden" class="aa-browse-btn" name="action" value="getOne_For_Update">
 							</FORM>
 						</td>
@@ -106,6 +125,7 @@
 
                       </tr>                   
                       </tbody>
+<%--                       </c:if> --%>
                       </c:forEach>
                   </table>
                   <%@ include file="page2.file"%>
@@ -119,5 +139,5 @@
  </section>
 
 </body>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </html>

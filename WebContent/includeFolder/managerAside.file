@@ -98,7 +98,7 @@
 				<ul class="nav_list" style="list-style-type:none;">
 					<h4>
 						<a href='<%=request.getContextPath()%>/back_end/manager/select_page.jsp'><i class="tou"></i>管理者專區</a> <br> 
-						<a href='<%=request.getContextPath()%>/back_end/problemtype/select_page.jsp'><i class="tou"></i>問題處理</a> <br> 
+						<a href='<%=request.getContextPath()%>/back_end/memberservice/listAllProblemMsg.jsp'><i class="tou"></i>問題處理</a> <br> 
 						<a href='<%=request.getContextPath()%>/back_end/product/productManager.jsp'><i class="tou"></i>商品管理</a> <br>
 						<a href='<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp'><i class="tou"></i>訂單管理</a> <br> 
 						<a href='<%=request.getContextPath()%>/back_end/member/listAllMember.jsp'><i class="tou"></i>會員管理</a> <br> 

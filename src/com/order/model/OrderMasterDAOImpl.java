@@ -14,6 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import com.booking.model.BookingDAO;
 import com.booking.model.BookingVO;
 
@@ -27,7 +32,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String UPDATE = "UPDATE ORDER_MASTER SET "
 			+ "SHIP_STATUS = ?, ORD_STATUS = ?, PAY_STATUS = ?, SHIP_CODE = ?, RETURN_CODE = ?, "
 			+ "SHIP_DATE = ?, ARRIVAL_DATE = ?, RETURN_DATE = ?, RENT_RANK = ?, LEASE_RANK = ?, "
-			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
+			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ?, EST_TRF_DA = ?, TRF_STATUS = ?,PAY_DATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
 	private static final String FIND_BY_PK = "SELECT * FROM ORDER_MASTER WHERE ORD_ID = ?";
 	private static final String FIND_BY_STATUS = "SELECT * FROM ORDER_MASTER WHERE  ORD_STATUS = ? ORDER BY ORD_ID DESC";
 	private static final String GET_ALL = "SELECT * FROM ORDER_MASTER ORDER BY ORD_ID DESC";
@@ -35,14 +40,26 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	private static final String INSERT_STMT_ORDERLIST = "INSERT INTO ORDER_LIST(PROD_ID, ORD_ID, PROD_PRICE, EST_START, EST_END) VALUES (? ,?, ?, ?, ?)";
 	private static final String UPDATE_ORDERLIST = "UPDATE ORDER_LIST SET ORD_STATUS = ? WHERE LIST_ID = ? AND ORD_ID = ?";
 	private static final String UPDATE2 = "UPDATE ORDER_MASTER SET ORD_STATUS = ? WHERE ORD_ID = ?";
+	private static final String QRCODE = "UPDATE ORDER_MASTER SET QRCODE = ? WHERE ORD_ID = ?";
 
+	
 	private static final String INSERT_RENT_COMMENT = "UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String INSERT_LEASE_COMMENT = "UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 
+//	static {
+//		try {
+//			Class.forName(Util.DRIVER);
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	private static DataSource ds = null;
 	static {
 		try {
-			Class.forName(Util.DRIVER);
-		} catch (ClassNotFoundException e) {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/JoyLease");
+		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
@@ -91,6 +108,11 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				omVO.setProdPrice(rs.getInt("PROD_PRICE"));
 				omVO.setShipFee(rs.getInt("SHIP_FEE"));
 				omVO.setOrdPrice(rs.getInt("ORD_PRICE"));
+				omVO.setEstTrfDa(rs.getTimestamp("EST_TRF_DA"));
+				omVO.setTrfStatus(rs.getInt("TRF_STATUS"));
+				omVO.setPayDate(rs.getTimestamp("PAY_DATE"));
+				omVO.setQrcode(rs.getBytes("QRCODE"));
+				
 
 				list.add(omVO);
 			}
@@ -279,9 +301,19 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setString(12, orderMaster.getLeaseComt());
 			pstmt.setTimestamp(13, orderMaster.getRentComtdate());
 			pstmt.setTimestamp(14, orderMaster.getLeaseComtdate());
-			pstmt.setInt(15, orderMaster.getOrdID());
+			pstmt.setTimestamp(15, orderMaster.getEstTrfDa());
+			pstmt.setInt(16, orderMaster.getTrfStatus());
+			pstmt.setTimestamp(17, orderMaster.getPayDate());
+			pstmt.setInt(18, orderMaster.getOrdID());
+
 			pstmt.executeUpdate();
 
+//			"UPDATE ORDER_MASTER SET "
+//			+ "SHIP_STATUS = ?, ORD_STATUS = ?, PAY_STATUS = ?, SHIP_CODE = ?, RETURN_CODE = ?, "
+//			+ "SHIP_DATE = ?, ARRIVAL_DATE = ?, RETURN_DATE = ?, RENT_RANK = ?, LEASE_RANK = ?, "
+//			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ?, EST_TRF_DA = ?, TRF_STATUS = ?, PAY_DATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -347,6 +379,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				orderMasterVO.setProdPrice(rs.getInt("PROD_PRICE"));
 				orderMasterVO.setShipFee(rs.getInt("SHIP_FEE"));
 				orderMasterVO.setOrdPrice(rs.getInt("ORD_PRICE"));
+				orderMasterVO.setEstTrfDa(rs.getTimestamp("EST_TRF_DA"));
+				orderMasterVO.setTrfStatus(rs.getInt("TRF_STATUS"));
+				orderMasterVO.setPayDate(rs.getTimestamp("PAY_DATE"));
+				orderMasterVO.setQrcode(rs.getBytes("QRCODE"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -420,6 +456,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 				orderMasterVO.setProdPrice(rs.getInt("PROD_PRICE"));
 				orderMasterVO.setShipFee(rs.getInt("SHIP_FEE"));
 				orderMasterVO.setOrdPrice(rs.getInt("ORD_PRICE"));
+				orderMasterVO.setEstTrfDa(rs.getTimestamp("EST_TRF_DA"));
+				orderMasterVO.setTrfStatus(rs.getInt("TRF_STATUS"));
+				orderMasterVO.setPayDate(rs.getTimestamp("PAY_DATE"));
+				orderMasterVO.setQrcode(rs.getBytes("QRCODE"));
 				list.add(orderMasterVO);
 			}
 		} catch (SQLException e) {
@@ -573,7 +613,10 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			pstmt.setString(12, omVO.getLeaseComt());
 			pstmt.setTimestamp(13, omVO.getRentComtdate());
 			pstmt.setTimestamp(14, omVO.getLeaseComtdate());
-			pstmt.setInt(15, omVO.getOrdID());
+			pstmt.setTimestamp(15, omVO.getEstTrfDa());
+			pstmt.setInt(16, omVO.getTrfStatus());
+			pstmt.setTimestamp(17, omVO.getPayDate());
+			pstmt.setInt(18, omVO.getOrdID());
 			pstmt.executeUpdate();
 
 			int key = 0;
@@ -739,13 +782,63 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		}
 	}
 
-	public static void main(String[] args) {
-		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+	@Override
+	public void addQRCode(OrderMasterVO omVO) {
+//		"UPDATE ORDER_MASTER SET QRCODE = ? WHERE ORD_ID = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(QRCODE);
+			pstmt.setBytes(1, omVO.getQrcode());
+			pstmt.setInt(2, omVO.getOrdID());
+			pstmt.executeUpdate();
 
-		long datetime = System.currentTimeMillis();
-		Timestamp timeStamp = new Timestamp(datetime);
-		java.sql.Date date = new java.sql.Date(datetime);
-		System.out.println(timeStamp);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	
+	public static void main(String[] args) {
+		
+		
+		String a = "JL16400867310151019";
+		String substring = a.substring(a.length()-4, a.length());
+		
+		System.out.println(substring);
+		
+		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+		OrderMasterVO omVO = omdao.findOrderMasterByPK(1007);
+		System.out.println(omVO.getQrcode());
+
+		
+		
+		
+		
+		
+//		OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+//
+//		long datetime = System.currentTimeMillis();
+//		Timestamp timeStamp = new Timestamp(datetime);
+//		java.sql.Date date = new java.sql.Date(datetime);
+//		System.out.println(timeStamp);
 		
 		// 查詢某期間成功的訂單		
 		
@@ -895,7 +988,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //		omdao.updateOrderMaster(om2);
 //		
 		// 從PK找
-		OrderMasterVO om3 = omdao.findOrderMasterByPK(170);
+//		OrderMasterVO om3 = omdao.findOrderMasterByPK(170);
 //		System.out.println(om3);
 //		System.out.println(om3.getPayID() + ",");
 //		System.out.println(om3.getRentID() + ",");

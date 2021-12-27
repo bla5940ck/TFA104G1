@@ -16,7 +16,7 @@
 
 
 <body>
-<%@ include file="header2.file" %>
+<%@ include file="/includeFolder/header.file" %>
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
@@ -67,19 +67,19 @@
                   <nav>
                     <ul class="pagination">
                       <li>
-                        <a aria-label="Previous" href="#">
-                          <span aria-hidden="true">«</span>
-                        </a>
-                      </li>
-                      <li class="active"><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                      <li>
-                        <a aria-label="Next" href="#">
-                          <span aria-hidden="true">»</span>
-                        </a>
+<!--                         <a aria-label="Previous" href="#"> -->
+<!--                           <span aria-hidden="true">«</span> -->
+<!--                         </a> -->
+<!--                       </li> -->
+<!--                       <li class="active"><a href="#">1</a></li> -->
+<!--                       <li><a href="#">2</a></li> -->
+<!--                       <li><a href="#">3</a></li> -->
+<!--                       <li><a href="#">4</a></li> -->
+<!--                       <li><a href="#">5</a></li> -->
+<!--                       <li> -->
+<!--                         <a aria-label="Next" href="#"> -->
+<!--                           <span aria-hidden="true">»</span> -->
+<!--                         </a> -->
                       </li>
                     </ul>
                   </nav>
@@ -102,12 +102,12 @@
                   </div>
                   <div class="aa-sidebar-widget">
                   	<div class="aa-search-box">
-                		<form action="">
-                  			<input type="text" name="" 
-                  				   action="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp" 
-                  				   size="25" placeholder="健身環大冒險" style= color= >
-                  				<button type="submit"><span class="fa fa-search"></span></button>
-                		</form>
+<!--                 		<form action=""> -->
+<!--                   			<input type="text" name=""  -->
+<%--                   				   action="<%=request.getContextPath()%>/back_end/PostBoard/postAll.jsp"  --%>
+<!--                   				   size="25" placeholder="健身環大冒險" style= color= > -->
+<!--                   				<button type="submit"><span class="fa fa-search"></span></button> -->
+<!--                 		</form> -->
               	  </div>
                   
                   
@@ -173,5 +173,5 @@
   <!-- / Blog Archive -->
 
 </body>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </html>

@@ -57,11 +57,20 @@ public class PostBoardServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				Integer postId = new Integer(req.getParameter("postId").trim());
+				Integer memberId = new Integer(req.getParameter("memberId").trim());
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				PostBoardService pbSvc = new PostBoardService();
-				PostBoardVO pbVO = pbSvc.findByPrimaryKey(postId);
+				List<PostBoardVO> pbVO = pbSvc.getAll();
+//				for(PostBoardVO pdid : pbVO) {
+//					if(pdid.getMemberId()== memberId) {
+//						System.out.println("取到的會員編號 :" + memberId);
+//						System.out.println(pdid.getPostId());
+//						
+//					}
+//				}
+				
+				
 				if (pbVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -96,14 +105,21 @@ public class PostBoardServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				Integer postId = new Integer(req.getParameter("postId"));
+				Integer memberId = new Integer(req.getParameter("memberId"));
+				//System.out.println("pbservlet 抓到的 : "+memberId);				
+//				System.out.println("會員編號" + memberId);
+				String postId = req.getParameter("postId");
+//				Integer postId = new Integer(req.getParameter("postId").trim());
+				//System.out.println("文章編號" + postId);
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				PostBoardService pbSvc = new PostBoardService();
-				PostBoardVO pbVO = pbSvc.findByPrimaryKey(postId);
+				PostBoardVO pbVO = pbSvc.findByPrimaryKey(Integer.valueOf(postId));
+//				System.out.println(pbVO.getMemberId());
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("pbVO", pbVO); // 資料庫取出的promoVO物件,存入req
+				req.setAttribute("pbVO", pbVO); 
+//				System.out.println("servlet "+req.getAttribute("pbVO"));
 				String url = "/back_end/PostBoard/updateArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updatearticle.jsp
 				successView.forward(req, res);
@@ -111,7 +127,7 @@ public class PostBoardServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/articleList.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/PostBoard/updateArticle.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -131,14 +147,14 @@ public class PostBoardServlet extends HttpServlet {
 				Integer postId = new Integer(req.getParameter("postId").trim());
 				System.out.println(postId);
 
-				Integer categoryId = null;
+				Integer categoryId = new Integer(req.getParameter("categoryId").trim());
 
-				try {
-					categoryId = new Integer(req.getParameter("categoryId").trim());
-				} catch (NumberFormatException e) {
-					categoryId = 0;
-					errorMsgs.add("商品類別請選擇");
-				}
+//				try {
+//					categoryId = new Integer(req.getParameter("categoryId").trim());
+//				} catch (NumberFormatException e) {
+//					categoryId = 0;
+//					errorMsgs.add("商品類別請選擇");
+//				}
 				System.out.println(categoryId);
 
 				Integer memberId = new Integer(req.getParameter("memberId").trim());
@@ -189,9 +205,6 @@ public class PostBoardServlet extends HttpServlet {
 				in.close();
 				System.out.println("buffer length: " + buf.length);
 				
-				
-								
-				
 
 				PostBoardVO pbVO = new PostBoardVO();
 				pbVO.setPostId(postId);
@@ -203,8 +216,17 @@ public class PostBoardServlet extends HttpServlet {
 				pbVO.setReplyCount(replyCount);
 				pbVO.setPic(part2Bytes(part));
 				
+				PostBoardService pbSvc = new PostBoardService();
+				PostBoardVO pbVO2 = pbSvc.findByPrimaryKey(postId);
+				//System.out.println("2: "+pbVO2.getPic().length);
+				//System.out.println("1: "+pbVO.getPic().length);
 				
-
+			    byte[] pic1 = pbVO.getPic().length == 0?  pbVO2.getPic() : pbVO.getPic();	
+			    //System.out.println(pic1.length);
+			    pbSvc.updatearticle(postId, categoryId, memberId, postTitle, postCont, 
+					postTime, replyCount,pic1);
+			    req.getSession().setAttribute("postId",postId);
+			
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("pbVO", pbVO);
@@ -214,9 +236,9 @@ public class PostBoardServlet extends HttpServlet {
 				}
 
 				/*************************** 2.開始修改資料 *****************************************/
-				PostBoardService pbSvc1 = new PostBoardService();
-				pbVO = pbSvc1.updatearticle(postId, categoryId, memberId, postTitle, postCont, postTime, replyCount,
-						part2Bytes(part));
+//				PostBoardService pbSvc1 = new PostBoardService();
+//				pbVO = pbSvc1.updatearticle(postId, categoryId, memberId, postTitle, postCont, postTime, replyCount,
+//						part2Bytes(part));
 
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("pbVO", pbVO); // 資料庫取出的postBoardVO物件,存入req

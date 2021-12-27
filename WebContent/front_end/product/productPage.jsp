@@ -249,7 +249,7 @@
                 	
                 	<c:forEach var="prodEL" items="${listSearch==null ? prodSvc1.allByTimeDesc : listSearch}" varStatus="loop">
                 	<c:if test="${prodEL.prodStatus==1 and (empty cateNo ? true :  cateNo==prodEL.categoryID)}">
-                	<c:if test="${loop.index <12 and (param.page==null or param.page==1)}">
+                	<c:if test="${loop.index <12 and (empty param.page or param.page==1)}">
                 	<li>
                   <figure>
                     <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodEL.prodID}">
@@ -395,23 +395,7 @@
             </div>
             <div class="aa-product-catg-pagination">
               <nav>
-                <ul class="pagination">
-                  <li>
-                    <a href="<%=request.getRequestURI()%>?page=${param.page>1 ? param.page-1 : 1}" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li><a href="<%=request.getRequestURI()%>">1</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=2">2</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=3">3</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=4">4</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=5">5</a></li>
-                  <li>
-                    <a href="<%=request.getRequestURI()%>?page=${param.page!=null? 1+param.page :2}" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
+               
               </nav>
             </div>
           </div>
@@ -441,33 +425,11 @@
               </div>
            
            
-           <script>
-           
-//            $("div.tag-cloud > a").click(function(){
-//         	   var label_name = $(this).text();
-//         	   console.log(label_name)
-//         	   $.ajax({
-<%--         		   url:"<%=request.getContextPath()%>/prod/ProdServlet", --%>
-//         		   type:"POST",
-        		  
-//         		   data:{
-//         			   labelName:label_name,
-//         			   action:'labelClick'
-//         		   },
-//         		   success:function(data){
-//         			   console.log(data);
-        			   
-        			   
-//         		   },error:function(){
-//         			   alert("傳送失敗");
-//         		   }
-        		   
-        		   
-//         	   });
-//         	   return false;
-        	   
-//            });   
-           </script>
+            <div class="">
+              <h3>地圖搜尋商品</h3>
+                         <a href="/TFA104G1/front_end/letswrite-google-map-api-5-master/mapProdSearch.jsp"><img style="width:60px" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/google-maps-%E5%A4%96%E9%80%81-%E6%96%B0%E5%8A%9F%E8%83%BD-1586248853.jpg?crop=0.488xw:0.974xh;0.259xw,0&resize=640:*"></a>
+   
+              </div>
            
            
             
@@ -659,8 +621,8 @@ $.ajax({
 	dataType:"json",
 	cache:false,
 	success:function(data){
-		console.log(data);
-		for(var i =0;i<8;i++){
+		console.log(data.all_label.length);
+		for(var i =0;i<data.all_label.length&&i<=8;i++){
 			$('div.tag-cloud').append("<a href='<%=path%>/prod/LabelServlet?action=labelClick&labelName=" + data.all_label[i] + "'>" +data.all_label[i] + "</a>")
 		}
 // 		$('div.tag-cloud').append()

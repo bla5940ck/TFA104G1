@@ -5,7 +5,8 @@
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 <%
 	PostBoardVO pbVO = (PostBoardVO)request.getAttribute("pbVO");
-	
+	Integer memberId = (Integer) session.getAttribute("id");
+
 %>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
 
 
 <body>
-<%@ include file="header.file" %>
+<%@ include file="/includeFolder/header.file" %>
 <!-- 錯誤表列 -->
 
 
@@ -54,8 +55,8 @@
 												</c:if>
 											   
 											   
-											<label for="">會員編號<span>*</span></label>
-											<input type="Text" name="memberId" value=""/>
+<!-- 											<label for="">會員編號<span>*</span></label> -->
+											<input type="hidden" name="memberId" value="<%=memberId%>"/>
 									
 											<label for="">請輸入徵求標題<span>*</span></label> 
 											<input type="Text" name="postTitle" value=""/>
@@ -101,7 +102,7 @@
 			</div>
 		</div>
 	</section>
-<%@ include file="footer2.file" %>
+<%@ include file="/includeFolder/footer2.file" %>
 </body>
 </html>
 

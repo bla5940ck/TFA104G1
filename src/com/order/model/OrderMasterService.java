@@ -14,7 +14,7 @@ public class OrderMasterService {
 
 	public OrderMasterVO addOrderMaster(Integer rentID, Integer leaseID, Integer payID, Integer couponID,
 			Timestamp ordDate, Integer storeCode, Date estStart, Date estEnd, Integer rentDays, Integer prodPrice,
-			Integer shipFee, Integer ordPrice) {
+			Integer shipFee, Integer ordPrice, byte[] qrcode) {
 
 		OrderMasterVO omVO = new OrderMasterVO();
 
@@ -30,6 +30,7 @@ public class OrderMasterService {
 		omVO.setProdPrice(prodPrice);
 		omVO.setShipFee(shipFee);
 		omVO.setOrdPrice(ordPrice);
+		omVO.setQrcode(qrcode);
 		dao.addOrderMaster(omVO);
 		return omVO;
 
@@ -38,7 +39,7 @@ public class OrderMasterService {
 	public OrderMasterVO updateorderMaster(Integer ordID, Integer shipStatus, Integer ordStatus, Integer payStatus,
 			Integer shipCode, Integer returnCode, Timestamp shipDate, Timestamp arrivalDate, Timestamp returnDate,
 			Integer rentRank, Integer leaseRank, String rentComt, String leaseComt, Timestamp rentComtdate,
-			Timestamp leaseComtdate) {
+			Timestamp leaseComtdate, Timestamp estTrfDa, Integer trfStatus, Timestamp payDate) {
 
 		OrderMasterVO omVO = new OrderMasterVO();
 		
@@ -57,7 +58,10 @@ public class OrderMasterService {
 		omVO.setLeaseComt(leaseComt);
 		omVO.setRentComtdate(rentComtdate);
 		omVO.setLeaseComtdate(leaseComtdate);
-
+		omVO.setEstTrfDa(estTrfDa);
+		omVO.setTrfStatus(trfStatus);
+		omVO.setPayDate(payDate);
+		
 		dao.updateOrderMaster(omVO);
 		
 		return omVO;
