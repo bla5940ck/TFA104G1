@@ -311,17 +311,20 @@ public class ManagerServlet extends HttpServlet {
 
 					if ((managerUser.trim().equals(user)) && (managerPassword.trim().equals(password))) {
 
-						System.out.println(req.getParameter("managerUser") + "你好");
+					      System.out.println(req.getParameter("managerUser") + "你好");
 
-						req.getSession().setAttribute("managerID", id);
-						req.getSession().setAttribute("managerUser", user);
-						req.getSession().setAttribute("managerPassword", password);
-						System.out.println("loginServlet: "+(String)req.getSession().getAttribute("location"));
-						res.sendRedirect((String)req.getSession().getAttribute("location"));
-						
-						return;
-					}
-
+					      req.getSession().setAttribute("managerID", id);
+					      req.getSession().setAttribute("managerUser", user);
+					      req.getSession().setAttribute("managerPassword", password);
+					      System.out.println("loginServlet: "+(String)req.getSession().getAttribute("location"));
+					      if(req.getSession().getAttribute("location")!=null) {
+					       res.sendRedirect((String)req.getSession().getAttribute("location"));       
+					      }else {
+					       res.sendRedirect("/TFA104G1/back_end/manager/select_page.jsp");
+					      }
+					      
+					      return;
+					     }
 				}
 				errorMsgs.add("帳號密碼不符合");
 				if (!errorMsgs.isEmpty()) {
