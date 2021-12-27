@@ -80,7 +80,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			
+			height: 650px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;

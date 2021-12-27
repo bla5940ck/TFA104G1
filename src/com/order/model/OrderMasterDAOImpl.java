@@ -539,7 +539,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			rs = pstmt.getGeneratedKeys();
 			while (rs.next()) {
 				key = rs.getInt(1);
-				System.out.println(key);
+//				System.out.println(key);
 			}
 			rs.close();
 			// 同時再新增訂單明細內容

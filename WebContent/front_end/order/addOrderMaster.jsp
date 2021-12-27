@@ -97,7 +97,6 @@ a.cart-img>img {
 											olVO.setProdPrice(cartVO.getRent());
 											olVO.setEstStart(cartVO.getEstStart());
 											olVO.setEstEnd(cartVO.getEstEnd());
-
 											orderList.add(olVO);
 									%>
 									<div id="lease-div">
@@ -246,13 +245,16 @@ $("a.aa-cart-view-btn").click(function(){
 	if(set.size == 1){
 		if(estEndSet.size == 1){
 			$("#cart-form").submit();
+			
+		}else{
+			alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
+			return false;
 		}
-		alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
+	}else{
+		alert("您選擇的出租方不同! 請回購物車調整! 謝謝!");
 		return false;
 	}
-	alert("您選擇的出租方不同! 請回購物車調整! 謝謝!");
-	return false;
-	});
+});
 
 
 	var coupon = $("#coupon"); //折價券

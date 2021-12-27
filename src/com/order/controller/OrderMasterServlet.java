@@ -33,6 +33,8 @@ import com.order.model.OrderMasterService;
 import com.order.model.OrderMasterVO;
 import com.product.jedis.JedisPoolUtil;
 import com.product.model.CartVO;
+import com.product.model.ProdService;
+import com.product.model.ProdVO;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
@@ -442,25 +444,23 @@ public class OrderMasterServlet extends HttpServlet {
 
 				String sc = (req.getParameter("shipCode").trim());
 				Integer shipCode = 0;
-				if (sc != null) {
+				if (sc != null && sc.length() != 0) {
 					try {
 						shipCode = new Integer(sc);
 					} catch (Exception e) {
 						errorMsgs.add("格式不正確" + e.getMessage());
 					}
 				}
-				;
 
 				String rc = (req.getParameter("returnCode").trim());
 				Integer returnCode = 0;
-				if (rc != null) {
+				if (rc != null && rc.length() != 0) {
 					try {
 						returnCode = new Integer(rc);
 					} catch (Exception e) {
 						errorMsgs.add("格式不正確");
 					}
 				}
-				;
 
 				String strsd = req.getParameter("shipDate");
 				Timestamp shipDate = null;
@@ -469,7 +469,6 @@ public class OrderMasterServlet extends HttpServlet {
 					shipDate = new Timestamp(Long.valueOf(strsd));
 					System.out.println(shipDate);
 				}
-				;
 
 				String strad = req.getParameter("arrivalDate");
 				Timestamp arrivalDate = null;
@@ -479,7 +478,6 @@ public class OrderMasterServlet extends HttpServlet {
 					arrivalDate = new Timestamp(Long.valueOf(strad));
 					System.out.println(arrivalDate);
 				}
-				;
 
 				String strrd = req.getParameter("returnDate");
 				Timestamp returnDate = null;
@@ -488,7 +486,6 @@ public class OrderMasterServlet extends HttpServlet {
 					returnDate = new Timestamp(Long.valueOf(strrd));
 					System.out.println(returnDate);
 				}
-				;
 
 				String strrr = req.getParameter("rentRank");
 				System.out.println(strrr);
@@ -633,7 +630,9 @@ public class OrderMasterServlet extends HttpServlet {
 			Integer leaseID = new Integer(req.getParameter("leaseID"));
 			try {
 				String prodName = req.getParameter("prodName");
+//				System.out.println("商品名稱為 : " + prodName);
 				Integer prodID = new Integer(req.getParameter("prodID"));
+//				System.out.println("商品編號為 : " + prodID);
 
 				/*************************** 日期部分 ******************************/
 				Date date = new Date();
@@ -687,7 +686,7 @@ public class OrderMasterServlet extends HttpServlet {
 				List<OrderListVO> list = (List<OrderListVO>) req.getSession().getAttribute("list1");
 //				System.out.println(list.size());
 
-				System.out.println("明細存入");
+//				System.out.println("明細存入");
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderMasterVO", omVO); // 含有輸入格式錯誤的VO物件,也存入req
@@ -754,25 +753,41 @@ public class OrderMasterServlet extends HttpServlet {
 				}
 
 				/*********************** 刪除購物車 ************************/
-				Integer memberID = (Integer) req.getSession().getAttribute("id");
-				System.out.println("memberID" + memberID);
-				Jedis jedis = null;
-				jedis = pool.getResource();
-				Gson gson = new Gson();
+				for (OrderListVO cartList : list) {
+					cartList.getProdID();
+					Integer memberID = (Integer) req.getSession().getAttribute("id");
+					System.out.println("memberID" + memberID);
+					Jedis jedis = null;
+					jedis = pool.getResource();
+					Gson gson = new Gson();
 
-				if (memberID != null) {
-					List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
-					for (String item : cart) {
-						CartVO cartVO = gson.fromJson(item, CartVO.class);
-						System.out.println("ProdID" + cartVO.getProdID());
-						if (cartVO.getProdID().equals(prodID)) {
-							jedis.lrem("member" + memberID, 1, item);
+					if (memberID != null) {
+						List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
+						for (String item : cart) {
+							CartVO cartVO = gson.fromJson(item, CartVO.class);
+							System.out.println("ProdID" + cartVO.getProdID());
+							if (cartVO.getProdID().equals(cartList.getProdID())) {
+								jedis.lrem("member" + memberID, 1, item);
+							}
 						}
+						jedis.close();
 					}
-					jedis.close();
 				}
 
 				/************* 綠界串接 ***********/
+
+				ArrayList<String> array = new ArrayList<String>();
+				for (OrderListVO listprod : list) {
+					System.out.println("取到的商品編號" + listprod.getProdID());
+					ProdService prodSVC = new ProdService();
+					ProdVO prodVO = prodSVC.findProductByPK(listprod.getProdID());
+					String prodNa = prodVO.getProdName();
+					array.add(prodNa);
+				}
+
+				String join = String.join("#", array);
+				System.out.println(join);
+
 				AllInOne all = new AllInOne("");
 				AioCheckOutALL obj = new AioCheckOutALL(); // 產生訂單
 				String ordDateNum = String.valueOf(ord); // 產生訂單日期long值
@@ -788,7 +803,7 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setMerchantTradeDate(ecord); // 交易日期S
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
-				obj.setItemName(prodName); // 商品名稱
+				obj.setItemName(join); // 商品名稱
 				obj.setReturnURL("https://2042-1-164-222-170.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
