@@ -130,7 +130,7 @@ a.cart-img>img {
 															value="<%=rent%>"><%=rent%> 元</td>
 														<td><input type="hidden" name="estStart"
 															value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
-														<td><input type="hidden" name="estEnd"
+														<td><input type="hidden" name="estEnd" class="estEnd"
 															value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
 														<td><input type="hidden" name="rentDays"
 															value="<%=rentDays%>"><%=rentDays%> 天</td>
@@ -236,19 +236,38 @@ a.cart-img>img {
 <script>
 
 var leaseID = $("input.leaseID");
-var array = new Array();
+console.log(leaseID);
+var set = new Set();
+// leaseID.each(function(index, item){
+// 	console.log($(item).val());
+// 	// array.push($(item).val());
+// 	set.add($(item).val());
+// });
 
-var id1 = 0;
-var id2 = 0;
-for(var i = 0; i < leaseID.length; i++){
-	id1 = leaseID[0];
-	array.push(id1);
-}
-
-
+var estEnd = $("input.estEnd");
+var estEndSet = new Set();
+estEnd.each(function(index, item){
+	estEndSet.add($(item).val());
+})
 
 $("a.aa-cart-view-btn").click(function(){
-		$("#cart-form").submit();
+	leaseID.each(function (index, item) {
+		console.log($(item).val());
+		set.add($(item).val());
+	});
+	estEnd.each(function (index, item) {
+		estEndSet.add($(item).val());
+	})
+	// console.log(set.size);
+	if(set.size == 1){
+		if(estEndSet.size == 1){
+			$("#cart-form").submit();
+		}
+		alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
+		return false;
+	}
+	alert("您選擇的出租方不同! 請回購物車調整! 謝謝!");
+	return false;
 	});
 
 
