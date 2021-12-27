@@ -21,13 +21,18 @@
 
 <%
 	PostBoardVO pbVO = (PostBoardVO) request.getAttribute("pbVO");
+	Integer memberId = (Integer) session.getAttribute("id");
 	PostBoardService pbSvc = new PostBoardService();
 	PostBoardVO  pb = pbSvc.findByPrimaryKey(Integer.valueOf(request.getParameter("postId")));
 	pageContext.setAttribute("pb", pb );
 	
+	
+	
 	pbReplyVO pbrVO = (pbReplyVO) request.getAttribute("pbrVO");
 	//pbReplyService pbrSvc = new pbReplyService();
 	pageContext.setAttribute("pbr",pbrVO);
+	
+	
 	
 	
 %>
@@ -104,7 +109,7 @@
                         <li>
                           <div class="media">
                             <div class="media-left">    
-                                <img class="media-object news-img" src="" alt="img">      
+<!--                                 <img class="media-object news-img" src="" alt="img">       -->
                             </div>
                             <div class="media-body">
                              <h4 class="author-name">${pbrVO.memberId}</h4><!--留言會員編號-->
@@ -145,14 +150,14 @@
                   
                   <!-- blog comments form -->
                   <div id="respond">
-                    <h3 class="reply-title">留言</h3>
+                    <h3 class="reply-title">留言區</h3>
                     <form id="commentform" method="post" name="form1" 
                     	  action="<%=request.getContextPath()%>/pbReplyServlet?postId=${pb.postId}">
                       
                       <p class="comment-form-author">
 						
-                        <label for="author">會員編號<span class="required">*</span></label>
-                        <input type="text" name="memberId" value="" size="30" required="required">
+<!--                         <label for="author">會員編號<span class="required">*</span></label> -->
+                        <input type="hidden" name="memberId" value="<%=memberId%>"/>
                         
 <!--                         <label for="">留言編號<span>*</span></label> -->
 <!-- 						<input type="Text" name="replyId" value=""/> -->

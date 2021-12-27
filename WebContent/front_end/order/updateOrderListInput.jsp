@@ -168,7 +168,7 @@ th, td {
 				<input type="hidden" name="listID" value="<%=olVO.getListID()%>">
 				<input type="hidden" name="ordID" value="<%=olVO.getOrdID()%>">
 			
-				<input type="submit" value="確認更新">
+				<input class="aa-browse-btn" type="submit" value="確認更新">
 			</main>
 		</div>
 	<%@ include file="/includeFolder/footer2.file" %>

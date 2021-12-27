@@ -106,16 +106,20 @@ public class PostBoardServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer memberId = new Integer(req.getParameter("memberId"));
-				
+				//System.out.println("pbservlet 抓到的 : "+memberId);				
+//				System.out.println("會員編號" + memberId);
+				String postId = req.getParameter("postId");
+//				Integer postId = new Integer(req.getParameter("postId").trim());
+				//System.out.println("文章編號" + postId);
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				PostBoardService pbSvc = new PostBoardService();
-				PostBoardVO pbVO = pbSvc.findByPrimaryKey(memberId);
-				System.out.println(pbVO);
+				PostBoardVO pbVO = pbSvc.findByPrimaryKey(Integer.valueOf(postId));
+//				System.out.println(pbVO.getMemberId());
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-				req.setAttribute("pbVO", pbVO); // 資料庫取出的promoVO物件,存入req
-				System.out.println("servlet "+req.getAttribute("pbVO"));
+				req.setAttribute("pbVO", pbVO); 
+//				System.out.println("servlet "+req.getAttribute("pbVO"));
 				String url = "/back_end/PostBoard/updateArticle.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updatearticle.jsp
 				successView.forward(req, res);

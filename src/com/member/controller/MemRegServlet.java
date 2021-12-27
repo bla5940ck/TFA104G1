@@ -93,25 +93,34 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 				if (phoneNum == null || phoneNum.trim().length() == 0) {
 					errorMsgs.add("手機號請勿空白");
 				}
-				
+				System.out.println("1223");
 				String email = req.getParameter("email").trim();
 				if (email == null || email.trim().length() == 0) {
 					errorMsgs.add("Email請勿空白");
 				}
-				String addNum = req.getParameter("addNum").trim();
-				if (addNum == null || addNum.trim().length() == 0) {
+				System.out.println("1224");
+				String zipcode = req.getParameter("zipcode").trim();
+				if (zipcode == null || zipcode.trim().length() == 0) {
 					errorMsgs.add("郵遞區號請勿空白");
 				}
-				String add = req.getParameter("add").trim();
-				if (add == null || add.trim().length() == 0) {
+				System.out.println("1225");
+				String city = req.getParameter("city").trim();
+				if (city == null || city.trim().length() == 0) {
+					errorMsgs.add("縣市請勿空白");
+				}
+				System.out.println("1226");
+				String town = req.getParameter("town").trim();
+				if (town == null || town.trim().length() == 0) {
 					errorMsgs.add("行政區域請勿空白");
 				}
+				System.out.println("1227");
 				String address = req.getParameter("address").trim();
 				if (address == null || address.trim().length() == 0) {
 					errorMsgs.add("地址請勿空白");
 				}
+				System.out.println("1228");
 				System.out.println("5556666");
-				address = add+address;
+				address = zipcode+" "+city+town+address;
 				System.out.println("6666666");
 				String bankCode = null ;
 				Integer status=0;

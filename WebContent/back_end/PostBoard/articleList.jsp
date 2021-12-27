@@ -111,6 +111,7 @@
 	                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" style="margin-bottom: 0px;">
 		                        <input type="submit" class="aa-browse-btn" value="修改" style="font-size:14px;"/> 
 		                        <input type="hidden" class="aa-browse-btn" name="postId" value="${postBoardVO.postId}" > 
+		                        <input type="hidden" class="aa-browse-btn" name="memberId" value=<%=memberId%>> 
 								<input type="hidden" class="aa-browse-btn" name="action" value="getOne_For_Update">
 							</FORM>
 						</td>

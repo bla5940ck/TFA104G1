@@ -22,75 +22,133 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>訂單資料更新:</title>
-
 <style>
- body { 
- 	margin: 0; 
- 	padding: 10px; 
- 	z-index: 1001;
- 	
- } 
-
-img {
-	max-width: 100%;
-}
-
- div.main_content { 
- 	width: 100%; 
- 	margin: 0 auto; 
- 	font-size: 0; 
- } 
-
-/*-------------------aside區域------------------- */
-aside.aside {
-	width: 200px;
-	height:620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-	text-align:center;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: calc(100% - 200px - 10px);
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-table {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left: 100px;	
-	
-}
-
-table, th, td {
-	border: 1px solid lightgrey;
-	width: 800px; 
-	text-align:center;
-	
-}
-
-th, td {
-	padding: 5px;
-}
-
-th{
-width: 180px;
-}
-a.cart-img > img{
-	object-fit: contain;
-	width: 185px;
-	height: 140px;
-}
-</style>
+		* {
+			box-sizing: border-box;
+			text-decoration: none;
+			list-style: none;
+		}
+		
+		body {
+			margin: 0;
+			padding: 0px;
+		}
+		
+		img {
+			max-width: 100%;
+		}
+		
+		header.header {
+			background-color: #ddd;
+			width: 100%;
+			margin: 0 auto 0px auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			header.header {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			header.header {
+				width: 100%;
+			}
+		}
+		
+		div.main_content {
+			width: 100%;
+			margin: 0 auto;
+			font-size: 0;
+			/*   border:1px solid red; */
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			div.main_content {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			div.main_content {
+				width: 100%;
+			}
+		}
+		/*-------------------aside區域------------------- */
+		aside.aside {
+			
+			width: 200px;
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
+		}
+		
+		/*--------------------main區域-------------------- */
+		main.main {
+			background-color: white;
+			width: calc(100% - 200px - 10px);
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			border: 1px solid white;
+			padding: 0px;
+		}
+		
+		@media ( max-width : 575.98px) {
+			aside.aside, main.main {
+				display: block;
+			}
+			aside.aside {
+				width: 100%;
+				margin: 0 0 10px 0;
+			}
+			main.main {
+				width: 100%;
+			}
+		}
+		
+		footer.footer {
+			background-color: #ddd;
+			width: 100%;
+			margin: 10px auto 0 auto;
+			border: 1px solid #999;
+		}
+		
+		@media all and (min-width:576px) and (max-width:767.98px) {
+			footer.footer {
+				width: 540px;
+			}
+		}
+		
+		@media ( max-width :575.98px) {
+			footer.footer {
+				width: 100%;
+			}
+		}
+		
+		/*--------------------table區域-------------------- */
+		table {
+			width: 100%;
+			background-color: white;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		
+		table, th, td {
+			border: 1px solid #CCCCFF;
+		}
+		
+		.cart-img{
+			height: 30%;
+			width: 30%;
+			
+		}
+		</style>
 </head>
 
 <body bgcolor='white'>
@@ -121,7 +179,7 @@ a.cart-img > img{
 				
 					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
-							<img src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
+							<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a></td>
 					</c:forEach>
 			
 					</tr>
@@ -272,7 +330,7 @@ a.cart-img > img{
 				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
 				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
 <%-- 				<center><%@ include file="/includeFolder/comment.file" %></center> --%>
-				<center><input type="submit" value="確認更新"></center>
+				<center><input class="aa-browse-btn" type="submit" value="確認更新"></center>
 			</main>
 		</div>
 	<%@ include file="/includeFolder/footer2.file" %>
