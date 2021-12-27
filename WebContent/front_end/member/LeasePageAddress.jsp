@@ -104,6 +104,7 @@
 			}
 			main.main {
 				width: 100%;
+				
 			}
 		}
 		
@@ -128,15 +129,34 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 50%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
 		table, th, td {
-			border: 1px solid #CCCCFF;
+			border: 1px solid lightgrey;
 		}
+		th, td {
+	height: 50px;
+	padding: 5px;
+	text-align: center;
+	font-size:15px;
+}
+
+        .li{
+            font-size: 14px;
+             outline: 0;
+   background-color: lightgrey;
+    background: 	#F0F0F0;
+    text-decoration: none;
+    color: #191561 ;
+    font-weight: bold;
+    		
+        }
+
+  
 		</style>
 	</head>
 	<body bgcolor='white'>
@@ -160,16 +180,16 @@
 				<main class="main">
 				
 						<h1>地址</h1>
-						<div>管理你的寄送相關資訊</div>
+						<div style="font-size:22px;">管理你的寄送相關資訊</div>
 						
-					<a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddAddress.jsp">新增超商地址</a>
+					<a style="font-size:20px;" href="<%=request.getContextPath()%>/front_end/member/LeasePageAddAddress.jsp"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
 						<hr>
 						 <c:forEach var="defAddressVO"  items="${list}" >
 						 <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						
-						<ul>
-							<div>${(defAddressVO.status==1)?'預設':' '}</div>
-							<li>姓名 : ${defAddressVO.recipient}</li>
+						<ul class="li">
+							<div style="font-size:16px; color:	#FF0080;">${(defAddressVO.status==1)?'預設':' '}</div>
+							<li >姓名 : ${defAddressVO.recipient}</li>
 							<li>電話 : ${defAddressVO.recptPhone}</li>
 							<li>超商 : ${defAddressVO.name711}</li>
 							<li>地址 : ${defAddressVO.add711}</li>
