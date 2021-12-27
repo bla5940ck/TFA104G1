@@ -22,6 +22,9 @@ public class MemcouponDAO implements Memcoupon_interface{
 		}
 	}
 	
+		private static final String CHECK_DOUBLE =
+			"SELECT * FROM member_coupon where member_id = ? and coupon_id = ?";
+	
 		private static final String GET_ONE_STMT = 
 			"UPDATE member_coupon set status = 1 where mem_coupon_id = ?";
 
@@ -37,6 +40,47 @@ public class MemcouponDAO implements Memcoupon_interface{
 		private static final String UPDATE = 
 			"UPDATE member_coupon set member_id=?, category_id=?, coupon_id=?, coupon_name=?, discount=?, status=?, start_date=?, end_date=? where mem_coupon_id = ?";
 	
+		
+		@Override
+		public MemcouponVO check(MemcouponVO memcouponVO) {
+			MemcouponVO	memcouponVO2 = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(CHECK_DOUBLE);
+				
+				pstmt.setInt(1, memcouponVO.getMember_id());
+				pstmt.setInt(2, memcouponVO.getCoupon_id());
+				
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return memcouponVO2;		
+		}
+		
+		
 		@Override
 		public List<MemcouponVO> getMemberid(Integer member_id) {
 			List<MemcouponVO> list = new ArrayList<MemcouponVO>();
@@ -232,65 +276,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 		
 	}
 
-//	@Override
-//	public MemcouponVO findByPrimaryKey(Integer mem_coupon_id) {
-//		MemcouponVO memcouponVO = null;
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		
-//		try {
-//			
-//			con = DriverManager.getConnection(Util.URL,Util.USER,Util.PASSWORD);
-//			pstmt = con.prepareStatement(GET_ONE_STMT);
-//			
-//			pstmt.setInt(1, mem_coupon_id);
-//			
-//			rs = pstmt.executeQuery();
-//			
-//			while (rs.next()) {
-//				memcouponVO = new MemcouponVO();
-//				memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
-//				memcouponVO.setMember_id(rs.getInt("member_id"));
-//				memcouponVO.setCategory_id(rs.getInt("category_id"));
-//				memcouponVO.setCoupon_id(rs.getInt("coupon_id"));
-//				memcouponVO.setDiscount(rs.getDouble("discount"));
-//				memcouponVO.setCoupon_name(rs.getString("coupon_name"));
-//				memcouponVO.setStatus(rs.getInt("status"));
-//				memcouponVO.setStart_date(rs.getDate("start_date"));
-//				memcouponVO.setEnd_date(rs.getDate("end_date"));
-//			}
-//			
-//			
-//		} catch (SQLException se) {
-//			throw new RuntimeException("A database error occured. "
-//					+ se.getMessage());
-//			
-//		} finally {
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (pstmt != null) {
-//				try {
-//					pstmt.close();
-//				} catch (SQLException se) {
-//					se.printStackTrace(System.err);
-//				}
-//			}
-//			if (con != null) {
-//				try {
-//					con.close();
-//				} catch (Exception e) {
-//					e.printStackTrace(System.err);
-//				}
-//			}
-//		}
-//		return memcouponVO;
-//	}
+
 	@Override
 	public void findByPrimaryKey(Integer mem_coupon_id) {
 		Connection con = null;
@@ -396,6 +382,17 @@ public class MemcouponDAO implements Memcoupon_interface{
 //		// TODO Auto-generated method stub
 //		
 //	}
+
+	public static String getCheckDouble() {
+		return CHECK_DOUBLE;
+	}
+
+
+	@Override
+	public MemcouponVO check(boolean memcouponVO2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

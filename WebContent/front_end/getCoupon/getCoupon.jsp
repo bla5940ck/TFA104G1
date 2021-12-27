@@ -84,8 +84,8 @@ input.memberId {
 		<c:if test="${b==null}">
 			<script>
 // 								swal({
-// 								  title: "折價券領取專區",
-// 								  text: "一張折價券只領一次",
+// 								  title: "歡迎使用折價券領取專區",
+// 								  text: "請選取想要的價券並按下'領取'按鈕'",
 // 								  icon: "info",
 // 								  button: "確認",});
 			</script>
