@@ -25,56 +25,43 @@ public class MemberDAO implements MemberDAO_interface {
 			e.printStackTrace();
 		}
 	}
-	
-	private static final String INSERT_STMT = 
-			"INSERT INTO member (bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,	"
+
+	private static final String INSERT_STMT = "INSERT INTO member (bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,	"
 			+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul) "
 			+ "VALUES (?, ?, ?, ?, ?, ?,?,?, ?, ?, ?, ?, ?,?,?, ?, ?, ?, ?, ?)";
-		private static final String GET_ALL_STMT = 
-			"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
-			+"birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul "
+	private static final String GET_ALL_STMT = "SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
+			+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul "
 			+ "FROM member";
-		private static final String GET_ONE_STMT = 
-			"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
+	private static final String GET_ONE_STMT = "SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
 			+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
 			+ "FROM JoyLease.member where member_id = ?";
-		private static final String GET_LOGIN_STMT = 
-				"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
-				+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
-				+ "FROM member where login_id = ?";
-		private static final String LOGIN = 
-				"SELECT login_id,password FROM member where login_id = ? and password=? and status=1";
+	private static final String GET_LOGIN_STMT = "SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
+			+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
+			+ "FROM member where login_id = ?";
+	private static final String LOGIN = "SELECT login_id,password FROM member where login_id = ? and password=? and status=1";
 //		private static final String DELETE = 
 //			"DELETE FROM member where member_id = ?";
-		private static final String UPDATE = 
-			"UPDATE member set bank_code=?,	email=?,  login_id=?,	idcn	=?,	phone_num=?,	password=?,status	=?,	name=?,	nickname=?,	birthday	=?,	address=?,	bank_account=?, account_name=?,rent_score=?,	lease_score=?,	creat_date=?,	pic=?,	idc_f=?,	idc_b=?,	foul	=? where (member_id = ?)";
+	private static final String UPDATE = "UPDATE member set bank_code=?,	email=?,  login_id=?,	idcn	=?,	phone_num=?,	password=?,status	=?,	name=?,	nickname=?,	birthday	=?,	address=?,	bank_account=?, account_name=?,rent_score=?,	lease_score=?,	creat_date=?,	pic=?,	idc_f=?,	idc_b=?,	foul	=? where (member_id = ?)";
 
-		private static final String UPDATESTATUS = 
-				"UPDATE member set status	=? where (member_id = ?)";
-		
-		private static final String UPDATEPW = 
-				"UPDATE member set password	=? where (login_id = ?)";
-		
-		private static final String UPDATEACCOUNT = 
-				"UPDATE member set bank_code =? ,bank_account =?  ,account_name=? where (member_id = ?)";
-		
-		
-		private static final String UPDATEONEMEMBER = 
-				"UPDATE member set member_id = ?"
-				+ ",name=?, email=?,creat_date=?,login_id=?,phone_num=?, ,status	=?where (member_id = ?)";
+	private static final String UPDATESTATUS = "UPDATE member set status	=? where (member_id = ?)";
 
-		
-		private static final String GET_PDR_ONE_STMT = 
-				"SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
-				+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
-				+ "FROM member where status = '0'";
-	
+	private static final String UPDATEPW = "UPDATE member set password	=? where (login_id = ?)";
+
+	private static final String UPDATEACCOUNT = "UPDATE member set bank_code =? ,bank_account =?  ,account_name=? where (member_id = ?)";
+
+	private static final String UPDATEONEMEMBER = "UPDATE member set member_id = ?"
+			+ ",name=?, email=?,creat_date=?,login_id=?,phone_num=?, ,status	=?where (member_id = ?)";
+
+	private static final String GET_PDR_ONE_STMT = "SELECT member_id,bank_code, email,login_id,idcn,phone_num,password,status,	name,	nickname,"
+			+ "birthday,	address,	bank_account,	account_name,	rent_score,	lease_score,	creat_date,	pic,	idc_f,	idc_b,	foul  "
+			+ "FROM member where status = '0'";
+
 	@Override
 	public void insert(MemberVO memberVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 
 			con = ds.getConnection();
@@ -100,14 +87,13 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setBytes(18, memberVO.getIdcF());
 			pstmt.setBytes(19, memberVO.getIdcB());
 			pstmt.setInt(20, memberVO.getFoul());
-			
+
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-	
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -163,10 +149,9 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
-	
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -190,21 +175,20 @@ public class MemberDAO implements MemberDAO_interface {
 	public void updateStatus(MemberVO memberVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-	
+
 		try {
-	
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATESTATUS);
 			pstmt.setInt(1, memberVO.getStatus());
 			pstmt.setInt(2, memberVO.getMemberId());
-			
+
 			pstmt.executeUpdate();
-	
+
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -229,11 +213,11 @@ public class MemberDAO implements MemberDAO_interface {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
-	
+
 //		System.out.println(memberVO.getCreatDate().toString());
 //		System.out.println(UPDATEONEMEMBER.toString());
 		try {
-	
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATEONEMEMBER);
 			pstmt.setInt(1, memberVO.getMemberId());
@@ -244,12 +228,11 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(6, memberVO.getPhoneNum());
 			pstmt.setInt(7, memberVO.getStatus());
 			pstmt.executeUpdate();
-	
+
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -268,7 +251,6 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 	}
-	
 
 	@Override
 	public MemberVO findByPrimaryKey(Integer memberId) {
@@ -281,7 +263,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			
+
 //			System.out.println(GET_ONE_STMT .toString()+ memberId.toString());
 
 			pstmt.setInt(1, memberId);
@@ -314,10 +296,9 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -344,6 +325,7 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 		return memberVO;
 	}
+
 	@Override
 	public List<MemberVO> findPdrID() {
 		List<MemberVO> list = new ArrayList<MemberVO>();
@@ -352,17 +334,17 @@ public class MemberDAO implements MemberDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_PDR_ONE_STMT);
 			rs = pstmt.executeQuery();
-			
+
 //			System.out.println(GET_PDR_ONE_STMT.toString());
-			
+
 			while (rs.next()) {
-				
+
 				memberVO = new MemberVO();
 				memberVO.setMemberId(rs.getInt("member_id"));
 				memberVO.setBankCode(rs.getString("bank_code"));
@@ -390,11 +372,10 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -421,16 +402,17 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 		return list;
 	}
+
 	@Override
 	public List<MemberVO> getAll() {
-		
+
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		MemberVO memberVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 
 			con = ds.getConnection();
@@ -466,10 +448,9 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-	
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -501,7 +482,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 		MemberDAO dao = new MemberDAO();
 		Timestamp now = new Timestamp(System.currentTimeMillis());
-		
+
 		// 新增
 //				MemberVO memberVO1 = new MemberVO();
 //				memberVO1.setBankCode("700");
@@ -525,7 +506,7 @@ public class MemberDAO implements MemberDAO_interface {
 //				memberVO1.setIdcB(null);
 //				memberVO1.setFoul(0);
 //				dao.insert(memberVO1);
-		
+
 		// 修改
 //		MemberVO memberVO2 = new MemberVO();
 //		memberVO2.setBankCode("822");
@@ -550,7 +531,7 @@ public class MemberDAO implements MemberDAO_interface {
 //		memberVO2.setFoul(0);
 //		memberVO2.setMemberId(8);
 //		dao.update(memberVO2);
-		
+
 //		//前台會員資料修改
 //		MemberVO memberVO2 = new MemberVO();
 //		memberVO2.setEmail("updateabc@gmail.com");
@@ -560,7 +541,7 @@ public class MemberDAO implements MemberDAO_interface {
 //		memberVO2.setMemberId(3);
 //		dao.updateMemberBasicInformation(memberVO2);
 //		
-		
+
 		// 單一查詢
 //		MemberVO memberVO3 = dao.findByPrimaryKey(1);
 //		System.out.print(memberVO3.getMemberId() + ",");
@@ -585,7 +566,6 @@ public class MemberDAO implements MemberDAO_interface {
 //		System.out.print(memberVO3.getIdcB() + ",");
 //		System.out.println(memberVO3.getFoul());
 //		System.out.println("---------------------");
-		
 
 		// 單一查詢loginid
 //		MemberVO memberVO3 = dao.findLoginID("zxcas4d");
@@ -611,8 +591,8 @@ public class MemberDAO implements MemberDAO_interface {
 //		System.out.print(memberVO3.getIdcB() + ",");
 //		System.out.println(memberVO3.getFoul());
 //		System.out.println("---------------------");		
-		
-				// 全部查詢
+
+		// 全部查詢
 //				List<MemberVO> list = dao.getAll();
 //				for (MemberVO aMember : list) {
 //					System.out.print(aMember.getMemberId() + ", ");
@@ -638,7 +618,7 @@ public class MemberDAO implements MemberDAO_interface {
 //					System.out.print(aMember.getFoul());
 //					System.out.println();
 //				}
-		
+
 		// 修改
 //		MemberVO memberVO2 = new MemberVO();
 //		memberVO2.setBankCode("822");
@@ -690,10 +670,9 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -722,7 +701,7 @@ public class MemberDAO implements MemberDAO_interface {
 	}
 
 	@Override
-	public MemberVO login(String loginId,String password) {
+	public MemberVO login(String loginId, String password) {
 		// TODO Auto-generated method stub
 		MemberVO memberVO = null;
 		Connection con = null;
@@ -738,8 +717,8 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(2, password);
 
 			rs = pstmt.executeQuery();
-			
-			if (rs !=null) {
+
+			if (rs != null) {
 				while (rs.next()) {
 					memberVO = new MemberVO();
 					memberVO.setLoginId(rs.getString("login_id"));
@@ -748,11 +727,10 @@ public class MemberDAO implements MemberDAO_interface {
 				}
 			}
 			// Handle any driver errors
-	
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -778,29 +756,28 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 		return memberVO;
-	
+
 	}
+
 //	UPDATEPW = 			"UPDATE member set password	=? where (login_id = ?)";
 	@Override
 	public void updatePw(MemberVO memberVO) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
-	
+
 		try {
-	
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATEPW);
 			pstmt.setString(1, memberVO.getPassword());
 			pstmt.setString(2, memberVO.getLoginId());
-			
+
 			pstmt.executeUpdate();
-	
-	
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -825,7 +802,7 @@ public class MemberDAO implements MemberDAO_interface {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 //			SQL :"UPDATE member set bank_code =? ,bank_account =?  account_name=? where (member_id = ?)";
 			con = ds.getConnection();
@@ -834,14 +811,13 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(2, memberVO.getBankAccount());
 			pstmt.setString(3, memberVO.getAccountName());
 			pstmt.setInt(4, memberVO.getMemberId());
-			
+
 			pstmt.executeUpdate();
-	
+
 			// Handle any driver errors
-		
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -861,9 +837,7 @@ public class MemberDAO implements MemberDAO_interface {
 		}
 	}
 
-	
-	private static final String FIND_EMAIL = 
-			"SELECT email ,login_id FROM member where email = ?  and status=1";
+	private static final String FIND_EMAIL = "SELECT email ,login_id FROM member where email = ?  and status=1";
 
 	@Override
 	public MemberVO findEmail(String email) {
@@ -882,8 +856,7 @@ public class MemberDAO implements MemberDAO_interface {
 
 			rs = pstmt.executeQuery();
 
-				
-			if (rs !=null) {
+			if (rs != null) {
 				while (rs.next()) {
 					memberVO = new MemberVO();
 					memberVO.setLoginId(rs.getString("login_id"));
@@ -892,11 +865,10 @@ public class MemberDAO implements MemberDAO_interface {
 				}
 			}
 			// Handle any driver errors
-		
+
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -922,11 +894,11 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 		return memberVO;
-	
+
 	}
 
-	private static final String UPDATE_ONE_MEM_INF = 
-			"UPDATE member set nickName	=? ,email = ?, phone_num =? , pic = ? where (member_id = ?)";
+	private static final String UPDATE_ONE_MEM_INF = "UPDATE member set nickName	=? ,email = ?, phone_num =? , pic = ? where (member_id = ?)";
+
 	@Override
 	public void updateMemberBasicInformation(MemberVO memberVO) {
 		// TODO Auto-generated method stub
@@ -944,12 +916,11 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setInt(5, memberVO.getMemberId());
 			System.out.println("9999944444444");
 			pstmt.executeUpdate();
-	
+
 			// Handle any driver errors
-	
+
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -968,9 +939,5 @@ public class MemberDAO implements MemberDAO_interface {
 			}
 		}
 	}
-		
-	
-
-
 
 }
