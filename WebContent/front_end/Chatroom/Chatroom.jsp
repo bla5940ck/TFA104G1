@@ -162,10 +162,10 @@ ul li{
 	</div>
 </body>
 <script>
-	var selfID = <%=selfID%>;
+	var selfID = <%=selfID%>;<!--自己會編-->
 	var prodID = <%=prodID%>;
 	console.log(selfID);
-	var memberID = <%=memberID%>
+	var memberID = <%=memberID%><!--對方會編-->
 	console.log("mem" + memberID)
 	var MyPoint = "/ChatroomWS/"+memberID;
 	console.log(MyPoint);
@@ -178,6 +178,7 @@ ul li{
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
 	var self = '${selfID}';
+	
 	var webSocket;
 
 	function connect() {
@@ -206,15 +207,26 @@ ul li{
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
 					var li = document.createElement('li');
+					
+					
+					
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-					historyData.sender === self ? li.className += 'me' : li.className += 'friend';
+					historyData.sender == selfID ? li.className += 'friend' : li.className += 'me';
+					
+					
+					
+					
 					li.innerHTML = showMsg;
 					ul.appendChild(li);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
+				
+				
 				var li = document.createElement('li');
-				jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
+				console.log(jsonObj.sender)
+				console.log(selfID)
+				jsonObj.sender == selfID ? li.className += 'friend' : li.className += 'me';
 				li.innerHTML = jsonObj.message;
 				console.log(li);
 				document.getElementById("area").appendChild(li);
@@ -243,8 +255,8 @@ ul li{
 		} else {
 			var jsonObj = {
 				"type" : "chat",
-				"sender" : self,
-				"receiver" : friend,
+				"sender" : friend,
+				"receiver" : selfID,
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -259,8 +271,8 @@ ul li{
 		var row = document.getElementById("row");
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
-			if (friends[i] === self) { continue; }
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>會員編號' + friends[i] + '</h2></div>';
+			if (friends[i] == selfID) { continue; }
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + selfID + ' ><h2>' + friends[i] + '</h2></div>';
 		}
 		addListener();
 	}
@@ -272,8 +284,8 @@ ul li{
 			updateFriendName(friend);
 			var jsonObj = {
 					"type" : "history",
-					"sender" : self,
-					"receiver" : friend,
+					"sender" : friend,
+					"receiver" : selfID,
 					"message" : ""
 				};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -281,6 +293,7 @@ ul li{
 	}
 	
 	function disconnect() {
+		
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
 		document.getElementById('connect').disabled = false;

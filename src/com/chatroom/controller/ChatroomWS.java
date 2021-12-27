@@ -83,6 +83,7 @@ public class ChatroomWS  {
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
+		System.out.println("關閉by JAVA");
 		String userNameClose = null;
 		Set<String> userNames = sessionsMap.keySet();
 		for (String userName : userNames) {
