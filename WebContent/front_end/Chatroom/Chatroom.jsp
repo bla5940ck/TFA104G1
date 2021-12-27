@@ -1,7 +1,18 @@
+<%@page import="com.product.model.ProdVO"%>
+<%@page import="com.product.model.ProdService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
+<% Integer prodID = Integer.valueOf(request.getParameter("prodID")); 
+	
+	ProdService prodSvc = new ProdService();
+	ProdVO prodVO = prodSvc.findProductByPK(prodID);
+	Integer memberID = Integer.valueOf(prodVO.getMemberID());
+	pageContext.setAttribute("prodID", prodID);
+	Integer selfID = Integer.valueOf(session.getAttribute("id").toString());
+	
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/front_end/Chatroom/css/friendchat.css" type="text/css" />
@@ -137,7 +148,7 @@ ul li{
 
 
 </style>
-<title>JoyLeaseChatroomNow</title>
+<title>JoyLeaseChatNow</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
 	<h3 id="statusOutput" class="statusOutput"></h3>
@@ -151,7 +162,14 @@ ul li{
 	</div>
 </body>
 <script>
-	var MyPoint = "/ChatroomWS/${userName}";
+	var selfID = <%=selfID%>;
+	var prodID = <%=prodID%>;
+	console.log(selfID);
+	var memberID = <%=memberID%>
+	console.log("mem" + memberID)
+	var MyPoint = "/ChatroomWS/"+memberID;
+	console.log(MyPoint);
+	console.log(prodID);
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -159,7 +177,7 @@ ul li{
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = '${userName}';
+	var self = '${selfID}';
 	var webSocket;
 
 	function connect() {
@@ -242,7 +260,7 @@ ul li{
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
 			if (friends[i] === self) { continue; }
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>會員編號' + friends[i] + '</h2></div>';
 		}
 		addListener();
 	}

@@ -424,7 +424,7 @@ request.setAttribute("product", product);
 									<div>
 										<input class="report-btn" type="submit" value="檢舉商品">
 										<span  class="msgIcon">
-										<a  href="#"><img style="width:40px" src="https://img.88icon.com/download/jpg/20200725/5757bdfd6b6b7e17cddfdd11f547f2a7_512_512.jpg!88bg"></i></a>
+										<a  href="/TFA104G1/front_end/Chatroom/Chatroom.jsp?prodID=<%=product.getProdID()%>"><img style="width:40px" src="https://img.88icon.com/download/jpg/20200725/5757bdfd6b6b7e17cddfdd11f547f2a7_512_512.jpg!88bg"></i></a>
 										</span>
 									</div>
 									</c:when>
