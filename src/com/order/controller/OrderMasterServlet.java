@@ -626,63 +626,43 @@ public class OrderMasterServlet extends HttpServlet {
 
 		if ("submit_order".equals(action)) { // 來自addOrderMaster.jsp的請求
 
-//			System.out.println("進來servlet");
-
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			Integer rentID = new Integer(req.getParameter("rentID"));
-//			System.out.println("承租者會員編號 : " + rentID);
-
 			Integer leaseID = new Integer(req.getParameter("leaseID"));
-//			System.out.println("出租者會員編號 : " + leaseID);
-
 			try {
 				String prodName = req.getParameter("prodName");
-
-//			System.out.println("商品名稱 : " + prodName);	
 				Integer prodID = new Integer(req.getParameter("prodID"));
-//			System.out.println("商品編號 :" + prodID);
 
 				/*************************** 日期部分 ******************************/
 				Date date = new Date();
 				long ord = date.getTime();
 				Timestamp ordDate = new Timestamp(ord);
-
-//			System.out.println("訂單日期 : " + ordDate);
 				DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 				java.sql.Date estStart = java.sql.Date.valueOf(req.getParameter("estStart"));
-//			System.out.println("預定租借起日 : "+ estStart);
 
 				java.sql.Date estEnd = java.sql.Date.valueOf(req.getParameter("estEnd"));
-//			System.out.println("預定租借訖日 : "+estEnd);		
 
 				Integer rentDays = new Integer(req.getParameter("rentDays"));
-//			System.out.println("承租天數 : " + rentDays);	
 
 				/******************** 付款資訊 ******************/
 				Integer payID = new Integer(req.getParameter("payID"));
-				System.out.println("付款方式編碼 : " + payID);
 
 				String strcp = req.getParameter("couponID").trim();
 				Integer couponID = null;
 				if (strcp != null && strcp.length() != 0) {
 					couponID = new Integer(strcp);
-//				System.out.println("折價券編碼 : " + couponID);	
 				}
 
 				Integer storeCode = new Integer(req.getParameter("code711"));
-//			System.out.println("預設物流 : " + storeCode);
 
 				Integer prodPrice = new Integer(req.getParameter("prodPrice"));
-//			System.out.println("商品小計 :" + prodPrice);	
 
 				Integer shipFee = new Integer(req.getParameter("shipFee"));
-//			System.out.println("運費 : " + shipFee);
 
 				Integer ordPrice = new Integer(req.getParameter("ordPrice"));
-//			System.out.println("訂單金額 :" + ordPrice);	
 
 				/************* 存入VO **************/
 				OrderMasterVO omVO = new OrderMasterVO();
@@ -701,9 +681,6 @@ public class OrderMasterServlet extends HttpServlet {
 				omVO.setProdPrice(prodPrice); // 商品小計
 				omVO.setShipFee(shipFee); // 運費
 				omVO.setOrdPrice(ordPrice); // 訂單金額
-//				omVO.setQrcode(in2b);
-
-//				System.out.println("訂單存入");
 
 				/************* 存入訂單明細VO ***********/
 				System.out.println(req.getSession().getAttribute("list1"));
@@ -715,7 +692,6 @@ public class OrderMasterServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("OrderMasterVO", omVO); // 含有輸入格式錯誤的VO物件,也存入req
 					req.setAttribute("OrderListVO", olVO);
-//					System.out.println("這裡");
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/addOrderMaster.jsp");
 					failureView.forward(req, res);
 					return;
@@ -724,8 +700,6 @@ public class OrderMasterServlet extends HttpServlet {
 				/*********************** 開始新增 ************************/
 				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 				omdao.inesetWithList(omVO, list);
-//				System.out.println("訂單+明細新增");		
-
 				/*********************** 產生QRcodecode *************************/
 				byte[] in2b = null;
 				if (payID == 2) {
@@ -740,10 +714,7 @@ public class OrderMasterServlet extends HttpServlet {
 					Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 					hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 					hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
-//					String filePath = "C:\\javawork";
-//					String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
-//					Path path = FileSystems.getDefault().getPath(filePath, fileName);
-					
+
 					BitMatrix matrix;
 
 					try {
@@ -752,27 +723,16 @@ public class OrderMasterServlet extends HttpServlet {
 						// 把產生的QRCode存到指定的目錄
 						ByteArrayOutputStream baos = new ByteArrayOutputStream();
 						MatrixToImageWriter.writeToStream(matrix, format, baos);
-//						MatrixToImageWriter.writeToPath(matrix, format, path);					
-						
-//						File file = new File(path.toString());
-//						InputStream input = new FileInputStream(file);
-						
-//						byte[] buff = new byte[100];
-//						int length = 0;
-//						while ((length = input.read(buff, 0, 100)) > 0) {
-//							baos.write(buff, 0, length);
-//						}
-						
+
 						in2b = baos.toByteArray();
-						baos.flush();	
+						baos.flush();
 						baos.close();
-//						input.close();
 
 						omdao = new OrderMasterDAOImpl();
 						OrderMasterVO qrcodeOM = omdao.findOrderMasterByPK(QRcofeordID);
 						qrcodeOM.setQrcode(in2b);
 						System.out.println(in2b);
-						
+
 						omdao.addQRCode(qrcodeOM);
 
 					} catch (WriterException e) {
@@ -784,12 +744,10 @@ public class OrderMasterServlet extends HttpServlet {
 
 				MemcouponDAO mcdao = new MemcouponDAO();
 				List<MemcouponVO> mclist = mcdao.getMemberid(rentID);
-//				System.out.println("接收的折價券編號" + couponID);
 				for (MemcouponVO mcVO : mclist) {
 					if (mcVO.getCoupon_id().equals(couponID)) {
 						mcVO.getMem_coupon_id();
 						Integer mem_coupon_id = mcVO.getMem_coupon_id();
-//						System.out.println("找該會員的折價券" + mem_coupon_id);
 
 						mcdao.findByPrimaryKey(mem_coupon_id);
 					}
@@ -809,23 +767,17 @@ public class OrderMasterServlet extends HttpServlet {
 						System.out.println("ProdID" + cartVO.getProdID());
 						if (cartVO.getProdID().equals(prodID)) {
 							jedis.lrem("member" + memberID, 1, item);
-//							System.out.println("購物車刪除成功");
 						}
 					}
 					jedis.close();
 				}
 
-//				req.getRequestDispatcher("/front_end/order/ECorder.html").forward(req, res);
-//				http://localhost:8081/TFA104G1/front_end/order/ECorder.html
-
 				/************* 綠界串接 ***********/
-//				System.out.println("準備進綠界");
 				AllInOne all = new AllInOne("");
 				AioCheckOutALL obj = new AioCheckOutALL(); // 產生訂單
 				String ordDateNum = String.valueOf(ord); // 產生訂單日期long值
 				Integer ordForEc = list.get(0).getOrdID();
 				System.out.println("OrderMaster 生成的訂單" + ordForEc);
-//				for (OrderListVO ec : list) {
 				System.out.println("727 取得訂單編號" + ordForEc);
 
 				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -851,18 +803,6 @@ public class OrderMasterServlet extends HttpServlet {
 
 				req.getRequestDispatcher("/front_end/order/ECpage.jsp").forward(req, res);
 
-//				}
-				/*********************** 新增完成準備轉交 ************************/
-//				String url = "/front_end/order/listAllOrderForRent.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-//				req.removeAttribute("list1");
-
-//				String info = obj.getPaymentInfoURL();
-//				System.out.println(info);
-//				String order = obj.getOrderResultURL();
-//				System.out.println(order);
-
 			} catch (Exception e) {
 				System.out.println("例外");
 				e.printStackTrace();
@@ -872,7 +812,6 @@ public class OrderMasterServlet extends HttpServlet {
 
 			}
 		}
-
 
 		if ("get_Status_Display_Manager".equals(action)) {
 			List<String> errorMsgs = new LinkedList<String>();
