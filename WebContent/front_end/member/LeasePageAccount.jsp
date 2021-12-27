@@ -125,15 +125,21 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 50%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
-		table, th, td {
-			border: 1px solid #CCCCFF;
-		}
+	table, th, td {
+	border: 1px solid lightgrey;
+}
+		th, td {
+	height: 50px;
+	padding: 3px;
+	text-align: center;
+		font-size:20px;
+}
 		</style>
 	</head>
 	<body bgcolor='white'>
@@ -153,34 +159,27 @@
 				
 					<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						<h1>我的銀行帳號</h1>
-						<div>如有款項須轉帳匯款給您，您的收款帳戶資訊</div>
+						<div  style="font-size:22px">如有款項須轉帳匯款給您，您的收款帳戶資訊</div>
 
 						<hr>
 						<table>
 						<jsp:useBean id="bankSvc" scope="page" class="com.member.model.BankService" />
 								<tr>
-									<td>金融機構:<font color=red><b>*</b></font></td>
+									<td><font color= #191561 ><b>金融機構 </b></font></td>
 									<td><select size="1" name="bankCode">
 										<c:forEach var="bankVO" items="${bankSvc.all}">
 											<option value="${bankVO.code}" ${(memberVO.bankCode==bankVO.code)?'selected':'' } >${bankVO.code} ${bankVO.chineseName}
 										</c:forEach>
 									</select></td>
 								</tr>
-								<%-- <tr>
-								<td>銀行代碼 : <font color=red><b>*</b></font></td>
-									<td><input type="TEXT" name="bankCode" size="45" value="${memberVO.bankCode}" /></td>	
-								</tr>
-								<tr>
-									<td>銀行名稱 : </td>
-									<td> <input type="TEXT" name="bankCode" size="45" value="${memberVO.bankCode}" /></td>
-								</tr>--%>
+
 								<tr> 
-									<td>銀行帳號 : </td>
-									<td><input type="TEXT" name="bankAccount" size="45" value="${memberVO.bankAccount}" /></td>
+									<td><font color= #191561 ><b>銀行帳號 </b></font></td>
+									<td><input type="TEXT" name="bankAccount" size="45.5" value="${memberVO.bankAccount}" /></td>
 								</tr>
 								<tr>
-									<td>戶名 : </td>
-									<td><input type="TEXT" name="accountName" size="45"	value="${memberVO.accountName}" /></td>
+									<td><font color= #191561 ><b>戶名 </b></font></td>
+									<td><input type="TEXT" name="accountName" size="45.5"	value="${memberVO.accountName}" /></td>
 								</tr>
 
 			
