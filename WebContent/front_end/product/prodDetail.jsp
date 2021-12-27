@@ -8,7 +8,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <style>
 span.msgIcon {
     padding-left: 80px;
