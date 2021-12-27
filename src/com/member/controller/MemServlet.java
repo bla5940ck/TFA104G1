@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.product.model.MailService;
+import com.promo.model.PromoService;
+import com.promo.model.PromoVO;
 
 @WebServlet("/member/MemServlet")
 public class MemServlet extends HttpServlet {
@@ -171,7 +174,7 @@ public class MemServlet extends HttpServlet {
 					}
 				}		
 		
-//修改		
+//點選會員修改		
 		if ("updateMember".equals(action)) { // 來自listAllEmp.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -201,7 +204,113 @@ public class MemServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+
+//實際單筆會員修改
+		if ("update".equals(action)) { // 來自update_promo.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+				Integer memberId = new Integer(req.getParameter("memberId"));
+
+//				Integer foul = 1;
+				Integer foul = new Integer(req.getParameter("foul"));
+				System.out.println("違規"+foul);
 		
+				 
+
+//				java.sql.Date birthday = null;
+//				try {
+//					birthday = java.sql.Date.valueOf(req.getParameter("birthday").trim());
+//				} catch (IllegalArgumentException e) {
+//					birthday = new java.sql.Date(System.currentTimeMillis());
+//					errorMsgs.add("請輸入日期!");
+//				}
+
+				
+
+				Double rentScore = new Double (req.getParameter("rentScore").trim());
+				Double leaseScore = new Double (req.getParameter("leaseScore").trim());
+				Integer status = Integer.valueOf(req.getParameter("status"));
+				System.out.println("狀態"+status);
+				System.out.println("出租評價"+rentScore);
+				System.out.println("承租評價"+leaseScore);
+				
+//				MemberService memSvc1 = new MemberService();	
+//				MemberVO memberVO1 = memSvc1.getOneMember(memberId);
+//				String bankCode = memberVO1.getBankCode();
+//				String email =memberVO1.getEmail();
+//				String loginId =memberVO1.getLoginId();
+//				String idcn= memberVO1.getIdcn();
+//				String phoneNum = memberVO1.getPhoneNum();
+//				String password = memberVO1.getPassword();
+//				String name = memberVO1.getName();
+//				String nickName = memberVO1.getNickName();
+//				String accountName= memberVO1.getAccountName();
+//				String address = memberVO1.getAddress();
+//				String bankAccount = memberVO1.getBankAccount();
+//				Timestamp creatDate = memberVO1.getCreatDate();
+//				byte[] pic = memberVO1.getPic();
+//				byte[] idcB=memberVO1.getIdcB();
+//				byte[] idcF=memberVO1.getIdcF();
+						
+				MemberVO memberVO = new MemberVO();
+				memberVO.setMemberId(memberId);
+//				memberVO.setBirthday(birthday);
+				memberVO.setFoul(foul);
+				memberVO.setLeaseScore(leaseScore);
+				memberVO.setRentScore(rentScore);
+				memberVO.setStatus(status);
+//				memberVO.setName(name);
+//				memberVO.setAccountName(accountName);
+//				memberVO.setAddress(address);
+//				memberVO.setBankAccount(bankAccount);
+//				memberVO.setBankCode(bankCode);
+//				memberVO.setCreatDate(creatDate);
+//				memberVO.setEmail(email);
+//				memberVO.setIdcB(idcB);
+//				memberVO.setIdcF(idcF);
+//				memberVO.setIdcn(idcn);
+//				memberVO.setLoginId(loginId);
+//				memberVO.setNickName(nickName);
+//				memberVO.setPassword(password);
+//				memberVO.setPhoneNum(phoneNum);
+//				memberVO.setPic(pic);
+				
+				
+				
+
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的promoVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/updateOneMember.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+
+				/*************************** 2.開始修改資料 *****************************************/
+				MemberService memSvc = new MemberService();
+				memberVO = memSvc.updateBackMember(memberId, foul, status, rentScore, leaseScore);
+				memberVO = memSvc.getOneMember(memberId);
+
+				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的memberVO物件,存入req
+				String url = "/back_end/member/updateOneMember.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOne_promo.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/member/updateOneMember.jsp");
+				failureView.forward(req, res);
+			}
+		}
+
 		
 
 //全部查詢停權		
