@@ -305,19 +305,31 @@ public class ManagerServlet extends HttpServlet {
 					String user = list.get(i).getManagerUser();
 					String password = list.get(i).getManagerPassword();
 					Integer id = list.get(i).getManagerID();
+					Integer status = list.get(i).getStatus();
 
 //					System.out.println("帳號 : " + user);
 //					System.out.println("密碼 : " + password);
 
 					if ((managerUser.trim().equals(user)) && (managerPassword.trim().equals(password))) {
-
+						if(status == 1) {
 						System.out.println(req.getParameter("managerUser") + "你好");
 
 						req.getSession().setAttribute("managerID", id);
 						req.getSession().setAttribute("managerUser", user);
 						req.getSession().setAttribute("managerPassword", password);
 						System.out.println("loginServlet: "+(String)req.getSession().getAttribute("location"));
-						res.sendRedirect((String)req.getSession().getAttribute("location"));
+						}else {
+							errorMsgs.add("您已經被停用" );
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/managerlogin.jsp");
+							failureView.forward(req, res);
+							return;
+						}
+						if(req.getSession().getAttribute("location")!=null) {
+							res.sendRedirect((String)req.getSession().getAttribute("location"));							
+						}else {
+							res.sendRedirect("/TFA104G1/back_end/manager/select_page.jsp");
+							
+						}
 						
 						return;
 					}
