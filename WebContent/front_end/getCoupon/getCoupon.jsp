@@ -65,7 +65,7 @@ input.memberId {
 										title : "領取成功",
 										text : "可以在結帳時使用折價券",
 										icon : "success",
-										button : "朕知道了",
+										button : "確認",
 									});
 								</script>
 							</c:if>
@@ -76,7 +76,7 @@ input.memberId {
 										title : "領取失敗",
 										text : "相同的折價券只能領一次",
 										icon : "error",
-										button : "朕知道了",
+										button : "確認",
 									});
 								</script>
 							</c:if>
@@ -87,7 +87,7 @@ input.memberId {
 								  title: "歡迎使用折價券領取專區",
 								  text: "請選取想要的價券並按下'領取'按鈕'",
 								  icon: "info",
-								  button: "朕知道了",});
+								  button: "確認",});
 			</script>
 		</c:if>
 
