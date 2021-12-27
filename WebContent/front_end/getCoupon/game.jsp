@@ -125,7 +125,7 @@ btn1, btn2, btn3, btn4 {
 									  title: "領取成功",
 									  text: "可以在結帳時使用折價券",
 									  icon: "success",
-									  button: "確認",});
+									  button: "朕知道了",});
 								</script>
 
 	</c:if>
@@ -136,7 +136,7 @@ btn1, btn2, btn3, btn4 {
 									  title: "領取失敗",
 									  text: "相同的折價券只能領一次",
 									  icon: "error",
-									  button: "確認",
+									  button: "朕知道了",
 									});
 								</script>
 	</c:if>
@@ -147,7 +147,7 @@ btn1, btn2, btn3, btn4 {
 								  title: "挑戰高分獲取更多折價券吧！",
 								  text: "點擊畫面左邊'遊戲開始'即可開始挑戰",
 								  icon: "info",
-								  button: "確認",});
+								  button: "朕知道了",});
 								</script>
 	</c:if>
 
