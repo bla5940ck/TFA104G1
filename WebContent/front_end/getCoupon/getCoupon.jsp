@@ -81,6 +81,16 @@ input.memberId {
 								</script>
 							</c:if>
 
+		<c:if test="${b==null}">
+			<script>
+								swal({
+								  title: "歡迎使用折價券領取專區",
+								  text: "請選取想要的價券並按下'領取'按鈕'",
+								  icon: "info",
+								  button: "確認",});
+			</script>
+		</c:if>
+
 							<br> <br>
 
 							<center>

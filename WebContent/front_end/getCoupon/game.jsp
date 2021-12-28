@@ -140,6 +140,16 @@ btn1, btn2, btn3, btn4 {
 									});
 								</script>
 	</c:if>
+	
+	<c:if test="${b==null}">
+		<script>
+								swal({
+								  title: "挑戰高分獲取更多折價券吧！",
+								  text: "點擊畫面左邊'遊戲開始'即可開始挑戰",
+								  icon: "info",
+								  button: "確認",});
+								</script>
+	</c:if>
 
 	<nav>
 		<h1></h1>
@@ -327,21 +337,27 @@ btn1, btn2, btn3, btn4 {
 // 							    	return;
 // 							    }
 							    
-							    if (this.collision(nx, ny) == true && snake.stage.score > 199) {
+							    if (this.collision(nx, ny) == true && snake.stage.score > 99) {
 							    	console.log("結束了");
 									document.getElementById("btn4").disabled = false
+// 									document.getElementById("btn3").disabled = false
+// 									document.getElementById("btn2").disabled = false
+// 									document.getElementById("btn1").disabled = false
 									return;
 							    }
 							    
-							 	if (this.collision(nx, ny) == true && snake.stage.score > 99) {
+							 	if (this.collision(nx, ny) == true && snake.stage.score > 9) {
 							    	console.log("結束了");
 									document.getElementById("btn3").disabled = false
+// 									document.getElementById("btn2").disabled = false
+// 									document.getElementById("btn1").disabled = false
 									return;
 							    }
 							    
 							     if (this.collision(nx, ny) == true && snake.stage.score > 1) {
 							    	console.log("結束了");
 									document.getElementById("btn2").disabled = false
+// 									document.getElementById("btn1").disabled = false
 									return;
 							    }
 							     
@@ -427,7 +443,11 @@ btn1, btn2, btn3, btn4 {
 							 * Window Load
 							 */
 // 							window.onload = function() {
-// 							  var snake = new Game.Snake('stage', {fps: 100, size: 4});
+// 								swal({
+// 									  title: "挑戰高分獲取更多折價券吧！",
+// 									  text: "點擊畫面左邊'遊戲開始'即可開始挑戰",
+// 									  icon: "info",
+// 									  button: "確認",});
 // 							};
 							
 							// 遊戲開始					
@@ -435,9 +455,10 @@ btn1, btn2, btn3, btn4 {
 
 								btnre.onclick = function(elementId, conf){
 									 var snake = new Game.Snake('stage', {fps: 100, size: 4});
+									 btnre.onclick = null;
 								};
-							
-							
+							 
+							 
 </script>
 		<h1></h1>
 		<center>
@@ -526,7 +547,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿100分</td>
+					<td>滿10分</td>
 					<td>達人</td>
 					<td>折20元</td>
 					<td>
@@ -536,7 +557,7 @@ btn1, btn2, btn3, btn4 {
 								type="hidden" name="member_id" value="<%=memID%>"> <input
 								type="hidden" name="category_id" value="1"> <input
 								type="hidden" name="coupon_id" value="3"> <input
-								type="hidden" name="coupon_name" value="滿100分折20元"> <input
+								type="hidden" name="coupon_name" value="滿10分折20元"> <input
 								type="hidden" name="discount" value="20"> <input
 								type="hidden" name="status" value="0"> <input
 								type="hidden" name="start_date" value=""> <input
@@ -546,7 +567,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿200分</td>
+					<td>滿100分</td>
 					<td>神</td>
 					<td>折50元</td>
 					<td>
