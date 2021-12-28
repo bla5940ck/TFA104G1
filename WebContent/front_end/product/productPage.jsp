@@ -395,23 +395,7 @@
             </div>
             <div class="aa-product-catg-pagination">
               <nav>
-                <ul class="pagination">
-                  <li>
-                    <a href="<%=request.getRequestURI()%>?page=${param.page>1 ? param.page-1 : 1}" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li><a href="<%=request.getRequestURI()%>">1</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=2">2</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=3">3</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=4">4</a></li>
-                  <li><a href="<%=request.getRequestURI()%>?page=5">5</a></li>
-                  <li>
-                    <a href="<%=request.getRequestURI()%>?page=${param.page!=null? 1+param.page :2}" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
+               
               </nav>
             </div>
           </div>
@@ -441,6 +425,11 @@
               </div>
            
            
+            <div class="">
+              <h3>地圖搜尋商品</h3>
+                         <a href="/TFA104G1/front_end/letswrite-google-map-api-5-master/mapProdSearch.jsp"><img style="width:60px" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/google-maps-%E5%A4%96%E9%80%81-%E6%96%B0%E5%8A%9F%E8%83%BD-1586248853.jpg?crop=0.488xw:0.974xh;0.259xw,0&resize=640:*"></a>
+   
+              </div>
            
            
             

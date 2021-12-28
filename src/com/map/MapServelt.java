@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.product.jedis.JedisPoolUtil;
 import com.product.model.ProdService;
 import com.product.model.ProdVO;
@@ -29,7 +30,7 @@ public class MapServelt extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html; charset=utf-8");
-
+		
 		// 最外層
 		JSONObject jsonObject4 = new JSONObject();
 
@@ -63,6 +64,7 @@ public class MapServelt extends HttpServlet {
 //				System.out.println(p.getProdID());
 				List<String> listPosition = new ArrayList<>();
 				
+				//從jedis取得陣列後，找到會員編號一樣的 給予同樣的經緯度
 				for(int j=0;j<jsonArray.length();j++) {
 					if(Integer.valueOf(((JSONObject)(jsonArray.get(j))).getString("memId")).equals(p.getMemberID())) {
 						System.out.println("123");
@@ -92,7 +94,7 @@ public class MapServelt extends HttpServlet {
 			req.getSession().setAttribute("mapDate", jsonObject4);
 		}
 		// 當搜尋完後跳轉 得到session存的資料
-		if ("getMapDate".equals(req.getParameter("action"))) {
+		if ("getMapData".equals(req.getParameter("action"))) {
 			req.getSession().getAttribute("mapDate");
 			if (req.getSession().getAttribute("mapDate") != null) {
 //				System.out.println(req.getSession().getAttribute("mapDate"));
@@ -110,6 +112,40 @@ public class MapServelt extends HttpServlet {
 			res.sendRedirect("/TFA104G1/front_end/letswrite-google-map-api-5-master/mapProdSearch.jsp");
 			return;
 		}
+		
+		
+		
+		
+		if("dataMap".equals(req.getParameter("action"))) {
+			System.out.println("進");
+			String lat = req.getParameter("lat");
+			String lng = req.getParameter("lng");
+			String prodID = req.getParameter("prodID");
+			Jedis jedis2 = pool.getResource();
+			
+			
+			
+			System.out.println("經度:"+lat + "  緯度:" + lng +"  商品編號:" +prodID);
+			
+			String mapJson ="{lat:" + lat + ",lng:" + lng + ",memId:1" + "}";
+			String dataStr=null;
+			JSONArray jsonArray= new JSONArray();
+			if(jedis2.get("dataMap")!=null) {
+				dataStr = jedis2.get("dataMap");
+				System.out.println(dataStr);
+				jsonArray = new JSONArray(dataStr);
+				
+			}
+			jsonArray.put(mapJson);
+			jedis2.del("dataMap");
+			jedis2.append("dataMap", jsonArray.toString());
+			
+			
+			jedis2.close();
+		}
+		
+		
+		
 
 	}
 

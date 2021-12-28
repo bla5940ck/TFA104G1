@@ -124,10 +124,14 @@ public class CartServlet extends HttpServlet {
 			jedis = pool.getResource();
 
 			if (memberID != null) {
+				System.out.println("進memberID!=null");
 				List<String> cart = jedis.lrange("member" + memberID, 0, jedis.llen("member" + memberID));
+				System.out.println("購物車數量"+cart.size());
+				System.out.println(prodID);
 				for (String item : cart) {
 					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
-					if (cartVO1.getProdID() == prodID) {
+					System.out.println(cartVO1.getProdID());
+					if (cartVO1.getProdID().equals(prodID)) {
 						System.out.println("商品刪除: " +prodID);
 						System.out.println("商品刪除Redis: " +cartVO1.getProdID());
 						System.out.println("會員編號: " +memberID);
