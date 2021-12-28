@@ -346,7 +346,7 @@ btn1, btn2, btn3, btn4 {
 									return;
 							    }
 							    
-							 	if (this.collision(nx, ny) == true && snake.stage.score > 4) {
+							 	if (this.collision(nx, ny) == true && snake.stage.score > 9) {
 							    	console.log("結束了");
 									document.getElementById("btn3").disabled = false
 // 									document.getElementById("btn2").disabled = false
@@ -354,7 +354,7 @@ btn1, btn2, btn3, btn4 {
 									return;
 							    }
 							    
-							     if (this.collision(nx, ny) == true && snake.stage.score > 2) {
+							     if (this.collision(nx, ny) == true && snake.stage.score > 1) {
 							    	console.log("結束了");
 									document.getElementById("btn2").disabled = false
 // 									document.getElementById("btn1").disabled = false
@@ -527,7 +527,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿3分</td>
+					<td>滿2分</td>
 					<td>不錯喔</td>
 					<td>折10元</td>
 					<td>
@@ -537,7 +537,7 @@ btn1, btn2, btn3, btn4 {
 								type="hidden" name="member_id" value="<%=memID%>"> <input
 								type="hidden" name="category_id" value="1"> <input
 								type="hidden" name="coupon_id" value="2"> <input
-								type="hidden" name="coupon_name" value="滿3分折10元"> <input
+								type="hidden" name="coupon_name" value="滿2分折10元"> <input
 								type="hidden" name="discount" value="10"> <input
 								type="hidden" name="status" value="0"> <input
 								type="hidden" name="start_date" value=""> <input
@@ -547,7 +547,7 @@ btn1, btn2, btn3, btn4 {
 					</td>
 				</tr>
 				<tr>
-					<td>滿5分</td>
+					<td>滿10分</td>
 					<td>達人</td>
 					<td>折20元</td>
 					<td>
@@ -557,7 +557,7 @@ btn1, btn2, btn3, btn4 {
 								type="hidden" name="member_id" value="<%=memID%>"> <input
 								type="hidden" name="category_id" value="1"> <input
 								type="hidden" name="coupon_id" value="3"> <input
-								type="hidden" name="coupon_name" value="滿5分折20元"> <input
+								type="hidden" name="coupon_name" value="滿10分折20元"> <input
 								type="hidden" name="discount" value="20"> <input
 								type="hidden" name="status" value="0"> <input
 								type="hidden" name="start_date" value=""> <input
