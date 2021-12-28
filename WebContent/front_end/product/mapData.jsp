@@ -10,6 +10,7 @@
 <head>
 <style>
 #map {
+ 
   height: 100%;
 }
 
@@ -47,39 +48,44 @@ body {
     <script src="./index.js"></script>
   </head>
   <body>
+  
     <div id="floating-panel">
       <input id="hide-markers" type="button" value="Hide Markers" />
       <input id="show-markers" type="button" value="Show Markers" />
       <input id="delete-markers" type="button" value="Delete Markers" />
+      <input style="color:red" class="submit1" type="button" value="提交" />
+      <form class="form1"action="/TFA104G1/MapServelt">
+		<input class="latInput" name="lat" type="hidden" value=""> <input
+			class="lngInput" name="lng" type="hidden" value=""> 
+			<input class="address" name="address"type="hidden" value="">
+			<input type="hidden" name="action" value="dataMap">
+			 
+	</form>
+      <table  style="border:3px #cccccc solid;text-align: center;" cellpadding="10" border='1'>
+		<tr>
+			<td>經度</td>
+			<td>緯度</td>
+			<td>地址</td>
+		</tr>
+		<tr>
+			<td class="latTd"></td>
+			<td class="lngTd"></td>
+			<td class="address"></td>
+		</tr>
+	</table>
     </div>
+    
     <div id="map"></div>
-    <p>Click on the map to add markers.</p>
+    
+   	    
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyvYui5OBhj7sjRtoRzCGq4XJtZxLrHM0&callback=initMap&v=weekly"
       async
     ></script>
-    <table  style="border:3px #cccccc solid;text-align: center;" cellpadding="10" border='1'>
-		<tr>
-			<td>經度</td>
-			<td>緯度</td>
-			<td>商品編號</td>
-		</tr>
-		<tr>
-			<td class="latTd"></td>
-			<td class="lngTd"></td>
-			<td class="prodIDTd"></td>
-		</tr>
-	</table>
-	<form action="/TFA104G1/MapServelt">
-		<input class="latInput" name="lat" type="hidden" value=""> <input
-			class="lngInput" name="lng" type="hidden" value=""> <input
-			class="prodIDInput" name="prodID" type="hidden" value="1"> <input
-			type="hidden" value="">
-			<input type="hidden" name="action" value="dataMap">
-			 <input type="submit">
-	</form>
+
+	
 	
 	
 	<script type="text/javascript">
@@ -87,10 +93,11 @@ body {
 	let markers = [];
 
 	function initMap() {
-	  const haightAshbury = { lat: 37.769, lng: -122.446 };
-
+	  const haightAshbury = { lat: 25.0521328, lng: 121.5410642 };
+	  geocoder = new google.maps.Geocoder();
+	  popup = new google.maps.InfoWindow();
 	  map = new google.maps.Map(document.getElementById("map"), {
-	    zoom: 12,
+	    zoom: 14,
 	    center: haightAshbury,
 	    mapTypeId: "terrain",
 	  });
@@ -117,12 +124,37 @@ body {
 	  const marker = new google.maps.Marker({
 	    position,
 	    map,
+	    
 	  });
-
+	  geocoder.geocode({
+          'latLng': position
+        }, function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                if (results) {
+                    // 將取得的資訊傳入 marker 訊息泡泡
+                    showAddress(results[0], marker);
+                }
+            } else {
+                alert("Reverse Geocoding failed because: " + status);
+            }
+        });
+	  
+	  
+	  
+	  hideMarkers();
+	  markers = [];
 	  markers.push(marker);
-	  console.log(position.lat);
-	  console.log(position.lng);
-	  console.log(markers[0].position);
+	  var str = JSON.stringify(position);
+// 	  console.log(JSON.stringify(position));
+
+
+	  console.log("lat "+JSON.parse(str).lat);
+	  console.log("lng "+JSON.parse(str).lng);
+	  $('td.latTd').text(JSON.parse(str).lat);
+		$('td.lngTd').text(JSON.parse(str).lng);
+		$('input.latInput').val(JSON.parse(str).lat);
+		$('input.lngInput').val(JSON.parse(str).lng);
+	  	
 	}
 	
 	
@@ -151,7 +183,15 @@ body {
 	}
 	
 	
-	
+	function showAddress(result, marker) {
+        map.setCenter(marker.getPosition());
+        // 顯示傳入的地址資訊
+        var popupContent = '<b>地址: </b> ' + result.formatted_address;
+        popup.setContent(popupContent);
+        popup.open(map, marker);
+        $('td.address').text(result.formatted_address);
+        $('input.address').val(result.formatted_address);
+    }
 	
 	</script>
 	
@@ -174,10 +214,7 @@ body {
 		// 使用者允許抓目前位置，回傳經緯度
 		function success(position) {
 			console.log(position.coords.latitude, position.coords.longitude);
-			$('td.latTd').text(position.coords.latitude);
-			$('td.lngTd').text(position.coords.longitude);
-			$('input.latInput').val(position.coords.latitude);
-			$('input.lngInput').val(position.coords.longitude);
+			
 			
 		}
 
@@ -187,5 +224,11 @@ body {
 	} else {
 		alert('Sorry, 你的裝置不支援地理位置功能。')
 	}
+	
+	
+	
+	$("input.submit1").click(function(){
+		$("form.form1").submit();
+	});
 </script>
 </html>
