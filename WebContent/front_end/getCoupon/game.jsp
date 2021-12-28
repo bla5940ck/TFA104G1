@@ -164,7 +164,9 @@ btn1, btn2, btn3, btn4 {
 			</h3>
 			<br> <input type="hidden" name="finalScore" class="finalScore">
 
-			<a id="restart" class="aa-browse-btn">遊戲開始</a>
+ 			<a id="restart" class="aa-browse-btn">遊戲開始</a>
+			<br>
+<!-- 			<a id="restart" class="aa-browse-btn" href="javascript:restart()">遊戲開始</a> -->
 		</center>
 
 
@@ -438,17 +440,6 @@ btn1, btn2, btn3, btn4 {
 							  setInterval(function() {gameDraw.drawStage();}, snake.stage.conf.fps);
 							};
 
-
-							/**
-							 * Window Load
-							 */
-// 							window.onload = function() {
-// 								swal({
-// 									  title: "挑戰高分獲取更多折價券吧！",
-// 									  text: "點擊畫面左邊'遊戲開始'即可開始挑戰",
-// 									  icon: "info",
-// 									  button: "確認",});
-// 							};
 							
 							// 遊戲開始					
 							 var btnre = document.getElementById('restart');
@@ -461,11 +452,7 @@ btn1, btn2, btn3, btn4 {
 							 
 </script>
 		<h1></h1>
-		<center>
-			<a class="aa-browse-btn"
-				href="/TFA104G1/front_end/product/homePage.jsp"><span
-				class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
-		</center>
+		<center><a class="aa-browse-btn" href="javascript:history.back()"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回上一頁</a></center>
 		<br>
 	</section>
 	<aside>

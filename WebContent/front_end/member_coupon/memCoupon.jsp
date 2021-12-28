@@ -14,86 +14,93 @@
 <head>
 <title>我的折價券</title>
 <style>
-body {
-	margin: 0;
-	padding: 10px;
-}
+ 		* { 
+ 			box-sizing: border-box; 
+ 			text-decoration: none; 
+ 			list-style: none; 
+ 		} 
+		
+		body {
+			margin: 0;
+			padding: 0px;
+		}
+		
+ 		img { 
+ 			max-width: 100%; 
+ 		} 
+		
+ 		header.header { 
+ 			background-color: #ddd; 
+ 			width: 100%; 
+ 			margin: 0 auto 0px auto; 
+ 			border: 1px solid #999; 
+ 		} 
+		
+			
+		div.main_content {
+			width: 100%;
+			margin: 0 auto;
+			font-size: 0;
+		}
 
-img {
-	max-width: 100%;
-}
+		/*-------------------aside區域------------------- */
+		aside.aside {
+			
+			width: 200px;
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			margin-right: 6px;
+			margin-left: 4px;
+			border: 1px solid #999 ;
+			border-color: transparent #191561 transparent transparent;
+		}
+		
+		/*--------------------main區域-------------------- */
+		main.main {
+			background-color: white;
+			width: calc(100% - 200px - 10px);
+			display: inline-block;
+			vertical-align: top;
+			font-size: 1rem;
+			border: 1px solid white;
+			padding: 0px;
+		}
+				
+		footer.footer {
+			background-color: #ddd;
+			width: 100%;
+			margin: 10px auto 0 auto;
+			border: 1px solid #999;
+		}
+		
+			/*--------------------table區域-------------------- */
+		table {
+			width: 50%;
+			background-color: white;
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+		
+		table, th, td {
+			border: 1px solid #CCCCFF;
+		}
+		th, td{
+		height: 50px;
+		text-align: center;
+		}
+		</style>
 
-button {
-	font-size: 13px;
-	outline-width: 100%;
-	background-color: white;
-}
+</head>
+<body bgcolor='white'>
 
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-}
+	<%@ include file="/includeFolder/header.file"%>
 
-/*-------------------aside區域------------------- */
-aside.aside {
-	width: 150px;
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-	text-align: center;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: white;
-	width: calc(100% - 150px - 10px);
-	height: 620px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-table {
-	width: 50%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table, th, td {
-	border: 1px solid lightgrey;
-}
-
-th, td {
-	height: 50px;
-	padding: 5px;
-	text-align: center;
-}
-</style>
-
-<body>
-		<%@ include file="/includeFolder/header.file"%>
-		<div class="main_content">
+	<div class="main_content">
 	<%@ include file="/includeFolder/rentMemberAside.file"%>
-<!-- 錯誤表列 -->
-	<main class="main" >
 
-<!-- / catg header banner section -->
+		<main class="main" >
 
-<!-- Cart view section -->
-<!-- 	<section id="aa-myaccount"> -->
-		<div class="container">
-			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
-<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
-						<div class="row" id="row2">
-							<!--<div class="col-md-6" id="col-md-6"> -->
-								<div class="aa-myaccount-login" id="aa-myaccount-login">
 
 <br>
 <br>
@@ -149,27 +156,22 @@ th, td {
 
 							<br> <br>
 							
-								<a class="aa-browse-btn"
-									href="/TFA104G1/front_end/product/homePage.jsp"><span
-									class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
-							
+							<a class="aa-browse-btn" href="javascript:history.back()"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回上一頁</a>
+							</center>
 							<br> <br>
-</center>
-	</div>
-	<!-- 	<footer class="footer"> footer區域 </footer> -->
-	
-								</div>
-						</div>
-						</div>
-					</div>
-				</div>
-<!-- 		</section> -->
-<!-- 		</div> -->
-	<%@ include file="/includeFolder/footer2.file"%>
-</body>
+							</main>
+
+
+</div>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 </script>
+
+
+</div>
+<%@ include file="/includeFolder/footer2.file"%>
+</body>
 </html>
