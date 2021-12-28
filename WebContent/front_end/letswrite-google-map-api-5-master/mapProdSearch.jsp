@@ -196,11 +196,12 @@
 		<button type="button" class="btn btn-info" @click="getCurrent">找目前位置與地圖上地點的距離</button>
           <div class="list-group">
             <div v-for="f in features" class="list-group-item">
+            <a class="prod_a" :href="f.properties.url">商品編號{{ f.properties.id}}
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ f.properties.name }}</h5><br>
                 <h5 class="mb-1">{{ f.properties.productName }}</h5>
                 <small>{{ f.properties.distance_text }}</small>
-              </div>
+              </div></a>
               <p class="mb-1">{{ f.properties.site }}</p>
               <small>{{ f.properties.distance_time }}</small>
             </div>
@@ -277,7 +278,7 @@
                 
 
 
-                
+              
                 Array.prototype.forEach.call(this.features, r => {
 
                   
@@ -295,9 +296,9 @@
                   let infowindow = new google.maps.InfoWindow({
                     content: `<p>${r.properties.name}</p>` // 支援html
                   });
-
-
-                  marker.addListener("click", () => {
+				console.log($('a.prod_a'));
+                 
+				marker.addListener("click", () => {
                       console.log(marker.prodID);
                       window.location.assign("/TFA104G1/front_end/product/prodDetail.jsp?prodID="+marker.prodID);
                       
