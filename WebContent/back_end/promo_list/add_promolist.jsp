@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>專案資料新增 - add_promolist.jsp</title>
+<title>專案資料新增</title>
 
 <style>
 body {

@@ -12,7 +12,10 @@
 <%@page import="com.product.model.*"%>
 <%@page import="java.util.stream.Collectors"%>
 
-
+<!DOCTYPE html>
+<html>
+<head>
+<title>出租者面交訂單</title>
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
@@ -29,8 +32,8 @@
 								stream()
 									.filter(o->o.getLeaseID()==memID)
 										.filter(o->o.getPayID()==2)
-											.filter(o->o.getPayStatus()==1)
-												.filter(o->o.getShipStatus()!=3)
+											.filter(o->o.getShipStatus()==0)
+// 												.filter(o->o.getPayStatus()==1)
 													.collect(Collectors.toList());
 
 	pageContext.setAttribute("list", list2);
@@ -39,9 +42,7 @@
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
 
-<html>
-<head>
-<title>所有訂單資料 - listAllOrderMaster.jsp</title>
+<style>
 <style>
 		* {
 			box-sizing: border-box;
@@ -97,7 +98,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			
+			height:765px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -164,21 +165,70 @@
 		}
 		
 		.cart-img{
-			height: 120px;
-			width: 120px;
+			display: block;
+  			width: 50%;
+  			height: auto;
+  			margin: 0 auto
 			
+		}
+		.dateBtn{
+		    background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
+		.check{
+		    background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
+		.div1{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 100%;
+		}
+		.div2{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 25%;
+		}
+		.div3{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 25%;
+		}
+		.div4{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			position:relative;
+			left:300px;
+			width: 15%;
+		}
+		.div5{
+/* 			border: 1px solid red; */
+			position: absolute;
+			margin-top: 0;
+			display: inline-block;
+			width: 15%;
 		}
 		</style>
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
+		<c:if test="${not empty errorMsgs}">
+			<font style="color: red">請修正以下錯誤:</font>
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li style="color: red">${message}</li>
+				</c:forEach>
+			</ul>
+		</c:if>
 	<div class="main_content">
 	<%@ include file="/includeFolder/leaseMemberAside.file"%>
-
 		<main class="main" >
-		<h3>面交訂單</h3>
-			<div>
-				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
+		<br>
+		<h1>待面交的訂單</h1>
+		 <div>
+		 	<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
 					<b>選擇訂單編號:</b> 
 					<select size="1" name="ordID">
@@ -189,179 +239,117 @@
 						</c:forEach>
 					</select> 
 					<input type="hidden" name="action" value="getOne_For_Display">
-					<input class="aa-browse-btn" type="submit" value="送出">
+					<input class="check" type="submit" value="送出">
 				</FORM>
-
-<%-- 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
-<!-- 					<b>輸入訂單編號 (如1):</b>  -->
-<!-- 					<input type="text" name="ordID">  -->
-<!-- 					<input type="hidden" name="action" value="getOne_For_Display">  -->
-<!-- 					<input type="submit" value="送出"> -->
-<!-- 				</FORM> -->
 			</div>
-			<c:if test="${not empty errorMsgs}">
-				<font style="color: red">請修正以下錯誤:</font>
-				<ul>
-					<c:forEach var="message" items="${errorMsgs}">
-						<li style="color: red">${message}</li>
-					</c:forEach>
-				</ul>
-			</c:if>
-
-<!-- 			<table id="table-1"> -->
-<!-- 				<div> -->
-<%-- 					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/OrderMasterServlet"> --%>
-<!-- 						<tr> -->
-<%-- 							<td><button><a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMasterForRent.jsp">全部</a></button></td> --%>
-<!-- 							<td><button name="ordStatus" value="0">已成立</button></td> -->
-<!-- 							<td><button name="ordStatus" value="1">待歸還</button></td> -->
-<!-- 							<td><button name="ordStatus" value="2">已完成</button></td> -->
-<!-- 							<td><button name="ordStatus" value="9">已取消</button></td> -->
-<!-- 						</tr> -->
-<!-- 						<input type="hidden" name="action" value="get_Status_Display"> -->
-<!-- 					</FORM> -->
-<!-- 				</div> -->
-<!-- 			</table> -->
-
-			<table id="table-1">
-				<tr>
-					<th>訂單編號</th>
-
-					<th>承租者</th>
-					<th>交易方式</th>
-					<th>折價券</th>
-					<th>運送狀態</th>
-					<th>付款狀態</th>
-					<th>訂單狀態</th>
-					<th>訂單日期</th>
-<!-- 					<th>出貨碼</th> -->
-<!-- 					<th>歸還碼</th> -->
-<!-- 					<th>超商碼</th> -->
-
-					<th>出貨日期</th>
-					<th>到貨日期</th>
-					<th>歸還日期</th>
-					<th>承租天數</th>
-
-					<th>訂單金額</th>
-				</tr>
-				<%@ include file="pageForLease.file"%>
-				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
-				<c:choose>
-						<c:when test="${omVO.leaseID == id}">
-
-							<tr>
-								<td>${omVO.ordID}</td>
-
-								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
-
-								<c:choose>
-									<c:when test="${omVO.payID == '1'}">
-										<td>信用卡</td>
-									</c:when>
-									<c:otherwise>
-										<td>面交</td>
-									</c:otherwise>
-								</c:choose>
-
-							<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
-								<c:set var="count" value="0"/>
-									<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
-										<c:if test="${count==0}">
-											<c:choose>
-												<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
-													<td>無</td>
-												</c:when>
-												<c:when test="${true}">
-													<td>${mcVO.coupon_name}</td>
-												</c:when>
-											</c:choose>
-												<c:set var="count" value="1"/>
-										</c:if>
-									</c:forEach>
-
-								<c:choose>
-									<c:when test="${omVO.shipStatus == '0'}">
-										<td>待出貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '1'}">
-										<td>已出貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '2'}">
-										<td>待取貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '3'}">
-										<td>取貨完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>商品遺失</td>
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="${omVO.payStatus == '0'}">
-										<td>待付款</td>
-									</c:when>
-									<c:otherwise>
-										<td>已付款</td>
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="${omVO.ordStatus == '0'}">
-										<td>已成立</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '1'}">
-										<td>待歸還</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '2'}">
-										<td>已完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>已取消</td>
-									</c:otherwise>
-								</c:choose>
-
-								<td><fmt:formatDate value="${omVO.ordDate}"
-										pattern="yyyy-MM-dd" /></td>
-
-<%-- 								<td>${omVO.shipCode}</td> --%>
-<%-- 								<td>${omVO.returnCode}</td> --%>
-<%-- 								<td>${omVO.storeCode}</td> --%>
-
-								<td><fmt:formatDate value="${omVO.shipDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.arrivalDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td><fmt:formatDate value="${omVO.returnDate}"
-										pattern="yyyy-MM-dd" /></td>
-								<td>${omVO.rentDays}</td>
-
-								<td>${omVO.ordPrice}</td>
-								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode"style="margin-bottom: 0px;">
-<%-- 										<button><a href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">開始面交</a></button>  --%>
-										<a class="aa-browse-btn" type="submit" href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">面交</a>
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-										<input type="hidden" name="memID" value=<%=memID%>>
-										<input type="hidden" name="action" value="toQRcode">
-									</FORM>
-								</td>
-								<td>
-									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/OrderListServlet"
-										style="margin-bottom: 0px;">
-										<input class="aa-browse-btn" type="submit" value="查看明細"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-										<input type="hidden" name="action" value="getlist_For_Rent">
-									</FORM>
-								</td>
-							</tr>
-						</c:when>
+		 <hr>
+		<%@ include file="pageForLease.file"%>
+		<div class="div1">
+		 <hr style="border: 1px solid black;">
+		 <c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
+		 <div class="div2">
+		 	<ul>
+		 		<h4>訂單編號 : ${omVO.ordID}</h4>
+				<li>出租者 : ${memSVC.getOneMember(omVO.rentID).name}</li>
+				<li>交易方式 : 
+					<c:choose>
+						<c:when test="${omVO.payID == '1'}">超商店到店</c:when>
+						<c:otherwise>面交</c:otherwise>
 					</c:choose>
-				</c:forEach>
-			</table>
-			<%@ include file="page2.file"%>
+				</li>
+				<li>折價券 : 
+				<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+				<c:set var="count" value="0"/>
+				<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
+					<c:if test="${count==0}">
+						<c:choose>
+							<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無</c:when>
+							<c:when test="${true}">${mcVO.coupon_name}</c:when>
+						</c:choose>
+						<c:set var="count" value="1"/>
+					</c:if>
+				</c:forEach>				
+				</li>
+				<li>運送狀態 : 
+					<c:choose>
+						<c:when test="${omVO.shipStatus == '0'}">待出貨</c:when>
+						<c:when test="${omVO.shipStatus == '1'}">已出貨</c:when>
+						<c:when test="${omVO.shipStatus == '2'}">待取貨</c:when>
+						<c:when test="${omVO.shipStatus == '3'}">取貨完成</c:when>
+						<c:otherwise>商品遺失</c:otherwise>
+					</c:choose>
+				</li>
+				<li>付款狀態 : 
+					<c:choose>
+						<c:when test="${omVO.payStatus == '0'}">待付款</c:when>
+						<c:otherwise>已付款</c:otherwise>
+					</c:choose>
+				</li>
+				<li>訂單狀態 : 
+					<c:choose>
+						<c:when test="${omVO.ordStatus == '0'}">已成立</c:when>
+						<c:when test="${omVO.ordStatus == '1'}">待歸還</c:when>
+						<c:when test="${omVO.ordStatus == '2'}">已完成</c:when>
+						<c:otherwise>已取消</c:otherwise>
+					</c:choose>
+				</li>
+		 	</ul>
+		 </div>
+		 <div class="div3">
+			<ul>
+				<li>訂單日期 : <fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></li>
+				<li>出貨日期 : 
+					<c:choose>
+					<c:when test="${omVO.shipDate != null}">
+						<fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" />
+					</c:when>
+					<c:otherwise>尚未出貨</c:otherwise>
+					</c:choose>
+				</li>	
+				<li>到貨日期 : 
+					<c:choose>
+					<c:when test="${omVO.arrivalDate != null}">
+						<fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" />
+					</c:when>
+					<c:otherwise>尚未到貨</c:otherwise>
+					</c:choose>
+				</li>
+				<li>歸還日期 : 
+					<c:choose>
+					<c:when test="${omVO.shipDate != null}">
+						<fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" />
+					</c:when>
+					<c:otherwise>待歸還</c:otherwise>
+					</c:choose>
+				</li>
+				<li>承租天數 : ${omVO.rentDays}</li>
+				<li>訂單金額 : ${omVO.ordPrice}</li>
+			</ul>		
+		</div>	
+		<div class="div5">
+			<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+			<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(omVO.ordID)}">
+				<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a>
+			</c:forEach>
+		</div>	
+		<div class="div4">
+			<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode"style="margin-bottom: 0px;">
+				<a class="aa-browse-btn" type="submit" href="<%=request.getContextPath()%>/front_end/order/QRCode.jsp?ordID=${omVO.ordID}">面交</a>
+				<input type="hidden" name="ordID" value="${omVO.ordID}">
+				<input type="hidden" name="memID" value=<%=memID%>>
+				<input type="hidden" name="action" value="toQRcode">
+			</FORM>
+			<br>
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderListServlet" style="margin-bottom: 0px;">
+				<input class="aa-browse-btn" type="submit" value="查看明細"> 
+				<input type="hidden" name="ordID" value="${omVO.ordID}">
+				<input type="hidden" name="action" value="getlist_For_Display">
+			</FORM>
+		</div>				
+		<hr style="border: 1px solid black;">
+		 </c:forEach>
+		 </div>
+		 <%@ include file="page2.file"%>
 		</main>
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
