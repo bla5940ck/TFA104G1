@@ -173,7 +173,13 @@ button{
 background-color: #FFF0AC;
 }
 </style>
-
+<script type="text/javascript">
+function check_all(obj,cName)
+{
+    var checkboxs = document.getElementsByName(cName);
+    for(var i=0;i<checkboxs.length;i++){checkboxs[i].checked = obj.checked;}
+}
+</script>
 </head>
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/managerHeader.file"%>
@@ -214,6 +220,10 @@ background-color: #FFF0AC;
 								<input type="hidden" name="action" value="get_arVdate_order">
 					</b>
 				</FORM>
+				
+				
+								
+								
 			</div>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -239,93 +249,41 @@ background-color: #FFF0AC;
 				</div>
 			</table>
 
+<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/account/ACrentLeaseServlet"
+										style="margin-bottom: 0px;">
+	預計轉帳日期 : <input name="estTrfDa"id="f_date5" type="text" style="width: 73px;">
+	<h3>出租者</h3>
 			<table id="table-2">
 				<tr>
-					
+					<th><p><input type="checkbox" name="all" onclick="check_all(this,'c')" />全選/全不選</p></th>
+					<th>收款人戶名</th>
+					<th>收款金額</th>
+					<th>收款銀行代碼</th>
+					<th>收款帳號</th>
+					<th>收款人統編</th>
 					<th>訂單編號</th>
-					<th>出租者</th>
-					<th>承租者</th>
-					<th>交易方式</th>
-					<th>運送狀態</th>
-					<th>付款狀態</th>
-					<th>訂單狀態</th>
-					<th>轉帳狀態</th>
 					<th>訂單日期</th>
-					<th>超商碼</th>
 					<th>訂單完成日期</th>
-					<th>訂單金額</th>
+
 				</tr>
 		
 				<c:forEach var="omVO" items="${list}" >		 
 							<c:choose>
-									
-									<c:when test="${((omVO.payID == 1) and omVO.payStatus == 1) }">
+									<c:when test="${(omVO.payID == 1 and omVO.payStatus == 1 and omVO.trfStatus == 0) and( (omVO.ordStatus == 2) or (omVO.ordStatus == 9 )  and (omVO.shipStatus != 0)and omVO.shipStatus != 3) }">
+
 							<tr>
-								<td>${omVO.ordID}</td>
-								<td>${memSVC.getOneMember(omVO.leaseID).loginId}</td>
-								<td>${memSVC.getOneMember(omVO.rentID).loginId}</td>
-								<td>信用卡</td>
-									
-								
-								<c:choose>
-									<c:when test="${omVO.shipStatus == '0'}">
-										<td>待出貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '1'}">
-										<td>已出貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '2'}">
-										<td>待取貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '3'}">
-										<td>取貨完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>商品遺失</td>
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="${omVO.payStatus == '0'}">
-										<td>待付款</td>
-									</c:when>
-									<c:otherwise>
-										<td>已付款</td>
-									</c:otherwise>
-								</c:choose>
-
-								<c:choose>
-									<c:when test="${omVO.ordStatus == '0'}">
-										<td>已成立</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '1'}">
-										<td>待歸還</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '2'}">
-										<td>已完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>已取消</td>
-									</c:otherwise>
-								</c:choose>
-								<td>${(omVO.trfStatus == 0)?'待轉帳':'已轉帳'}</td>
-								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
-
-								<td>${omVO.storeCode}</td>
-<%-- 								<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
-<%-- 								<td><fmt:formatDate value="${omVO.arrivalDate}"	pattern="yyyy-MM-dd" /></td> --%>
-								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> 
-<%-- 								<td>${omVO.rentDays}</td> --%>
+								<td><input  type="checkbox" name="c" value="${omVO.ordID}" /></td>
+								<td>${memSVC.getOneMember(omVO.leaseID).accountName}</td>
 								<td>${omVO.ordPrice}</td>
-<%-- 								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="狀態修改"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-																	<input type="hidden" name="listID" value="${omVO.ordID}"> 
-										<input type="hidden" name="action" value="getOne_For_Manager_Update">
-									</FORM>
-								</td>--%>
+								<td>${memSVC.getOneMember(omVO.leaseID).bankCode}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).bankAccount}</td>
+								<td>${memSVC.getOneMember(omVO.leaseID).idcn}</td>
+								<td>${omVO.ordID}</td>
+								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
+								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> 
+								
+<%-- 								
 								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
@@ -335,13 +293,16 @@ background-color: #FFF0AC;
 										<input type="hidden" name="action" value="getlist_For_Manager">
 									</FORM>
 								</td>
+								--%>
 							</tr>
 							</c:when>
-
 								</c:choose>
 				</c:forEach>
 			</table>
-		
+									
+										<input type="submit" value="送出"> 
+										<input type="hidden" name="action" value="updateTfrStatus">
+									</FORM>
 			<br>
 <button class="back_btn">返回上一頁</button>
 		</main>
@@ -443,7 +404,20 @@ $("#f_date3").blur(function(){
 	       value:'',
         });
 </script>
-
+<script type="text/javascript">
+  $.datetimepicker.setLocale('zh');
+        $('#f_date5').datetimepicker({
+	       theme: '',              //theme: 'dark',
+	       timepicker:false,       //timepicker:true,
+	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
+		   value: '',  // value:   new Date(),
+	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
+	//startDate:	            '2017/07/10',  // 起始日
+	minDate:               '-1970-01-01', // 去除今日(不含)之前
+	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+	});
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
 	$("button.back_btn").click(function(){

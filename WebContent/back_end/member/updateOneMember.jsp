@@ -195,15 +195,15 @@ a.aa-add-to-cart-btn {
 	
 	<tr>
 		<td>違規次數</td>
-		<td><input name="foul" id="foul" type="text" size="10"value="${memberVO.foul}"></td>
+		<td><input  style="text-align:center" name="foul" id="foul" type="text" size="10"value="${memberVO.foul}"></td>
 	</tr>
 	<tr>
 		<td>出租評價</td>
-		<td><input name="rentScore" id="rentScore" type="text" size="10"value="${memberVO.rentScore}"></td>
+		<td><input  style="text-align:center" name="rentScore" id="rentScore" type="text" size="10"value="${memberVO.rentScore}"></td>
 	</tr>
 	<tr>
 		<td>承租評價</td>
-		<td><input name="leaseScore" id="leaseScore" type="text" size="10"value="${memberVO.leaseScore}"></td>
+		<td><input  style="text-align:center" name="leaseScore" id="leaseScore" type="text" size="10"value="${memberVO.leaseScore}"></td>
 	</tr>
 	<jsp:useBean id="memSvc" scope="page" class="com.member.model.MemberService" />
 	<jsp:useBean id="memVO" scope="page" class="com.member.model.MemberVO" />

@@ -37,6 +37,16 @@
 
 	pageContext.setAttribute("list", list);
 %>
+<%
+ String exportToExcel = request.getParameter("exportToExcel");
+ if (exportToExcel != null
+ && exportToExcel.toString().equalsIgnoreCase("YES")) {
+ response.setContentType("application/vnd.ms-excel");
+ response.setHeader("Content-Disposition", "inline; filename="
+ + "excel.xls");
+ 
+ }
+ %>
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -180,6 +190,7 @@ background-color: #FFF0AC;
 	<div class="main_content">
 	<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
+ <a href="Suss.jsp?exportToExcel=YES">Export to Excel</a>
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 		
@@ -341,6 +352,16 @@ background-color: #FFF0AC;
 								</c:choose>
 				</c:forEach>
 			</table>
+			
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> 
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ <%
+ if (exportToExcel == null) {
+ %>
+ <%
+ }
+ %>
+			
 		
 			<br>
 <button class="back_btn">返回上一頁</button>

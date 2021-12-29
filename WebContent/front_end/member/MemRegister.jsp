@@ -273,9 +273,19 @@ img.preview {
 				<a class="small" href="ForgetPW.jsp" style="color:#191561;">Forgot Password?</a>
 			</div>
 			-->
+			
+			<input type="checkbox" name="chbox" > 
+			<span>欲成為JoyLease會員時，請詳閱</span>
+			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_parent">【服務條款及會員契約】</a>
+			<span> . </span>
+			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_parent">【隱私權政策】</a>
+			<span> 點選註冊表示您同意條款所有內容 。 </span>
+			<br>
+			<br>
 			<div class="text-center">
 				<a class="small" href="LoginForgetPW.jsp" style="color:#191561;">已經有帳號?登入!</a>
 			</div>
+			
 			<input   type="hidden" name="action" value="insert"> 
 			<input class="aa-browse-btn"	type="submit" value="註冊">
 	</FORM>
@@ -338,7 +348,7 @@ img.preview {
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
+	maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 
 	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
