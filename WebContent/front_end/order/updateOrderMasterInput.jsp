@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.order.model.*"%>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>訂單資料更新:</title>
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
@@ -17,11 +22,6 @@
 %>
 <jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
 
-
-<html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>訂單資料更新:</title>
 
 <style>
 		* {
@@ -78,7 +78,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			
+			height: 700px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -134,7 +134,7 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 60%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
@@ -145,9 +145,21 @@
 		}
 		
 		.cart-img{
-			height: 30%;
-			width: 30%;
+			height: auto;
+			width: 50%;
 			
+		}
+		
+		.statusWidth{
+			width: 100px;
+		}
+		.div3{
+/* 			border: 1px solid red; */
+			position:relative;
+			
+			width: 15%;
+			height: 100%;
+			text-align: inherit;
 		}
 		</style>
 </head>
@@ -176,7 +188,7 @@
 				</div>
 				<table>
 				<tr>
-					<th>商品照片</th>
+					<th style="width: 50px">商品照片</th>
 				
 					<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(OrderMasterVO.ordID)}">
 							<td><a class="cart-img"	href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=${olVO.prodID}">
@@ -189,7 +201,7 @@
 				
 				<table>
 					<tr>
-						<th>付款狀態</th>
+						<th class="statusWidth">付款狀態</th>
 						<td><p id="payS"><%=omVO.getPayStatus()%></p></td>
 						<td><select name="payStatus" size="1" style="width:100px;">
 								<option value="0" <%=omVO.getPayStatus() == 0? "selected" : ""%>>待付款</option>
@@ -197,7 +209,7 @@
 						</select></td>
 					</tr>
 					<tr>
-						<th>運送狀態</th>
+						<th class="statusWidth">運送狀態</th>
 						<td><p id="shipS"><%=omVO.getShipStatus()%></p></td>
 						<td><select name="shipStatus" size="1" id="s" style="width:100px;">
 								<option value="0" <%=omVO.getShipStatus() == 0? "selected" : ""%>>待出貨</option>
@@ -208,7 +220,7 @@
 						</select></td>
 					</tr>
 					<tr>
-						<th>訂單狀態</th>
+						<th class="statusWidth">訂單狀態</th>
 						<td><p id="ordS"><%=omVO.getOrdStatus()%></p></td>
 						<td><select name="ordStatus" size="1" style="width:100px;">
 								<option value="0" <%=omVO.getOrdStatus() == 0? "selected" : ""%>>已成立</option>
@@ -220,72 +232,35 @@
 				</table>
 				<table>
 					<tr>
-						<th>出貨代碼</th>
-						<td><input type="TEXT" name="shipCode" size="20"
-							value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"></td>
-
+						<th class="statusWidth">出貨代碼</th>
+						<td><input type="TEXT" name="shipCode" size="20" value="<%=omVO.getShipCode().equals(0) ? "" : omVO.getShipCode()%>"></td>
 					</tr>
-
 					<tr>
-						<th>歸還代碼</th>
-						<td><input type="hidden" name="returnCode" size="20"
-							value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /><%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%></td>
+						<th class="statusWidth">歸還代碼</th>
+						<td><input type="hidden" name="returnCode" size="20" value="<%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%>" /><%=omVO.getReturnCode().equals(0) ? "" : omVO.getReturnCode()%></td>
 					</tr>
-
 				</table>
-					<center>
-					<input type="button" onclick="ShowShipDate()" value="出貨時間 ">
-					<input type="button" onclick="ShowArrivalDate()" value="到貨時間 ">
-<!-- 					<input type="button" onclick="ShowReturnDate()" value="歸還時間 "> -->
-					</center>
 				<table>
 					<tr>
-						<th>出貨日期</th>
+						<th class="statusWidth">出貨日期</th>
 						<td><input type="hidden"  id="getShipDate">
 						<p id="shipDate">${OrderMasterVO.shipDate}</p></td>
 					</tr>
 					<tr>
-						<th>實際到貨日期</th>
+						<th class="statusWidth">實際到貨日期</th>
 						<td><input type="hidden" id="getArrivalDate">
 						<p id="arrivalDate">${OrderMasterVO.arrivalDate}</p></td>																	
 					</tr>
 					<tr>
-						<th>實際歸還日期</th>
+						<th class="statusWidth">實際歸還日期</th>
 						<td><input type="hidden" id="getReturnDate">
 						<p id="returnDate">${OrderMasterVO.returnDate}</p></td>
 					</tr>
 				</table>
-				<table>
-<!-- 					<tr> -->
-<!-- 						<th>承租方評價</th> -->
-<!-- 						<td> -->
-						<input type="hidden" name="rentRank" value="<%=omVO.getRentRank() == null?"":omVO.getRentRank()%>">						
-<%-- 						<p id="rr"><%=omVO.getRentRank()%></p></td> --%>
-
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<th>出租方評價</th> -->
-<!-- 						<td> -->
-						<input type="hidden" name="leaseRank" value="<%=omVO.getLeaseRank() == null?"":omVO.getLeaseRank()%>">
-<%-- 						<p id="lr"><%=omVO.getLeaseRank()%></p> --%>
-<!-- 						</td> -->
-
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<th>承租方評論</th> -->
-<!-- 						<td> -->
-						<input type="hidden" name="rentComt" value="<%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt() %>">					
-<%-- 						<p id="rc"><%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt()%></p></td> --%>
-
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<th>出租方評論</th> -->
-<!-- 						<td> -->
-						<input type="hidden" name="leaseComt" value="<%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %>">
-<%-- 						<p id="lc"><%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %></p></td> --%>
-
-<!-- 					</tr> -->
-				</table>
+				<input type="hidden" name="rentRank" value="<%=omVO.getRentRank() == null?"":omVO.getRentRank()%>">						
+				<input type="hidden" name="leaseRank" value="<%=omVO.getLeaseRank() == null?"":omVO.getLeaseRank()%>">
+				<input type="hidden" name="rentComt" value="<%=omVO.getRentComt() == null?"尚未評論":omVO.getRentComt() %>">					
+				<input type="hidden" name="leaseComt" value="<%=omVO.getLeaseComt() == null?"尚未評論":omVO.getLeaseComt() %>">
 				<input type="hidden" name="action" value="update_for_Lease"> 
 				<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
 				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
@@ -297,7 +272,12 @@
 				<input type="hidden" name="returnDate" id="returnTimelong" value="<%=omVO.getReturnDate()== null ? "" : omVO.getReturnDate().getTime()%>">
 				<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">
 				<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}">
-				<center><input class="aa-browse-btn" type="submit" value="確認更新"></center>
+				<div class="div3">
+					<input type="button" onclick="ShowShipDate()" value="出貨時間 ">
+					<input type="button" onclick="ShowArrivalDate()" value="到貨時間 ">
+<!-- 				<input type="button" onclick="ShowReturnDate()" value="歸還時間 "> -->
+					<input class="aa-browse-btn" type="submit" value="確認更新">
+				</div>
 			</main>
 		</div>
 	<%@ include file="/includeFolder/footer2.file" %>

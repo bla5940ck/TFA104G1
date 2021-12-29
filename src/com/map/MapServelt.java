@@ -46,7 +46,11 @@ public class MapServelt extends HttpServlet {
 			List<JSONObject> listFeatures = new ArrayList<>();
 
 			jedis = pool.getResource();
-
+			//假如redis裡沒有資料 則傳回原本頁面
+			if(jedis.get("dataMap")==null) {
+				res.sendRedirect(req.getContextPath()+"/front_end/letswrite-google-map-api-5-master/mapProdSearch.jsp");
+				return;
+			}
 			String leaseStr = jedis.get("dataMap");
 
 			JSONArray jsonArray = new JSONArray(leaseStr);
@@ -185,7 +189,7 @@ public class MapServelt extends HttpServlet {
 		
 		
 		
-		
+		//出租者頁面 地址顯示
 		if("showAddress".equals(req.getParameter("action"))) {
 			System.out.println("進去顯示地址");
 			

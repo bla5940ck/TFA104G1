@@ -80,6 +80,19 @@ public class MemberService {
 		return memberVO;
 	}
 	
+	//後台會員基本資料更改
+		public MemberVO updateBackMember(Integer memberId,Integer foul ,Integer status ,Double rentScore,Double leaseScore
+				) {
+			MemberVO memberVO = new MemberVO();
+			memberVO.setMemberId(memberId);
+			memberVO.setFoul(foul);
+			memberVO.setStatus(status);
+//			memberVO.setBirthday(birthday);
+			memberVO.setRentScore(rentScore);
+			memberVO.setLeaseScore(leaseScore);
+			dao.updateBackOneMember(memberVO);
+			return memberVO;
+		}
 	//前台會員基本資料更改
 	public MemberVO updateMemberBasicInformation(Integer memberId,String nickName,  String email , String phoneNum ,byte[] pic
 			) {

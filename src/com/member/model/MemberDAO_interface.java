@@ -10,7 +10,7 @@ public interface MemberDAO_interface {
     public void updateAccount(MemberVO memberVO);
     public void updateOneStatus(MemberVO memberVO);
     public void updateMemberBasicInformation(MemberVO memberVO);
-    
+    public void updateBackOneMember(MemberVO memberVO);
     
 //    public void delete( Integer memberId);
     public MemberVO findByPrimaryKey(Integer memberId);

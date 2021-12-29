@@ -560,7 +560,15 @@ public class MemberDAO implements MemberDAO_interface {
 //		memberVO2.setMemberId(3);
 //		dao.updateMemberBasicInformation(memberVO2);
 //		
-		
+//		//後台會員資料修改
+//		MemberVO memberVO2 = new MemberVO();
+//		memberVO2.setFoul(10);
+//		memberVO2.setRentScore(5.0);
+//		memberVO2.setLeaseScore(5.0);
+//		memberVO2.setStatus(9);
+//		memberVO2.setMemberId(2);
+//		dao.updateMemberBasicInformation(memberVO2);
+			
 		// 單一查詢
 //		MemberVO memberVO3 = dao.findByPrimaryKey(1);
 //		System.out.print(memberVO3.getMemberId() + ",");
@@ -932,9 +940,9 @@ public class MemberDAO implements MemberDAO_interface {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		System.out.println("77777744444444");
+		
 		try {
-			System.out.println("888888844444444");
+			
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_ONE_MEM_INF);
 			pstmt.setString(1, memberVO.getNickName());
@@ -942,9 +950,60 @@ public class MemberDAO implements MemberDAO_interface {
 			pstmt.setString(3, memberVO.getPhoneNum());
 			pstmt.setBytes(4, memberVO.getPic());
 			pstmt.setInt(5, memberVO.getMemberId());
-			System.out.println("9999944444444");
+			
 			pstmt.executeUpdate();
 	
+			// Handle any driver errors
+	
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	private static final String UPDATEMEMBER = 
+			"UPDATE member set foul = ?,rent_score=?, lease_score=? ,status=? where (member_id = ?)";
+	@Override
+	public void updateBackOneMember(MemberVO memberVO) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		System.out.println("00000111111");
+		try {
+			System.out.println("0000000");
+			con = ds.getConnection();
+			System.out.println("99999");
+			pstmt = con.prepareStatement(UPDATEMEMBER);
+			System.out.println("88888");
+			pstmt.setDouble(2, memberVO.getRentScore());
+			System.out.println("2222222");
+			
+			pstmt.setDouble(3, memberVO.getLeaseScore());
+			System.out.println("333333");
+			pstmt.setInt(4, memberVO.getStatus());
+			System.out.println("44444444");
+			pstmt.setInt(5, memberVO.getMemberId());
+			System.out.println("5555555");
+			pstmt.setInt(1, memberVO.getFoul());
+			System.out.println("111111");
+			pstmt.executeUpdate();
+			System.out.println("6666666");
 			// Handle any driver errors
 	
 		} catch (SQLException se) {

@@ -353,9 +353,9 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 		// 新增
 //		MemberServiceVO msvo1 = new MemberServiceVO();
 //
-//		long datetime = System.currentTimeMillis();
-//		Timestamp timestamp = new Timestamp(datetime);
-////		System.out.println(timestamp);
+		long datetime = System.currentTimeMillis();
+		Timestamp timestamp = new Timestamp(datetime);
+//		System.out.println(timestamp);
 //		
 //		msvo1.setMsgID(2);
 //		msvo1.setProdID(2);
@@ -377,19 +377,21 @@ public class MemberServiceDAO implements MemberServiceDAO_interface {
 //		
 //		// 修改
 //		MemberServiceVO msvo2 = new MemberServiceVO();
+//		
 //		msvo2.setProdID(2);
 //		msvo2.setMemberID(1);
 //		msvo2.setManagerID(1);
 //		msvo2.setTypeID(3);
 //		msvo2.setOrdID(2);
 //		msvo2.setMsgDate(timestamp);
-//		msvo2.setProblemMsg("123");
+//		msvo2.setProblemMsg("dao測試");
 //		msvo2.setMsgRes("321");
 //		msvo2.setPic1(null);
 //		msvo2.setPic2(null);
 //		msvo2.setPic3(null);
 //		msvo2.setProblemStatus(2);
-////		dao.update(msvo2);
+//		msvo2.setMsgID(38);
+//		dao.update(msvo2);
 //		
 		
 		// 刪除
