@@ -124,7 +124,7 @@
               <!-- / cart box -->
               <!-- search box -->
               <div class="aa-search-box">
-                 <form action="<%=path %>/prod/ProdServlet" method="post">
+                 <form class="" action="<%=path %>/prod/ProdServlet" method="post">
                 <input type="text" name="searchCot" id="" placeholder="健身環大冒險">
                   <input type="hidden" name="action" value="search">
                   <button type="submit"><span class="fa fa-search"></span></button>
@@ -171,7 +171,7 @@
       <!-- 找目前地點 -->
       <section class="row">
         <div class="col google-map">
-          <form action="/TFA104G1/MapServelt">
+          <form class="form_search" action="/TFA104G1/MapServelt">
           <br><br>
           商品搜尋:
           
@@ -196,11 +196,12 @@
 		<button type="button" class="btn btn-info" @click="getCurrent">找目前位置與地圖上地點的距離</button>
           <div class="list-group">
             <div v-for="f in features" class="list-group-item">
+            <a class="prod_a" :href="f.properties.url">商品編號{{ f.properties.id}}
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ f.properties.name }}</h5><br>
                 <h5 class="mb-1">{{ f.properties.productName }}</h5>
                 <small>{{ f.properties.distance_text }}</small>
-              </div>
+              </div></a>
               <p class="mb-1">{{ f.properties.site }}</p>
               <small>{{ f.properties.distance_time }}</small>
             </div>
@@ -218,27 +219,7 @@
 
     <!-- map -->
     <script>
-    $.ajax({
-    	url:"/TFA104G1/MapServelt",
-    	dataType:"json",
-    	type:"get",
-    	data:{
-    		action:"map"
-    	},
-    	success:function(data){
-    		console.log(data)
-    	},error:function(e){
-    		console.log(e)
-    	}
-    	
-    });
-    
-    
-    
-    
-    
-    
-    
+
     
       const googleMap = new Vue({
         el: '#app',
@@ -277,7 +258,7 @@
                 
 
 
-                
+              
                 Array.prototype.forEach.call(this.features, r => {
 
                   
@@ -295,9 +276,9 @@
                   let infowindow = new google.maps.InfoWindow({
                     content: `<p>${r.properties.name}</p>` // 支援html
                   });
-
-
-                  marker.addListener("click", () => {
+				console.log($('a.prod_a'));
+                 
+				marker.addListener("click", () => {
                       console.log(marker.prodID);
                       window.location.assign("/TFA104G1/front_end/product/prodDetail.jsp?prodID="+marker.prodID);
                       
@@ -405,7 +386,7 @@
               navigator.geolocation.getCurrentPosition(success, error);
 
             } else {
-              alert('Sorry, 你的裝置不支援地理位置功能。')
+              alert('Sorry, 你的裝置不支援地理位置功能。');
             }
           }
         },
@@ -415,6 +396,14 @@
           });
         }
       })
+
+      $('input.search-btn').click(function(){
+        
+        if($('input.search').val()==""){
+          alert('請輸入搜尋內容');
+          return false;
+        }
+      });
     </script>
 
   </body>

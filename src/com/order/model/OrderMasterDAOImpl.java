@@ -539,7 +539,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			rs = pstmt.getGeneratedKeys();
 			while (rs.next()) {
 				key = rs.getInt(1);
-				System.out.println(key);
+//				System.out.println(key);
 			}
 			rs.close();
 			// 同時再新增訂單明細內容
@@ -1071,5 +1071,50 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 //			System.out.println(om4.getOrdPrice() + ",");
 //			System.out.println("=========================");
 //		}
+	}
+
+	private static final String UPDATETRF= "UPDATE ORDER_MASTER SET trf_status = ? ,est_trf_da=? WHERE ORD_ID = ?";
+	@Override
+	public void updateOrdMaster(OrderMasterVO orderMaster) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			pstmt = con.prepareStatement(UPDATETRF);
+
+			
+			pstmt.setInt(1, orderMaster.getTrfStatus());
+			pstmt.setTimestamp(2, orderMaster.getEstTrfDa());
+			pstmt.setInt(3, orderMaster.getOrdID());
+
+			pstmt.executeUpdate();
+
+//			"UPDATE ORDER_MASTER SET "
+//			+ "SHIP_STATUS = ?, ORD_STATUS = ?, PAY_STATUS = ?, SHIP_CODE = ?, RETURN_CODE = ?, "
+//			+ "SHIP_DATE = ?, ARRIVAL_DATE = ?, RETURN_DATE = ?, RENT_RANK = ?, LEASE_RANK = ?, "
+//			+ "RENT_COMT = ?, LEASE_COMT = ?, RENT_COMTDATE = ?, LEASE_COMTDATE = ?, EST_TRF_DA = ?, TRF_STATUS = ?, PAY_DATE = ? WHERE (ORD_ID = ?) ORDER BY ORD_ID DESC";
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
 	}
 }

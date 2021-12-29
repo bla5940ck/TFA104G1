@@ -142,7 +142,7 @@ background-color: #FFF0AC;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >	
 
-		 <h3>所有專案資料 - listall_promo.jsp</h3>
+		 <h3>所有專案資料 </h3>
 
 	<h4>
   <a href='add_promo.jsp'>新增專案</a>
@@ -164,9 +164,9 @@ background-color: #FFF0AC;
 		<th>專案編號</th>
 		<th>專案名稱</th>
 		<th>專案內容</th>
-		<th>專案開始日期</th>
-		<th>專案結束日期</th>
-		<th>專案狀態</th>
+<!-- 		<th>專案開始日期</th> -->
+<!-- 		<th>專案結束日期</th> -->
+<!-- 		<th>專案狀態</th> -->
 	</tr>
 	<%@ include file="page1.file" %> 
 	<c:forEach var="promoVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -193,9 +193,9 @@ background-color: #FFF0AC;
 			<td>${promoVO.promo_id}</td>
 			<td>${promoVO.promo_name}</td>
 			<td>${promoVO.promo_text}</td> 
-			<td>${promoVO.promo_start}</td>
-			<td>${promoVO.promo_end}</td>
-			<td>${(promoVO.status==0)?'進行中':'已結束'}</td>
+<%-- 			<td>${promoVO.promo_start}</td> --%>
+<%-- 			<td>${promoVO.promo_end}</td> --%>
+<%-- 			<td>${(promoVO.status==0)?'進行中':'已結束'}</td> --%>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/promo_list/promolist.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="專案明細">

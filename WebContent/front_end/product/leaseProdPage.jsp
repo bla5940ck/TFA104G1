@@ -155,6 +155,11 @@ div.overlay > article{
 												<div></div>
 											</div>
 											<!-- (begin) cms module -->
+											
+											
+											<a class="a-mod3" href="" />商品地圖系統</a><br>
+											目前設定位置:
+											<p style="color:red" class="showAddress_p"></p>
 
 										</div>
 									</div>
@@ -688,9 +693,37 @@ div.overlay > article{
 				  
 				});
 		
+			
+			
+// 			進去地圖登記
+			
+			$("a.a-mod3").click(function(){
+				window.location.assign("/TFA104G1/front_end/product/mapData.jsp");
+				return false;
+			});
+			
+			
+			$.ajax({
+				url:"/TFA104G1/MapServelt",
+				data:{
+					action:"showAddress",
+				},
+				success:function(data){
+					$('p.showAddress_p').text(data);
+				},error:function(e){
+					console.log("失敗")
+				}
+				
+			});
+				
+			
+			
+			
+			
+			
 	</script>
 
-
+<!-- showAddress_p -->
 
 </body>
 
