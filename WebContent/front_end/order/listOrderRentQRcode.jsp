@@ -32,8 +32,8 @@
 								stream()
 									.filter(o->o.getRentID()==memID)
 										.filter(o->o.getPayID()==2)
-											.filter(o->o.getShipStatus()!=3)
-												.filter(o->o.getPayStatus()==1)
+// 												.filter(o->o.getPayStatus()==1)
+											.filter(o->o.getShipStatus()==0)
 													.collect(Collectors.toList());
 
 	pageContext.setAttribute("list", list2);
@@ -167,8 +167,10 @@
 		}
 		
 		.cart-img{
-			height: 120px;
-			width: 120px;
+			display: block;
+  			width: 50%;
+  			height: auto;
+  			margin: 0 auto
 			
 		}
 		.dateBtn{
