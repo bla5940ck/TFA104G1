@@ -93,7 +93,7 @@ body {
 	let markers = [];
 
 	function initMap() {
-	  const haightAshbury = { lat: 25.0521328, lng: 121.5410642 };
+	  const haightAshbury = { lat:  25.0521328, lng: 121.5410642 };
 	  geocoder = new google.maps.Geocoder();
 	  popup = new google.maps.InfoWindow();
 	  map = new google.maps.Map(document.getElementById("map"), {
