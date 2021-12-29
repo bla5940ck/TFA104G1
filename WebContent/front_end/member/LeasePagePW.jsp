@@ -125,15 +125,21 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 50%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
-		table, th, td {
-			border: 1px solid #CCCCFF;
-		}
+	table, th, td {
+	border: 1px solid lightgrey;
+}
+		th, td {
+	height: 50px;
+	padding: 3px;
+	text-align: center;
+		font-size:20px;
+}
 		</style>
 </head>
 <body bgcolor='white'>
@@ -154,21 +160,21 @@
 				ACTION="<%=request.getContextPath()%>/member/MemFrontServlet"
 				name="form1">
 				<h1>更改密碼</h1>
-				<div>為確保你帳戶的安全</div>
+				<div style="font-size:22px;">為確保你帳戶的安全</div>
 				<hr>
 				<table>
 					<tr>
-						<td>現在密碼 : <font color=red><b>*</b></font></td>
+						<td><font color= #191561 ><b>現在密碼</b></font></td>
 						<td><input type="password" name="password"
 							placeholder="請輸入現在密碼" value=""></td>
 					</tr>
 					<tr>
-						<td>新密碼 : <font color=red><b>*</b></font></td>
+						<td><font color= #191561 ><b>新密碼</b></font></td>
 						<td><input type="password" name="newPW" placeholder="請輸入新密碼"
 							value=""></td>
 					</tr>
 					<tr>
-						<td>確認密碼 : <font color=red><b>*</b></font></td>
+						<td><font color= #191561 ><b>確認密碼</b></font></td>
 						<td><input type="password" name="newPW2"
 							placeholder="請確認輸入新密碼" value=""></td>
 					</tr>
@@ -179,9 +185,10 @@
 					type="hidden" name="loginId" value="${memberVO.loginId}"> <input
 					type="submit" value="儲存"class="aa-browse-btn" >
 				<p class="aa-lost-password">
-					<a
+					<a style="font-size:20px;"
 						href="<%=request.getContextPath()%>/front_end/member/ForgetPW.jsp">Forget
 						Password ?</a>
+									
 				</p>
 			</FORM>
 											
@@ -191,8 +198,8 @@
 	<%@ include file="/includeFolder/footer2.file" %>
 </body>
 
-document.getElementById("password").value = document.getElementById("pwd2").value;
 <script language="javascript">
+document.getElementById("password").value = document.getElementById("pwd2").value;
 function checkvalue(){
 if(docment.formname.password.value==''){
 alert("現在密碼不能為空");

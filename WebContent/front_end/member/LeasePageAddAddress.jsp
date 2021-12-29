@@ -8,7 +8,6 @@
 <%
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
-  
 %>
 
 <!DOCTYPE html>
@@ -127,15 +126,33 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 50%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
 		table, th, td {
-			border: 1px solid #CCCCFF;
+			border: 1px solid lightgrey;
 		}
+		th, td {
+	height: 50px;
+	padding: 5px;
+	text-align: center;
+	font-size:15px;
+}
+
+        .li{
+            font-size: 14px;
+             outline: 0;
+   background-color: lightgrey;
+    background: 	#F0F0F0;
+    text-decoration: none;
+    color: #191561 ;
+    font-weight: bold;
+    		
+        }
+
 		</style>
 	</head>
 <body bgcolor='white'>
@@ -151,20 +168,16 @@
 		<div class="main_content">
 				<%@ include file="/includeFolder/rentMemberAside.file"%>
 				
-				<%
-					DefAddressService dfaSvc = new DefAddressService();
-					List<DefAddressVO> list = dfaSvc.getOneMemAll(memberVO.getMemberId());
-					pageContext.setAttribute("list",list);
-				%>
+			
 				<main class="main">
 				
 					
 						<h1>地址</h1>
-						<div>管理你的寄送相關資訊</div>
+						<div style="font-size:22px;">管理你的寄送相關資訊</div>
 						
 					<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
-						<h1>新增超商地址</h1>
-						<div>管理你的寄送相關資訊</div>
+						<h2>新增超商地址</h2>
+						<div style="font-size:18px;">管理你的寄送相關資訊</div>
 						<table>
 								<tr>
 									<td>是否設為預設取件資訊 : </td>
@@ -178,21 +191,30 @@
 									<td>收件電話 : </td>
 									<td><input type="TEXT" name="recptPhone" size="45" value="" /></td>
 								</tr>
+								<%-- 
+								<c:foreach var="list1" items="${arrayList}">
+								
+								--%>
+								
 								<tr>
-									<td>收件超商代碼 : </td>
-									<td><input type="TEXT" name="code711" size="45" value="" /></td>
+									<td>超商代碼 : </td>
+									<td><input type="hidden" name="code711" size="45" value="${arrayList[0]}" />${arrayList[0]}</td>
 								</tr>
 								<tr>
-									<td>收件超商 : </td>
-									<td><input type="TEXT" name="name711" size="45" value="" /></td>
+									<td>超商店名 : </td>
+									<td><input type="hidden" name="name711" size="45" value="${arrayList[1]}" />${arrayList[1]}</td>
 								</tr>
 								<tr>
 									<td>超商地址 : </td>
-									<td><input type="TEXT" name="add711" size="45" value="" /></td>
+									<td><input type="hidden" name="add711" size="45" value="${arrayList[2]}" />${arrayList[2]}</td>
 								</tr>
 						</table>
 					<input type="hidden" name="action" value="insertAddress">
+					<!--
+					  <input type="hidden" name="memberId" value="1"> 
+-->
 					<input type="hidden" name="memberId" value="${memberVO.memberId}">
+
 					<input type="submit" value="增加"class="aa-browse-btn" ></FORM>
 						
 						

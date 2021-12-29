@@ -22,4 +22,7 @@ public interface OrderMasterDAO_interface {
 	void addOrderMaster(OrderMasterVO orderMaster);
 	void insertAllOrder(OrderMasterVO omVO, OrderListVO olVO); //交易控制一版_新增
 	void updateOrderMaster(OrderMasterVO orderMaster);
+	
+	//IAN 使用
+	void updateOrdMaster(OrderMasterVO orderMaster);
 }
