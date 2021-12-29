@@ -7,7 +7,7 @@
 <html>
 <head>
 
-<title>IBM Manager: Home</title>
+<title>管理者頁面</title>
 <style>
 body {
 	margin: 0;

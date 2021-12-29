@@ -118,7 +118,7 @@ if (null == pic || "".equals(pic))
 						</c:choose>
 						</i> 
 					
-					<h3 style="background-color:yellow;">出租專區<br><span class="nav-title">${memberVO.loginId}</span></center></h3>
+					<h3 style="background-color:yellow;">出租專區<br><span class="nav-title">${memberVO1.loginId}</span></center></h3>
 					<h5>
 						<a href="<%=request.getContextPath()%>/front_end/product/leaseProdPage.jsp"><i class="tou"></i>商品管理</a>
 						<a href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp"><i class="tou"></i>我的訂單</a>

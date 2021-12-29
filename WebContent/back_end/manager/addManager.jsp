@@ -159,12 +159,12 @@ background-color: #FFF0AC;
 						<td><input type="TEXT" name="managerUser" size="45" /></td>
 					</tr>
 					<tr>
-						<td>管理員姓名:</td>
-						<td><input type="TEXT" name="managerName" size="45" /></td>
+						<td>管理員密碼:</td>
+						<td><input type="password" name="managerPassword" size="45" /></td>
 					</tr>
 					<tr>
-						<td>管理員密碼:</td>
-						<td><input type="TEXT" name="managerPassword" size="45" /></td>
+						<td>管理員姓名:</td>
+						<td><input type="TEXT" name="managerName" size="45" /></td>
 					</tr>
 					<tr>
 						<td>管理員狀態:</td>

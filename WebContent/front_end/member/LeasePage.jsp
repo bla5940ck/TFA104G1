@@ -125,15 +125,21 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 50%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
 		table, th, td {
-			border: 1px solid #CCCCFF;
+			border: 1px solid lightgrey;
 		}
+		th, td {
+	height: 32px;
+	padding: 5px;
+	text-align: center;
+	font-size:15px;
+}
 		</style>
 	</head>
 	<body bgcolor='white'>
@@ -192,33 +198,33 @@
 				</aside> --%>
 				<main class="main">
 				
-					<%-- <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet"   name="form1">--%>
+		
 					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						<h1>我的帳戶</h1>
-						<div>管理你的檔案以保護你的帳戶</div>
+						<div  style="font-size:22px">管理你的檔案以保護你的帳戶</div>
 						<table>
 								<tr>
-								<td>會員編號 : <font color=red><b>*</b></font></td>
+								<td>會員編號 </td>
 									<td>${memberVO.memberId}</td>	
 								</tr>
 								<tr>
-									<td>姓名 : </td>
+									<td>姓名 </td>
 									<td>${memberVO.name}</td>
 								</tr>
 								<tr>
-									<td>匿名 : </td>
+									<td>匿名 </td>
 									<td><input type="TEXT" name="nickName" size="45" value="${memberVO.nickName}" /></td>
 								</tr>
 								<tr>
-									<td>EMAIL : </td>
+									<td>EMAIL </td>
 									<td><input type="email" name="email" size="45"	value="${memberVO.email}" /></td>
 								</tr>
 								<tr>
-									<td>手機號碼 : </td>
+									<td>手機號碼 </td>
 									<td><input type="TEXT" name="phoneNum" size="45"	value="${memberVO.phoneNum}" /></td>
 								</tr>
 								<tr>
-									<td>生日 : </td>
+									<td>生日 </td>
 									<td>${memberVO.birthday}</td>
 								</tr>
 						</table>

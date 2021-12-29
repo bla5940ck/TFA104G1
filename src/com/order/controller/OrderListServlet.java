@@ -48,7 +48,7 @@ public class OrderListServlet extends HttpServlet {
 					errorMsgs.add("格式錯誤 ! 請輸入訂單明細編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					System.out.println("這");
+//					System.out.println("這");
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
@@ -62,7 +62,7 @@ public class OrderListServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					System.out.println("這2");
+//					System.out.println("這2");
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
@@ -78,7 +78,7 @@ public class OrderListServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					System.out.println("這3");
+//					System.out.println("這3");
 					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/order/listAllOrderList.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷

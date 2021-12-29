@@ -86,9 +86,10 @@ main.main {
 }
 
   table {
-	width: calc(100% - 200px - 10px);
+	width: 100% ;
 	
-	margin-top: 5px;
+	margin:5px;
+	margin-left: 5px;
 	margin-bottom: 5px;
   }
   table, th, td {
@@ -105,6 +106,9 @@ main.main {
   
   button{
 background-color: #FFF0AC;
+}
+input{
+background-color:#FFF0AC;
 }
 </style>
 

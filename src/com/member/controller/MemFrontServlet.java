@@ -304,8 +304,7 @@ public class MemFrontServlet extends HttpServlet {
 			}
 		}
 		// 超商收件地址新增
-		if ("insertAddress".equals(action)) { // 來自addEmp.jsp的請求
-
+		if ("insertAddress".equals(action)) { // 來自LeaseAddAddress.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -318,7 +317,6 @@ public class MemFrontServlet extends HttpServlet {
 				// checkbox 沒選擇時會回傳null要先做處理
 				Integer status = 0;
 				if(req.getParameter("status")!=null) {
-					
 					status = new Integer(req.getParameter("status").trim());
 				Enumeration e = req.getParameterNames();
 				while (e.hasMoreElements()) {
@@ -334,19 +332,19 @@ public class MemFrontServlet extends HttpServlet {
 
 				String recipient = req.getParameter("recipient").trim();
 				String recipientReg = "^[(\u4e00-\u9fa5)]{2,20}$";
-				if (recipient == null || recipient.length() == 0) {
-					errorMsgs.add("收件姓名: 請勿空白");
-				} else if (!recipient.trim().matches(recipientReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("收件姓名: 只能是中文, 且長度必需在2到20之間");
-				}
+//				if (recipient == null || recipient.length() == 0) {
+//					errorMsgs.add("收件姓名: 請勿空白");
+//				} else if (!recipient.trim().matches(recipientReg)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("收件姓名: 只能是中文, 且長度必需在2到20之間");
+//				}
 
 				String recptPhone = req.getParameter("recptPhone").trim();
 				String recptPhoneReg = "^09[0-9]{8}$";
-				if (recptPhone == null || recptPhone.length() == 0) {
-					errorMsgs.add("收件電話: 請勿空白");
-				} else if (!recptPhone.trim().matches(recptPhoneReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("收件電話: 只能是數字, 且長度必需在10");
-				}
+//				if (recptPhone == null || recptPhone.length() == 0) {
+//					errorMsgs.add("收件電話: 請勿空白");
+//				} else if (!recptPhone.trim().matches(recptPhoneReg)) { // 以下練習正則(規)表示式(regular-expression)
+//					errorMsgs.add("收件電話: 只能是數字, 且長度必需在10");
+//				}
 
 				Integer code711 = new Integer(req.getParameter("code711").trim());
 				String name711 = req.getParameter("name711").trim();

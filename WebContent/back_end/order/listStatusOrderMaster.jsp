@@ -7,17 +7,19 @@
 
 <%
 
-	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
+// 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
 
+
+	Integer ordStatus = Integer.valueOf(request.getParameter("ordStatus"));
 	OrderMasterService omSVC = new OrderMasterService();
-	List<OrderMasterVO> list = omSVC.getStatus(omVO.getOrdStatus());
+	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 
+	List<OrderMasterVO> list = omSVC.getAll();
 	List<OrderMasterVO> list1 = omSVC.getAll();
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-										.filter(o -> o.getOrdStatus() == omVO.getOrdStatus())
+										.filter(o -> o.getOrdStatus() == ordStatus)
 											.collect(Collectors.toList());
 
 	pageContext.setAttribute("list", list2);
@@ -202,16 +204,13 @@ background-color: #FFF0AC;
 			</c:if>
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
-						<tr>
-							<td><a class="a1" href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
-							<td><button name="ordStatus" value="0">已成立</button></td>
-							<td><button name="ordStatus" value="1">待歸還</button></td>
-							<td><button name="ordStatus" value="2">已完成</button></td>
-							<td><button name="ordStatus" value="9">已取消</button></td>
-						</tr>
-						<input type="hidden" name="action" value="get_Status_Display_Manager">
-					</FORM>
+					<tr>
+						<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp">全部</a></td>
+						<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/back_end/order/listStatusOrderMaster.jsp?ordStatus=0">已成立</a></td>
+						<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/back_end/order/listStatusOrderMaster.jsp?ordStatus=1">待歸還</a></td>
+						<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/back_end/order/listStatusOrderMaster.jsp?ordStatus=2">已完成</a></td>
+						<td><a class="aa-browse-btn" href="<%=request.getContextPath()%>/back_end/order/listStatusOrderMaster.jsp?ordStatus=9">已取消</a></td>
+					</tr>		
 				</div>
 			</table>
 			<table id="table-1">

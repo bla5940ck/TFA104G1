@@ -159,7 +159,7 @@
 					訂單編號 :<%=ordID%>
 				</h4>
 
-				<h4>確認收貨請掃QR CODE</h4>
+				<h4>請承租方掃描QR CODE以確認收貨 !</h4>
 
 				<img alt=""
 					src="<%=request.getContextPath()%>/QRCodeTest?action=toQRcode&ordID=<%=ordID%>">
