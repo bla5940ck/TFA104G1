@@ -792,8 +792,8 @@ public class OrderMasterServlet extends HttpServlet {
 				AioCheckOutALL obj = new AioCheckOutALL(); // 產生訂單
 				String ordDateNum = String.valueOf(ord); // 產生訂單日期long值
 				Integer ordForEc = list.get(0).getOrdID();
-				System.out.println("OrderMaster 生成的訂單" + ordForEc);
-				System.out.println("727 取得訂單編號" + ordForEc);
+//				System.out.println("OrderMaster 生成的訂單" + ordForEc);
+//				System.out.println("727 取得訂單編號" + ordForEc);
 
 				SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				String ecord = sdf3.format(ordDate);
@@ -804,7 +804,7 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 				obj.setItemName(join); // 商品名稱
-				obj.setReturnURL("https://2042-1-164-222-170.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+				obj.setReturnURL("https://b6de-1-164-228-23.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
 				obj.setClientBackURL("http://10.2.12.23:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");

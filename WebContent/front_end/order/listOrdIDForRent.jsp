@@ -4,6 +4,11 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>訂單狀態查詢</title>
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 
@@ -20,10 +25,6 @@
 <jsp:useBean id="omSVC" scope="page" class="com.order.model.OrderMasterService" />
 
 
-<html>
-<head>
-<meta charset="UTF-8">
-<title>訂單狀態查詢</title>
 <style>
 		* {
 			box-sizing: border-box;
@@ -87,7 +88,7 @@
 			margin-right: 6px;
 			margin-left: 4px;
 			border: 1px solid #999 ;
-			border-color: transparent #191561 transparent transparent;
+			border-color: transparent #191561 #191561 transparent;
 		}
 		
 		/*--------------------main區域-------------------- */
@@ -144,17 +145,17 @@
 		table, th, td {
 			border: 1px solid #CCCCFF;
 		}
+		.back_btn{
+			background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
 		</style>
 </head>
 
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
-	<div class="main_content">
-	<%@ include file="/includeFolder/rentMemberAside.file"%>
-		
-		<main class="main">
-			
-			<c:if test="${not empty errorMsgs}">
+		<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
 				<ul>
 					<c:forEach var="message" items="${errorMsgs}">
@@ -162,70 +163,53 @@
 					</c:forEach>
 				</ul>
 			</c:if>
-			
-		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/memberservice/problemTypeReport.jsp" name="form1">
-			<h3>訂單明細</h3>
-			<table id="table-1">
-				<tr>
-<!-- 					<th>訂單明細編號</th> -->
-<!-- 					<th>商品編號</th> -->
-					<th>商品名稱</th>
-<!-- 					<th>訂單編號</th> -->
-					<th>商品金額</th>
-					<th>預計開始日期</th>
-					<th>預計結束日期</th>
-					<th>出貨碼</th>
-					<th>歸還碼</th>
-					<th>超商碼</th>
-					<th>訂單狀態</th>
-<!-- 					<th>更新狀態</th> -->
-				</tr>
-<%-- 				<%@ include file="page1.file"%> --%>
-<%-- 				<c:forEach var="olVO" items="${list}" begin="<%=pageIndex%>" --%>
-<%-- 					end="<%=pageIndex+rowsPerPage-1%>"> --%>
-				<c:forEach var="olVO" items="${list}">
-					<tr>
-
-<%-- 						<td>${olVO.listID}</td> --%>
-<%-- 						<td>${olVO.prodID}</td> --%>
-						<td>
-							${prodSVC.findProductByPK(olVO.prodID).prodName}
-						</td>
-<%-- 						<td>${olVO.ordID}</td> --%>
-						<td>${olVO.prodPrice}</td>
-						<td>${omSVC.getOneOrderMaster(olVO.ordID).estStart}</td>
-						<td>${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</td>
-						<td>${omSVC.getOneOrderMaster(olVO.ordID).shipCode}</td>
-						<td>${omSVC.getOneOrderMaster(olVO.ordID).returnCode}</td>
-						<td>${omSVC.getOneOrderMaster(olVO.ordID).storeCode}</td>
-						<td class="status">
+	<div class="main_content">
+	<%@ include file="/includeFolder/rentMemberAside.file"%>
+		<main class="main">
+		<br>		
+			<h1>訂單明細</h1>
+			<hr>
+			<c:forEach var="olVO" items="${list}">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front_end/memberservice/problemTypeReport.jsp" name="form1">
+					<ul>
+					<h4>
+						<li>商品名稱 : ${prodSVC.findProductByPK(olVO.prodID).prodName}</li>
+						<li>商品金額 : ${olVO.prodPrice}</li>
+						<li>預計開始日期 : ${omSVC.getOneOrderMaster(olVO.ordID).estStart}</li>
+						<li>預計結束日期 : ${omSVC.getOneOrderMaster(olVO.ordID).estEnd}</li>
+						<li>出貨碼 : ${omSVC.getOneOrderMaster(olVO.ordID).shipCode == 0 ?"尚未出貨" :omSVC.getOneOrderMaster(olVO.ordID).shipCode} </li>
+						<li>歸還碼 : ${omSVC.getOneOrderMaster(olVO.ordID).returnCode == 0 ?"尚未歸還 " :omSVC.getOneOrderMaster(olVO.ordID).returnCode}</li>
+						<li>超商碼 : ${omSVC.getOneOrderMaster(olVO.ordID).storeCode == 0 ?"還未至超商寄貨" :omSVC.getOneOrderMaster(olVO.ordID).storeCode}</li>
+						<li class="status">訂單狀態 : 
 						<c:choose>
 							<c:when test="${olVO.ordStatus == '0'}">已成立</c:when>
 							<c:when test="${olVO.ordStatus == '1'}">待歸還</c:when>							
 							<c:when test="${olVO.ordStatus == '2'}">已完成</c:when>							
 							<c:when test="${olVO.ordStatus == '9'}">已取消</c:when>								
 						</c:choose>
-						</td>
-					<tr>
-						<td>
-								<input type="hidden" id="ordID" name="ordID" value="${olVO.ordID}">
-								<input type="hidden" id="listID" name="listID" value="${olVO.listID}">
-								<input type="hidden" id="proID" name="prodID" value="${olVO.prodID}">
-								<input type="hidden" name="action" value="updateList"> 
-						</td>
-				</c:forEach>
-				</table>
-				<input class="aa-browse-btn" type="submit" value="提出問題">
-				<center><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">回上頁</a></center>
-			</FORM>
-<%-- 			<%@ include file="page2.file"%> --%>
-		</main>
+						</li>
+					</h4>	
+					</ul>
+					<br>
+						<input class="aa-browse-btn" type="submit" value="提出問題">
+						<input type="hidden" id="ordID" name="ordID" value="${olVO.ordID}">
+						<input type="hidden" id="listID" name="listID" value="${olVO.listID}">
+						<input type="hidden" id="proID" name="prodID" value="${olVO.prodID}">
+						<input type="hidden" name="action" value="updateList"> 
+				</FORM>
+			</c:forEach>
+			<hr>
+			<center><button class="back_btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderForRent.jsp">回上頁</button></center>
+	</main>
 	</div>
 	<%@ include file="/includeFolder/footer2.file" %>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
-
+$("button.back_btn").click(function(){
+	history.go(-1);
+});
 var ordStatus = $("select.ordStatus");
 
 var map = new Map();
