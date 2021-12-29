@@ -124,7 +124,7 @@
               <!-- / cart box -->
               <!-- search box -->
               <div class="aa-search-box">
-                 <form action="<%=path %>/prod/ProdServlet" method="post">
+                 <form class="" action="<%=path %>/prod/ProdServlet" method="post">
                 <input type="text" name="searchCot" id="" placeholder="健身環大冒險">
                   <input type="hidden" name="action" value="search">
                   <button type="submit"><span class="fa fa-search"></span></button>
@@ -171,7 +171,7 @@
       <!-- 找目前地點 -->
       <section class="row">
         <div class="col google-map">
-          <form action="/TFA104G1/MapServelt">
+          <form class="form_search" action="/TFA104G1/MapServelt">
           <br><br>
           商品搜尋:
           
@@ -219,27 +219,7 @@
 
     <!-- map -->
     <script>
-    $.ajax({
-    	url:"/TFA104G1/MapServelt",
-    	dataType:"json",
-    	type:"get",
-    	data:{
-    		action:"map"
-    	},
-    	success:function(data){
-    		console.log(data)
-    	},error:function(e){
-    		console.log(e)
-    	}
-    	
-    });
-    
-    
-    
-    
-    
-    
-    
+
     
       const googleMap = new Vue({
         el: '#app',
@@ -406,7 +386,7 @@
               navigator.geolocation.getCurrentPosition(success, error);
 
             } else {
-              alert('Sorry, 你的裝置不支援地理位置功能。')
+              alert('Sorry, 你的裝置不支援地理位置功能。');
             }
           }
         },
@@ -416,6 +396,14 @@
           });
         }
       })
+
+      $('input.search-btn').click(function(){
+        
+        if($('input.search').val()==""){
+          alert('請輸入搜尋內容');
+          return false;
+        }
+      });
     </script>
 
   </body>
