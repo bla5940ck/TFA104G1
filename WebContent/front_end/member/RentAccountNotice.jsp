@@ -3,11 +3,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.member.model.*"%>
+<%@ page import="com.order.model.*"%>
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
+<%@page import="java.util.stream.Collectors"%>
+<%@ page import="java.sql.*"%>
+<%@page import="java.sql.Timestamp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@  page import="java.util.Collections" %>
 <%
-  MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
-  pageContext.setAttribute("memberVO",memberVO);
+  
+  Integer memID = (Integer) session.getAttribute("id");
+  
+  OrderMasterService omSVC = new OrderMasterService();
+	List<OrderMasterVO> list = omSVC.getAll();
+	pageContext.setAttribute("list", list);
+	
+	
 %>
+<jsp:useBean id="memSVC" scope="page"
+	class="com.member.model.MemberService" />
+	
 <!DOCTYPE html>
 <html>
 	<head>
@@ -122,17 +137,35 @@
 			}
 		}
 		
-		/*--------------------table區域-------------------- */
+			/*--------------------table區域-------------------- */
 		table {
-			width: 100%;
+			width: 50%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
 		table, th, td {
-			border: 1px solid #CCCCFF;
+			border: 1px solid lightgrey;
 		}
+		th, td {
+	height: 50px;
+	padding: 5px;
+	text-align: center;
+	font-size:15px;
+}
+
+        .li{
+            font-size: 14px;
+             outline: 0;
+   background-color: lightgrey;
+    background: 	#F0F0F0;
+    text-decoration: none;
+    color: #191561 ;
+    font-weight: bold;
+    		
+        }
+ 
 		</style>
 	</head>
 <body bgcolor='white'>
@@ -147,76 +180,41 @@
 			</c:if>
 		<div class="main_content">
 <%@ include file="/includeFolder/leaseMemberAside.file"%>
-				<%-- <aside class="aside">
-						<nav class="nav">
-								<div>
-									<a class="" href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">
-										<div>
-												 <td>
-														<c:set var="img" value="${memberVO.pic}" />
-														<%
-														byte b[] = (byte[]) pageContext.getAttribute("img");
-															String pic = Base64.encode(b);
-															if (null == pic || "".equals(pic))
-																pic ="123";
-														%>
-														<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="120">
-													</td>
-												    <td>${memberVO.loginId}</td>
-											 <img class="" src="<%=request.getContextPath()%>/front_end/member/img/LogingPIC.jpg"> 
-										</div>
-									</a>
-								</div>
-								<h1>承租專區</h1>
-								<ul class="nav_list">
-									<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">我的帳戶</a>
-										<ul class="nav_list">
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp">個人檔案</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAccount.jsp">銀行帳號</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePageAddress.jsp">地址</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeasePagePW.jsp">更改密碼</a></li>
-										</ul>
-									</li>
-									<li><a href="">訂單資訊</a></li>
-									<li><a href="">通知</a></li>
-										<ul class="nav_list">
-											<li><a href="">訂單更新通知</a></li>
-											<li><a href="">評價通知</a></li>
-											<li><a href="<%=request.getContextPath()%>/front_end/member/LeaseAccountNotice.jsp">款項通知</a></li>
-										</ul>
-									<li><a href="">問題回報查詢</a></li>
-									<li><a href="">我的折價券</a></li>
-								</ul>
-						</nav>
-				</aside> --%>
-				<%
-					DefAddressService dfaSvc = new DefAddressService();
-					List<DefAddressVO> list = dfaSvc.getOneMemAll(memberVO.getMemberId());
-					pageContext.setAttribute("list",list);
-				%>
+
+				
+
 				<main class="main">
 				
 					
 						<h1>出租款項通知</h1>
-						<div>可以留意您的帳務相關資訊</div>
+						<div style="font-size:22px;">可以留意您的帳務相關資訊</div>
 						
 						<hr>
-						 <c:forEach var="defAddressVO"  items="${list}" >
-						 <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
-						
-						<ul>
-							<!-- <div>${(defAddressVO.status==1)?'預設':' '}</div> -->
-							<li>款項月份 : 2021/12</li>
-							<li>角色 : 承租方</li>
-							<li>姓名 : ${defAddressVO.recipient}</li>
-							<li>金額 : NTD.1,000</li>
-							<li>預計轉帳日期 : 2022-1-15</li>
+						  <c:forEach var="OrderMasterVO"  items="${list}" > 
+				<c:if test="${OrderMasterVO.trfStatus==1}">
+					<c:choose>
+						<c:when test="${OrderMasterVO.leaseID == id}">
+					 
+						<ul class="li">
+							<!-- <div>${(defAddressVO.status==1)?'':' '}</div> -->
+							<li>訂單日期 : <fmt:parseDate value="${OrderMasterVO.ordDate}" pattern="yyyy-MM-dd" var="ordDate"/>
+									<fmt:formatDate value="${ordDate}" pattern="yyyy-MM-dd"/></li>
+							
+							<li>訂單編號 : <a
+								href="/TFA104G1/front_end/order/listAllOrderForRent.jsp?ordID=${OrderMasterVO.ordID}">${OrderMasterVO.ordID}</a></li>
+							<li>收款人 : ${memSVC.getOneMember(OrderMasterVO.leaseID).accountName}</li>
+							<!--<li>金額 : NTD. ${OrderMasterVO.ordPrice}</li> ord_price-ship_fee -->
+							<li>金額 : <fmt:formatNumber value= "${OrderMasterVO.ordPrice}" type="currency"/></li><!-- ord_price-ship_fee -->
+							<li >預計匯款日期 : <font color="#FF0080"> <fmt:parseDate value="${OrderMasterVO.estTrfDa}" pattern="yyyy-MM-dd" var="estTrfDa"/>
+									<fmt:formatDate value="${estTrfDa}" pattern="yyyy-MM-dd"/></font></li>
 							
 						</ul>
-						<input type="hidden" name="action" value="delete">
-						<input type="hidden" name="def711" value="${defAddressVO.def711}">
-					<input type="hidden" value="刪除"></FORM>
+						
 						<hr>
+					 
+						</c:when>
+						</c:choose>
+					</c:if>
 						</c:forEach> 
 						
 						

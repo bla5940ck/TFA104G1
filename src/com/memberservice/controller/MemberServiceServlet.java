@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.websocket.SendResult;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
@@ -134,7 +135,7 @@ public class MemberServiceServlet extends HttpServlet {
 				String msgRes = null;
 
 				Integer msgID = new Integer(req.getParameter("msgID"));
-//				System.out.println("msgID ="+msgID);
+				System.out.println("msgID ="+msgID);
 
 				Integer prodID = new Integer(req.getParameter("prodID"));
 //				System.out.println("prodID ="+prodID);
@@ -183,7 +184,7 @@ public class MemberServiceServlet extends HttpServlet {
 
 				MemberServiceVO msVO = new MemberServiceVO();
 
-				msVO.setMsgID(msgID);
+				msVO.setMsgID(realMsVO.getMsgID());
 				msVO.setProdID(prodID);
 				msVO.setMemberID(memberID);
 				msVO.setManagerID(managerID);
@@ -209,7 +210,8 @@ public class MemberServiceServlet extends HttpServlet {
 				MemberServiceService msSvc = new MemberServiceService();
 				msVO = msSvc.updateMemberService(msgID, prodID, memberID, managerID, typeID, ordID, msgDate, problemMsg,
 						msgRes, realMsVO.getPic1(), realMsVO.getPic2(), realMsVO.getPic3(), problemStatus);
-
+				
+				System.out.println("修改後的msgID" + msVO.getMsgID());
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("msVO", msVO); // 資料庫update成功後,正確的的empVO物件,存入req
 
@@ -442,9 +444,10 @@ public class MemberServiceServlet extends HttpServlet {
 				MemberServiceDAO dao = new MemberServiceDAO();
 				dao.insert(msVO);
 
-				String url = "/front_end/memberservice/listAllMemberProblem.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
-				successView.forward(req, res);
+				String url = req.getContextPath()+"/front_end/memberservice/listAllMemberProblem.jsp";
+				res.sendRedirect(url);
+//				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+//				successView.forward(req, res);
 
 			} catch (Exception e) {
 				// TODO: handle exception

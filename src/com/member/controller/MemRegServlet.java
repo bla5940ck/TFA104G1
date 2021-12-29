@@ -54,6 +54,10 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
+				String chbox = req.getParameter("chbox");
+				if (chbox == null || chbox.trim().length() == 0) {
+					errorMsgs.add("要加入JoyLease會員需要勾選同意會員條款");
+				}
 				String name = req.getParameter("name").trim();
 				System.out.println("333333");
 				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";

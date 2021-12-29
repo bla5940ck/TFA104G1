@@ -7,10 +7,10 @@ import java.util.List;
 		public void update(MemcouponVO memcouponVO);
 		public void delete(Integer mem_coupon_id);
 		public void findByPrimaryKey(Integer mem_coupon_id);
-//		public MemcouponVO findByPrimaryKey(Integer mem_coupon_id);
 		public List<MemcouponVO> getAll();
 		public List<MemcouponVO> getMemberid(Integer member_id);
-//		public MemcouponVO isCouponIdDup(Integer coupon_id);
+		public MemcouponVO check(boolean memcouponVO2);
+		public MemcouponVO check(MemcouponVO memcouponVO2);
 		
 	}
 

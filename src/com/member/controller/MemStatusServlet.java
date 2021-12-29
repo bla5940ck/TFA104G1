@@ -96,11 +96,11 @@ public class MemStatusServlet extends HttpServlet {
 			memberVO=memSvc.getOneMember(memberId);
 			String to = memberVO.getEmail();
 			String subject = "【JoyLease】帳號審核通過通知";
-			String ch_name =  memberVO.getName();
+			String ch_name =  memberVO.getNickName();
 			String url2 = "/front_end/member/LeaseLogin.jsp";
 			String indexUrl =  req.getContextPath() + url2;
-			String messageText = "Hello! 親愛的 " + ch_name + "您好~您已通過會員審核，歡迎點選以下連結登入使用 【JoyLease】樂借所平台~ \n"
-					+ indexUrl ;
+			String messageText = "Hello! 親愛的 " + ch_name + "您好~您已通過會員審核，歡迎您盡快登入使用 【JoyLease】樂借所平台~ \n"
+					 ;
 			MailService mailService = new MailService();
 			mailService.sendMail(to, subject, messageText);
 			/*************************** 其他可能的錯誤處理 **********************************/

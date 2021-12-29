@@ -190,11 +190,12 @@ public class ManagerServlet extends HttpServlet {
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String managerUser = req.getParameter("managerUser");
-				String managerUserReg = "^[(a-zA-Z0-9_)]{2,10}$";
+				System.out.println("輸入新增的帳號" + managerUser);
+				String managerUserReg = "^[(a-zA-Z0-9)]{2,10}$";
 				if (managerUser == null || managerUser.trim().length() == 0) {
 					errorMsgs.add("管理員帳號: 請勿空白");
 				} else if (!managerUser.trim().matches(managerUserReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("管理員帳號: 只能是英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("管理員帳號: 只能是英文字母、數字和 , 且長度必需在2到10之間");
 				}
 
 				String managerName = req.getParameter("managerName");
@@ -208,9 +209,9 @@ public class ManagerServlet extends HttpServlet {
 				String managerPassword = req.getParameter("managerPassword");
 				String managerPasswordReg = "^[(a-zA-Z0-9_)]{2,10}$";
 				if (managerPassword == null || managerPassword.trim().length() == 0) {
-					errorMsgs.add("管理員帳號: 請勿空白");
+					errorMsgs.add("管理員密碼: 請勿空白");
 				} else if (!managerPassword.trim().matches(managerPasswordReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("管理員帳號: 只能是英文字母、數字和_ , 且長度必需在2到10之間");
+					errorMsgs.add("管理員密碼: 只能是英文字母、數字和_ , 且長度必需在2到10之間");
 				}
 
 				Integer status = new Integer(req.getParameter("status"));
@@ -324,7 +325,7 @@ public class ManagerServlet extends HttpServlet {
 					      }
 					      
 					      return;
-					     }
+					}
 				}
 				errorMsgs.add("帳號密碼不符合");
 				if (!errorMsgs.isEmpty()) {

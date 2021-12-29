@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ page import="java.sql.*"%>
+
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
  					<label class="rememberme" for="remember">
  					<input type="checkbox" id="remember"> 記住我</label>
                     <div class="attxt"><a href="<%=request.getContextPath()%>/front_end/member/MemRegister.jsp"style="color:#191561;">立刻註冊 !</a></div>
-				<!--	<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/LoginForgetPW.jsp"style="color:#191561;">忘記密碼 ?</a></div>  -->
+				<%--	<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/LoginForgetPW.jsp"style="color:#191561;">忘記密碼 ?</a></div>  --%>
                   </form>
                 </div>
               </div>

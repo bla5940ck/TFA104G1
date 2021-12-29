@@ -105,6 +105,8 @@ table {
 table, th, td {
 	font-size: 10px;
 	border: 1px solid #CCCCFF;
+	align:center ;
+	valign:middle;
 }
 
 th, td {
@@ -137,27 +139,26 @@ background-color: #FFF0AC;
 <%@ include file="/includeFolder/managerHeader.file"%>
 <!--  <h4>此頁暫練習採用 Script 的寫法取值:</h4>-->
 
-	<tr><td>
+<div>
 		
-		 <button><a href="<%=request.getContextPath()%>/back_end/member/listAllPdrMember.jsp">回首頁</a></button>
-	</td></tr>
-
 
 
 
 <%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemStatusServlet" style="margin-bottom: 0px;"> --%>
-
+<div style=”width:300px;height:auto;float:right;display:inline”>
 			    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemStatusServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="通過">
+			     <input style="font-size: 12pt; color: white;background-color:green" type="submit" value="通過">
 			     <input type="hidden" name="memberId"  value="${memberVO.memberId}">
 			      <input type="hidden" name="status"  value="1"></FORM>
-
+</div>
+<div style=”width:300px;height:auto;float:right;display:inline”>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemStatusServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="不通過">
+			     <input style="font-size: 12pt; color: white;background-color:red" type="submit" value="不通過">
 			     <input type="hidden" name="memberId"  value="${memberVO.memberId}">
 			      <input type="hidden" name="status"  value="9"></FORM>
 
-
+</div>
+</div>
 <table>
 	<tr>
 		<th>註冊日期</th>
@@ -257,7 +258,10 @@ background-color: #FFF0AC;
 	</tr>
 </table>
 
+<div style=”width:300px;height:auto;float:left;display:inline”>
+		 <button><a href="<%=request.getContextPath()%>/back_end/member/listAllPdrMember.jsp">回上頁</a></button>
 
+</div>
 
 
 </body>
