@@ -276,9 +276,9 @@ img.preview {
 			
 			<input type="checkbox" name="chbox" > 
 			<span>欲成為JoyLease會員時，請詳閱</span>
-			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_parent">【服務條款及會員契約】</a>
+			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_blank">【服務條款及會員契約】</a>
 			<span> . </span>
-			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_parent">【隱私權政策】</a>
+			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_blank">【隱私權政策】</a>
 			<span> 點選註冊表示您同意條款所有內容 。 </span>
 			<br>
 			<br>
