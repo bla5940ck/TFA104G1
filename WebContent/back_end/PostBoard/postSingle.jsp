@@ -114,7 +114,7 @@
                             <div class="media-body">
                              <h4 class="author-name">會員編號  ${pbrVO.memberId}</h4><!--留言會員編號-->
                              <span class="comments-date"></span>
-                             <p style="font-size:8px;">${pb.postTime}</p>
+                             <p style="font-size:8px;">${pbrVO.replyTime}</p>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
 
                             </div>
