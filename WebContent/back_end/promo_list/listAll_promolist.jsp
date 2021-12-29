@@ -14,7 +14,7 @@
 
 <html>
 <head>
-<title>所有專案明細資料 - listAll_promolist.jsp</title>
+<title>所有專案明細資料</title>
 
 <style>
 body {

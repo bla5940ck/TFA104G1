@@ -19,7 +19,7 @@ System.out.println(promoID);
 
 <html>
 <head>
-<title>所有專案明細資料 - promolistAll.jsp</title>
+<title>所有專案明細資料</title>
 
 <style>
 body {
@@ -147,11 +147,11 @@ background-color: #FFF0AC;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >	
 
-		 <h3>所有專案明細資料 - promolistAll.jsp</h3>
+		 <h3>所有專案明細資料 </h3>
 
 
 	<h4>  
-<a href='add_promolist.jsp'>新增專案明細</a>
+<a href='add_promolist.jsp'>新增折價券</a>
 	</h4>
 
 
@@ -175,10 +175,10 @@ background-color: #FFF0AC;
 <!-- 		<th>商品類別編號</th> -->
 		<th>折價券名稱</th>
 		<th>折價金額</th>
-		<th>數量</th>
-		<th>已領取數量</th>
-		<th>開始日期</th>
-		<th>結束日期</th>
+		<th>狀態</th>
+<!-- 		<th>已領取數量</th> -->
+<!-- 		<th>開始日期</th> -->
+<!-- 		<th>結束日期</th> -->
 	</tr>
 <%-- 	<%@ include file="page1.file" %>  --%>
 <%-- 	<c:forEach var="promolistVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> --%>
@@ -200,10 +200,10 @@ background-color: #FFF0AC;
 <%-- 			<td>${promolistVO.category_id}</td> --%>
 			<td>${promolistVO.coupon_name}</td>
 			<td>${Math.round(promolistVO.discount)}</td>
-			<td>${promolistVO.amount}</td>
-			<td>${promolistVO.used}</td> 
-			<td>${promolistVO.start_date}</td>
-			<td>${promolistVO.end_date}</td>
+			<td>${(promolistVO.amount==1)?'進行中':'已結束'}</td>
+<%-- 			<td>${promolistVO.used}</td>  --%>
+<%-- 			<td>${promolistVO.start_date}</td> --%>
+<%-- 			<td>${promolistVO.end_date}</td> --%>
 			<td>
 			  <FORM METHOD="post" ACTION="promolist.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
