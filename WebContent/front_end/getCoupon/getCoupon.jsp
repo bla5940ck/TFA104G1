@@ -81,6 +81,16 @@ input.memberId {
 								</script>
 							</c:if>
 
+		<c:if test="${b==null}">
+			<script>
+								swal({
+								  title: "歡迎使用折價券領取專區",
+								  text: "請選取想要的價券並按下'領取'按鈕'",
+								  icon: "info",
+								  button: "確認",});
+			</script>
+		</c:if>
+
 							<br> <br>
 
 							<center>
@@ -168,11 +178,7 @@ input.memberId {
 
 							</main>
 							<br> <br>
-							<center>
-								<a class="aa-browse-btn"
-									href="/TFA104G1/front_end/product/homePage.jsp"><span
-									class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
-							</center>
+							<center><a class="aa-browse-btn" href="javascript:history.back()"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回上一頁</a></center>
 							<br> <br>
 						</div>
 					</div>

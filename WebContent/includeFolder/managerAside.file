@@ -102,7 +102,7 @@
 						<a href='<%=request.getContextPath()%>/back_end/product/productManager.jsp'><i class="tou"></i>商品管理</a> <br>
 						<a href='<%=request.getContextPath()%>/back_end/order/listAllOrderMaster.jsp'><i class="tou"></i>訂單管理</a> <br> 
 						<a href='<%=request.getContextPath()%>/back_end/member/listAllMember.jsp'><i class="tou"></i>會員管理</a> <br> 
-						<a>帳務管理</a> <br>
+						<a href='<%=request.getContextPath()%>/back_end/account/AccountListDetile.jsp'><i class="tou"></i>帳務管理</a> <br>
 						<a href='<%=request.getContextPath()%>/back_end/member/listAllPdrMember.jsp'><i class="tou"></i>會員審核</a> <br> 
 						<a href='<%=request.getContextPath()%>/back_end/promo/listAll_promo.jsp'><i class="tou"></i>專案專區</a>
 					</h4>

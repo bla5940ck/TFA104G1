@@ -101,4 +101,21 @@ public class OrderMasterService {
 		dao.addLeaseComment(omVO);
 		return omVO;
 	}
+	
+	
+	//IAN
+	public OrderMasterVO updateMasterTRF(Integer ordID, Timestamp estTrfDa, Integer trfStatus) {
+
+		OrderMasterVO omVO = new OrderMasterVO();
+		
+		omVO.setOrdID(ordID);
+		
+		omVO.setEstTrfDa(estTrfDa);
+		omVO.setTrfStatus(trfStatus);
+	
+		
+		dao.updateOrdMaster(omVO);
+		
+		return omVO;
+	}
 }

@@ -72,11 +72,7 @@ input.memberId {
 
 
 							<br> <br>
-							<center>
-								<a class="aa-browse-btn"
-									href="/TFA104G1/front_end/product/homePage.jsp"><span
-									class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
-							</center>
+						<center><a class="aa-browse-btn" href="javascript:history.back()"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回上一頁</a></center>
 							<br> <br>
 						</div>
 						<!-- 						</div> -->

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Distance Matrix API - Google Maps API demo - Augustus - Let's Write</title>
+    <title>product-map</title>
     <link rel="canonical" href="https://letswrite.tw/google-map-api-distance-matrix/">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
       .container {
         padding-top: 30px;
@@ -14,6 +15,7 @@
       }
       #map {
         background: #CCC;
+        height:500px;
       }
       ul {
         padding-top: 16px;
@@ -39,15 +41,9 @@
       }
     </style>
 
-    <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
+    <!-- <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/> -->
     <!-- Google Tag Manager-->
-    <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
-    </script>
+
   </head>
   <body>
 
@@ -56,21 +52,19 @@
       <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
 
-    <div class="row fixed-bottom">
-      <div class="col">
-        <div class="alert alert-info" role="alert">
-          Let's Write 筆記文：<br/>
-          <a href="https://letswrite.tw/google-map-api-distance-matrix/" target="_blank">Google Maps API學習筆記-5</a>
-        </div>
-      </div>
-    </div>
+    
 
     <div id="app" class="container">
 
       <!-- 找目前地點 -->
       <section class="row">
         <div class="col google-map">
-          <button type="button" class="btn btn-info" @click="getCurrent">找我的所在地與地圖上地點的距離</button>
+          <form action="/TFA104G1/MapServelt">
+          商品搜尋:
+          <input type="hidden" name="action" value="search">
+          <input type="text" class="search" name=search>
+          <input class ="search-btn"type="submit">
+        </form>
         </div>
       </section>
 
@@ -85,11 +79,12 @@
 
         <!-- 顯示距離列表 -->
         <div class="col-md-4">
-
+		<button type="button" class="btn btn-info" @click="getCurrent">找目前位置與地圖上地點的距離</button>
           <div class="list-group">
             <div v-for="f in features" class="list-group-item">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ f.properties.name }}</h5>
+                <h5 class="mb-1">{{ f.properties.name }}</h5><br>
+                <h5 class="mb-1">{{ f.properties.productName }}</h5>
                 <small>{{ f.properties.distance_text }}</small>
               </div>
               <p class="mb-1">{{ f.properties.site }}</p>
@@ -109,6 +104,28 @@
 
     <!-- map -->
     <script>
+    $.ajax({
+    	url:"/TFA104G1/MapServelt",
+    	dataType:"json",
+    	type:"get",
+    	data:{
+    		action:"map"
+    	},
+    	success:function(data){
+    		console.log(data)
+    	},error:function(e){
+    		console.log(e)
+    	}
+    	
+    });
+    
+    
+    
+    
+    
+    
+    
+    
       const googleMap = new Vue({
         el: '#app',
         data: {
@@ -121,31 +138,77 @@
             
             // 預設地圖中心點
             let location = {
-              lat: 25.0374865,
-              lng: 121.5647688
+              lat: 25.0521328,
+              lng: 121.5410642
             };
 
             this.map = new google.maps.Map(document.getElementById('map'), {
               center: location,
               zoom: 16
             });
+            let marker = new google.maps.Marker({
+        position: location,
+        title: '自己',
+        map: this.map
+      });
 
-            var f =' {type: Feature,geometry: {type: Point,coordinates: [25.0374865, 121.5647688]},properties: {id: 1,name: 臺北市政府親子劇場,site: 110台北市信義區市府路1號市府大樓}}';
+//             var f =' {type: Feature,geometry: {type: Point,coordinates: [25.0374865, 121.5647688]},properties: {id: 1,name: 臺北市政府親子劇場,site: 110台北市信義區市府路1號市府大樓}}';
 //             features.put(f);
             
+//             const vicDummyDatas = [
+//   {
+//     "geometry": {
+//       "coordinates": [
+//         "25.0405919",
+//         "121.5647644"
+//       ],
+//       "type": "Point"
+//     },
+//     "type": "Feature",
+//     "properties": {
+//       "site": "110台北市信義區市府路1號市府大樓",
+//       "name": "會員編號1",
+//       "id": "1"
+//     }
+//   },
+//   {
+//     "geometry": {
+//       "coordinates": [
+//         "25.0405919",
+//         "121.5547644"
+//       ],
+//       "type": "Point"
+//     },
+//     "type": "Feature",
+//     "properties": {
+//       "site": "110台北市信義區市府路2號市府大樓",
+//       "name": "會員編號2",
+//       "id": "2"
+//     }
+//   }
+// ]
+
+            
             // 放置marker
-            fetch('./map.geojson')
+            fetch('/TFA104G1/MapServelt?action=getMapDate')
               .then(res => res.json())
               .then(result => {
                 this.features = result.features;
+                // this.features = vicDummyDatas;
+                
+
+
                 
                 Array.prototype.forEach.call(this.features, r => {
+
                   
                   // 寫入marker
                   let latLng = new google.maps.LatLng(r.geometry.coordinates[0], r.geometry.coordinates[1]);
                   let marker = new google.maps.Marker({
                     position: latLng,
                     map: this.map,
+                    site:r.properties.site,
+                    prodID:r.properties.id,
                     icon: 'https://cdn0.iconfinder.com/data/icons/lumin-social-media-icons/512/Location-32.png'
                   });
 
@@ -153,6 +216,55 @@
                   let infowindow = new google.maps.InfoWindow({
                     content: `<p>${r.properties.name}</p>` // 支援html
                   });
+
+
+                  marker.addListener("click", () => {
+                      console.log(marker.prodID);
+                      window.location.assign("/TFA104G1/front_end/product/prodDetail.jsp?prodID="+marker.prodID);
+                      
+                      
+                   });
+
+
+
+                  marker.addListener("mouseover", () => {
+                    
+                    $('div.list-group').css("backgroundColor","yellow");
+                      console.log(marker.site)
+                    // for(var i=0;i<$('p.mb-1').length;i++){
+                      $('p.mb-1').each(function(){
+                        // console.log($(this).text())
+                     
+                    // }
+                    if(marker.site==$(this).text()){
+                      console.log($(this).text())
+                      console.log($(this).closest('div.list-group-item'))
+                      $(this).closest('div.list-group-item').css("backgroundColor","yellow")
+                      // console.log($('p.mb-1').closest('section').find('div.list-group'));
+                      // alert(r?.properties?.site);
+                    }
+                  });
+                   });
+                  
+                   marker.addListener("mouseout", () => {
+                  
+                    // alert(r?.properties?.site);
+                   
+                    $('p.mb-1').each(function(){
+                        // console.log($(this).text())
+                     
+                    // }
+                    if(marker.site==$(this).text()){
+                      console.log($(this).text())
+                      console.log($(this).closest('div.list-group-item'))
+                      $(this).closest('div.list-group-item').css("backgroundColor","white");
+                      // console.log($('p.mb-1').closest('section').find('div.list-group'));
+                      // alert(r?.properties?.site);
+                    }
+                  });
+                    
+                   });
+                   
 
                 });
               })
@@ -173,9 +285,10 @@
 
               // 使用者允許抓目前位置，回傳經緯度
               function success(position) {
-
+              //   lat: 25.0521328,
+              // lng: 121.5410642
                 // 將所在地設成比較的點
-                let originPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                let originPosition = new google.maps.LatLng(25.0521328,121.5410642);
 
                 // 把要計算的點存成陣列
                 let destinations = [];
@@ -188,7 +301,7 @@
                 service.getDistanceMatrix({
                   origins: [originPosition],
                   destinations: destinations,
-                  travelMode: 'DRIVING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
+                  travelMode: 'WALKING', // 交通方式：BICYCLING(自行車)、DRIVING(開車，預設)、TRANSIT(大眾運輸)、WALKING(走路)
                   unitSystem: google.maps.UnitSystem.METRIC, // 單位 METRIC(公里，預設)、IMPERIAL(哩)
                   avoidHighways: true, // 是否避開高速公路
                   avoidTolls: true // 是否避開收費路線

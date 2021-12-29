@@ -12,9 +12,27 @@
 </head>
 <title>服務條款及會員契約</title>
 <style>
-input.memberId {
-	background-color: lightgray;
-}
+
+	input.memberId {
+  			background-color: lightgray;
+	}
+
+        .shuffle_text {
+            padding: 5% 5%;
+            color: black;
+            font-family: '微軟正黑體';
+            font-weight: bold;
+            line-height: 1.8em;
+        }
+
+        .rand_text {
+            color: white;
+            background-color: #555;
+        }
+
+        .yet_text {
+            color: #2a2a2a;
+        }
 </style>
 
 
@@ -34,9 +52,85 @@ input.memberId {
 					<div class="row" id="row2">
 						<!--<div class="col-md-6" id="col-md-6"> -->
 						<div class="aa-myaccount-login" id="aa-myaccount-login">
-							<br> <br>
+							<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js" type="text/javascript"></script>
+    <script>
+    $(function(){
+        // shaffle text
+        var _runingShuffleEffects = "";               // for dat.gui
+        var _ele = $('.shuffle_text');
+        var _strDefault = _ele.text(); // for dat.gui
+        var _shuffleEffectQueue = [];
+        var _initDuration = 25; //速度 1-100,越小越慢
+        
+        jQuery.fn.extend({
+        shuffleEffect: function(duration) {
+          if(duration == null) duration = 50;
+          var $this = jQuery(this);
+          var strDefault = $this.text();
+          var nLength = strDefault.length - 1;
+          var i = 0;
+          var strText = "";
+          var tid = setInterval(function(){
+            _runingShuffleEffects = tid;
+            if(i < nLength+1){
+              var slicedText = strDefault.slice(i+1,nLength);
+              var textYet = strDefault.slice(i,nLength);
+              // [" ", ".", "、", "。", "　"]
+              var term = slicedText.match(/[^ \.、。　]+/g);
+              var termRand = "";
+              var strShuffle = "";
+              if(term != null){
+                termRand = term[0].split("").sort(function() {
+                  return Math.random() - 0.5;
+                });
+                strShuffle = termRand.join("");
+              }
+              strText += strDefault.charAt(i);
+              $this.css({opacity:1}).html(strText + "<span class='rand_text'>" + strShuffle + "</span><span class='yet_text'>" + textYet + "</span>");
+                i++;
+            } else {
+              _runingShuffleEffects = "";
+              _shuffleEffectQueue.shift().shuffleEffect(duration);
+              clearInterval(tid);
+            }
+          }, duration);
+        }});
+        
+      
+        // dat.gui 
+        var Setting = function(){
+          this.duration = _initDuration;
+        }
+        var _setting = new Setting();
+//         控制bar調整        
+//         var gui = new dat.GUI();
+//         gui.add(_setting, 'duration',1,100).onFinishChange(function(value){
+//           init();
+//         });
+        
+        var init = function(){
+          _shuffleEffectQueue = [];
+          if(_runingShuffleEffects != ""){
+            // init
+            clearInterval(_runingShuffleEffects);
+            _runingShuffleEffects = "";
+          }
+          // run
+          _ele.find("p").each(function(){
+            var $this = jQuery(this);
+            $this.css({opacity:0});
+            _shuffleEffectQueue.push($this);
+          });
+          _shuffleEffectQueue.shift().shuffleEffect(_setting.duration);
+      //  _ele.shuffleEffect(_setting.duration);
+        };
+        init();
+      })
+      </script>
+     <div class="shuffle_text">
 
-	<div>
 		<p
 			style="margin-top: 0pt; margin-bottom: 0pt; text-align: center; widows: 0; orphans: 0; font-size: 26pt">
 			<span style="font-family: '微軟正黑體'; font-weight: bold">服務條款及會員契約</span>
@@ -421,13 +515,9 @@ input.memberId {
 			<span style="font-family: '微軟正黑體'; font-weight: bold">&#xa0;</span>
 		</p>
 	
-
-							<br> <br>
-							<center>
-								<a class="aa-browse-btn"
-									href="/TFA104G1/front_end/product/homePage.jsp"><span
-									class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回首頁</a>
-							</center>
+</div>
+							
+							<center><a class="aa-browse-btn" href="javascript:history.back()"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回上一頁</a></center>
 							<br> <br>
 						</div>
 

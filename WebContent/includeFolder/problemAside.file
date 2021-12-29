@@ -4,7 +4,7 @@
 				<ul class="nav_list">
 					<h2>問題專區</h2>
 					<h4>
-						<a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp">全部訂單</a>
+						<a href="<%=request.getContextPath()%>/front_end/memberservice/listAllMemberProblem.jsp">全部問題</a>
 					</h4>
 				</ul>
 			</nav>

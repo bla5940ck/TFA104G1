@@ -9,6 +9,34 @@ public class MemcouponService {
 		dao = new MemcouponDAO();
 	}
 	
+//	public boolean insert(Integer member_id, Integer category_id, Integer coupon_id, Double discount, String coupon_name, 
+//			Integer status, java.sql.Date start_date, java.sql.Date end_date) {
+//				
+//		MemcouponVO memcouponVO = new MemcouponVO();
+//	
+//		memcouponVO.setMember_id(member_id);
+//		memcouponVO.setCoupon_id(coupon_id);
+//		
+//		dao.check(memcouponVO);
+//		if (memcouponVO != null) {
+//			return false;			
+//		}else {
+//			
+//		MemcouponVO memcouponVO2 = new MemcouponVO();
+//		
+//		memcouponVO2.setMember_id(member_id);
+//		memcouponVO2.setCategory_id(category_id);
+//		memcouponVO2.setCoupon_id(coupon_id);
+//		memcouponVO2.setDiscount(discount);
+//		memcouponVO2.setCoupon_name(coupon_name);
+//		memcouponVO2.setStatus(status);
+//		memcouponVO2.setStart_date(start_date);
+//		memcouponVO2.setEnd_date(end_date);
+//		dao.insert(memcouponVO2);
+//		}
+//		return true;
+//	}
+	
 	public boolean insert(Integer member_id, Integer category_id, Integer coupon_id, Double discount, String coupon_name, 
 			Integer status, java.sql.Date start_date, java.sql.Date end_date) {
 				
@@ -17,7 +45,7 @@ public class MemcouponService {
 		//假如是false 代表沒有重複
 		//true 代表重複
 		for(MemcouponVO memcouponVO:list) {
-			if(memcouponVO.getMember_id()==1) {
+			if(member_id.equals(memcouponVO.getMember_id())) {
 				
 				flag = flag || (coupon_id.equals(memcouponVO.getCoupon_id()));
 			}
@@ -40,22 +68,6 @@ public class MemcouponService {
 		}
 		return true;
 	}
-	
-//	public MemcouponVO insert2(Integer member_id, Integer category_id, Integer coupon_id, Double discount, String coupon_name, 
-//			Integer status, java.sql.Date start_date, java.sql.Date end_date) {
-//		MemcouponVO memcouponVO = new MemcouponVO();
-//		memcouponVO.setMember_id(member_id);
-//		memcouponVO.setCategory_id(category_id);
-//		memcouponVO.setCoupon_id(coupon_id);
-//		memcouponVO.setDiscount(discount);
-//		memcouponVO.setCoupon_name(coupon_name);
-//		memcouponVO.setStatus(status);
-//		memcouponVO.setStart_date(start_date);
-//		memcouponVO.setEnd_date(end_date);
-//		dao.insert(memcouponVO);
-//		
-//		return memcouponVO;
-//	}
 	
 	
 	public MemcouponVO update(Integer mem_coupon_id, Integer member_id, Integer category_id, Integer coupon_id, Double discount, String coupon_name, 

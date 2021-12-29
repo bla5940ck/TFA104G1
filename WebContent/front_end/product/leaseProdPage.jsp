@@ -155,6 +155,11 @@ div.overlay > article{
 												<div></div>
 											</div>
 											<!-- (begin) cms module -->
+											
+											
+											<a class="a-mod3" href="" />商品地圖系統</a><br>
+											目前定位:
+											<p style="color:red" class="showAddress_p"></p>
 
 										</div>
 									</div>
@@ -360,7 +365,7 @@ div.overlay > article{
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'
@@ -450,7 +455,7 @@ div.overlay > article{
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'
@@ -544,7 +549,7 @@ div.overlay > article{
 
 
 																		</li>
-																		<li>評價： <a class="score" href="">9.6</a>
+																		<li>查看預約狀況： <a class="score" href="#">點擊</a>
 																		</li>
 																		<li><img alt='超商取貨'
 																			src='https://s.yimg.com/f/i/tw/mall/yps/ico_superbus.png'
@@ -688,9 +693,37 @@ div.overlay > article{
 				  
 				});
 		
+			
+			
+// 			進去地圖登記
+			
+			$("a.a-mod3").click(function(){
+				window.location.assign("/TFA104G1/front_end/product/mapData.jsp");
+				return false;
+			});
+			
+			
+			$.ajax({
+				url:"/TFA104G1/MapServelt",
+				data:{
+					action:"showAddress",
+				},
+				success:function(data){
+					$('p.showAddress_p').text(data);
+				},error:function(e){
+					console.log("失敗")
+				}
+				
+			});
+				
+			
+			
+			
+			
+			
 	</script>
 
-
+<!-- showAddress_p -->
 
 </body>
 
