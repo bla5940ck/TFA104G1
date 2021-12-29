@@ -696,24 +696,23 @@ public class BackEndOrderServlet extends HttpServlet {
 				Integer ordStatus = new Integer(req.getParameter("ordStatus").trim());
 				Integer payStatus = new Integer(req.getParameter("payStatus").trim());
 
-				String sc = (req.getParameter("shipCode").trim());
+				String sc = req.getParameter("shipCode");
+				System.out.println(sc);
 				Integer shipCode = 0;
-				if (sc != null) {
-					try {
-						shipCode = new Integer(sc);
-					} catch (Exception e) {
-						errorMsgs.add("格式不正確" + e.getMessage());
-					}
+				if (sc != null && sc.length()!=0) {
+					
+						shipCode = Integer.valueOf(sc);
+					
 				}
-				;
+				
 
 				String rc = (req.getParameter("returnCode").trim());
 				Integer returnCode = 0;
-				if (rc != null) {
+				if (rc != null && rc.length()!= 0) {
 					try {
 						returnCode = new Integer(rc);
 					} catch (Exception e) {
-						errorMsgs.add("格式不正確");
+						errorMsgs.add("returnCode格式不正確");
 					}
 				}
 
