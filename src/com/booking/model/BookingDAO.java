@@ -322,16 +322,16 @@ public class BookingDAO implements BookingDAO_interface {
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1,bk.getProdID());
-			System.out.println("進到bookingDAO");
-			System.out.println(bk.getProdID());
+//			System.out.println("進到bookingDAO");
+//			System.out.println(bk.getProdID());
 			pstmt.setInt(2,bk.getStatus());
-			System.out.println(bk.getStatus());
+//			System.out.println(bk.getStatus());
 			pstmt.setDate(3, bk.getEstStart());
-			System.out.println(bk.getEstStart());
+//			System.out.println(bk.getEstStart());
 			pstmt.setDate(4, bk.getEstEnd());
-			System.out.println(bk.getEstEnd());
+//			System.out.println(bk.getEstEnd());
 			pstmt.setInt(5, bk.getOrdID());
-			System.out.println(bk.getOrdID());
+//			System.out.println(bk.getOrdID());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
