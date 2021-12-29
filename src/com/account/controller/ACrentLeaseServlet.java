@@ -1,9 +1,12 @@
 package com.account.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,42 +19,126 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.order.model.OrderListDAOImpl;
 import com.order.model.OrderMasterDAOImpl;
+import com.order.model.OrderMasterService;
 import com.order.model.OrderMasterVO;
 import com.product.jedis.JedisPoolUtil;
 
 import redis.clients.jedis.JedisPool;
 
-/**
- * Servlet implementation class ArAcServlet
- */
-@WebServlet("/account/ArAcServlet")
-public class ArAcServlet extends HttpServlet {
+@WebServlet("/account/ACrentLeaseServlet")
+public class ACrentLeaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static JedisPool pool = JedisPoolUtil.getJedisPool();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ArAcServlet() {
+
+    public ACrentLeaseServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 //		String path = req.getRequestURI();
 //		System.out.println(path);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
+	
+		
+		//依ACRent.jsp訂單編號UPDATE
+				if ("updateTfrStatus".equals(action)) {
+//					System.out.println(1234);
+//					System.out.println( "checkbox  " +req.getParameterValues("c"));
+					List<String> errorMsgs = new LinkedList<String>();
+					req.setAttribute("errorMsgs", errorMsgs);
+
+					try {
+						/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+						Integer trfStatus = 1;
+						String []ordID = req.getParameterValues("c");
+//						System.out.println(Arrays.toString(ordID));
+						List list = Arrays.asList(ordID);
+					      req.setAttribute("ordID", list);
+					    
+					      
+					      DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+								String estTrfDa =(String)req.getParameter("estTrfDa");
+//								startDate = sdf.format(startDate);
+								if (estTrfDa == null || (estTrfDa.trim()).length() == 0) {
+									errorMsgs.add("請選擇日期");
+								}
+								System.out.println(estTrfDa);
+								
+							
+								
+					
+								OrderMasterService omSvc = new OrderMasterService();
+								OrderMasterVO omVO =  null;
+								
+						
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
+							failureView.forward(req, res);
+							return;// 程式中斷
+						}
+						Integer id=null;
+						/*************************** 2.開始查詢資料 ****************************/
+						Date date = sdf.parse(estTrfDa);
+						Timestamp sd = new Timestamp(date.getTime());
+//						java.sql.Timestamp sd = java.sql.Timestamp.valueOf(estTrfDa);
+						for (int i = 0; i < ordID.length; i++  ) {
+							id = Integer.parseInt(ordID[i]);
+							omVO =	omSvc.updateMasterTRF(id, sd, trfStatus);
+							}
+						
+//						for (String name : ordID) {
+//					    	  id=Integer.parseInt(name);
+////					    	  System.out.println(name);
+//					    	  omVO =	omSvc.updateMasterTRF(id, sd, trfStatus);
+//					    	  }
+						
+//						if (omVO == null) {
+//							errorMsgs.add("查無資料");
+//						}
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
+							failureView.forward(req, res);
+							return;// 程式中斷
+						}
+//
+//						OrderListDAOImpl oldao = new OrderListDAOImpl();
+//
+						/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+//						req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的VO物件,存入req
+//						String url = "/back_end/account/ACRent.jsp";
+//						RequestDispatcher successView = req.getRequestDispatcher(url);
+//						successView.forward(req, res);
+						RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
+						
+						try {  
+							failureView.forward(req, res);
+						    return;  
+						     }catch(Exception e){
+						    	 
+						    	 System.out.println("1");
+						    	 
+						     }
+						return;
+						/*************************** 其他可能的錯誤處理 *************************************/
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("2");
+						errorMsgs.add("無法取得資料:" + e.getMessage());
+						RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+				}
+		
 		//依訂單編號查詢
 		if ("getOne_For_Display".equals(action)) {
 
@@ -65,7 +152,7 @@ public class ArAcServlet extends HttpServlet {
 					errorMsgs.add("請輸入訂單編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -79,7 +166,7 @@ public class ArAcServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -94,7 +181,7 @@ public class ArAcServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -110,7 +197,7 @@ public class ArAcServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -134,7 +221,7 @@ public class ArAcServlet extends HttpServlet {
 						}
 						System.out.println(startDate);
 						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 							failureView.forward(req, res);
 							return;// 程式中斷
 						}
@@ -145,7 +232,7 @@ public class ArAcServlet extends HttpServlet {
 							errorMsgs.add("請選擇日期");
 						}
 						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 							failureView.forward(req, res);
 							return;// 程式中斷
 						}
@@ -169,12 +256,12 @@ public class ArAcServlet extends HttpServlet {
 							}
 						}
 						req.setAttribute("list", list2);
-						req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp").forward(req, res);
+						req.getRequestDispatcher("/back_end/account/ACRent.jsp").forward(req, res);
 						return;
 					} catch (Exception e) {
 						e.printStackTrace();
 						errorMsgs.add("修改資料失敗:" + e.getMessage());
-						RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/AccountListDetile.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/ACRent.jsp");
 						failureView.forward(req, res);
 					}
 		}
@@ -196,7 +283,7 @@ if ("get_arVdate_order".equals(action)) {
 				}
 				System.out.println(startDate);
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -207,7 +294,7 @@ if ("get_arVdate_order".equals(action)) {
 					errorMsgs.add("請選擇日期");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -231,12 +318,12 @@ if ("get_arVdate_order".equals(action)) {
 					}
 				}
 				req.setAttribute("list", list2);
-				req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp").forward(req, res);
+				req.getRequestDispatcher("/back_end/account/ACRent.jsp").forward(req, res);
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/AccountListDetile.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/ACRent.jsp");
 				failureView.forward(req, res);
 			}
 		

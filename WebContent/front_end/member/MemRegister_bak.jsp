@@ -24,7 +24,7 @@
 
 body {
 	margin: 0;
-	padding: 10px;
+	padding: 0px;
 }
 
 img {
@@ -36,7 +36,7 @@ img {
 header.header {
 	background-color: #ddd;
 	width: 100%;
-	margin: 0 auto 10px auto;
+	margin: 0 auto 0px auto;
 	border: 1px solid #999;
 }
 
@@ -198,7 +198,7 @@ img.preview {
 							<!--<div class="col-md-6" id="col-md-6"> -->
 								<div class="aa-myaccount-login" id="aa-myaccount-login">
 								
-	<h1>會員註冊:</h1>
+	<h1>會員註冊</h1>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -216,16 +216,16 @@ img.preview {
 
 
 
-			<label for="">請輸入姓名<span>*</span></label> 
+			<label for="">姓名<span>*</span></label> 
 			<input type="text"
 				name="name" placeholder="請輸入姓名"> <br> 
-			<label for="">請輸入帳號<span>*</span></label>
-			<input type="text" name="loginId" placeholder="請輸入帳號"> <br>
-			<label for="">請輸入密碼<span>*</span></label> 
+			<label for="">登入帳號<span>*</span></label>
+			<input type="text" name="loginId" placeholder="請設置登入帳號"> <br>
+			<label for="">登入密碼<span>*</span></label> 
 			<input type="password"
 				name="password" placeholder="請輸入密碼"> <br> 
-			<label for="">身分證字號<span>*</span></label>
-			<input type="text" name="idcn" placeholder="請輸入身分證字號"> <br>
+			<label for="">身分證號<span>*</span></label>
+			<input type="text" name="idcn" placeholder="請輸入身分證號"> <br>
 			<label for="">生日<span>*</span></label> 
 			<input name="birthday"
 				name="birthday" id="f_date1" type="text"> <br> <label
@@ -240,8 +240,8 @@ img.preview {
 			<label for="">縣市行政區<span>*</span></label>
 			<input type="text" name="add" placeholder="關聯郵遞區號預設帶入"> <br>
 			  -->	
-			  <div id="twzipcode"></div> 
 			<label for="">縣市行政區<span>*</span></label>	 <br>
+			  <div id="twzipcode"></div> 
 			<label for="">請輸入地址<span>*</span></label> 
 			<input type="text"
 				name="address" placeholder="請輸入地址"> <br>
@@ -268,12 +268,13 @@ img.preview {
 			</div>
 			<div style="width: 20px; height: 250px; "></div>
 			<hr>
+			<!--  
 			<div class="text-center">
 				<a class="small" href="ForgetPW.jsp" style="color:#191561;">Forgot Password?</a>
 			</div>
+			-->
 			<div class="text-center">
-				<a class="small" href="LeaseLogin.jsp" style="color:#191561;">Already have an account?
-					Login!</a>
+				<a class="small" href="LoginForgetPW.jsp" style="color:#191561;">已經有帳號?登入!</a>
 			</div>
 			<input   type="hidden" name="action" value="insert"> 
 			<input class="aa-browse-btn"	type="submit" value="註冊">

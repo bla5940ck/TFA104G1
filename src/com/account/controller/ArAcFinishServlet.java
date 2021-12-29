@@ -24,14 +24,14 @@ import redis.clients.jedis.JedisPool;
 /**
  * Servlet implementation class ArAcServlet
  */
-@WebServlet("/account/ArAcServlet")
-public class ArAcServlet extends HttpServlet {
+@WebServlet("/account/ArAcFinishServlet")
+public class ArAcFinishServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static JedisPool pool = JedisPoolUtil.getJedisPool();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ArAcServlet() {
+    public ArAcFinishServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -65,7 +65,7 @@ public class ArAcServlet extends HttpServlet {
 					errorMsgs.add("請輸入訂單編號");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -79,7 +79,7 @@ public class ArAcServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -94,7 +94,7 @@ public class ArAcServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -110,7 +110,7 @@ public class ArAcServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -134,7 +134,7 @@ public class ArAcServlet extends HttpServlet {
 						}
 						System.out.println(startDate);
 						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 							failureView.forward(req, res);
 							return;// 程式中斷
 						}
@@ -145,7 +145,7 @@ public class ArAcServlet extends HttpServlet {
 							errorMsgs.add("請選擇日期");
 						}
 						if (!errorMsgs.isEmpty()) {
-							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 							failureView.forward(req, res);
 							return;// 程式中斷
 						}
@@ -160,7 +160,7 @@ public class ArAcServlet extends HttpServlet {
 
 						List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
 						for (OrderMasterVO omVO : list) {
-							if (omVO.getOrdStatus() == 2 && omVO.getOrdDate() != null && omVO.getOrdDate().before(ed)
+							if (omVO.getTrfStatus() == 1 && omVO.getOrdStatus() == 2 && omVO.getOrdDate() != null && omVO.getOrdDate().before(ed)
 									&& omVO.getOrdDate().after(sd)) {
 								long time = omVO.getReturnDate().getTime();
 								Integer ordID = omVO.getOrdID();
@@ -169,12 +169,12 @@ public class ArAcServlet extends HttpServlet {
 							}
 						}
 						req.setAttribute("list", list2);
-						req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp").forward(req, res);
+						req.getRequestDispatcher("/back_end/account/ACFinish.jsp").forward(req, res);
 						return;
 					} catch (Exception e) {
 						e.printStackTrace();
 						errorMsgs.add("修改資料失敗:" + e.getMessage());
-						RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/AccountListDetile.jsp");
+						RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/ACFinish.jsp");
 						failureView.forward(req, res);
 					}
 		}
@@ -196,7 +196,7 @@ if ("get_arVdate_order".equals(action)) {
 				}
 				System.out.println(startDate);
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -207,7 +207,7 @@ if ("get_arVdate_order".equals(action)) {
 					errorMsgs.add("請選擇日期");
 				}
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACFinish.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -222,7 +222,7 @@ if ("get_arVdate_order".equals(action)) {
 
 				List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getOrdStatus() == 2 && omVO.getReturnDate() != null && omVO.getReturnDate().before(ed)
+					if (omVO.getTrfStatus() == 1 && omVO.getOrdStatus() == 2 && omVO.getReturnDate() != null && omVO.getReturnDate().before(ed)
 							&& omVO.getReturnDate().after(sd)) {
 						long time = omVO.getReturnDate().getTime();
 						Integer ordID = omVO.getOrdID();
@@ -231,12 +231,12 @@ if ("get_arVdate_order".equals(action)) {
 					}
 				}
 				req.setAttribute("list", list2);
-				req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp").forward(req, res);
+				req.getRequestDispatcher("/back_end/account/ACFinish.jsp").forward(req, res);
 				return;
 			} catch (Exception e) {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/AccountListDetile.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/bcak_end/account/ACFinish.jsp");
 				failureView.forward(req, res);
 			}
 		

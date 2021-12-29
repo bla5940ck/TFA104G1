@@ -60,7 +60,7 @@
  
  <table id="table-1">
 	<tr><td>
-		 <h3>所有會員資料- listAllMember.jsp</h3>
+		 <h3>信用卡訂單資料</h3>
 		 <h4><a href="<%=request.getContextPath()%>/back_end/manager/afterLogin.jsp"><img src="<%=request.getContextPath()%>/front_end/member/img/index.jpg" width="100" height="32" border="0"></a></h4>
 	</td></tr>
 </table>

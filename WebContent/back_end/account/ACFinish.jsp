@@ -37,6 +37,7 @@
 
 	pageContext.setAttribute("list", list);
 %>
+
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -184,7 +185,7 @@ background-color: #FFF0AC;
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 		
 
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcFinishServlet">
 					<b>輸入訂單編號 :</b><br> 
 					<input type="text" name="ordID"> 
 					<input type="hidden" name="action" value="getOne_For_Display"> 
@@ -192,7 +193,7 @@ background-color: #FFF0AC;
 				</FORM>
 			</div>
 			<div>
-				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcFinishServlet">
 					<b>依訂單日期查詢訂單 :
 					<br>
 						起始日期 : <input name="startDate" id="f_date3" type="text" style="width: 73px;"> 
@@ -204,7 +205,7 @@ background-color: #FFF0AC;
 				</FORM>
 			</div>
 			<div>
-				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcFinishServlet">
 					<b>依訂單完成日期查詢訂單 :
 					<br>
 						起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
@@ -226,7 +227,7 @@ background-color: #FFF0AC;
 
 			<table id="table-1">
 				<div>
-					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet">
+				
 						<tr>
 							<td><a class="a1" href="<%=request.getContextPath()%>/back_end/account/AccountListDetile.jsp">第三方核帳</a></td>
 							<td><a class="a1" href="<%=request.getContextPath()%>/back_end/account/ACRent.jsp">應付-出租者</a></td>
@@ -235,13 +236,12 @@ background-color: #FFF0AC;
 							
 						</tr>
 						<input type="hidden" name="action" value="get_Status_Display_Manager">
-					</FORM>
+				
 				</div>
 			</table>
 
 			<table id="table-2">
 				<tr>
-					
 					<th>訂單編號</th>
 					<th>出租者</th>
 					<th>承租者</th>
@@ -251,7 +251,7 @@ background-color: #FFF0AC;
 					<th>訂單狀態</th>
 					<th>轉帳狀態</th>
 					<th>訂單日期</th>
-					<th>超商碼</th>
+					<th>預計轉帳日期</th>
 					<th>訂單完成日期</th>
 					<th>訂單金額</th>
 				</tr>
@@ -259,7 +259,7 @@ background-color: #FFF0AC;
 				<c:forEach var="omVO" items="${list}" >		 
 							<c:choose>
 									
-									<c:when test="${((omVO.payID == 1) and omVO.payStatus == 1) }">
+									<c:when test="${(((omVO.payID == 1) and omVO.payStatus == 1) and omVO.trfStatus == 1) }">
 							<tr>
 								<td>${omVO.ordID}</td>
 								<td>${memSVC.getOneMember(omVO.leaseID).loginId}</td>
@@ -311,8 +311,8 @@ background-color: #FFF0AC;
 								<td>${(omVO.trfStatus == 0)?'待轉帳':'已轉帳'}</td>
 								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
 
-								<td>${omVO.storeCode}</td>
-<%-- 								<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
+								
+								<td><fmt:formatDate value="${omVO.estTrfDa}" pattern="yyyy-MM-dd" /></td> 
 <%-- 								<td><fmt:formatDate value="${omVO.arrivalDate}"	pattern="yyyy-MM-dd" /></td> --%>
 								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> 
 <%-- 								<td>${omVO.rentDays}</td> --%>

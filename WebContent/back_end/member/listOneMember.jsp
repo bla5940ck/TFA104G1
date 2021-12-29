@@ -178,7 +178,17 @@ background-color: #FFF0AC;
 			<td>${memberVO.loginId}</td>
 			<td>${memberVO.phoneNum}</td> 
 			<!--<td>${memberVO.status}</td>-->
-		    <td>${(memberVO.status==1)?'使用中':'未啟用/停用'}</td>
+		    <c:choose>
+			<c:when test="${memberVO.status==1}">
+			<td>使用中</td>
+			</c:when>
+			<c:when test="${memberVO.status==9}">
+			<td>停權</td>
+			</c:when>
+			<c:otherwise>
+			<td>尚未啟用</td>
+			</c:otherwise>
+			</c:choose>
 			
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/member/MemServlet" style="margin-bottom: 0px;">
