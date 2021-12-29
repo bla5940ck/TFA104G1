@@ -58,36 +58,23 @@ a.cart-img>img {
 										boolean flag = true;
 
 										List<CartVO> checkoutList = (List<CartVO>) request.getAttribute("checkoutList");
-// 											System.out.println(checkoutList.size());
-										// 				Set<CartVO> treeSet = new TreeSet();
 										List<OrderListVO> orderList = new ArrayList();
 										for (CartVO cartVO : checkoutList) {
-											// 					treeSet.add(cartVO);
-											// 					Iterator<CartVO> it = treeSet.iterator();
-											// 					while(it.hasNext()){
-											// 						it.next().getLeaseID();
-											// 					}
-
+										
 											Integer memID = (Integer) session.getAttribute("id");
-// 																System.out.println("承租者編號 : " + memID);
+// 											System.out.println("承租者編號 : " + memID);
 											//會員名稱
 											MemberService memSVC = new MemberService();
-// 											System.out.println("這裡");
-// 											System.out.println(cartVO.getLeaseID());
+											System.out.println(cartVO.getLeaseID());
 											MemberVO memVO = memSVC.getOneMember(cartVO.getLeaseID());
-											// 				 	System.out.println("出租者會員姓名  " + memVO.getName());
 											String leaseName = memVO.getName();
 											//起訖日
-// 											System.out.println("起始日 : " + cartVO.getEstStart());
-// 											System.out.println("結束日 : " + cartVO.getEstEnd());
 											Date esstr = cartVO.getEstStart();
 											Date eestr = cartVO.getEstEnd();
 											long rd = ((eestr.getTime()) - (esstr.getTime()));
 											Date rdd = new Date(rd);
 											Integer rentDays = new Integer((rdd.getDate()));
 											Integer rentDay = new Integer((rdd.getDay()));
-											// 				 	System.out.println("租借天數Date : " + rentDays);
-											// 				 	System.out.println("租借天數Day : " + rentDay);
 											// 預設物流
 											DefAddressJDBCDAO dadao = new DefAddressJDBCDAO();
 											List<DefAddressVO> list2 = dadao.getAll();
@@ -143,7 +130,7 @@ a.cart-img>img {
 															value="<%=rent%>"><%=rent%> 元</td>
 														<td><input type="hidden" name="estStart"
 															value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
-														<td><input type="hidden" name="estEnd"
+														<td><input type="hidden" name="estEnd" class="estEnd"
 															value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
 														<td><input type="hidden" name="rentDays"
 															value="<%=rentDays%>"><%=rentDays%> 天</td>
@@ -151,9 +138,10 @@ a.cart-img>img {
 															name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%>
 															元</td>
 														<input type="hidden" name="rentID" value="<%=memID%>">
-														<input type="hidden" name="leaseID"	value="<%=cartVO.getLeaseID()%>">
+														<input type="hidden" name="leaseID"	class="leaseID" value="<%=cartVO.getLeaseID()%>">
 														<input type="hidden" name="prodID"	value="<%=cartVO.getProdID()%>">
 														<input type="hidden" name="prodName" value="<%=cartVO.getProdName()%>">
+														<input type="hidden" name="leaseName" class="leaseName" value="<%=leaseName%>">
 													</tr>
 											</table>
 											<%
@@ -167,12 +155,32 @@ a.cart-img>img {
 														<jsp:useBean id="poDAO"
 															class="com.order.model.PaymentOptionsDAOImpl" />
 														<tr>
-															<td>選擇付款方式:</td>
+															<td>取貨方式:</td>
 															<td><select size="1" name="payID"
 																style="width: 120px">
 																	<c:forEach var="poVO"
 																		items="${poDAO.getAllPaymentOptions()}">
 																		<option value="${poVO.payID}">${poVO.payName}
+																	</c:forEach>
+															</select></td>
+														</tr>
+
+														<jsp:useBean id="daDAO"
+															class="com.member.model.DefAddressDAO" />
+														<jsp:useBean id="meDAO"
+															class="com.member.model.MemberDAO" />
+
+														<tr>
+															<td>取貨資訊:</td>
+															<td><select size="1" name="code711"
+																style="width: 230px">
+																				<option value=0>面交自取
+																	<c:forEach var="daVO" items="${daDAO.getAll()}">
+																		<c:choose>
+																			<c:when test="${daVO.memberId == id}">
+																				<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
+																			</c:when>
+																		</c:choose>
 																	</c:forEach>
 															</select></td>
 														</tr>
@@ -190,26 +198,6 @@ a.cart-img>img {
 																				</c:when>
 																			</c:choose>
 																		</c:forEach>
-															</select></td>
-														</tr>
-
-														<jsp:useBean id="daDAO"
-															class="com.member.model.DefAddressDAO" />
-														<jsp:useBean id="meDAO"
-															class="com.member.model.MemberDAO" />
-
-														<tr>
-															<td>選擇超商:</td>
-															<td><select size="1" name="code711"
-																style="width: 230px">
-																				<option value=0>面交
-																	<c:forEach var="daVO" items="${daDAO.getAll()}">
-																		<c:choose>
-																			<c:when test="${daVO.memberId == id}">
-																				<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
-																			</c:when>
-																		</c:choose>
-																	</c:forEach>
 															</select></td>
 														</tr>
 														<tr>
@@ -247,11 +235,42 @@ a.cart-img>img {
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
+var leaseID = $("input.leaseID");
+console.log(leaseID);
+var set = new Set();
+// leaseID.each(function(index, item){
+// 	console.log($(item).val());
+// 	// array.push($(item).val());
+// 	set.add($(item).val());
+// });
+
+var estEnd = $("input.estEnd");
+var estEndSet = new Set();
+estEnd.each(function(index, item){
+	estEndSet.add($(item).val());
+})
 
 $("a.aa-cart-view-btn").click(function(){
-	 
-	  $("#cart-form").submit();
-});
+	leaseID.each(function (index, item) {
+		console.log($(item).val());
+		set.add($(item).val());
+	});
+	estEnd.each(function (index, item) {
+		estEndSet.add($(item).val());
+	})
+	// console.log(set.size);
+	if(set.size == 1){
+		if(estEndSet.size == 1){
+			$("#cart-form").submit();
+		}
+		alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
+		return false;
+	}
+	alert("您選擇的出租方不同! 請回購物車調整! 謝謝!");
+	return false;
+	});
+
+
 	var coupon = $("#coupon"); //折價券
 	var discount = $("#discount"); //折扣
 	var thisOrder = $("#thisOrder"); //前端顯示的訂單金額
@@ -260,8 +279,10 @@ $("a.aa-cart-view-btn").click(function(){
 
 	var total = 0;
 	var form = $("input.prodPrice");
+	
 	form.each(function(index, item) {
-// 		console.log("索引值：" + index + "； 內容：" + $(item).val());
+		
+		// console.log("索引值：" + index + "； 內容：" + $(item).val());
 		total += parseInt($(item).val());
 
 		var data_id = "";
@@ -289,6 +310,8 @@ $("a.aa-cart-view-btn").click(function(){
 	// 	thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
 	document.getElementById("ordPrice").setAttribute('value',
 			total - coupon.val() + 60);
+		
+
 </script>
 
 </html>

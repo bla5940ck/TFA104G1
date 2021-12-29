@@ -310,7 +310,7 @@ public class ManagerServlet extends HttpServlet {
 //					System.out.println("帳號 : " + user);
 //					System.out.println("密碼 : " + password);
 
-					 if ((managerUser.trim().equals(user)) && (managerPassword.trim().equals(password))) {
+					if ((managerUser.trim().equals(user)) && (managerPassword.trim().equals(password))) {
 
 					      System.out.println(req.getParameter("managerUser") + "你好");
 
@@ -325,8 +325,7 @@ public class ManagerServlet extends HttpServlet {
 					      }
 					      
 					      return;
-					     }
-
+					}
 				}
 				errorMsgs.add("帳號密碼不符合");
 				if (!errorMsgs.isEmpty()) {
