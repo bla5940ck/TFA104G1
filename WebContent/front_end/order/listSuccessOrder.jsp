@@ -6,12 +6,17 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.order.model.*"%>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>歷史訂單</title>
 
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-
+	
 	OrderMasterService omSVC = new OrderMasterService();
 	List<OrderMasterVO> list = omSVC.getAll();
 
@@ -31,10 +36,6 @@
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
 
-<html>
-<head>
-<meta charset="UTF-8">
-<title>歷史訂單</title>
 <style>
 		* {
 			box-sizing: border-box;
@@ -90,7 +91,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			height:650px;
+			height:765px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -166,6 +167,40 @@
    			border: 1px solid #191561;
    			color: white;
 		}
+		.check{
+		    background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
+	.div1{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 100%;
+		}
+		.div2{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 25%;
+		}
+		.div3{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 25%;
+		}
+		.div4{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			position:relative;
+			left:300px;
+			width: 15%;
+		}
+		.div5{
+/* 			border: 1px solid red; */
+			position: absolute;
+			margin-top: 0;
+			display: inline-block;
+			width: 15%;
+		}
 		</style>
 </head>
 
@@ -174,9 +209,8 @@
 	<div class="main_content">
 		<%@ include file="/includeFolder/leaseMemberAside.file"%>
 		<main class="main">
-		<h3>歷史訂單</h3>
+		<h1>歷史訂單</h1>
 			<jsp:useBean id="OrdserListSvc" scope="page" class="com.order.model.OrderListService" />
-
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
 				<ul>
@@ -186,122 +220,107 @@
 				</ul>
 			</c:if>
 			<div>
-				<h5>依歸還日期查詢訂單</h5>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet">
-					起始日期:<input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
-					結束日期:<input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
+				<h5>依歸還日期查詢訂單 : 
+					起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+					結束日期 : <input name="endDate"id="f_date2" type="text" style="width: 73px;"> 
 							<input type="button" class="dateBtn" value="確認">
 						     <input type="hidden" name="action" value="get_date_forLease_order">
+				</h5>
 				</FORM>
+				<div class="getTotal">
+				<span class="sumFee"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span class="sum"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span class="all"></span>
+				</div>
 			</div>
-			<table id="table-1">
-				<tr>
-					<th>訂單編號</th>
-					<th>承租者</th>
-					<th>交易方式</th>
-					<th>折價券</th>
-					<th>折抵金額</th>
-					
-
-					<th>訂單狀態</th>
-					<th>訂單日期</th>
-
-					<th>歸還日期</th>
-					<th>承租天數</th>
-					<th>運費</th>
-					<th>訂單金額</th>
-				</tr>
-				<%@ include file="pageForLease.file"%>
+			<%@ include file="pageForLease.file"%>
+				<div class="div1">
+			<hr style="border: 1px solid black;">
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-					<tr>
-						<td>${omVO.ordID}</td>
-						<td>${memSVC.getOneMember(omVO.rentID).name}</td>
-						<c:choose>
-							<c:when test="${omVO.payID == '1'}">
-								<td>信用卡</td>
-							</c:when>
-							<c:otherwise>
-								<td>面交</td>
-							</c:otherwise>
+					<div class="div2">
+					<ul>
+						<h4>訂單編號 : ${omVO.ordID}</h4>
+						<li>承租者 : ${memSVC.getOneMember(omVO.rentID).name}</li>
+						<li>交易方式 :
+							<c:choose>
+								<c:when test="${omVO.payID == '1'}">超商店到店</c:when>
+								<c:otherwise>面交</c:otherwise>
 						</c:choose>
-
+						</li>
+						<li>折價券 :
 						<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
 						<c:set var="count" value="0" />
 						<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
 							<c:if test="${count==0}">
 								<c:choose>
-									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
-										<td>無</td>
+									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無
 									</c:when>
-									<c:when test="${true}">
-										<td>${mcVO.coupon_name}</td>
-									</c:when>
+									<c:when test="${true}">${mcVO.coupon_name}</c:when>
 								</c:choose>
 								<c:set var="count" value="1" />
 							</c:if>
 						</c:forEach>
-
+						</li>
+						<li>折抵金額 : 
 						<c:set var="count" value="0" />
 						<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
 							<c:if test="${count==0}">
 								<c:choose>
-									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">
-										<td>無</td>
-									</c:when>
-									<c:when test="${true}">
-										<td>$${Math.round(mcVO.discount)}元</td>
-									</c:when>
+									<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無</c:when>
+									<c:when test="${true}">$${Math.round(mcVO.discount)}元</c:when>
 								</c:choose>
 								<c:set var="count" value="1" />
 							</c:if>
 						</c:forEach>
-
+						</li>				
+						<li>訂單狀態 : 
 						<c:choose>
-							<c:when test="${omVO.ordStatus == '0'}">
-								<td>已成立</td>
-							</c:when>
-							<c:when test="${omVO.ordStatus == '1'}">
-								<td>待歸還</td>
-							</c:when>
-							<c:when test="${omVO.ordStatus == '2'}">
-								<td>已完成</td>
-							</c:when>
-							<c:otherwise>
-								<td>已取消</td>
-							</c:otherwise>
+							<c:when test="${omVO.ordStatus == '0'}">已成立</c:when>
+							<c:when test="${omVO.ordStatus == '1'}">待歸還</c:when>
+							<c:when test="${omVO.ordStatus == '2'}">已完成</c:when>
+							<c:otherwise>已取消</c:otherwise>
 						</c:choose>
-
-						<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
-<%-- 						<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
-<%-- 						<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td> --%>
-						<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td>
-						<td>${omVO.rentDays}</td>
-						<td>$${omVO.shipFee}元</td>
-						<td>$${omVO.ordPrice}元</td>
-						<td>
-							<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
+						</li>
+					</ul>						
+					</div>	
+					<div class="div3">	
+						<ul>
+							<li>訂單日期 : <fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></li>
+							<li>歸還日期 : 
+								<c:choose>
+									<c:when test="${omVO.returnDate != null}">
+										<fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" />
+									</c:when>
+									<c:otherwise>待歸還</c:otherwise>
+							</c:choose>
+				</li>
+							<li>承租天數 : ${omVO.rentDays}</li>
+							<li>運費 : $${omVO.shipFee}元</li>
+							<li>訂單金額 : $${omVO.ordPrice}元</li>	
+						</ul>		
+					</div>
+					<div class="div5">
+						<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
+						<c:forEach var="olVO" items="${olDAO.findOrderListByOrdID(omVO.ordID)}">
+							<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=${olVO.prodID}"alt="img"></a>
+						</c:forEach>
+					</div>			
+									
+					<div class="div4">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/OrderMasterServlet" style="margin-bottom: 0px;">
 								<input class="aa-browse-btn" type="submit" value="評價"> 
 								<input type="hidden" name="ordID" value="${omVO.ordID}"> 
 								<input type="hidden" class="shipFee" name="shipFee" value="${omVO.shipFee}">
 								<input type="hidden" class="price" name="price" value="${omVO.ordPrice}"> 
 								<input type="hidden" class="ncFee" name="ncFee" value="${omVO.ordPrice - omVO.shipFee}"> 
 								<input type="hidden" name="action" value="getComment_For_Display">
-							</FORM>
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
-			
-			<div class="getTotal">
-				<p class="sumFee"></p>
-			</div>
-			<div class="getTotal">
-				<p class="sum"></p>
-			</div>
-			
-			<div class="getTotal">
-				<p class="all"></p>
-			</div>
+						</FORM>
+					</div>	
+						
+						<hr style="border: 1px solid black;">
+					</c:forEach>
+				</div>
 			<%@ include file="page2.file"%>
 		</main>
 	</div>

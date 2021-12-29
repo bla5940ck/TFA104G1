@@ -5,25 +5,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.order.model.*"%>
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>訂單資料更新:</title>
 <%
 	Integer memID = (Integer) session.getAttribute("id");
 	OrderMasterVO omVO = (OrderMasterVO) request.getAttribute("OrderMasterVO");
-	// 	OrderListVO olVO = new OrderListVO();
-	// 	OrderListDAOImpl oldao = new OrderListDAOImpl();
 %>
 
 <%
 	java.text.DateFormat df = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	String formatDate = df.format(new java.util.Date());
-	//     out.println(formatDate);
 %>
 <jsp:useBean id="olDAO" class="com.order.model.OrderListDAOImpl" />
 
 
-<html>
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title>訂單資料更新:</title>
 
 <style>
 		* {
@@ -80,7 +78,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			height:650px;
+			height:800px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -136,30 +134,83 @@
 		
 		/*--------------------table區域-------------------- */
 		table {
-			width: 90%;
+			width: 80%;
 			background-color: white;
 			margin-top: 5px;
 			margin-bottom: 5px;
 		}
 		
 		table, th, td {
-			border: 1px solid #CCCCFF;
+/* 			border: 1px solid #CCCCFF; */
 		}
 		
 		.cart-img{
-			height: 120px;
-			width: 120px;
+			display: block;
+  			width: 100%;
+  			height: auto;
+  			margin: 0 auto
+			
 			
 		}
-
+		.dateBtn{
+		    background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
+		.check{
+		    background-color: #191561;
+   			border: 1px solid #191561;
+   			color: white;
+		}
+		.div1{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 100%;
+		}
+		.div2{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 15%;
+		}
+		.div3{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			width: 15%;
+		}
+		.div4{
+/* 			border: 1px solid red; */
+			display: inline-block;
+			position:relative;
+			left:205px;
+			width: 15%;
+		}
+		.div5{
+/* 			border: 1px solid red; */
+			position: absolute;
+			margin-top: 0;
+			display: inline-block;
+			width: 15%;
+		}
+		
+		.aa-totals-table{
+/* 			border: 1px solid red;  */
+			display: inline-block;
+			width: 100%;
+		}
+		
+		.rankarea{
+/* 			border: 1px solid red;  */
+			display: inline-block;
+			widows: 40%;
+		}
+		.mine{
+/* 			border: 1px solid red;  */
+			display: inline-block;
+			width: 37%;
+			vertical-align: top;
+		}
         @import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
 
-/*         * { */
-/*             margin: 0; */
-/*             padding: 0; */
-/*             font-family: roboto; */
-/*         } */
-        
         a.comment:link,
         a.comment:visited {
             background-color: #191561;
@@ -189,14 +240,9 @@
             overflow: hidden;
         }
 
-        hr {
-            margin: 20px;
-            border: 1px solid black;
-            border-bottom: thin solid rgba(255, 255, 255, 0.1);
-        }
-
         div.title {
             font-size: 2em;
+            display: inline-block;
         }
 
         h1 span {
@@ -207,6 +253,7 @@
         div.stars {
             width: 270px;
             display: inline-block;
+            
         }
 
         input.star {
@@ -287,10 +334,20 @@
         }
 </style>
 </head>
+<%
+OrderListDAOImpl oldao = new OrderListDAOImpl();
+System.out.println(omVO.getOrdID());
+List<OrderListVO> list = oldao.findOrderListByOrdID(omVO.getOrdID());
+
+for (OrderListVO olVO : list) {
+	ProdDAO prodDAO = new ProdDAO();
+	ProdVO prodVO = prodDAO.findProductByPK(olVO.getProdID());
+	MemberJDBCDAO memDAO = new MemberJDBCDAO();
+	MemberVO memVO = memDAO.findByPrimaryKey(omVO.getRentID());
+%>
 
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
-	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -303,145 +360,80 @@
 		<div class="main_content">
 			<%@ include file="/includeFolder/leaseMemberAside.file"%>
 			<main class="main">
-				<!-- 				<section id="cart-view"> -->
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="cart-view-area">
-								<div class="cart-view-table">
-									<div>
-										<h4>
-											<th>訂單編號</th>
-											<td><%=omVO.getOrdID()%></td>
-										</h4>
-									</div>
-									<div id="lease-div">
-										<div class="table-responsive">
-											<table class="table-1">
-												<thead>
-													<tr>
-														<th>商品圖片</th>
-														<th>商品名稱</th>
-														<th>承租者</th>
-														<th>商品租金</th>
-														<th>訂單日期</th>
-														<th>承租天數:</th>
-														<th>總計</th>
-													</tr>
-												</thead>
-												<%
-													OrderListDAOImpl oldao = new OrderListDAOImpl();
-													System.out.println(omVO.getOrdID());
-													List<OrderListVO> list = oldao.findOrderListByOrdID(omVO.getOrdID());
-
-													for (OrderListVO olVO : list) {
-
-														ProdDAO prodDAO = new ProdDAO();
-														ProdVO prodVO = prodDAO.findProductByPK(olVO.getProdID());
-														MemberJDBCDAO memDAO = new MemberJDBCDAO();
-														MemberVO memVO = memDAO.findByPrimaryKey(omVO.getRentID());
-												%>
-												<tbody>
-													<td><a class="cart-img" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=olVO.getProdID()%>">
-														<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=olVO.getProdID()%>"
-															alt="img">
-													</a></td>
-													<td><a id="prodName" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=olVO.getProdID()%>"><%=prodVO.getProdName()%></a></td>
-													<td><%=memVO.getName()%></td>
-													<td><p id="prodPrice"><%=olVO.getProdPrice()%></p></td>
-													<td><fmt:formatDate value="<%=omVO.getOrdDate()%>" pattern="yyyy-MM-dd" /></td>
-<%-- 													<td><%=omVO.getOrdDate()%></td> --%>
-													<td><p id="rentDays"><%=omVO.getRentDays()%></p></td>
-													<td><p id="total"><%=olVO.getProdPrice() * omVO.getRentDays()%></p></td>
-												</tbody>
-												<%
-													}
-												%>
-												<div class="cart-view-total">
-													<table class="aa-totals-table">
-														<tbody>
-															<tr>
-																<th>承租方評價</th>
-																<td><input type="hidden" name="rentRank"
-																	value="<%=omVO.getRentRank() == null ? "" : omVO.getRentRank()%>">
-																	<p><%=omVO.getRentRank() == 0 ? "尚未評分" : omVO.getRentRank()+"顆星"%></p>
-																</td>
-															</tr>
-															<tr>
-																<th>承租方評論</th>
-																<td><input type="hidden" name="rentComt"
-																	value="<%=omVO.getRentComt() == null ? "尚未評論" : omVO.getRentComt()%>">
-																	<p><%=omVO.getRentComt() == null ? "尚未評論" : omVO.getRentComt()%></p></td>
-															</tr>
-
-															<tr>
-																<th>我的評價</th>
-																<td><p id="rank"><%=omVO.getLeaseRank() == 0 ? "尚未評分" : omVO.getLeaseRank()+"顆星"%></p></td>
-															</tr>
-															<tr>
-																<th>我的評論</th>
-																<td><p id="lc"><%=omVO.getLeaseComt() == null ? "尚未評論" : omVO.getLeaseComt()%></p></td>
-															</tr>
-														</tbody>
-													</table>
-
-													<table id="review">
-														<tr>
-															<th>我的評分</th>
-														</tr>														
-															<td bgcolor="#191561">
-														<div class="stars" id="s">
-															<input class="star star-5" id="star-5-2" onchange="test" type="radio" name="star" value="5" <%=omVO.getLeaseRank()== 5 ? "checked" : ""%>/> 
-																<label class="star star-5" for="star-5-2"></label> 
-															<input class="star star-4" id="star-4-2" onchange="test" type="radio" name="star" value="4" <%=omVO.getLeaseRank()== 4 ? "checked" : ""%>/> 
-																<label class="star star-4" for="star-4-2"></label> 
-															<input class="star star-3" id="star-3-2" onchange="test" type="radio" name="star" value="3" <%=omVO.getLeaseRank()== 3 ? "checked" : ""%>/> 
-																<label class="star star-3" for="star-3-2"></label> 
-															<input class="star star-2" id="star-2-2" onchange="test" type="radio" name="star" value="2" <%=omVO.getLeaseRank()== 2 ? "checked" : ""%>/> 
-																<label class="star star-2" for="star-2-2"></label> 
-															<input class="star star-1" id="star-1-2" onchange="test" type="radio" name="star" value="1" <%=omVO.getLeaseRank()== 1 ? "checked" : ""%>/> 
-																<label class="star star-1" for="star-1-2"></label>
-														</div>	
-															</td>
-														<tr>
-															<th>我的評價</th>
-														</tr>
-														<tr>
-															<td>
-																<div class="rev-box">
-                													<textarea class="review" col="30" name="leaseComt" placeholder="在此填寫您的評價"></textarea>
-              														<input type="hidden" name="leaseRank" id="leaseRank">
-																	<input type="hidden" name="action" value="update_lease_comment"> 
-																	<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-              														<input class="aa-browse-btn" type="submit" value="送出評價 !">
-           														</div>
-															</td>													
-														</tr>
-													</table>
-													<center><a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">回前頁</a></center>
-												</div>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+			<br>
+			<h1>訂單評價</h1>
+				<div class="div1">
+					<div class="div2">
+						<ul>
+							<li>訂單編號 : <%=omVO.getOrdID()%></li>
+							<li>商品名稱 : 
+							<a id="prodName" href="<%=request.getContextPath()%>/front_end/product/prodDetail.jsp?prodID=<%=olVO.getProdID()%>"><%=prodVO.getProdName()%></a>
+							</li>
+							<li>承租者 : <%=memVO.getName()%></li>
+							<li>商品租金 : <%=olVO.getProdPrice()%> 元</li>
+							<li>訂單日期 : <fmt:formatDate value="<%=omVO.getOrdDate()%>" pattern="yyyy-MM-dd" /></li>
+							<li>承租天數 : <%=omVO.getRentDays()%> 天</li>
+							<li>總計金額 : <%=olVO.getProdPrice() * omVO.getRentDays()%> 元</li>
+						</ul>
 					</div>
-				</div>
-<!-- 			<input type="hidden" name="leaseRank" id="leaseRank"> -->
-<!-- 			<input type="hidden" name="action" value="update_lease_comment">  -->
-<%-- 			<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>"> --%>
-<%-- 			<c:forEach var="olVO" items="${olDAO.getAllOrderList()}"> --%>
-<%-- 				<input type="hidden" name="listID" value="${olVO.listID}"> --%>
-<%-- 			</c:forEach> --%>
-			<%-- 				<input type="hidden" name="listID" value="<%=olVO.getListID()%>"> --%>
-<%-- 			<input type="hidden" name="rentComtdate" value="${OrderMasterVO.rentComtdate}">  --%>
-<%-- 			<input type="hidden" name="leaseComtdate" value="${OrderMasterVO.leaseComtdate}"> --%>
-<%-- 			<center> --%>
-<!-- 				<input type="submit" value="確認更新"> -->
-<%-- 			</center> --%>
-			</main>
-		</div>
+						<div class="div3">
+							<img class="cart-img" src="<%=request.getContextPath()%>/prod/ProdServlet?action=detail&no=1&prodID=<%=olVO.getProdID()%>"alt="img">
+						</div>
+					<hr style="border: 1px solid black;">
+						<%
+							}
+						%>
+					</div>	
+					<div>
+						<ul>
+							<li>承租者評分 : <%=omVO.getRentRank() == 0 ? "尚未評分" : omVO.getRentRank()+"顆星"%></li>
+							<li>承租者評論 : <%=omVO.getRentComt() == null || omVO.getRentComt().length() == 0 ? "尚未評論" : omVO.getRentComt()%></li>
+						</ul>
+					</div>
+						<hr style="border: 1px solid black;">
+						<div class="aa-totals-table">
+						<div class="mine">
+							<ul>
+								<li style="font-size: large;">我的評分 : <p id="rank"><%=omVO.getLeaseRank() == 0 ? "尚未評分" : omVO.getLeaseRank()+"顆星"%></p></li>	
+								<li style="font-size: large;">我的評論 : <p id="lc"><%=omVO.getLeaseComt() == null || omVO.getLeaseComt().length() == 0 ? "尚未評論" : omVO.getLeaseComt()%></p></li>	
+							</ul>
+						</div>
+						<div class="rankarea">
+						
+						<table id="review">
+																					
+								<td bgcolor="#191561">
+							<div class="stars" id="s">
+								<input class="star star-5" id="star-5-2" onchange="test" type="radio" name="star" value="5" <%=omVO.getLeaseRank()== 5 ? "checked" : ""%>/> 
+								<label class="star star-5" for="star-5-2"></label> 
+								<input class="star star-4" id="star-4-2" onchange="test" type="radio" name="star" value="4" <%=omVO.getLeaseRank()== 4 ? "checked" : ""%>/> 
+								<label class="star star-4" for="star-4-2"></label> 
+								<input class="star star-3" id="star-3-2" onchange="test" type="radio" name="star" value="3" <%=omVO.getLeaseRank()== 3 ? "checked" : ""%>/> 
+								<label class="star star-3" for="star-3-2"></label> 
+								<input class="star star-2" id="star-2-2" onchange="test" type="radio" name="star" value="2" <%=omVO.getLeaseRank()== 2 ? "checked" : ""%>/> 
+								<label class="star star-2" for="star-2-2"></label> 
+								<input class="star star-1" id="star-1-2" onchange="test" type="radio" name="star" value="1" <%=omVO.getLeaseRank()== 1 ? "checked" : ""%>/> 
+								<label class="star star-1" for="star-1-2"></label>
+							</div>	
+								</td>
+							
+							<tr>
+								<td>
+									<div class="rev-box">
+                						<textarea class="review" col="30" name="leaseComt" placeholder="在此填寫您的評價"></textarea>
+              							<input type="hidden" name="leaseRank" id="leaseRank">
+										<input type="hidden" name="action" value="update_lease_comment"> 
+										<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
+              							<center><input class="aa-browse-btn" type="submit" value="送出評價 !">
+										<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listSuccessOrder.jsp">回前頁</a></center>
+           							</div>
+								</td>													
+							</tr>
+						</table>
+						</div>
+						</div>
+				</main>
+			</div>
 		<%@ include file="/includeFolder/footer2.file"%>
 	</FORM>
 </body>
