@@ -319,7 +319,7 @@ public class PostBoardJDBCDAO implements PostBoardDAOImpl {
 //		dao.update(postboardVO2);
 //
         //刪除
-		//dao.delete(124);
+		//dao.delete(138);
 //
 //		// 查詢--ok
 //		PostBoardVO postboardVO3 = new PostBoardVO();
