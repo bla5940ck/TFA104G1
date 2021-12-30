@@ -12,11 +12,11 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <style type="text/css">
+ <style type="text/css">
       #login{
-        margin: 10%;
+        margin: 1%;
       }
-    </style>
+    </style> 
 
 
 </head>
@@ -27,15 +27,15 @@
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                   <h3>Member Login</h3>
                   <form id="loginForm" METHOD="post" action="<%=request.getContextPath()%>/member/LoginServlet" class="aa-login-form">
-                    <label for="">帳號 : <span>*</span></label>
+                    <label for="">帳號 : <span></span></label>
                     <input id="username" type="text" name="loginId" value="" placeholder="請輸入帳號">
-                    <label for="">密碼 : <span>*</span></label>
+                    <label for="">密碼 : <span></span></label>
                     <input id="password" type="password" name="password" value=""  placeholder="請輸入密碼">
                     <input type=submit id="login"  value=" Login" class="aa-browse-btn"onclick="myLogin()">
                    	<input type="hidden" name="action"	value="LeaseLogin">
                    <label class="rememberme" for="remember"><input type="checkbox" id="remember"> Remember Me </label>
-                    <div class="attxt"><a href="<%=request.getContextPath()%>/front_end/member/MemRegister.jsp"style="color:#191561;">Register !</a></div>
-					<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/LoginForgetPW.jsp"style="color:#191561;">Forget Password ?</a></div>
+                    <div class="attxt"><a href="<%=request.getContextPath()%>/front_end/member/MemRegister.jsp"style="color:#191561;">立即註冊 !</a></div>
+					<div class="pdtxt"><a href="<%=request.getContextPath()%>/front_end/member/LoginForgetPW.jsp"style="color:#191561;">忘記密碼 ?</a></div>
                   </form>
                 </div>
         
