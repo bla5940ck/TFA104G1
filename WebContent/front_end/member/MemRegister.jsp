@@ -11,184 +11,16 @@
 <head>
 <meta charset="UTF-8">
 <title>會員註冊 MemRegister.jsp</title>
-<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"
-	"type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-<style>
-* {
-	box-sizing: border-box;
-	text-decoration: none;
-	list-style: none;
-}
-
-body {
-	margin: 0;
-	padding: 0px;
-}
-
-img {
-	max-width: 100%;
-	
-}
 
 
-header.header {
-	background-color: #ddd;
-	width: 100%;
-	margin: 0 auto 0px auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	header.header {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	header.header {
-		width: 100%;
-	}
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-	/*   border:1px solid red; */
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	div.main_content {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	div.main_content {
-		width: 100%;
-	}
-}
-/*-------------------aside區域------------------- */
-aside.aside {
-	background-color: #ddd;
-	width: 200px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: #ddd;
-	width: calc(100% - 200px - 10px);
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-@media ( max-width : 575.98px) {
-	aside.aside, main.main {
-		display: block;
-	}
-	aside.aside {
-		width: 100%;
-		margin: 0 0 10px 0;
-	}
-	main.main {
-		width: 100%;
-	}
-}
-
-footer.footer {
-	background-color: #ddd;
-	width: 100%;
-	margin: 10px auto 0 auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	footer.footer {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	footer.footer {
-		width: 100%;
-	}
-}
-
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-
-#preview {
-	border: 1px solid lightgray;
-	display: inline-block;
-	width: 100px;
-	min-height: 150px;
-	position: relative;
-}
-
-#preview span.text {
-	position: absolute;
-	display: inline-block;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	z-index: -1;
-	color: lightgray;
-}
-
-#preview img.preview_img {
-	width: 100%;
-}
-
-img.preview {
-	width: 100%;
-}
-</style>
 
 </head>
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header.file" %>
 
+<%@ include file="/includeFolder/header.file"%>
 <section id="aa-myaccount">
 		<div class="container">
 			<div class="row" id="row1">
@@ -233,13 +65,7 @@ img.preview {
 				placeholder="請輸入手機號碼"> <br> 
 			<label for="">請輸入Email<span>*</span></label>
 			<input type="text" name="email" placeholder="請輸入Email"> <br>
-		<!--	
-		<label for="">請輸入郵遞區號<span>*</span></label> 
-			<input type="text"
-				name="zipcodeName" placeholder="請輸入郵遞區號"> <br> 
-			<label for="">縣市行政區<span>*</span></label>
-			<input type="text" name="add" placeholder="關聯郵遞區號預設帶入"> <br>
-			  -->	
+
 			<label for="">縣市行政區<span>*</span></label>	 <br>
 			  <div id="twzipcode"></div> 
 			<label for="">請輸入地址<span>*</span></label> 
@@ -276,9 +102,9 @@ img.preview {
 			
 			<input type="checkbox" name="chbox" > 
 			<span>欲成為JoyLease會員時，請詳閱</span>
-			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_parent">【服務條款及會員契約】</a>
+			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_blank">【服務條款及會員契約】</a>
 			<span> . </span>
-			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_parent">【隱私權政策】</a>
+			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_blank">【隱私權政策】</a>
 			<span> 點選註冊表示您同意條款所有內容 。 </span>
 			<br>
 			<br>

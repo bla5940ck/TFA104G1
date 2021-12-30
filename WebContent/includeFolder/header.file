@@ -66,7 +66,7 @@
                   </li>
                   	
                   <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/uploadProd.jsp">我要出租</a></li>
-                  <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/product/cart.jsp">購物車</a></li>
+                  <li class="hidden-xs"><a href="<%=request.getContextPath()%>/front_end/member/MemRegister.jsp">會員註冊</a></li>
                   <c:choose>
                   	<c:when test="${id == null}">
                      	<li><a href="<%=request.getContextPath()%>/front_end/member/Login.jsp" data-toggle="modal" data-target="#login-modal">會員登入</a></li>
