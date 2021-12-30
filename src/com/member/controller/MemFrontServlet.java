@@ -24,6 +24,7 @@ import com.member.model.DefAddressVO;
 import com.member.model.MemberJDBCDAO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.product.model.ProdVO;
 
 @WebServlet("/member/MemFrontServlet")
 @MultipartConfig()
@@ -111,7 +112,9 @@ public class MemFrontServlet extends HttpServlet {
 							
 //						}
 						
-						memberVO.setPic(pic);
+							memberVO.setPic(pic);
+							
+						
 						System.out.println(memberId);
 						System.out.println(nickName);
 						System.out.println(phoneNum);
@@ -132,7 +135,9 @@ public class MemFrontServlet extends HttpServlet {
 						/*************************** 2.開始修改資料 *****************************************/
 						System.out.println("3333344444444");
 						MemberService memSvc = new MemberService();
+//						MemberVO memberVO1 = memSvc.getOneMember(memberId);
 						System.out.println("333335555555");
+//						pic = (pic == null ? memberVO.getPic() : memberVO1.getPic());
 						memberVO = memSvc.updateMemberBasicInformation(memberId, nickName, email, phoneNum, pic);
 						System.out.println("44444444");
 						memberVO = memSvc.getOneMember(memberId);

@@ -1007,8 +1007,24 @@ public class MemberJDBCDAO implements MemberDAO_interface {
 			}
 		}
 	}
+
+	@Override
+	public void updateBackOneMember(MemberVO memberVO) {
+		// TODO Auto-generated method stub
 		
-	
+	}
+		
+//	var somedate2 = new Date('2017-06-15');
+//	      $('#f_date1').datetimepicker({
+//	          beforeShowDay: function(date) {
+//	        	  if (  date.getYear() >  somedate2.getYear() || 
+//			           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//			           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//	              ) {
+//	                   return [false, ""]
+//	              }
+//	              return [true, ""];
+//	      }});
 
 
 
