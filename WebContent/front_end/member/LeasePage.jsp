@@ -229,10 +229,10 @@
 								</tr>
 						</table>
 						
-					<input type="submit" value="儲存"class="aa-browse-btn" ></FORM>					
 					<input type="hidden" name="action" value="updateBasic">
 					<input type="hidden" name="memberId" value="${memberVO.memberId}">
 					<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="pic"id='file_id1' name='file_name1'>
+					<input type="submit" value="儲存"class="aa-browse-btn" ></FORM>					
 				
 					
 					<FORM>
@@ -268,7 +268,7 @@ $("#file_id1").change(
 					for (var i = 0; i < this.files.length; i++) {
 						var reader = new FileReader();
 						reader.onload = function(e) {
-							var img = $("<img class = 'preview_img' width='280' >")
+							var img = $("<img class = 'preview_img' width='292' height='292' >")
 									.attr('src', e.target.result);
 							$("#preview1").append(img);
 						}

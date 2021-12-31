@@ -4,6 +4,7 @@
 
 <%
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+	pageContext.setAttribute("memberVO",memberVO);
 %>
 
 
@@ -50,27 +51,27 @@
 
 			<label for="">姓名<span>*</span></label> 
 			<input type="text"
-				name="name" placeholder="請輸入姓名"> <br> 
+				name="name" placeholder="請輸入姓名" value="${memberVO.name}"> <br> 
 			<label for="">登入帳號<span>*</span></label>
-			<input type="text" name="loginId" placeholder="請設置登入帳號"> <br>
+			<input type="text" name="loginId" placeholder="請設置登入帳號"  value="${memberVO.loginId}"> <br>
 			<label for="">登入密碼<span>*</span></label> 
 			<input type="password"
 				name="password" placeholder="請輸入密碼"> <br> 
 			<label for="">身分證號<span>*</span></label>
-			<input type="text" name="idcn" placeholder="請輸入身分證號"> <br>
+			<input type="text" name="idcn" placeholder="請輸入身分證號" value="${memberVO.idcn}"> <br>
 			<label for="">生日<span>*</span></label> 
 			<input name="birthday"
 				name="birthday" id="f_date1" type="text"> <br> <label
 				for="">手機號碼<span>*</span></label> <input type="text" name="phoneNum"
-				placeholder="請輸入手機號碼"> <br> 
+				placeholder="請輸入手機號碼" value="${memberVO.phoneNum}"> <br> 
 			<label for="">請輸入Email<span>*</span></label>
-			<input type="text" name="email" placeholder="請輸入Email"> <br>
+			<input type="text" name="email" placeholder="請輸入Email" value="${memberVO.email}"> <br>
 
 			<label for="">縣市行政區<span>*</span></label>	 <br>
 			  <div id="twzipcode"></div> 
 			<label for="">請輸入地址<span>*</span></label> 
 			<input type="text"
-				name="address" placeholder="請輸入地址"> <br>
+				name="address" placeholder="請輸入地址" > <br>
 				
 				 	
 				  
@@ -83,13 +84,13 @@
 			<div><h1>圖片預覽</h1></div>
 
 			<div id="preview1"
-				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
+				style="text-align: center;width: 320px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
 				<span class="text"style=”text-align: center;”>預覽圖 </span>
 			</div>
-			<div style="width: 20px; height: 250px; float:left; display:inline"></div>
+			<div style="width: 30px; height: 250px; float:left; display:inline"></div>
 			
 			<div id="preview2"
-				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
+				style="text-align: center;width: 320px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
 				<span class="text"style=”text-align: center;”>預覽圖 </span>
 			</div>
 			<div style="width: 20px; height: 250px; "></div>
@@ -128,7 +129,7 @@
 	</section>
 
 
-
+<%-- --%>
 	<br>
 
 <%@ include file="/includeFolder/footer2.file" %>
@@ -164,8 +165,8 @@
  <!-- jQuery library -->
   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 --><script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
+       $.datetimepicker.setLocale('zh');
+     $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
@@ -175,7 +176,7 @@
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
 	maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
+	}); 
 
 	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
@@ -193,17 +194,17 @@
 	//      }});
 
 	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
+//var somedate2 = new Date('2017-06-15');
+//	      $('#f_date1').datetimepicker({
+//	          beforeShowDay: function(date) {
+//	        	  if (  date.getYear() >  somedate2.getYear() || 
+//			           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//			           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//	              ) {
+//	                   return [false, ""]
+//	              }
+//	              return [true, ""];
+//	      }});
 
 	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
 	//      var somedate1 = new Date('2017-06-15');
@@ -238,7 +239,7 @@
 							for (var i = 0; i < this.files.length; i++) {
 								var reader = new FileReader();
 								reader.onload = function(e) {
-									var img = $("<img class = 'preview_img'>")
+									var img = $("<img class = 'preview_img' width='292' height='242'>")
 											.attr('src', e.target.result);
 									$("#preview1").append(img);
 								}
@@ -264,7 +265,7 @@
 							for (var i = 0; i < this.files.length; i++) {
 								var reader = new FileReader();
 								reader.onload = function(e) {
-									var img = $("<img class = 'preview_img'>")
+									var img = $("<img class = 'preview_img' width='292' height='242'>")
 											.attr('src', e.target.result);
 									$("#preview2").append(img);
 								}
