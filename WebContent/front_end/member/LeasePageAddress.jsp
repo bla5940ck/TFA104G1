@@ -9,6 +9,8 @@
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
   
+  ServletContext context = getServletContext();
+  context.setAttribute("memberId1", memberVO.getMemberId());
 %>
 
 <!DOCTYPE html>

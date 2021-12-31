@@ -258,7 +258,6 @@ background-color: #FFF0AC;
 		
 				<c:forEach var="omVO" items="${list}" >		 
 							<c:choose>
-									
 									<c:when test="${((omVO.payID == 1) and omVO.payStatus == 1) }">
 							<tr>
 								<td>${omVO.ordID}</td>
@@ -312,20 +311,8 @@ background-color: #FFF0AC;
 								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
 
 								<td>${omVO.storeCode}</td>
-<%-- 								<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
-<%-- 								<td><fmt:formatDate value="${omVO.arrivalDate}"	pattern="yyyy-MM-dd" /></td> --%>
 								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> 
-<%-- 								<td>${omVO.rentDays}</td> --%>
 								<td>${omVO.ordPrice}</td>
-<%-- 								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="狀態修改"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-																	<input type="hidden" name="listID" value="${omVO.ordID}"> 
-										<input type="hidden" name="action" value="getOne_For_Manager_Update">
-									</FORM>
-								</td>--%>
 								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
@@ -396,7 +383,7 @@ $("#f_date1").blur(function(){
         });
         $("#f_date2").datetimepicker({
            theme: '',          //theme: 'dark',
-           timepicker: false,   //timepicker: false,
+           timepicker: false,    
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format: 'Y-m-d H:i:s',
 	       value:'',

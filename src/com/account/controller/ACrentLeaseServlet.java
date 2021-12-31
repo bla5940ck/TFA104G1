@@ -140,67 +140,65 @@ public class ACrentLeaseServlet extends HttpServlet {
 				}
 		
 		//依訂單編號查詢
-		if ("getOne_For_Display".equals(action)) {
+				if ("getOne_For_Display".equals(action)) {
 
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
+					List<String> errorMsgs = new LinkedList<String>();
+					req.setAttribute("errorMsgs", errorMsgs);
 
-			try {
-				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-				String str = req.getParameter("ordID");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入訂單編號");
+					try {
+						/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+						System.out.println("String ordID:"+req.getParameter("ordID"));
+						Integer ordID = Integer.parseInt(req.getParameter("ordID"));
+						System.out.println("INT ordID:"+ordID);
+						if (ordID == null ) {
+							errorMsgs.add("請輸入訂單編號");
+						}
+//						Integer ordID= null;
+
+					
+
+						
+						// Send the use back to the form, if there were errors
+						if (!errorMsgs.isEmpty()) {
+							RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
+							failureView.forward(req, res);
+							return;// 程式中斷
+						}
+
+						/*************************** 2.開始查詢資料 ****************************/
+
+						OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
+						OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
+
+						if (omVO == null) {
+							errorMsgs.add("查無資料");
+						}
+						// Send the use back to the form, if there were errors
+						List<OrderMasterVO> list = omdao.getAllOrderMaster();
+
+						List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
+						for (OrderMasterVO omVO1 : list) {
+							if (omVO1.getOrdID().equals(ordID))  {
+								long time = omVO1.getOrdDate().getTime();
+							 
+								System.out.println("訂單編號 :" + ordID + "完成時間" + time);
+								list2.add(omVO1);
+							}
+						}
+						req.setAttribute("list", list2);
+						req.getRequestDispatcher("/back_end/account/ACRent.jsp").forward(req, res);
+						return;
+					
+
+						
+						/*************************** 其他可能的錯誤處理 *************************************/
+					} catch (Exception e) {
+						e.printStackTrace();
+						errorMsgs.add("無法取得資料:" + e.getMessage());
+						RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
+						failureView.forward(req, res);
+					}
 				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				Integer ordID = null;
-
-				try {
-					ordID = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("格式不正確");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				/*************************** 2.開始查詢資料 ****************************/
-
-				OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
-				OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
-
-				if (omVO == null) {
-					errorMsgs.add("查無資料");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
-				OrderListDAOImpl oldao = new OrderListDAOImpl();
-
-				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-				req.setAttribute("OrderMasterVO", omVO); // 資料庫取出的VO物件,存入req
-				String url = "/back_end/order/listOneOrderMaster.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);
-				successView.forward(req, res);
-				/*************************** 其他可能的錯誤處理 *************************************/
-			} catch (Exception e) {
-				e.printStackTrace();
-				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/ACRent.jsp");
-				failureView.forward(req, res);
-			}
-		}
 	
 		
 		
@@ -249,7 +247,7 @@ public class ACrentLeaseServlet extends HttpServlet {
 						for (OrderMasterVO omVO : list) {
 							if (omVO.getOrdStatus() == 2 && omVO.getOrdDate() != null && omVO.getOrdDate().before(ed)
 									&& omVO.getOrdDate().after(sd)) {
-								long time = omVO.getReturnDate().getTime();
+								long time = omVO.getOrdDate().getTime();
 								Integer ordID = omVO.getOrdID();
 								System.out.println("訂單編號 :" + ordID + "完成時間" + time);
 								list2.add(omVO);

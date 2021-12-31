@@ -190,7 +190,7 @@ function check_all(obj,cName)
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 		
 
-				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/account/ACrentLeaseServlet">
 					<b>輸入訂單編號 :</b><br> 
 					<input type="text" name="ordID"> 
 					<input type="hidden" name="action" value="getOne_For_Display"> 
@@ -198,7 +198,7 @@ function check_all(obj,cName)
 				</FORM>
 			</div>
 			<div>
-				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ACrentLeaseServlet">
 					<b>依訂單日期查詢訂單 :
 					<br>
 						起始日期 : <input name="startDate" id="f_date3" type="text" style="width: 73px;"> 
@@ -210,7 +210,7 @@ function check_all(obj,cName)
 				</FORM>
 			</div>
 			<div>
-				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
+				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ACrentLeaseServlet">
 					<b>依訂單完成日期查詢訂單 :
 					<br>
 						起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
