@@ -90,14 +90,14 @@
                   <div class="aa-sidebar-widget">
                     <h3>全部分類</h3>
                     <ul class="aa-catg-nav">
-                      <li><a href="#">Nintendo</a></li>
-                      <li><a href="#">PlayStation</a></li>
-                      <li><a href="#">XBOX</a></li>
-                      <li><a href="#">其他遊戲主機</a></li>                                                
-                      <li><a href="#">電腦遊戲</a></li>
-                      <li><a href="#">桌遊</a></li>
-                      <li><a href="#">拼圖</a></li>
-                      <li><a href="#">其他</a></li>
+                      <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=1&prodSelect=<c:out value="${prodSelect}"/>">Nintendo</a></li>
+                       <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=2&prodSelect=<c:out value="${prodSelect}"/>">PlayStation</a></li>
+                  	   <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=3&prodSelect=<c:out value="${prodSelect}"/>">XBOX</a></li>
+                  	   <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=4&prodSelect=<c:out value="${prodSelect}"/>">其他遊戲主機</a></li>                                                
+                  	   <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=5&prodSelect=<c:out value="${prodSelect}"/>">電腦遊戲</a></li>
+                  	   <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=6&prodSelect=<c:out value="${prodSelect}"/>">桌遊</a></li>
+                       <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=7&prodSelect=<c:out value="${prodSelect}"/>">拼圖</a></li>
+                       <li><a href="/TFA104G1/prod/ProdServlet?action=select&cateNo=8&prodSelect=<c:out value="${prodSelect}"/>">其他</a></li>
                     </ul>
                   </div>
                   <div class="aa-sidebar-widget">
