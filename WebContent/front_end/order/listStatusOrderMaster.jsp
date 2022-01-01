@@ -28,7 +28,7 @@
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getLeaseID()==memID)
+									.filter(o->o.getLeaseID().equals(memID))
 										.filter(o -> o.getOrdStatus() == ordStatus)
 											.collect(Collectors.toList());
 
@@ -247,7 +247,7 @@
 					<h5>選擇訂單編號 :  
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.leaseID == id}">
+							<c:if test="${OrderMasterVO.leaseID eq id}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>
