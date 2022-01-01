@@ -121,8 +121,8 @@ object-fit: contain;
 					<th>會員編號</th>
 					<th>問題編號</th>
 					<th>商品編號</th>					
-					<th>管理者編號</th>
-					<th>問題類型編號</th>
+<!-- 					<th>管理者編號</th> -->
+					<th>問題類型</th>
 					<th>訂單編號</th>
 					<th>訊息時間</th>					
 					<th>問題描述</th>
@@ -146,7 +146,7 @@ object-fit: contain;
 						
 						<td>${msVO.prodID}</td>						
 						
-						<td>${msVO.managerID}</td>
+<%-- 						<td>${msVO.managerID}</td> --%>
 						
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
 						

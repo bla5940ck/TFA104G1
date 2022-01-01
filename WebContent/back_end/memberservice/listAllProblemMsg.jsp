@@ -158,11 +158,11 @@ background-color: #FFF0AC;
 		<ul>
 			<button><a href='/TFA104G1/back_end/problemtype/listAllProblemType.jsp'>所有問題類型</a></button>
 		</ul>
-		<br>
+			<br>
 		<ul>
 			<button><a href='/TFA104G1/back_end/problemtype/addProblemType.jsp'>新增問題類型</a></button>
 		</ul>
-		<br>	
+		<br>
 			<div>
 				<h4>依提出問題日期查詢訂單</h4>
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/MemberServiceServlet">
@@ -213,9 +213,9 @@ background-color: #FFF0AC;
 					<tr>
 						<td>${msVO.msgID}</td>
 <%-- 						<td>${msVO.managerID}</td> --%>
-						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?prodID=${msVO.prodID}&action=selectItem&value=10">${msVO.prodID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/msg/MsgProdServlet?prodID=${msVO.prodID}&action=selectItem&value=10">${(msVO.prodID)==0?'':msVO.prodID}</a></td>
 						<td><a href="<%=request.getContextPath()%>/back_end/member/listOneMember.jsp?memberID=${msVO.memberID}">${msVO.memberID}</a></td>
-						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderProblem.jsp?ordID=${msVO.ordID}">${msVO.ordID}</a></td>
+						<td><a href="<%=request.getContextPath()%>/back_end/order/updateOrderProblem.jsp?ordID=${msVO.ordID}">${(msVO.ordID)==0?'':msVO.ordID}</a></td>
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>						
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td><button id = "class1" class="class1" value="${msVO.problemMsg}">查詢</button></td>
@@ -261,8 +261,7 @@ background-color: #FFF0AC;
 			</table>
 
 
-			<%@ include file="page2.file"%>
-			<br>
+			<%@ include file="page2.file"%>		
 			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
