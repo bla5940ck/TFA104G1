@@ -34,7 +34,7 @@ public class MsgProdServlet extends HttpServlet {
 					boolean flag = true;
 					for (MemberServiceVO msVO : msList) {
 
-						if (prodVO.getProdID() == msVO.getProdID()) {
+						if (prodVO.getProdID().equals(msVO.getProdID())) {
 							if (flag)
 								list.add(prodVO);
 							flag = false;
@@ -75,7 +75,7 @@ public class MsgProdServlet extends HttpServlet {
 			// 單筆查詢
 			else if ("10".equals(req.getParameter("value"))) {
 				Integer prodID = Integer.valueOf(req.getParameter("prodID"));
-				list = prodList.stream().filter(p -> p.getProdID() == prodID).collect(Collectors.toList());
+				list = prodList.stream().filter(p -> p.getProdID().equals(prodID)).collect(Collectors.toList());
 
 				req.setAttribute("list", list);
 				req.getRequestDispatcher("/back_end/product/productManager.jsp").forward(req, res);
