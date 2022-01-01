@@ -160,7 +160,7 @@ a.cart-img>img {
 																<option value=0>面交自取
 																<c:forEach var="daVO" items="${daDAO.getAll()}">
 																	<c:choose>
-																		<c:when test="${daVO.memberId == id}">
+																		<c:when test="${daVO.memberId eq id}">
 																			<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
 																		</c:when>
 																	</c:choose>
@@ -175,7 +175,7 @@ a.cart-img>img {
 																	<option value="0">請選擇折價券
 																		<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 																			<c:choose>
-																				<c:when test="${mcVO.member_id == id && mcVO.status == 0}">
+																				<c:when test="${mcVO.member_id eq id && mcVO.status == 0}">
 																					<option data-id="${mcVO.coupon_id}"
 																						value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 																				</c:when>
