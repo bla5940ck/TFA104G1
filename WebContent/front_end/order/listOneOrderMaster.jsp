@@ -226,7 +226,7 @@
 				<jsp:useBean id="olDAO"	class="com.order.model.OrderListDAOImpl" /> 
 				<c:forEach var="olVO" items="${olDAO.getAllOrderList()}">
 					<c:choose>
-						<c:when test="${olVO.ordID == omVO.ordID}">
+						<c:when test="${olVO.ordID eq omVO.ordID}">
 							<input type="hidden" name="listID" value="${olVO.listID}">
 						</c:when>
 					</c:choose>

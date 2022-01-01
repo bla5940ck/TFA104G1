@@ -31,7 +31,7 @@
 	List<OrderMasterVO> list1 = omSVC.getAll();
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getRentID()==memID)
+									.filter(o->o.getRentID().equals(memID))
 										.collect(Collectors.toList());
 
 	pageContext.setAttribute("list", list2);
@@ -249,7 +249,7 @@
 					<h5>選擇訂單編號:
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.rentID == id}">
+							<c:if test="${OrderMasterVO.rentID eq id}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>

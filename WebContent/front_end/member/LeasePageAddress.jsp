@@ -185,11 +185,10 @@
 						<h1>地址</h1>
 						<div style="font-size:22px;">管理你的寄送相關資訊</div>
 						
-					<a style="font-size:20px;" href="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://104.199.254.38:8081/TFA104G1/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
-				<!--  
-					<a style="font-size:20px;" href="<%=request.getContextPath()%>/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
+			<a style="font-size:20px;" href="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://107.167.179.66:8081/TFA104G1/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>	
+			<!-- <a style="font-size:20px;" href="<%=request.getContextPath()%>/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
 						-->
-						<hr>
+						<hr> 	
 						 <c:forEach var="defAddressVO"  items="${list}" >
 						<%--  <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/front_end/member/LeasePageAddAddress.jsp" name="form1">--%>
 						  <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">

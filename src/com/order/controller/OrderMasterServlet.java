@@ -704,7 +704,7 @@ public class OrderMasterServlet extends HttpServlet {
 				if (payID == 2) {
 
 					Integer QRcofeordID = list.get(0).getOrdID();
-	String url = "http://localhost:8081/TFA104G1/QRCodeTest?action=check&memID=" + QRcofeordID;
+String url = "http://107.167.179.66:8081/TFA104G1/QRCodeTest?action=check&memID=" + QRcofeordID;
 
 					int width = 300;
 					int height = 300;
@@ -804,10 +804,10 @@ public class OrderMasterServlet extends HttpServlet {
 				obj.setTotalAmount(ordPrice.toString()); // 交易金額
 				obj.setTradeDesc("感謝您使用joyLease平台"); // 交易描述
 				obj.setItemName(join); // 商品名稱
-	obj.setReturnURL("https://0307-119-77-246-24.ngrok.io/TFA104G1/ECreturn"); // 付款完成通知回傳網址
+	obj.setReturnURL("https://107.167.179.66:8081/TFA104G1/ECreturn"); // 付款完成通知回傳網址
 				obj.setNeedExtraPaidInfo("N");
 				obj.setChooseSubPayment("ALL");
-	obj.setClientBackURL("http://localhost:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");
+	obj.setClientBackURL("http://107.167.179.66:8081/TFA104G1/front_end/order/listAllOrderForRent.jsp");
 
 				String form = all.aioCheckOut(obj, null);
 
@@ -1030,7 +1030,7 @@ public class OrderMasterServlet extends HttpServlet {
 				List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
 				for (OrderMasterVO omVO : list) {
 					if (omVO.getOrdStatus() == 2 && omVO.getReturnDate() != null && omVO.getReturnDate().before(ed)
-							&& omVO.getReturnDate().after(sd) && omVO.getRentID() == memID) {
+							&& omVO.getReturnDate().after(sd) && omVO.getRentID().equals(memID)) {
 						long time = omVO.getReturnDate().getTime();
 						Integer ordID = omVO.getOrdID();
 						list2.add(omVO);
@@ -1066,7 +1066,7 @@ public class OrderMasterServlet extends HttpServlet {
 				List<OrderMasterVO> list2 = new ArrayList<OrderMasterVO>();
 				for (OrderMasterVO omVO : list) {
 					if (omVO.getOrdStatus() == 2 && omVO.getReturnDate() != null && omVO.getReturnDate().before(ed)
-							&& omVO.getReturnDate().after(sd) && omVO.getLeaseID() == memID) {
+							&& omVO.getReturnDate().after(sd) && omVO.getLeaseID().equals(memID)) {
 						long time = omVO.getReturnDate().getTime();
 						Integer ordID = omVO.getOrdID();
 						System.out.println("訂單編號 :" + ordID + "歸還時間" + time);
@@ -1098,7 +1098,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1116,7 +1116,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1134,7 +1134,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1152,7 +1152,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1170,7 +1170,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1188,7 +1188,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1206,7 +1206,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1224,7 +1224,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1242,7 +1242,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1260,7 +1260,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1278,7 +1278,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);
@@ -1296,7 +1296,7 @@ public class OrderMasterServlet extends HttpServlet {
 				java.sql.Date sqlDate3 = java.sql.Date.valueOf(edate);
 				java.sql.Date sqlDate4 = java.sql.Date.valueOf(bdate);
 				for (OrderMasterVO omVO : list) {
-					if (omVO.getLeaseID() == memID && omVO.getOrdDate().after(sqlDate4)
+					if (omVO.getLeaseID().equals(memID) && omVO.getOrdDate().after(sqlDate4)
 							&& omVO.getOrdDate().before(sqlDate3)) {
 						Integer ordID = omVO.getOrdID();
 						System.out.println(ordID);

@@ -617,7 +617,7 @@ public class ProdServlet extends HttpServlet {
 
 						for (String item : cart) {
 							CartVO cartVO1 = gson.fromJson(item, CartVO.class);
-							if (cartVO1.getProdID() == prodID) {
+							if (cartVO1.getProdID().equals(prodID)) {
 								checkoutList.add(cartVO1);
 								System.out.println("vo: " + cartVO1.getProdID());
 							}

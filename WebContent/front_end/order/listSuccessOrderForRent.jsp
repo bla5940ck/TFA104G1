@@ -21,7 +21,7 @@
 	List<OrderMasterVO> list = omSVC.getAll();
 
 	List<OrderMasterVO> list2 = 
-						list.stream().filter(o -> o.getRentID() == memID)
+						list.stream().filter(o -> o.getRentID().equals(memID))
 							.filter(o -> o.getOrdStatus() == 2)
 								.collect(Collectors.toList());
 

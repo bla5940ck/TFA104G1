@@ -30,7 +30,7 @@
 	List<OrderMasterVO> list1 = omSVC.getAll();
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getRentID()==memID)
+									.filter(o->o.getRentID().equals(memID))
 										.filter(o->o.getPayID()==2)
 // 												.filter(o->o.getPayStatus()==1)
 											.filter(o->o.getShipStatus()==0)
@@ -236,7 +236,7 @@
 					<b>選擇訂單編號:</b> 
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.rentID == id && OrderMasterVO.payID == 2 && OrderMasterVO.shipStatus == 0}">
+							<c:if test="${OrderMasterVO.rentID eq id && OrderMasterVO.payID == 2 && OrderMasterVO.shipStatus == 0}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>
