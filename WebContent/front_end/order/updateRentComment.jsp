@@ -78,7 +78,7 @@
 		}
 		/*-------------------aside區域------------------- */
 		aside.aside {
-			height:765px;
+			height:800px;
 			width: 200px;
 			display: inline-block;
 			vertical-align: top;
@@ -141,7 +141,7 @@
 		}
 		
 		table, th, td {
-			border: 1px solid #CCCCFF;
+/* 			border: 1px solid #CCCCFF; */
 		}
 		
 		.cart-img{
@@ -423,7 +423,7 @@ for (OrderListVO olVO : list) {
               					<input type="hidden" name="rentRank" id="rentRank">
 								<input type="hidden" name="action" value="update_rent_comment"> 
 								<input type="hidden" name="ordID" value="<%=omVO.getOrdID()%>">
-              					<center><input class="aa-browse-btn" type="submit" value="送出評價 !"></center>
+              					<center><input class="aa-browse-btn" type="submit" value="送出評價 !">
 								<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listSuccessOrderForRent.jsp">回前頁</a></center>				
            					</div>
 						</td>													

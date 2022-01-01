@@ -190,13 +190,10 @@
 			width: 30%;
 		}
 		.head3{
-/* 			border: 1px solid red; */
+/*   		border: 1px solid red;  */
 			display: inline-block;
-			vertical-align:middle;
-			text-align:justify;
-			width: 55%;			
-			position: absolute;
-			bottom: 239px;
+ 			text-align:left; 
+ 			width: 100%;	
 		}
 		
 		.div1{

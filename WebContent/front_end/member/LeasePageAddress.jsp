@@ -9,6 +9,8 @@
   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
   pageContext.setAttribute("memberVO",memberVO);
   
+  ServletContext context = getServletContext();
+  context.setAttribute("memberId1", memberVO.getMemberId());
 %>
 
 <!DOCTYPE html>
@@ -183,9 +185,9 @@
 						<h1>地址</h1>
 						<div style="font-size:22px;">管理你的寄送相關資訊</div>
 						
-					<a style="font-size:20px;" href="<%=request.getContextPath()%>/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
+					<a style="font-size:20px;" href="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://104.199.254.38:8081/TFA104G1/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
 				<!--  
-					<a style="font-size:20px;" href="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://23e7-1-164-222-170.ngrok.io/TFA104G1/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
+					<a style="font-size:20px;" href="<%=request.getContextPath()%>/member/AddressFrontServlet"><input type="submit" value="新增超商地址"class="aa-browse-btn" ></a>
 						-->
 						<hr>
 						 <c:forEach var="defAddressVO"  items="${list}" >

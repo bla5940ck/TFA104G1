@@ -65,7 +65,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_ORD_ID);
 
 			pstmt.setInt(1, ordID);
@@ -180,7 +180,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, orderList.getProdID());
@@ -219,7 +219,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_PK);
 
 			pstmt.setInt(1, listID);
@@ -275,7 +275,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 
@@ -332,7 +332,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_STATUS);
 
 			pstmt.setInt(1, ordStatus);
@@ -388,7 +388,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		PreparedStatement pstmt2 = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, olVO.getOrdStatus());
@@ -438,7 +438,7 @@ public class OrderListDAOImpl implements OrderListDAO_interface {
 		PreparedStatement pstmt2 = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, olVO.getOrdStatus());

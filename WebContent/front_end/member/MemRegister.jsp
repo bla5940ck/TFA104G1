@@ -4,6 +4,7 @@
 
 <%
 	MemberVO memberVO = (MemberVO) request.getAttribute("memberVO");
+	pageContext.setAttribute("memberVO",memberVO);
 %>
 
 
@@ -11,184 +12,16 @@
 <head>
 <meta charset="UTF-8">
 <title>會員註冊 MemRegister.jsp</title>
-<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"
-	"type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/jquery-3.6.0.min.js"type="text/javascript"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
-<style>
-* {
-	box-sizing: border-box;
-	text-decoration: none;
-	list-style: none;
-}
-
-body {
-	margin: 0;
-	padding: 0px;
-}
-
-img {
-	max-width: 100%;
-	
-}
 
 
-header.header {
-	background-color: #ddd;
-	width: 100%;
-	margin: 0 auto 0px auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	header.header {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	header.header {
-		width: 100%;
-	}
-}
-
-div.main_content {
-	width: 100%;
-	margin: 0 auto;
-	font-size: 0;
-	/*   border:1px solid red; */
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	div.main_content {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	div.main_content {
-		width: 100%;
-	}
-}
-/*-------------------aside區域------------------- */
-aside.aside {
-	background-color: #ddd;
-	width: 200px;
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	margin-right: 10px;
-	border: 1px solid #999;
-}
-
-/*--------------------main區域-------------------- */
-main.main {
-	background-color: #ddd;
-	width: calc(100% - 200px - 10px);
-	display: inline-block;
-	vertical-align: top;
-	font-size: 1rem;
-	border: 1px solid #999;
-	padding: 10px;
-}
-
-@media ( max-width : 575.98px) {
-	aside.aside, main.main {
-		display: block;
-	}
-	aside.aside {
-		width: 100%;
-		margin: 0 0 10px 0;
-	}
-	main.main {
-		width: 100%;
-	}
-}
-
-footer.footer {
-	background-color: #ddd;
-	width: 100%;
-	margin: 10px auto 0 auto;
-	border: 1px solid #999;
-}
-
-@media all and (min-width:576px) and (max-width:767.98px) {
-	footer.footer {
-		width: 540px;
-	}
-}
-
-@media ( max-width :575.98px) {
-	footer.footer {
-		width: 100%;
-	}
-}
-
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
-
-<style>
-table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
-th, td {
-	padding: 1px;
-}
-
-#preview {
-	border: 1px solid lightgray;
-	display: inline-block;
-	width: 100px;
-	min-height: 150px;
-	position: relative;
-}
-
-#preview span.text {
-	position: absolute;
-	display: inline-block;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	z-index: -1;
-	color: lightgray;
-}
-
-#preview img.preview_img {
-	width: 100%;
-}
-
-img.preview {
-	width: 100%;
-}
-</style>
 
 </head>
 <body bgcolor='white'>
-<%@ include file="/includeFolder/header.file" %>
 
+<%@ include file="/includeFolder/header.file"%>
 <section id="aa-myaccount">
 		<div class="container">
 			<div class="row" id="row1">
@@ -218,33 +51,27 @@ img.preview {
 
 			<label for="">姓名<span>*</span></label> 
 			<input type="text"
-				name="name" placeholder="請輸入姓名"> <br> 
+				name="name" placeholder="請輸入姓名" value="${memberVO.name}"> <br> 
 			<label for="">登入帳號<span>*</span></label>
-			<input type="text" name="loginId" placeholder="請設置登入帳號"> <br>
+			<input type="text" name="loginId" placeholder="請設置登入帳號"  value="${memberVO.loginId}"> <br>
 			<label for="">登入密碼<span>*</span></label> 
 			<input type="password"
 				name="password" placeholder="請輸入密碼"> <br> 
 			<label for="">身分證號<span>*</span></label>
-			<input type="text" name="idcn" placeholder="請輸入身分證號"> <br>
+			<input type="text" name="idcn" placeholder="請輸入身分證號" value="${memberVO.idcn}"> <br>
 			<label for="">生日<span>*</span></label> 
 			<input name="birthday"
 				name="birthday" id="f_date1" type="text"> <br> <label
 				for="">手機號碼<span>*</span></label> <input type="text" name="phoneNum"
-				placeholder="請輸入手機號碼"> <br> 
+				placeholder="請輸入手機號碼" value="${memberVO.phoneNum}"> <br> 
 			<label for="">請輸入Email<span>*</span></label>
-			<input type="text" name="email" placeholder="請輸入Email"> <br>
-		<!--	
-		<label for="">請輸入郵遞區號<span>*</span></label> 
-			<input type="text"
-				name="zipcodeName" placeholder="請輸入郵遞區號"> <br> 
-			<label for="">縣市行政區<span>*</span></label>
-			<input type="text" name="add" placeholder="關聯郵遞區號預設帶入"> <br>
-			  -->	
+			<input type="text" name="email" placeholder="請輸入Email" value="${memberVO.email}"> <br>
+
 			<label for="">縣市行政區<span>*</span></label>	 <br>
 			  <div id="twzipcode"></div> 
 			<label for="">請輸入地址<span>*</span></label> 
 			<input type="text"
-				name="address" placeholder="請輸入地址"> <br>
+				name="address" placeholder="請輸入地址" > <br>
 				
 				 	
 				  
@@ -257,13 +84,13 @@ img.preview {
 			<div><h1>圖片預覽</h1></div>
 
 			<div id="preview1"
-				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
+				style="text-align: center;width: 320px; height: 250px; border: 3px #cccccc dashed;float:left; display:inline">
 				<span class="text"style=”text-align: center;”>預覽圖 </span>
 			</div>
-			<div style="width: 20px; height: 250px; float:left; display:inline"></div>
+			<div style="width: 30px; height: 250px; float:left; display:inline"></div>
 			
 			<div id="preview2"
-				style="text-align: center;width: 300px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
+				style="text-align: center;width: 320px; height: 250px; border: 3px #cccccc dashed;float:left;display:inline">
 				<span class="text"style=”text-align: center;”>預覽圖 </span>
 			</div>
 			<div style="width: 20px; height: 250px; "></div>
@@ -276,9 +103,9 @@ img.preview {
 			
 			<input type="checkbox" name="chbox" > 
 			<span>欲成為JoyLease會員時，請詳閱</span>
-			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_parent">【服務條款及會員契約】</a>
+			<a  style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Terms.jsp" target="_blank">【服務條款及會員契約】</a>
 			<span> . </span>
-			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_parent">【隱私權政策】</a>
+			<a style="color:#191561;" href="<%=request.getContextPath()%>/front_end/others/Privacy.jsp" target="_blank">【隱私權政策】</a>
 			<span> 點選註冊表示您同意條款所有內容 。 </span>
 			<br>
 			<br>
@@ -302,7 +129,7 @@ img.preview {
 	</section>
 
 
-
+<%-- --%>
 	<br>
 
 <%@ include file="/includeFolder/footer2.file" %>
@@ -338,8 +165,8 @@ img.preview {
  <!-- jQuery library -->
   <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 --><script>
-        $.datetimepicker.setLocale('zh');
-        $('#f_date1').datetimepicker({
+       $.datetimepicker.setLocale('zh');
+     $('#f_date1').datetimepicker({
 	       theme: '',              //theme: 'dark',
 	       timepicker:false,       //timepicker:true,
 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
@@ -349,7 +176,7 @@ img.preview {
 	//startDate:	            '2017/07/10',  // 起始日
 	//minDate:               '-1970-01-01', // 去除今日(不含)之前
 	maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-	});
+	}); 
 
 	// ----------------------------------------------------------以下用來排定無法選擇的日期-----------------------------------------------------------
 
@@ -367,17 +194,17 @@ img.preview {
 	//      }});
 
 	//      2.以下為某一天之後的日期無法選擇
-	//      var somedate2 = new Date('2017-06-15');
-	//      $('#f_date1').datetimepicker({
-	//          beforeShowDay: function(date) {
-	//        	  if (  date.getYear() >  somedate2.getYear() || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-	//		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-	//              ) {
-	//                   return [false, ""]
-	//              }
-	//              return [true, ""];
-	//      }});
+//var somedate2 = new Date('2017-06-15');
+//	      $('#f_date1').datetimepicker({
+//	          beforeShowDay: function(date) {
+//	        	  if (  date.getYear() >  somedate2.getYear() || 
+//			           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//			           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//	              ) {
+//	                   return [false, ""]
+//	              }
+//	              return [true, ""];
+//	      }});
 
 	//      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
 	//      var somedate1 = new Date('2017-06-15');
@@ -412,7 +239,7 @@ img.preview {
 							for (var i = 0; i < this.files.length; i++) {
 								var reader = new FileReader();
 								reader.onload = function(e) {
-									var img = $("<img class = 'preview_img'>")
+									var img = $("<img class = 'preview_img' width='292' height='242'>")
 											.attr('src', e.target.result);
 									$("#preview1").append(img);
 								}
@@ -438,7 +265,7 @@ img.preview {
 							for (var i = 0; i < this.files.length; i++) {
 								var reader = new FileReader();
 								reader.onload = function(e) {
-									var img = $("<img class = 'preview_img'>")
+									var img = $("<img class = 'preview_img' width='292' height='242'>")
 											.attr('src', e.target.result);
 									$("#preview2").append(img);
 								}

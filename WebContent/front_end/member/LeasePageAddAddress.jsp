@@ -6,8 +6,15 @@
 <%@ page import="com.sun.org.apache.xerces.internal.impl.dv.util.Base64"%>
 
 <%
-  MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
-  pageContext.setAttribute("memberVO",memberVO);
+//   MemberVO memberVO = (MemberVO) session.getAttribute("MemberVO"); //LoginServlet.java (Concroller) 存入session的memberVO物件 (包括幫忙取出的memberVO, 也包括輸入資料錯誤時的memberVO物件)
+//   pageContext.setAttribute("memberVO",memberVO);
+	ServletContext context = getServletContext();
+	System.out.println("memberVO: "+session.getAttribute("MemberVO"));
+	System.out.println("id: "+session.getAttribute("id"));
+	System.out.println("memberId1: " +context.getAttribute("memberId1"));
+	System.out.println("memberId: " +session.getAttribute("memberId"));
+
+				
 %>
 
 <!DOCTYPE html>
@@ -213,7 +220,7 @@
 					<!--
 					  <input type="hidden" name="memberId" value="1"> 
 -->
-					<input type="hidden" name="memberId" value="${memberVO.memberId}">
+					<input type="hidden" name="memberId" value="${memberId}">
 
 					<input type="submit" value="增加"class="aa-browse-btn" ></FORM>
 						

@@ -158,7 +158,7 @@ div.overlay > article{
 											
 											
 											<a class="a-mod3" href="" />商品地圖系統</a><br>
-											目前定位:
+											目前設定位置:
 											<p style="color:red" class="showAddress_p"></p>
 
 										</div>

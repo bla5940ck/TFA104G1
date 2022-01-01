@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -287,7 +288,9 @@ public class MemFrontServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				// *工作1: 才在session內做已經登入過的標識
 
-				session.setAttribute("memberId", memberId);
+//				session.setAttribute("memberId", memberId);
+				
+				System.out.println("context memberId : "+memberId);
 //				MemberService memSvc = new MemberService();
 				MemberVO memberVO2 = memSvc.getLoginMember(loginId);
 				session.setAttribute("MemberVO", memberVO2);
