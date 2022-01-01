@@ -232,10 +232,10 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 				memberVO.setRentScore(rentScore);
 				memberVO.setStatus(status);
 				
+				req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的memberVO物件,也存入req
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					System.out.println("10101111");
-					req.setAttribute("memberVO", memberVO); // 含有輸入格式錯誤的memberVO物件,也存入req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front_end/member/MemRegister.jsp");
 					failureView.forward(req, res);
@@ -257,7 +257,7 @@ if ("insert".equals(action)) { // 來自MemRegister.jsp的請求
 //				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
+			}catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				System.out.println("1331131311");
 				RequestDispatcher failureView = req
