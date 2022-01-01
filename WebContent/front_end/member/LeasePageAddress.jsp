@@ -191,8 +191,8 @@
 						-->
 						<hr>
 						 <c:forEach var="defAddressVO"  items="${list}" >
-						 <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/front_end/member/LeasePageAddAddress.jsp" name="form1">
-						
+						<%--  <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/front_end/member/LeasePageAddAddress.jsp" name="form1">--%>
+						  <FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						<ul class="li">
 							<div style="font-size:16px; color:	#FF0080;">${(defAddressVO.status==1)?'預設':' '}</div>
 							<li >姓名 : ${defAddressVO.recipient}</li>
