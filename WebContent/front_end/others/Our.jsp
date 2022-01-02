@@ -4,53 +4,101 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="java.io.*,java.util.*, javax.servlet.*"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<title>團隊介紹</title>
 </head>
-<title>關於我們</title>
 <style>
+input.memberId {
+	background-color: lightgray;
+}
 
-	input.memberId {
-  			background-color: lightgray;
-	}
-	
+body {
+	display: grid;
+	grid-template-areas: "header header header" "nav section aside"
+		"footer footer footer";
+	/* 	grid-template-rows: 80px 1fr 50px; */
+	grid-template-columns: 20% 60% 20%;
+	grid-gap: 5px;
+	height: 100vh;
+	margin: 10px;
+}
+
+header {
+	grid-area: header;
+}
+
+nav {
+	grid-area: nav;
+	margin-left: 30px;
+}
+
+section {
+	grid-area: section;
+	text-align: center;
+	font-family: helvetica;
+}
+
+aside {
+	grid-area: aside;
+}
+
+footer {
+	grid-area: footer;
+}
+
+
 </style>
 
-
 <body>
+	<header>
 		<%@ include file="/includeFolder/header.file"%>
-<!-- 錯誤表列 -->
+	</header>
 
+<nav>
+<br>
+<br>
 
-<!-- / catg header banner section -->
+<h2>廖勁驊</h2>
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/hwa.png">
+<h2>王勝平</h2>
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ping.png">
+<h2>江宇晟</h2>
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/nopeople.png">
+</nav>
 
-<!-- Cart view section -->
-	<section id="aa-myaccount">
-		<div class="container">
-			<div class="row" id="row1">
-				<div class="col-md-12" id="col-md-12">
-<!-- 					<div class="aa-myaccount-area" id="aa-myaccount-area"> -->
-						<div class="row" id="row2">
-							<!--<div class="col-md-6" id="col-md-6"> -->
-								<div class="aa-myaccount-login" id="aa-myaccount-login">
+<section>
+		
 		<br>
-		<br>
-		<h2>廖勁驊　<br>王勝平　<br>江宇晟　<br>林家祥　<br>孫浣茗　<br>林昊葳</h2>
-		<br>
+		<center><h2>團隊介紹</h2></center>
+		
+		<center><img alt="基紐特戰隊"  style= "weight: 700px; height: 532px;" src="<%=request.getContextPath()%>/includeFolder/img/our.jpg"></center>
+	<center><img alt="比對圖"  style= "weight: 700px; height: 527px;" src="<%=request.getContextPath()%>/includeFolder/img/compare.jpg"></center>
+	
+	
 	<br>
+	<br>
+
 	<center><a class="aa-browse-btn" href="javascript:history.back()"><span class="fa fa-long-arrow-left"></span>&nbsp&nbsp&nbsp回上一頁</a></center>							<br>
 	<br>
-								</div>
-<!-- 						</div> -->
-						</div>
-					</div>
-				</div>
-			</div>
-<!-- 		</div> -->
-	</section>
-	<%@ include file="/includeFolder/footer2.file"%>
+</section>
+	
+	<aside>
+	<br>
+<br>
+
+	<h2>林家祥</h2>
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ian.png">
+	<h2>孫浣茗</h2>
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/nopeople.png">
+	<h2>林昊葳</h2>
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/wei.png">
+	</aside>
+	
+	<footer>
+		<%@ include file="/includeFolder/footer2.file"%>
+	</footer>
 </body>
 </html>

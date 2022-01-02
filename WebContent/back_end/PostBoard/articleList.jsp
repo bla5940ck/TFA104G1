@@ -118,7 +118,7 @@
                         <td>
                         	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back_end/PostBoard/pb.do" style="margin-bottom: 0px;">
 								<input type="submit"  class="aa-browse-btn" value="刪除" style="font-size:14px;"/> 
-								<input type="hidden"  class="aa-browse-btn" name="postId" value="${postBoardVO.postId}" > 
+								<input type="hidden"  class="aa-browse-btn" name="postId" value="${postBoardVO.postId}" >
 								<input type="hidden"  class="aa-browse-btn" name="action" value="delete" >
 							</FORM>
 						</td>

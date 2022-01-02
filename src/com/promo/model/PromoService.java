@@ -9,6 +9,22 @@ public class PromoService {
 		dao = new PromoDAO();
 	}
 	
+	public void DateEnd(long time) {
+//		java.sql.Date promo_end = new java.sql.Date(time);
+		List<PromoVO> list = dao.getAll();
+		Integer promo_id = null;
+		
+		System.out.println(time);
+		System.out.println(list);
+		
+		for(PromoVO promoVO:list) {
+			if(time > promoVO.getPromo_end().getTime()) {
+				promoVO.setPromo_id(promo_id);
+				dao.promoDateEnd(promo_id);
+			}
+		}
+	};
+	
 	
 	public PromoVO insert(String promo_name, java.sql.Date promo_start, java.sql.Date promo_end, String promo_text,
 			Integer status) {
