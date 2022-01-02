@@ -394,6 +394,7 @@
                         <c:forEach var = "prodVO" items="${prodSvc1.allByTimeDesc}" varStatus="loop">
                        
                         <c:if test="${loop.index<8 &&prodVO.prodStatus==1}">
+                        
                     <li>
                       <figure>
                          <a class="aa-product-img" href="<%=path%>/front_end/product/prodDetail.jsp?cookie=y&prodID=${prodVO.prodID}">
