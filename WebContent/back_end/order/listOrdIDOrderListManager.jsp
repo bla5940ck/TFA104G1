@@ -178,6 +178,7 @@ background-color: #FFF0AC;
 					<th>預計開始日期</th>
 					<th>預計結束日期</th>
 					<th>訂單狀態</th>
+		
 				</tr>
 				<%@ include file="page1.file"%>
 				<c:forEach var="olVO" items="${list}" begin="<%=pageIndex%>"
@@ -204,13 +205,6 @@ background-color: #FFF0AC;
 						</td>
 						
 						<td>
-							
-<!-- 					<select size="1" name="ordStatus" class="ordStatus"> -->
-<%-- 						<option value="0" <%=olVO.getOrdStatus()==0?"selected":"" %>>已成立</option> --%>
-<%-- 						<option value="1" <%=olVO.getOrdStatus()==1?"selected":"" %>>待歸還</option> --%>
-<%-- 						<option value="2" <%=olVO.getOrdStatus()==2?"selected":"" %>>已完成</option> --%>
-<%-- 						<option value="9" <%=olVO.getOrdStatus()==9?"selected":"" %>>已取消</option> --%>
-<!-- 					</select> -->
 							<input type="hidden" class="ordID" name="ordID" value="${olVO.ordID}">
 							<input type="hidden" class="listID" name="listID" value="${olVO.listID}">
 							<input type="hidden" class="prodID" name="prodID" value="${olVO.prodID}">

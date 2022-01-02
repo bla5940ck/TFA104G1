@@ -53,15 +53,15 @@ public class ECreturn extends HttpServlet {
 
 		java.sql.Timestamp payDate = new java.sql.Timestamp(parse.getTime());
 
-		Integer trfStatus = Integer.valueOf(req.getParameter("RtnCode"));
-		if (trfStatus == 1) {
+		Integer rtnCode = Integer.valueOf(req.getParameter("RtnCode"));
+		if (rtnCode == 1) {
 			String ordid = req.getParameter("MerchantTradeNo");
 			Integer ordID = Integer.valueOf(ordid.substring(ordid.length() - 4, ordid.length())); //取串接之訂單編號末四碼為訂單編號
 			OrderMasterDAOImpl omdao = new OrderMasterDAOImpl();
 			OrderMasterVO omVO = omdao.findOrderMasterByPK(ordID);
 			
-			omVO.setTrfStatus(trfStatus); // 轉帳狀態
-			System.out.println("轉帳狀態" + omVO.getTrfStatus());
+//			omVO.setTrfStatus(rtnCode); // 轉帳狀態
+//			System.out.println("轉帳狀態" + omVO.getTrfStatus());
 
 			omVO.setPayDate(payDate); // 付款日期
 			System.out.println("付款日期" + omVO.getPayDate());
