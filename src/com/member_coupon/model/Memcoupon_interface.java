@@ -11,7 +11,7 @@ import java.util.List;
 		public List<MemcouponVO> getMemberid(Integer member_id);
 		public MemcouponVO check(boolean memcouponVO2);
 		public MemcouponVO check(MemcouponVO memcouponVO2);
-		public void orderSelect(Integer mem_coupon_id);
+		public MemcouponVO orderSelect(Integer mem_coupon_id);
 		
 	}
 
