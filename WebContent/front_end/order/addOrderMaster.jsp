@@ -176,7 +176,7 @@ a.cart-img>img {
 																		<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 																			<c:choose>
 																				<c:when test="${mcVO.member_id eq id && mcVO.status == 0}">
-																					<option data-id="${mcVO.coupon_id}"
+																					<option data-id="${mcVO.mem_coupon_id}"
 																						value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 																				</c:when>
 																			</c:choose>
