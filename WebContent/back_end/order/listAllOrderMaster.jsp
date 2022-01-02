@@ -245,26 +245,21 @@ background-color: #FFF0AC;
 					<th>付款狀態</th>
 					<th>訂單狀態</th>
 					<th>訂單日期</th>
-<!-- 					<th>出貨碼</th> -->
-<!-- 					<th>歸還碼</th> -->
+					<th>出貨碼</th>
+					<th>歸還碼</th>
 					<th>超商碼</th>
-	
-<!-- 					<th>出貨日期</th> -->
-<!-- 					<th>到貨日期</th> -->
+					<th>出貨日期</th>
+					<th>到貨日期</th>
 					<th>歸還日期</th>
 					<th>承租天數</th>
-
 					<th>訂單金額</th>
 				</tr>
 				<%@ include file="page1.file"%>
 				<c:forEach var="omVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">		 
 							<tr>
 								<td>${omVO.ordID}</td>
-
-
-								<td>${memSVC.getOneMember(omVO.leaseID).loginId}</td>
-								<td>${memSVC.getOneMember(omVO.rentID).loginId}</td>
-
+								<td>${memSVC.getOneMember(omVO.leaseID).name}</td>
+								<td>${memSVC.getOneMember(omVO.rentID).name}</td>
 								<c:choose>
 									<c:when test="${omVO.payID == '1'}">
 										<td>信用卡</td>
@@ -291,61 +286,48 @@ background-color: #FFF0AC;
 								</c:forEach>
 								
 								<c:choose>
-									<c:when test="${omVO.shipStatus == '0'}">
-										<td>待出貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '1'}">
-										<td>已出貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '2'}">
-										<td>待取貨</td>
-									</c:when>
-									<c:when test="${omVO.shipStatus == '3'}">
-										<td>取貨完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>商品遺失</td>
-									</c:otherwise>
+									<c:when test="${omVO.shipStatus == '0'}"><td>待出貨</td></c:when>
+									<c:when test="${omVO.shipStatus == '1'}"><td>已出貨</td></c:when>
+									<c:when test="${omVO.shipStatus == '2'}"><td>待取貨</td></c:when>
+									<c:when test="${omVO.shipStatus == '3'}"><td>取貨完成</td></c:when>
+									<c:otherwise><td>商品遺失</td></c:otherwise>
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${omVO.payStatus == '0'}">
-										<td>待付款</td>
-									</c:when>
-									<c:otherwise>
-										<td>已付款</td>
-									</c:otherwise>
+									<c:when test="${omVO.payStatus == '0'}"><td>待付款</td></c:when>
+									<c:otherwise><td>已付款</td></c:otherwise>
 								</c:choose>
 
 								<c:choose>
-									<c:when test="${omVO.ordStatus == '0'}">
-										<td>已成立</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '1'}">
-										<td>待歸還</td>
-									</c:when>
-									<c:when test="${omVO.ordStatus == '2'}">
-										<td>已完成</td>
-									</c:when>
-									<c:otherwise>
-										<td>已取消</td>
-									</c:otherwise>
+									<c:when test="${omVO.ordStatus == '0'}"><td>已成立</td></c:when>
+									<c:when test="${omVO.ordStatus == '1'}"><td>待歸還</td></c:when>
+									<c:when test="${omVO.ordStatus == '2'}"><td>已完成</td></c:when>
+									<c:otherwise><td>已取消</td></c:otherwise>
 								</c:choose>
 								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
-<%-- 								<td>${omVO.shipCode}</td> --%>
-<%-- 								<td>${omVO.returnCode}</td> --%>
-								<td>${omVO.storeCode}</td>
-<%-- 								<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
-<%-- 								<td><fmt:formatDate value="${omVO.arrivalDate}"	pattern="yyyy-MM-dd" /></td> --%>
-<%-- 								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> --%>
+								<td>${omVO.shipCode == 0 ? "待出貨" : omVO.shipCode}</td>
+								<td>${omVO.returnCode == 0 ? "待歸還" : omVO.returnCode}</td>
+								<td>${omVO.storeCode == 0 ?"尚未至超商出貨" : omVO.storeCode}</td>
+								<c:choose>
+									<c:when test="${omVO.shipDate != '' && omVO.shipDate != null}">
+										<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td>
+									</c:when>
+									<c:otherwise><td>尚未出貨</td></c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${omVO.arrivalDate !='' && omVO.arrivalDate != null}">
+										<td><fmt:formatDate value="${omVO.arrivalDate}" pattern="yyyy-MM-dd" /></td>
+									</c:when>
+									<c:otherwise><td>尚未到貨</td></c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${omVO.returnDate != '' && omVO.returnDate != null}">
+										<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td>
+									</c:when>
+									<c:otherwise><td>尚未歸還</td></c:otherwise>
+								</c:choose>
 								<td>${omVO.rentDays}</td>
 								<td>${omVO.ordPrice}</td>
-								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="狀態修改"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-										<%-- 								<input type="hidden" name="listID" value="${omVO.ordID}">  --%>
 										<input type="hidden" name="action" value="getOne_For_Manager_Update">
 									</FORM>
 								</td>
