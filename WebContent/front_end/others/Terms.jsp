@@ -62,7 +62,7 @@
         var _ele = $('.shuffle_text');
         var _strDefault = _ele.text(); // for dat.gui
         var _shuffleEffectQueue = [];
-        var _initDuration = 25; //速度 1-100,越小越慢
+        var _initDuration = 30; //速度 1-100,越小越慢
         
         jQuery.fn.extend({
         shuffleEffect: function(duration) {

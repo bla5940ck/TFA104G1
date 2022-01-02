@@ -7,6 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.promo.model.PromoVO;
+
 import java.sql.*;
 import util.Util;
 
@@ -21,6 +23,9 @@ public class MemcouponDAO implements Memcoupon_interface{
 			e.printStackTrace();
 		}
 	}
+	
+		private static final String ORDER_SELECT = 
+			"SELECT * FROM member_coupon where mem_coupon_id = ?";
 	
 		private static final String CHECK_DOUBLE =
 			"SELECT * FROM member_coupon where member_id = ? and coupon_id = ?";
@@ -40,6 +45,61 @@ public class MemcouponDAO implements Memcoupon_interface{
 		private static final String UPDATE = 
 			"UPDATE member_coupon set member_id=?, category_id=?, coupon_id=?, coupon_name=?, discount=?, status=?, start_date=?, end_date=? where mem_coupon_id = ?";
 	
+		@Override
+		public void orderSelect (Integer mem_coupon_id) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			MemcouponVO memcouponVO = null;
+			ResultSet rs = null;
+			
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(ORDER_SELECT);
+
+				pstmt.setInt(1, mem_coupon_id);
+
+				pstmt.executeUpdate();
+				
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					memcouponVO = new MemcouponVO();
+					memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
+					memcouponVO.setMember_id(rs.getInt("member_id"));
+					memcouponVO.setCategory_id(rs.getInt("category_id"));
+					memcouponVO.setCoupon_id(rs.getInt("coupon_id"));
+					memcouponVO.setDiscount(rs.getDouble("discount"));
+					memcouponVO.setCoupon_name(rs.getString("coupon_name"));
+					memcouponVO.setStatus(rs.getInt("status"));
+					memcouponVO.setStart_date(rs.getDate("start_date"));
+					memcouponVO.setEnd_date(rs.getDate("end_date"));
+				}
+
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			
+		}
 		
 		@Override
 		public MemcouponVO check(MemcouponVO memcouponVO) {

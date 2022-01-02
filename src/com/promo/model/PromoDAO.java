@@ -21,6 +21,9 @@ public class PromoDAO implements Promo_interface{
 			e.printStackTrace();
 		}
 	}
+	
+		private static final String END =
+			"UPDATE promo set status= 2 where promo_id=?";
 		
 		private static final String INSERT_STMT = 
 			"INSERT INTO promo (promo_name, promo_start, promo_end, promo_text, status) VALUES (?, ?, ?, ?, ?);";
@@ -32,6 +35,47 @@ public class PromoDAO implements Promo_interface{
 			"DELETE FROM promo where promo_id = ?";
 		private static final String UPDATE = 
 			"UPDATE promo set promo_name=?, promo_start=?, promo_end=?, promo_text=?, status=? where promo_id = ?";
+	
+		@Override
+		public void promoDateEnd(Integer promo_id) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+
+			try {
+
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(END);
+
+				pstmt.setInt(1, promo_id);
+
+				pstmt.executeUpdate();
+
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			
+		}	
+		
+		
 	
 	@Override
 	public void insert(PromoVO promoVO) {
