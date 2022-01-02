@@ -60,21 +60,24 @@ footer {
 <nav>
 <br>
 <br>
-<br>
-<br>
+
 <h2>廖勁驊</h2>
-<img style= "weight: 200px; height: 160px;" src="<%=request.getContextPath()%>/includeFolder/img/hwa.png">
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/hwa.png">
 <h2>王勝平</h2>
-<img style= "weight: 220px; height: 176px;" src="<%=request.getContextPath()%>/includeFolder/img/ping.png">
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ping.png">
 <h2>江宇晟</h2>
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/nopeople.png">
 </nav>
 
 <section>
 		
 		<br>
 		<center><h2>團隊介紹</h2></center>
-		<br>
-		<center><img alt="基紐特戰隊"  style= "weight: 687px; height: 521px;" src="<%=request.getContextPath()%>/includeFolder/img/our.jpg"></center>
+		
+		<center><img alt="基紐特戰隊"  style= "weight: 700px; height: 532px;" src="<%=request.getContextPath()%>/includeFolder/img/our.jpg"></center>
+	<center><img alt="比對圖"  style= "weight: 700px; height: 527px;" src="<%=request.getContextPath()%>/includeFolder/img/compare.jpg"></center>
+	
+	
 	<br>
 	<br>
 
@@ -85,13 +88,13 @@ footer {
 	<aside>
 	<br>
 <br>
-<br>
-<br>
+
 	<h2>林家祥</h2>
-	<img style= "weight: 200px; height: 160px;" src="<%=request.getContextPath()%>/includeFolder/img/ian.png">
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ian.png">
 	<h2>孫浣茗</h2>
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/nopeople.png">
 	<h2>林昊葳</h2>
-	<img style= "weight: 200px; height: 160px;" src="<%=request.getContextPath()%>/includeFolder/img/wei.png">
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/wei.png">
 	</aside>
 	
 	<footer>
