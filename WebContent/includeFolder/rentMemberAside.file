@@ -106,7 +106,7 @@ if (null == pic || "".equals(pic))
 					<c:choose>
 					<c:when test="${fn:length(memberVO1.pic)!=0 and memberVO1.pic!=null}">
 			
-						<img class="idc" src="data:image/jpg;base64,<%=pic%>"width="200px">
+						<img class="idc" src="data:image/jpg;base64,<%=pic%>" width='199' height='180'>
 						</c:when>
 						<c:otherwise>
 					<img style="width:80px;height:80px" id="mh-avatar" src="https://s.yimg.com/ag/images/default_user_profile_pic_192sq.jpg" height="56" alt="用戶大頭貼">

@@ -67,7 +67,6 @@ public class MemFrontServlet extends HttpServlet {
 
 					try {
 						/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-						System.out.println("111111");
 						Integer memberId = new Integer(req.getParameter("memberId"));
 						String nickName = req.getParameter("nickName").trim();
 						
@@ -82,47 +81,40 @@ public class MemFrontServlet extends HttpServlet {
 						if (!phoneNum.matches(reg)) { // 以下練習正則(規)表示式(regular-expression)
 							errorMsgs.add("手機號碼 : 只能是09開頭數字, 且長度必需在10碼");
 						}
-						System.out.println("2222222");
 //						byte[] pic = reg.getBytes();
 //						if (!fsaveDirectory.exists())
 //							 fsaveDirectory.mkdirs();
 						byte[] pic =null;
+						MemberService memSvc = new MemberService();
+						MemberVO memVO=memSvc.getOneMember(memberId);
 						MemberVO memberVO = new MemberVO();
 						memberVO.setMemberId(memberId);
 						memberVO.setNickName(nickName);
 						memberVO.setPhoneNum(phoneNum);
 						memberVO.setEmail(email);
-						System.out.println("12133333333");
-						Part part = req.getPart("file_name1");
 						
+//						memberVO.setPic(memberVO.getPic());
+						Part part = req.getPart("file_name1");
+						System.out.println("part.getSize() = "+part.getSize());
+						if(part.getSize()!=0) {
+							
 							String filename = getFileNameFromPart(part);
-							System.out.println("121444444");
+//							System.out.println("filename.getBytes()=" +filename.getBytes());
 							InputStream in = part.getInputStream();
 							pic = new byte[in.available()];
-//							if (filename!= null && part.getContentType()!=null) {
-//								String name = part.getName();
-//								String ContentType = part.getContentType();
-//								long size = part.getSize();
-//								System.out.println("121355555");
-//								File f = new File(fsaveDirectory, filename);
-//								System.out.println("1213666666");
-//								part.write(f.toString());
-//								part.write(fileName);
-								System.out.println("72137777");
-								System.out.println("72133333333");
-								System.out.println("82133333333");
 								in.read(pic);
 								in.close();
-							
-							
-//						}
-						
+						}else {
+							pic = memVO.getPic();
+//							byte[] pic1 = prodVO.getPic1() == null ? prod_original.getPic1() : prodVO.getPic1();
+						}
 						memberVO.setPic(pic);
-						System.out.println(memberId);
-						System.out.println(nickName);
-						System.out.println(phoneNum);
-						System.out.println(email);
-						System.out.println(pic);
+							
+							
+//								memberVO.setPic(pic);
+//						if(pic==null ) {
+//							pic = memberVO.getPic();
+//						}
 //						memberVO.setBankAccount(bankAccount);
 //						memberVO.setAccountName(accountName);
 						// Send the use back to the form, if there were errors
@@ -136,8 +128,6 @@ public class MemFrontServlet extends HttpServlet {
 						}
 
 						/*************************** 2.開始修改資料 *****************************************/
-						System.out.println("3333344444444");
-						MemberService memSvc = new MemberService();
 						System.out.println("333335555555");
 						memberVO = memSvc.updateMemberBasicInformation(memberId, nickName, email, phoneNum, pic);
 						System.out.println("44444444");
