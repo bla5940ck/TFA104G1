@@ -113,7 +113,7 @@ a.cart-img>img {
 
 														cartVO1 = gson.fromJson(item, CartVO.class);
 														request.setAttribute("cartVO1", cartVO1);
-														if (cartVO1.getLeaseID() == leaseID) {
+														if (cartVO1.getLeaseID().equals(leaseID)) {
 
 															//出租者商品數量
 															leaseProd++;
@@ -125,7 +125,7 @@ a.cart-img>img {
 											<tr>
 												<input type="hidden" value="<%=cartVO1.getProdID()%>">
 												<input type="hidden" value="<%=cartVO1.getTotalPrice()%>">
-												                      	<c:if test="${cartVO1.prodID == prodIDCheck}">
+												                      	<c:if test="${cartVO1.prodID==prodIDCheck}">
 												                      	<td><input class="cart-checkbox" checked="checked" name="cartCheckbox" type="checkbox" value="<%=cartVO1.getProdID()%>" style= "width:25px;height:25px;"></td>
 												                        	<input type="hidden" class="selectOnePrice" value="<%=cartVO1.getTotalPrice()%>">
 												                        	<input type="hidden" class="selectOneSelect" value="1">
