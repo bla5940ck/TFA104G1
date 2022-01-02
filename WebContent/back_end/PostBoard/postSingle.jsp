@@ -1,3 +1,4 @@
+<%@page import="com.member.model.MemberVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.postboard.model.*"%>
@@ -28,12 +29,11 @@
 	
 	
 	
+	
+	
 	pbReplyVO pbrVO = (pbReplyVO) request.getAttribute("pbrVO");
 	//pbReplyService pbrSvc = new pbReplyService();
 	pageContext.setAttribute("pbr",pbrVO);
-	
-	
-	
 	
 %>
 
@@ -49,7 +49,7 @@
                   <article class="aa-blog-content-single">                        
                     <h2><a href="#" >${pb.postTitle}</a></h2><!--徵求標題-->
                      <div class="aa-article-bottom">
-                      <div class="aa-post-author">Posted By <a href="#">${pb.memberId}</a></div><!--會員ID -->
+                      <div class="aa-post-author">Posted By 會員編號 <a href="#">${pb.memberId}</a></div><!--會員ID -->
                       <div class="aa-post-date">${pb.postTime}</div><!--發文時間 -->
                      </div>
                      
@@ -109,12 +109,12 @@
                         <li>
                           <div class="media">
                             <div class="media-left">    
-                                <img class="media-object news-img" src="" alt="img">      
+                                <img class="media-object news-img" src="<%=request.getContextPath()%>/back_end/PostBoard/member-icon-1.png" alt="img">      
                             </div>
                             <div class="media-body">
-                             <h4 class="author-name">${pbrVO.memberId}</h4><!--留言會員編號-->
+                             <h4 class="author-name">會員編號  ${pbrVO.memberId}</h4><!--留言會員編號-->
                              <span class="comments-date"></span>
-                             <p style="font-size:8px;">${pb.postTime}</p>
+                             <p style="font-size:8px;">${pbrVO.replyTime}</p>
                              <p>${pbrVO.replyCont}</p><!--留言內容 -->
 
                             </div>

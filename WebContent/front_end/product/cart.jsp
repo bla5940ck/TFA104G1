@@ -437,9 +437,7 @@ location.href + " table.aa-totals-table");
 	    	          "opacity": 0
 	    	        }, 1000, "swing", function(){
 	    	        	$(this).remove(); 
-	    	        	 $('#prod-select').text($('input.selectOneSelect').val());
-	    	       	  
-	    	             $('#td-total').text($('input.selectOnePrice').val());
+	    	        	
 	    	        });
 	    	
 	    	
@@ -450,9 +448,7 @@ location.href + " table.aa-totals-table");
 	    	          "opacity": 0
 	    	        }, 1000, "swing", function(){
 	    	        	$(this).remove();
-	    	        	 $('#prod-select').text($('input.selectOneSelect').val());
-	    	       	  
-	    	             $('#td-total').text($('input.selectOnePrice').val());
+
 	    	        });
 	    	
 	    }
