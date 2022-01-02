@@ -30,7 +30,7 @@
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getRentID()==memID)
+									.filter(o->o.getRentID().equals(memID))
 										.filter(o -> o.getOrdStatus() == ordStatus)
 											.collect(Collectors.toList());
 
@@ -189,13 +189,10 @@
 			width: 30%;
 		}
 		.head3{
-/* 			border: 1px solid red; */
+/*   		border: 1px solid red;  */
 			display: inline-block;
-			vertical-align:middle;
-			text-align:justify;
-			width: 55%;			
-			position: absolute;
-			bottom: 239px;
+ 			text-align:left; 
+ 			width: 100%;	
 		}
 		
 		.div1{
@@ -252,7 +249,7 @@
 					<h5>選擇訂單編號 :  
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.rentID == id}">
+							<c:if test="${OrderMasterVO.rentID eq id}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>

@@ -12,7 +12,9 @@ import java.sql.Types;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -45,7 +47,8 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	
 	private static final String INSERT_RENT_COMMENT = "UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String INSERT_LEASE_COMMENT = "UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
-
+	private static final String GETDATEGROUPBYORDERID = "SELECT COUNT(ORD_DATE),month(ord_date) FROM JOYLEASE.ORDER_MASTER WHERE ORD_STATUS=2  GROUP BY(MONTH(ORD_DATE)) ;";
+	
 //	static {
 //		try {
 //			Class.forName(Util.DRIVER);
@@ -73,7 +76,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(FIND_BY_STATUS);
 
 			pstmt.setInt(1, ordStatus);
@@ -153,7 +156,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 
 			// 設定autoCommit false在pstmt.executeUpdate()之前
 			con.setAutoCommit(false);
@@ -236,7 +239,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, orderMaster.getRentID());
@@ -284,7 +287,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, orderMaster.getShipStatus());
@@ -344,7 +347,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(FIND_BY_PK);
 
 			pstmt.setInt(1, ordID);
@@ -423,7 +426,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(GET_ALL);
 			rs = pstmt.executeQuery();
 
@@ -500,7 +503,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 
 			// 1. 設定於pstmt.executeUpdate()之前
 			con.setAutoCommit(false);
@@ -590,7 +593,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 
 			// 1. 設定於pstmt.executeUpdate()之前
 			con.setAutoCommit(false);
@@ -671,7 +674,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			con.setAutoCommit(false);
 
 			pstmt = con.prepareStatement(UPDATE2);
@@ -719,7 +722,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(INSERT_LEASE_COMMENT);
 //			"UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
 			pstmt.setInt(1, orderMaster.getLeaseRank());
@@ -753,7 +756,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(INSERT_RENT_COMMENT);
 //			"UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
 			pstmt.setInt(1, orderMaster.getRentRank());
@@ -789,7 +792,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 		
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(QRCODE);
 			pstmt.setBytes(1, omVO.getQrcode());
 			pstmt.setInt(2, omVO.getOrdID());
@@ -814,6 +817,53 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 			}
 		}
 	}
+	
+	
+	
+	public List<Map<String,String>> getDate(){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs =null;
+		List<Map<String,String>> list = new ArrayList<>();
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GETDATEGROUPBYORDERID);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Map<String,String> map = new HashMap<>();
+				map.put(rs.getString(2),rs.getString(1));
+				list.add(map);
+				
+				
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
 	
 	
 	public static void main(String[] args) {
@@ -1081,7 +1131,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 		PreparedStatement pstmt = null;
 
 		try {
-			con = DriverManager.getConnection(Util.URL, Util.USER, Util.PASSWORD);
+			con = ds.getConnection();;
 			pstmt = con.prepareStatement(UPDATETRF);
 
 			

@@ -1,7 +1,18 @@
+<%@page import="com.product.model.ProdVO"%>
+<%@page import="com.product.model.ProdService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
+<% Integer prodID = Integer.valueOf(request.getParameter("prodID")); 
+	
+	ProdService prodSvc = new ProdService();
+	ProdVO prodVO = prodSvc.findProductByPK(prodID);
+	Integer memberID = Integer.valueOf(prodVO.getMemberID());
+	pageContext.setAttribute("prodID", prodID);
+	Integer selfID = Integer.valueOf(session.getAttribute("id").toString());
+	
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/front_end/Chatroom/css/friendchat.css" type="text/css" />
@@ -137,7 +148,7 @@ ul li{
 
 
 </style>
-<title>JoyLeaseChatroomNow</title>
+<title>JoyLeaseChatNow</title>
 </head>
 <body onload="connect();" onunload="disconnect();">
 	<h3 id="statusOutput" class="statusOutput"></h3>
@@ -151,7 +162,14 @@ ul li{
 	</div>
 </body>
 <script>
-	var MyPoint = "/ChatroomWS/${userName}";
+	var selfID = <%=selfID%>;<!--自己會編-->
+	var prodID = <%=prodID%>;
+	console.log(selfID);
+	var memberID = <%=memberID%><!--對方會編-->
+	console.log("mem" + memberID)
+	var MyPoint = "/ChatroomWS/"+memberID;
+	console.log(MyPoint);
+	console.log(prodID);
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -159,7 +177,8 @@ ul li{
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
-	var self = '${userName}';
+	var self = '${selfID}';
+	
 	var webSocket;
 
 	function connect() {
@@ -188,15 +207,26 @@ ul li{
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
 					var li = document.createElement('li');
+					
+					
+					
 					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-					historyData.sender === self ? li.className += 'me' : li.className += 'friend';
+					historyData.sender == selfID ? li.className += 'friend' : li.className += 'me';
+					
+					
+					
+					
 					li.innerHTML = showMsg;
 					ul.appendChild(li);
 				}
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("chat" === jsonObj.type) {
+				
+				
 				var li = document.createElement('li');
-				jsonObj.sender === self ? li.className += 'me' : li.className += 'friend';
+				console.log(jsonObj.sender)
+				console.log(selfID)
+				jsonObj.sender == selfID ? li.className += 'friend' : li.className += 'me';
 				li.innerHTML = jsonObj.message;
 				console.log(li);
 				document.getElementById("area").appendChild(li);
@@ -225,8 +255,8 @@ ul li{
 		} else {
 			var jsonObj = {
 				"type" : "chat",
-				"sender" : self,
-				"receiver" : friend,
+				"sender" : friend,
+				"receiver" : selfID,
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -241,8 +271,8 @@ ul li{
 		var row = document.getElementById("row");
 		row.innerHTML = '';
 		for (var i = 0; i < friends.length; i++) {
-			if (friends[i] === self) { continue; }
-			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + friends[i] + ' ><h2>' + friends[i] + '</h2></div>';
+			if (friends[i] == selfID) { continue; }
+			row.innerHTML +='<div id=' + i + ' class="column" name="friendName" value=' + selfID + ' ><h2>' + friends[i] + '</h2></div>';
 		}
 		addListener();
 	}
@@ -254,8 +284,8 @@ ul li{
 			updateFriendName(friend);
 			var jsonObj = {
 					"type" : "history",
-					"sender" : self,
-					"receiver" : friend,
+					"sender" : friend,
+					"receiver" : selfID,
 					"message" : ""
 				};
 			webSocket.send(JSON.stringify(jsonObj));
@@ -263,6 +293,7 @@ ul li{
 	}
 	
 	function disconnect() {
+		
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
 		document.getElementById('connect').disabled = false;

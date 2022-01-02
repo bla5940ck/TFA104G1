@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -58,6 +59,11 @@ public class MemFrontServlet extends HttpServlet {
 					// Store this set in the request scope, in case we need to
 					// send the ErrorPage view.
 					req.setAttribute("errorMsgs", errorMsgs);
+					
+					List<String> sussMsgs = new LinkedList<String>();
+					// Store this set in the request scope, in case we need to
+					// send the ErrorPage view.
+					req.setAttribute("sussMsgs", sussMsgs);
 
 					try {
 						/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -146,6 +152,7 @@ public class MemFrontServlet extends HttpServlet {
 //						MemberService memSvc = new MemberService();
 						MemberVO memberVO2 = memSvc.getLoginMember(loginId);
 						session.setAttribute("MemberVO", memberVO2);
+						sussMsgs.add("修改成功!!!");
 //						req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
 						String url = "/front_end/member/LeasePage.jsp";
 						RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交LeasePageAccount.jsp
@@ -168,6 +175,9 @@ public class MemFrontServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
+			
+			String url = "/front_end/member/LeasePagePW.jsp";
+			
 			String loginId = req.getParameter("loginId");
 			String password = req.getParameter("password");
 			String newPW = req.getParameter("newPW").trim();
@@ -182,17 +192,20 @@ public class MemFrontServlet extends HttpServlet {
 				out.println("<BODY>原密碼無效!<BR>");
 				out.println("請重新輸入 <A HREF=" + req.getContextPath() + "/front_end/member/LeasePagePW.jsp>重新修改</A>");
 				out.println("</BODY></HTML>");
+//				res.setHeader("Refresh", "2; URL=" + req.getContextPath() + url);
 //				res.setHeader("Refresh", "3; URL=" + req.getContextPath() + "/front_end/member/LeaseLogin.jsp");
 			} else if (!newPW.equals(newPW2)) { // 以下練習正則(規)表示式(regular-expression)
 				out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-				out.println("<BODY>newPW!=newPW2<BR>");
+				out.println("<BODY>新密碼輸入不一致!<BR>");
 				out.println("請重新輸入 <A HREF=" + req.getContextPath() + "/front_end/member/LeasePagePW.jsp>重新修改</A>");
 				out.println("</BODY></HTML>");
+//				res.setHeader("Refresh", "2; URL=" + req.getContextPath() + url);
 			} else if (!newPW.trim().matches(reg)) { // 以下練習正則(規)表示式(regular-expression)
 				out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-				out.println("<BODY>newPW無效!<BR>");
+				out.println("<BODY>新密碼無效!<BR>");
 				out.println("請重新輸入 <A HREF=" + req.getContextPath() + "/front_end/member/LeasePagePW.jsp>重新修改</A>");
 				out.println("</BODY></HTML>");
+//				res.setHeader("Refresh", "2; URL=" + req.getContextPath() + url);
 			}
 
 			else { // 【帳號 , 密碼有效時, 才做以下工作】
@@ -224,10 +237,10 @@ public class MemFrontServlet extends HttpServlet {
 					MemberVO memberVO2 = memSvc.getLoginMember(loginId);
 					session.setAttribute("MemberVO", memberVO2);
 //				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
-					String url = "/front_end/member/LeasePagePW.jsp";
+					 url = "/front_end/member/LeasePagePW.jsp";
 					out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-					out.println("<BODY>Password reset complete<BR>");
-//				out.println("<BR>或3秒後自動回到密碼畫面 ");
+					out.println("<BODY>密碼設置成功! <BR>");
+				out.println("<BR>2 秒後回到密碼設置頁面!! ");
 					out.println("</BODY></HTML>");
 					res.setHeader("Refresh", "2; URL=" + req.getContextPath() + url);
 //					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交LeasePageAccount.jsp
@@ -250,6 +263,10 @@ public class MemFrontServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
+			List<String> sussMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("sussMsgs", sussMsgs);
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer memberId = new Integer(req.getParameter("memberId"));
@@ -287,10 +304,13 @@ public class MemFrontServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				// *工作1: 才在session內做已經登入過的標識
 
-				session.setAttribute("memberId", memberId);
+//				session.setAttribute("memberId", memberId);
+				
+				System.out.println("context memberId : "+memberId);
 //				MemberService memSvc = new MemberService();
 				MemberVO memberVO2 = memSvc.getLoginMember(loginId);
 				session.setAttribute("MemberVO", memberVO2);
+				sussMsgs.add("修改成功!!!");
 //				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
 				String url = "/front_end/member/LeasePageAccount.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交LeasePageAccount.jsp

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,7 @@ public class AddressFrontServlet extends HttpServlet {
 
 		String action = req.getParameter("action");
 		PrintWriter out = res.getWriter();
-		String marketURL="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://104.199.254.38:8081/TFA104G1/member/AddressFrontServlet";
+		String marketURL="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://107.167.179.66:8081/TFA104G1/member/AddressFrontServlet";
 
 	
 		
@@ -75,8 +76,16 @@ System.out.println(storeaddress);
 				/*************************** 3.完成,準備轉交(Send the Success view) *************/
 				HttpSession session = req.getSession();
 				session.setAttribute("arrayList", arrayList);
+				ServletContext context = getServletContext();
 				
+				System.out.println(context.getAttribute("memberId1"));
+				String memberId = context.getAttribute("memberId1").toString();
 				
+				System.out.println("context memberId : "+memberId);
+				System.out.println("存入session");
+				session.setAttribute("memberId", memberId);
+				System.out.println("session memberId : "+session.getAttribute("memberId").toString());
+
 //				req.setAttribute("memberVO", memberVO); // 資料庫update成功後,正確的的memberVO物件,存入req
 				String url = "/front_end/member/LeasePageAddAddress.jsp";
 //				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交LeasePageAccount.jsp

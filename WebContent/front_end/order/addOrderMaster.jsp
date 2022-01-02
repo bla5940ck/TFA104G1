@@ -122,7 +122,7 @@ a.cart-img>img {
 														<td><input type="hidden" name="estStart" value="<%=cartVO.getEstStart()%>"><%=cartVO.getEstStart()%></td>
 														<td><input type="hidden" name="estEnd" class="estEnd" value="<%=cartVO.getEstEnd()%>"><%=cartVO.getEstEnd()%></td>
 														<td><input type="hidden" name="rentDays" value="<%=rentDays%>"><%=rentDays%> 天</td>
-														<td><input type="hidden" class="prodPrice"name="prodPrice" id="prodPrice" value="<%=totalPrice%>"><%=totalPrice%>元</td>
+														<td><input type="hidden" class="prodPrice"name="prodPrice" value="<%=totalPrice%>"><%=totalPrice%>元</td>
 														<input type="hidden" name="rentID" value="<%=memID%>">
 														<input type="hidden" name="leaseID"	class="leaseID" value="<%=cartVO.getLeaseID()%>">
 														<input type="hidden" name="prodID"	value="<%=cartVO.getProdID()%>">
@@ -142,10 +142,9 @@ a.cart-img>img {
 															class="com.order.model.PaymentOptionsDAOImpl" />
 														<tr>
 															<td>取貨方式:</td>
-															<td><select size="1" name="payID"
-																style="width: 120px">
-																	<c:forEach var="poVO"
-																		items="${poDAO.getAllPaymentOptions()}">
+															<td><select name="payID" class="payID" size="1" style="width: 135px;">
+																		<option value="0">請選擇取貨方式
+																	<c:forEach var="poVO" items="${poDAO.getAllPaymentOptions()}">
 																		<option value="${poVO.payID}">${poVO.payName}
 																	</c:forEach>
 															</select></td>
@@ -156,11 +155,12 @@ a.cart-img>img {
 
 														<tr>
 															<td>取貨資訊:</td>
-															<td><select size="1" name="code711" style="width: 230px">
+															<td><select size="1" class="choice" name="code711" style="width: 230px">
+																<option value=2>請選擇取貨資訊
 																<option value=0>面交自取
 																<c:forEach var="daVO" items="${daDAO.getAll()}">
 																	<c:choose>
-																		<c:when test="${daVO.memberId == id}">
+																		<c:when test="${daVO.memberId eq id}">
 																			<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
 																		</c:when>
 																	</c:choose>
@@ -171,11 +171,11 @@ a.cart-img>img {
 														<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
 														<tr>
 															<td>選擇折價券:</td>
-															<td><select size="1" id="coupon">
+															<td><select size="1" class="coupon">
 																	<option value="0">請選擇折價券
 																		<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 																			<c:choose>
-																				<c:when test="${mcVO.member_id == id && mcVO.status == 0}">
+																				<c:when test="${mcVO.member_id eq id && mcVO.status == 0}">
 																					<option data-id="${mcVO.coupon_id}"
 																						value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 																				</c:when>
@@ -185,15 +185,15 @@ a.cart-img>img {
 														</tr>
 														<tr>
 															<td>折扣:</td>
-															<td><p id="discount"></p></td>
+															<td><p class="discount"></p></td>
 														</tr>
 														<tr>
 															<td>運費:</td>
-															<td><input type="hidden" id="shipFee" name="shipFee" value="60">60 元</td>
+															<td><input type="hidden" class="shipFee" name="shipFee"><p class="thisFee"/></td>
 														</tr>
 														<tr>
 															<td>訂單金額:</td>
-															<td><p id="thisOrder"></p></td>
+															<td><p class="thisOrder"/></td>
 														</tr>
 													</tbody>
 												</table>
@@ -209,23 +209,61 @@ a.cart-img>img {
 			</section>
 		</div>
 		<input type="hidden" name="action" value="submit_order">
-		<input type="hidden" name="couponID" id="couponID"> 
+		<input type="hidden" name="couponID" class="couponID"> 
 		<input type="hidden" name="def711" value="${daVO.def711}">
-		<input type="hidden" name="ordPrice" id="ordPrice">		
+		<input type="hidden" name="ordPrice" id="ordPrice" class="ordPrice">		
 	</FORM>
 	<%@ include file="/includeFolder/footer2.file"%>
 </body>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
+
+var payID = $(".payID"); // 取貨方式
+// var choice = $(".choice");
+var thisFee = $(".thisFee"); // 總運費
+var coupon = $(".coupon"); //折價券
+var shipFee = $(".shipFee"); // 運費
+var discount = $(".discount"); //折扣
+var prodPrice = $(".prodPrice"); //商品小計
+var thisOrder = $(".thisOrder"); //前端顯示的訂單金額
+var form = $("input.prodPrice");
+var ordPrice = $(".ordPrice"); //回傳servlet的訂單金額
+var total = 0;
+
+form.each(function(index, item){
+	total += parseInt($(item).val());
+	thisOrder.text(total + "元");
+})
+
+payID.change(function(){
+	if(payID.val() == 1 ){
+		thisFee.html("60 元");
+		shipFee.attr("value", 60);
+	}else if(payID.val() == 2){
+		thisFee.html("0 元");
+		shipFee.attr("value", 0);
+	}
+	thisOrder.text(total + parseInt(shipFee.val()) - parseInt(coupon.val()) + "元");
+	
+	var finalprice = total + parseInt(shipFee.val()) - parseInt(coupon.val());
+// 	console.log(finalprice);
+	ordPrice.attr("value", finalprice);
+	console.log("沒選折價券的" + ordPrice.val());
+		
+})
+
+	coupon.change(function (){
+		discount.text(coupon.val() + "元");
+		thisOrder.text(total + parseInt(shipFee.val()) - parseInt(coupon.val()) + "元");
+		var finalprice = total + parseInt(shipFee.val()) - parseInt(coupon.val());
+		ordPrice.attr("value", finalprice);
+		console.log("折價券選完的" + ordPrice.val());
+	})
+
 var leaseID = $("input.leaseID");
-console.log(leaseID);
+// console.log(leaseID);
 var set = new Set();
-// leaseID.each(function(index, item){
-// 	console.log($(item).val());
-// 	// array.push($(item).val());
-// 	set.add($(item).val());
-// });
 
 var estEnd = $("input.estEnd");
 var estEndSet = new Set();
@@ -234,6 +272,13 @@ estEnd.each(function(index, item){
 })
 
 $("a.aa-cart-view-btn").click(function(){
+	var choice = $(".choice");
+	console.log(choice.val());
+	if(payID.val() == 2 && choice.val() != 0 || payID.val() == 1 && choice.val() == 0){
+		alert("您選擇的取貨方式及相關資訊必須相同哦 !");
+		return false;
+	}
+if(choice.val() != 2){
 	leaseID.each(function (index, item) {
 		console.log($(item).val());
 		set.add($(item).val());
@@ -242,61 +287,25 @@ $("a.aa-cart-view-btn").click(function(){
 		estEndSet.add($(item).val());
 	})
 	// console.log(set.size);
+	
 	if(set.size == 1){
 		if(estEndSet.size == 1){
 			$("#cart-form").submit();
-			
+			console.log("送出的價格" + ordPrice.val());
+			}else{
+				alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
+				return false;
+			}
 		}else{
-			alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
+			alert("您選擇的出租方不同! 請回購物車調整! 謝謝!");
 			return false;
-		}
+		}	
 	}else{
-		alert("您選擇的出租方不同! 請回購物車調整! 謝謝!");
+		alert("尚未選擇取貨資訊哦 !");
 		return false;
-	}
+	}	
 });
 
-
-	var coupon = $("#coupon"); //折價券
-	var discount = $("#discount"); //折扣
-	var thisOrder = $("#thisOrder"); //前端顯示的訂單金額
-	var prodPrice = $("#prodPrice"); //商品小計
-	var orderPrice = $("#orderPrice"); //回傳servlet的訂單金額
-
-	var total = 0;
-	var form = $("input.prodPrice");
-	
-	form.each(function(index, item) {
-		
-		// console.log("索引值：" + index + "； 內容：" + $(item).val());
-		total += parseInt($(item).val());
-
-		var data_id = "";
-
-		coupon.change(function() {
-// 			alert(coupon.val());
-			discount.text(coupon.val() + "元");
-
-			var finalPrice = parseInt(total - coupon.val() + 60);
-			thisOrder.text(parseInt(total - coupon.val() + 60) + "元");
-			document.getElementById("ordPrice").setAttribute('value',
-					finalPrice);
-
-			data_id = $("#coupon option:selected").attr('data-id');
-// 			console.log(data_id);
-
-			document.getElementById("couponID").setAttribute('value', data_id);
-
-		});
-
-		thisOrder.text(total + "元");
-	});
-
-	// 	thisOrder.text(parseInt(totalPrice-(coupon).val()+ 60) + "元");
-	// 	thisOrder=parseInt(couponID.val() + prodPrice.val())+ 60 ;
-	document.getElementById("ordPrice").setAttribute('value',
-			total - coupon.val() + 60);
-		
 
 </script>
 

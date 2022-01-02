@@ -151,7 +151,7 @@ public class LabelServlet extends HttpServlet {
 					if (p == null)
 						listCookie.remove(0);
 
-					flag = flag || (p.getProdID() == cookieID);
+					flag = flag || (p.getProdID().equals(cookieID));
 				} // 假如編號有重複 就不加入瀏覽清單
 				if (!flag) {
 					if (listCookie.size() >= 3) { // 大於三張圖片 刪除第一張

@@ -145,14 +145,7 @@
 	<body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 		<%-- <header class="header"> header區域 </header>--%>
-		<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-			</c:if>
+		
 		<div class="main_content">
 		<%@ include file="/includeFolder/rentMemberAside.file"%>
 			<%-- 	<aside class="aside">
@@ -202,6 +195,24 @@
 					<FORM METHOD="post"  enctype="multipart/form-data" ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						<h1>我的帳戶</h1>
 						<div  style="font-size:22px">管理你的檔案以保護你的帳戶</div>
+						
+						<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+			</c:if>
+						
+												<c:if test="${not empty sussMsgs}">
+<!-- 					<font style="color: red">請修正以下錯誤:</font> -->
+					<ul>
+						<c:forEach var="message" items="${sussMsgs}">
+							<li style="color: #191561;font-size:20px;">${message}</li>
+						</c:forEach>
+					</ul>
+			</c:if>
 						<table>
 								<tr>
 								<td>會員編號 </td>
@@ -229,10 +240,10 @@
 								</tr>
 						</table>
 						
-					<input type="submit" value="儲存"class="aa-browse-btn" ></FORM>					
 					<input type="hidden" name="action" value="updateBasic">
 					<input type="hidden" name="memberId" value="${memberVO.memberId}">
 					<input type="file" class="file" accept="image/gif, image/jpeg, image/png" onchange="showPic(this.value);" value="pic"id='file_id1' name='file_name1'>
+					<input type="submit" value="儲存"class="aa-browse-btn" ></FORM>					
 				
 					
 					<FORM>
@@ -268,7 +279,7 @@ $("#file_id1").change(
 					for (var i = 0; i < this.files.length; i++) {
 						var reader = new FileReader();
 						reader.onload = function(e) {
-							var img = $("<img class = 'preview_img' width='280' >")
+							var img = $("<img class = 'preview_img' width='292' height='292' >")
 									.attr('src', e.target.result);
 							$("#preview1").append(img);
 						}

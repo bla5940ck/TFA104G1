@@ -409,6 +409,7 @@ public class PostBoardServlet extends HttpServlet {
 				/*************************** 2.開始刪除資料 ***************************************/
 				PostBoardService pbSvc = new PostBoardService();
 				pbSvc.delet(postId);
+				System.out.println("test");
 
 				/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
 				String url = "/back_end/PostBoard/articleList.jsp";

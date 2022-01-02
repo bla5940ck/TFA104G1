@@ -43,7 +43,7 @@
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getLeaseID()==memID)
+									.filter(o->o.getLeaseID().equals(memID))
 										.collect(Collectors.toList());
 	if(request.getAttribute("list") != null){
 		list2 = (List) request.getAttribute("list");
@@ -198,25 +198,24 @@
 		}
 		
 		.head{
+/* 			border: 1px solid red;		 */
 			display: inline-block;
 			width: 100%;
 		}
 		.head2{
+/* 		 	border: 1px solid red;		 */
 			display: inline-block;
 			width: 30%;
 		}
 		.head3{
-/* 			border: 1px solid red; */
+/*   		border: 1px solid red;  */
 			display: inline-block;
-			vertical-align:middle;
-			text-align:justify;
-			width: 55%;			
-			position: absolute;
-			bottom: 209px;
+ 			text-align:left; 
+ 			width: 100%;	
 		}
 		
 		.div1{
-/* 			border: 1px solid red; */
+/*   			border: 1px solid red;   */
 			display: inline-block;
 			width: 100%;
 		}
@@ -268,7 +267,7 @@
 					<h5>選擇訂單編號 :  
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.leaseID == id}">
+							<c:if test="${OrderMasterVO.leaseID eq id}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>
@@ -301,13 +300,13 @@
 				</h5>
 				</FORM>
 			</div>		
-			<div class="head3">		
+			</div>
+			<div class="head3">
 			<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listAllOrderMaster.jsp">全部</a>
 			<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=0">已成立</a>
 			<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=1">待歸還</a>
 			<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=2">已完成</a>
 			<a class="aa-browse-btn" href="<%=request.getContextPath()%>/front_end/order/listStatusOrderMaster.jsp?ordStatus=9">已取消</a>
-			</div>
 			</div>
 			<%@ include file="pageForLease.file"%>
 			<div class="div1">
