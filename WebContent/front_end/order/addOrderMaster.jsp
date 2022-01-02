@@ -253,12 +253,20 @@ payID.change(function(){
 		
 })
 
+var data_id = "";
+
 	coupon.change(function (){
 		discount.text(coupon.val() + "元");
 		thisOrder.text(total + parseInt(shipFee.val()) - parseInt(coupon.val()) + "元");
 		var finalprice = total + parseInt(shipFee.val()) - parseInt(coupon.val());
 		ordPrice.attr("value", finalprice);
 		console.log("折價券選完的" + ordPrice.val());
+		
+		data_id = $(".coupon option:selected").attr('data-id');
+		console.log("折價券編號" + data_id);
+		
+		$(".couponID").attr("value", data_id);
+		
 	})
 
 var leaseID = $("input.leaseID");
@@ -292,6 +300,7 @@ if(choice.val() != 2){
 		if(estEndSet.size == 1){
 			$("#cart-form").submit();
 			console.log("送出的價格" + ordPrice.val());
+			console.log("選到的折價券編號 " + $(".couponID").val())
 			}else{
 				alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
 				return false;
