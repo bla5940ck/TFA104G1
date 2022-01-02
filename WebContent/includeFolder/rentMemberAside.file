@@ -114,7 +114,7 @@ if (null == pic || "".equals(pic))
 						</c:choose>
 						</i> 
 					
-					<h3 style="background-color:lightgreen;">承租專區<br><span class="nav-title">${memberVO1.loginId}</span></center></h3>
+					<h3 style="background-color:lightgreen;">承租專區<br><span class="nav-title" style="font-size:16px;">帳號 : ${memberVO1.loginId}<br>會員號 : ${memberVO1.memberId}</span></center></h3>
 					<h5>
 						<a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp"><i class="tou"></i>我的帳戶</a> 
 						<a href="<%=request.getContextPath()%>/front_end/member/LeasePage.jsp"><i class="tou"></i>個人檔案</a>
