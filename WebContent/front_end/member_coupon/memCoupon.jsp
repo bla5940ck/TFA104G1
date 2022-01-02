@@ -9,7 +9,7 @@
 	List<MemcouponVO> list = memcouponVO;
 	pageContext.setAttribute("list", list);
 %>
-
+<!DOCTYPE html>
 <html>
 <head>
 <title>我的折價券</title>

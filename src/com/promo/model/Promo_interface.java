@@ -8,6 +8,7 @@ import java.util.List;
 		public void delete(Integer promo_id);
 		public PromoVO findByPrimaryKey(Integer promo_id);
 		public List<PromoVO> getAll();
+		public void promoDateEnd(Integer promo_id);
 		
 	}
 
