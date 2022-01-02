@@ -249,19 +249,12 @@
 									<c:otherwise>面交</c:otherwise>
 								</c:choose>
 							</li>
-							<li>折價券 :
-							<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
-							<c:set var="count" value="0" />
-							<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
-								<c:if test="${count==0}">
-									<c:choose>
-										<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無
-										</c:when>
-										<c:when test="${true}">${mcVO.coupon_name}</c:when>
+							<li>折價券 : 
+								<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
+									<c:choose> 
+										<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無</c:when>
+										<c:otherwise>${mcDAO.orderSelect(omVO.couponID).coupon_name}</c:otherwise>
 									</c:choose>
-								<c:set var="count" value="1" />
-								</c:if>
-							</c:forEach>
 							</li>
 							<li>折抵金額 : 
 								<c:set var="count" value="0" />
