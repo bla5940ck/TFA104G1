@@ -49,6 +49,7 @@ public class MemberForgotPwServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
+		res.setContentType("text/html; charset=UTF-8");
 		String action = req.getParameter("action");
 		PrintWriter out = res.getWriter();
 		System.out.println("111110000000");
@@ -64,8 +65,8 @@ public class MemberForgotPwServlet extends HttpServlet {
 
 			if (!allowEmail(email)) { // 【EMAIL無效時】
 				out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-				out.println("<BODY>EMAIL無效!<BR>");
-				out.println("請重新輸入 <A HREF=" + req.getContextPath() + "/front_end/member/ForgetPW.jsp>重新修改</A>");
+				out.println("<BODY>Email 不存在<BR>");
+				out.println("請重新輸入<A HREF=" + req.getContextPath() + "/front_end/member/LoginForgetPW.jsp>重新修改</A>");
 				out.println("</BODY></HTML>");
 //				res.setHeader("Refresh", "3; URL=" + req.getContextPath() + "/front_end/member/LeaseLogin.jsp");
 			} else { // 【帳號 , 密碼有效時, 才做以下工作】
@@ -84,7 +85,6 @@ public class MemberForgotPwServlet extends HttpServlet {
 					/*************************** 2.開始修改資料 *****************************************/
 					memVO = memSvc.updatePw(password, loginId);
 
-					System.out.println("0000000");
 					/**************************** 3.寄送新密碼資料給使用者 *****************************************/
 					String to = email;
 					String subject = "【JoyLease】密碼通知";
@@ -96,17 +96,17 @@ public class MemberForgotPwServlet extends HttpServlet {
 					mailService.sendMail(to, subject, messageText);
 					
 					/*************************** 4.修改完成,準備轉交(Send the Success view) *************/
-					String url = "/front_end/member/ForgetPW.jsp";
+					String url = "/front_end/member/LoginForgetPW.jsp";
 					out.println("<HTML><HEAD><TITLE>Access Denied</TITLE></HEAD>");
-					out.println("<BODY>Password reset complete<BR>");
-					out.println("<BR>或2秒後自動回到主畫面 ");
+					out.println("<BODY>密碼修改成功<BR>");
+					out.println("<BR>2秒後回到登入頁面");
 					out.println("</BODY></HTML>");
 					res.setHeader("Refresh", "2; URL=" + req.getContextPath() + url);
 
 					/*************************** 其他可能的錯誤處理 *************************************/
 				} catch (Exception e) {
 					errorMsgs.add("修改資料失敗:" + e.getMessage());
-					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/LeasePagePW.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front_end/member/LoginForgetPW.jsp");
 					failureView.forward(req, res);
 				}
 			}

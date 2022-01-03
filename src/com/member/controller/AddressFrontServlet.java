@@ -47,7 +47,7 @@ public class AddressFrontServlet extends HttpServlet {
 
 		String action = req.getParameter("action");
 		PrintWriter out = res.getWriter();
-		String marketURL="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://104.199.254.38:8081/TFA104G1/member/AddressFrontServlet";
+		String marketURL="https://emap.presco.com.tw/c2cemap.ashx?eshopid=870&&servicetype=1&url=http://107.167.179.66:8081/TFA104G1/member/AddressFrontServlet";
 
 	
 		

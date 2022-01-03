@@ -28,7 +28,7 @@
 	
 	List<OrderMasterVO> list2 =list.
 								stream()
-									.filter(o->o.getLeaseID()==memID)
+									.filter(o->o.getLeaseID().equals(memID))
 										.filter(o -> o.getOrdStatus() == ordStatus)
 											.collect(Collectors.toList());
 
@@ -247,7 +247,7 @@
 					<h5>選擇訂單編號 :  
 					<select size="1" name="ordID">
 						<c:forEach var="OrderMasterVO" items="${OrdserMasterSvc.all}">
-							<c:if test="${OrderMasterVO.leaseID == id}">
+							<c:if test="${OrderMasterVO.leaseID eq id}">
 								<option value="${OrderMasterVO.ordID}">${OrderMasterVO.ordID}
 							</c:if>
 						</c:forEach>
@@ -281,16 +281,10 @@
 					</li>
 					<li>折價券 : 
 					<jsp:useBean id="mcDAO" class="com.member_coupon.model.MemcouponDAO" />
-					<c:set var="count" value="0"/>
-					<c:forEach var="mcVO" items="${mcoSVC.getAll()}">
-						<c:if test="${count==0}">
-							<c:choose>
-								<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無</c:when>
-								<c:when test="${true}">${mcVO.coupon_name}</c:when>
-							</c:choose>
-						<c:set var="count" value="1"/>
-						</c:if>
-					</c:forEach>
+						<c:choose> 
+							<c:when test="${omVO.couponID =='' || omVO.couponID == null}">無</c:when>
+							<c:otherwise>${mcDAO.orderSelect(omVO.couponID).coupon_name}</c:otherwise>
+						</c:choose>
 					</li>
 					<li>運送狀態 : 
 					<c:choose>

@@ -22,14 +22,14 @@ import com.chatroom.websocketchat.model.ChatroomState;
 
 
 
-@ServerEndpoint("/ChatroomWS/{userName}")
+@ServerEndpoint("/ChatroomWS/{memberID}")
 public class ChatroomWS  {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
 	//ConcurrentHashMap
 	Gson gson = new Gson();
 
 	@OnOpen
-	public void onOpen(@PathParam("userName") String userName, Session userSession) throws IOException {
+	public void onOpen(@PathParam("memberID") String userName, Session userSession) throws IOException {
 		/* save the new user in the map */
 		sessionsMap.put(userName, userSession);
 		/* Sends all the connected users to the new user */
@@ -83,6 +83,7 @@ public class ChatroomWS  {
 
 	@OnClose
 	public void onClose(Session userSession, CloseReason reason) {
+		System.out.println("關閉by JAVA");
 		String userNameClose = null;
 		Set<String> userNames = sessionsMap.keySet();
 		for (String userName : userNames) {

@@ -185,9 +185,8 @@
 					type="hidden" name="loginId" value="${memberVO.loginId}"> <input
 					type="submit" value="儲存"class="aa-browse-btn" >
 				<p class="aa-lost-password">
-					<a style="font-size:20px;"
-						href="<%=request.getContextPath()%>/front_end/member/ForgetPW.jsp">Forget
-						Password ?</a>
+					<a style="font-size:20px; color:#191561 "
+						href="<%=request.getContextPath()%>/front_end/member/LoginForgetPW.jsp">忘記密碼 ?</a>
 									
 				</p>
 			</FORM>

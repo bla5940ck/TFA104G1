@@ -160,7 +160,7 @@ a.cart-img>img {
 																<option value=0>面交自取
 																<c:forEach var="daVO" items="${daDAO.getAll()}">
 																	<c:choose>
-																		<c:when test="${daVO.memberId == id}">
+																		<c:when test="${daVO.memberId eq id}">
 																			<option value="${daVO.code711}">${daVO.name711+=" / 收件人: "+=daVO.recipient += daVO.recptPhone}
 																		</c:when>
 																	</c:choose>
@@ -175,8 +175,8 @@ a.cart-img>img {
 																	<option value="0">請選擇折價券
 																		<c:forEach var="mcVO" items="${mcDAO.getAll()}">
 																			<c:choose>
-																				<c:when test="${mcVO.member_id == id && mcVO.status == 0}">
-																					<option data-id="${mcVO.coupon_id}"
+																				<c:when test="${mcVO.member_id eq id && mcVO.status == 0}">
+																					<option data-id="${mcVO.mem_coupon_id}"
 																						value="${Math.round(mcVO.discount)}">${mcVO.coupon_name}
 																				</c:when>
 																			</c:choose>
@@ -253,12 +253,20 @@ payID.change(function(){
 		
 })
 
+var data_id = "";
+
 	coupon.change(function (){
 		discount.text(coupon.val() + "元");
 		thisOrder.text(total + parseInt(shipFee.val()) - parseInt(coupon.val()) + "元");
 		var finalprice = total + parseInt(shipFee.val()) - parseInt(coupon.val());
 		ordPrice.attr("value", finalprice);
 		console.log("折價券選完的" + ordPrice.val());
+		
+		data_id = $(".coupon option:selected").attr('data-id');
+		console.log("折價券編號" + data_id);
+		
+		$(".couponID").attr("value", data_id);
+		
 	})
 
 var leaseID = $("input.leaseID");
@@ -292,6 +300,7 @@ if(choice.val() != 2){
 		if(estEndSet.size == 1){
 			$("#cart-form").submit();
 			console.log("送出的價格" + ordPrice.val());
+			console.log("選到的折價券編號 " + $(".couponID").val())
 			}else{
 				alert("您選擇的起訖日不同! 請回購物車調整! 謝謝!");
 				return false;

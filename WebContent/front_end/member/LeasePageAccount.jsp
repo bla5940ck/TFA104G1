@@ -144,14 +144,9 @@
 	</head>
 	<body bgcolor='white'>
 		<%@ include file="/includeFolder/header.file"%>
-		<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-			</c:if>
+		
+			
+			
 		<div class="main_content">
 		<%@ include file="/includeFolder/rentMemberAside.file"%>
 				
@@ -160,7 +155,25 @@
 					<FORM METHOD="post"  ACTION="<%=request.getContextPath()%>/member/MemFrontServlet" name="form1">
 						<h1>我的銀行帳號</h1>
 						<div  style="font-size:22px">如有款項須轉帳匯款給您，您的收款帳戶資訊</div>
-
+						
+						<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+			</c:if>
+						
+						
+						<c:if test="${not empty sussMsgs}">
+<!-- 					<font style="color: red">請修正以下錯誤:</font> -->
+					<ul>
+						<c:forEach var="message" items="${sussMsgs}">
+							<li style="color: #191561;font-size:20px;">${message}</li>
+						</c:forEach>
+					</ul>
+			</c:if>
 						<hr>
 						<table>
 						<jsp:useBean id="bankSvc" scope="page" class="com.member.model.BankService" />
@@ -203,4 +216,5 @@
 		pic.style.visibility = "visible";
 		}
 </script>
+
 </html>

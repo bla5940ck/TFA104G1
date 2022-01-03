@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
- pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="com.member_coupon.model.*"%>
 <%@ page import="java.sql.Timestamp"%>
@@ -9,19 +8,9 @@
 <%@ page import="com.order.model.*"%>
 <%@ page import="com.product.model.*"%>
 <%@ page import="java.util.stream.Collectors"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>已付款訂單資料</title>
-</head>
- <a href="Suss.jsp?exportToExcel=YES">Export to Excel</a>
-<body bgcolor='white'>
-<%@ include file="/includeFolder/managerHeader.file"%>
-	<div class="main_content">
-	<%@ include file="/includeFolder/managerAside.file"%>
-		<main class="main" >
-		
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
 <%
 	MemcouponDAO memDAO = new MemcouponDAO();
 	List <MemcouponVO> memVO = memDAO.getAll();
@@ -52,18 +41,146 @@
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
 
- <%
- String exportToExcel = request.getParameter("exportToExcel");
- if (exportToExcel != null
- && exportToExcel.toString().equalsIgnoreCase("YES")) {
- response.setContentType("application/vnd.ms-excel");
- response.setHeader("Content-Disposition", "inline; filename="
- + "excel.xls");
- 
- }
- %>
- 
-	<div>
+<html>
+<head>
+<title>已付款訂單資料</title>
+<style>
+body {
+	margin: 0;
+	padding: 10px;
+}
+
+img {
+	max-width: 100%;
+}
+
+button {
+	font-size: 13px;
+	outline-width: 100%;
+	background-color: white;
+}
+
+div.main_content {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 0;
+}
+
+/*-------------------aside區域------------------- */
+aside.aside {
+	width: 200px;	
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;	
+	margin-right: 10px;
+	border: 1px solid #999;
+	text-align: center;
+	background-color:#F5D998;;
+	height:720px;
+}
+
+
+
+/*--------------------main區域-------------------- */
+main.main {
+	background-color: 	#F0F0F0;
+	width: calc(100% - 200px - 10px);
+	height: 720px;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 1rem;
+	border: 1px solid #999;
+	padding: 10px;
+}
+
+table {
+	width: 80%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	border: 1px solid lightgrey;
+}
+
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+
+table#table-1 {
+	
+	border: 2px solid black;
+	text-align: center;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h4 {
+	color: red;
+	display: inline;
+}
+
+table {
+	width: 100%;
+	background-color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table, th, td {
+	font-size: 10px;
+	border: 1px solid #CCCCFF;
+}
+
+th, td {
+	height: 100px padding: 5px;
+	text-align: center;
+}
+
+.pic {
+	object-fit: contain;
+	width: 95px;
+	height: 80px;
+}
+
+
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+.class1{
+background-color:#FFF0AC;
+}
+
+input{
+background-color:#FFF0AC;
+}
+
+.a1{
+border:2px solid black;
+background-color:#FFF0AC;
+}
+
+button{
+background-color: #FFF0AC;
+}
+</style>
+
+</head>
+<body bgcolor='white'>
+	<%@ include file="/includeFolder/managerHeader.file"%>
+	<div class="main_content">
+	<%@ include file="/includeFolder/managerAside.file"%>
+		<main class="main" >
+			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 		
 
@@ -121,10 +238,9 @@
 					</FORM>
 				</div>
 			</table>
- 
- <table align="left" border="2" id="table-2">
- <thead>
- <tr>
+
+			<table id="table-2">
+				<tr>
 					
 					<th>訂單編號</th>
 					<th>出租者</th>
@@ -140,12 +256,7 @@
 					<th>訂單金額</th>
 				</tr>
 		
- </thead>
- <tbody>
- <%
- for (int i = 0; i < 1; i++) {
- %>
- 	<c:forEach var="omVO" items="${list}" >		 
+				<c:forEach var="omVO" items="${list}" >		 
 							<c:choose>
 									<c:when test="${((omVO.payID == 1) and omVO.payStatus == 1) }">
 							<tr>
@@ -216,21 +327,115 @@
 
 								</c:choose>
 				</c:forEach>
- <%
- }
- %>
- </tbody>
- </table>
- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> 
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <%
- if (exportToExcel == null) {
- %>
- <%
- }
- %>
- <button class="back_btn">返回上一頁</button>
+			</table>
+		
+			<br>
+<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
+
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="datetimepicker/jquery.datetimepicker.css" />
+<script src="datetimepicker/jquery.js"></script>
+<script src="datetimepicker/jquery.datetimepicker.full.js"></script>
+<style>
+.xdsoft_datetimepicker .xdsoft_datepicker {
+	width: 300px; /* width:  300px; */
+}
+
+.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
+	height: 151px; /* height:  151px; */
+}
+</style>
+<script type="text/javascript">
+$("#f_date1").blur(function(){
+// 	alert(1);
+	console.log($("#f_date1").val());
+	if($("#f_date1").val() != null && $("#f_date1") != ''){		
+		$("#f_date2").blur(function(){
+			console.log($("#f_date2").val());
+			if($("#f_date2").val != null && $("#f_date2") != ''){
+				$("#DATE").submit();
+// 				$.ajax({
+<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
+// 					type:"POST",
+// 					data:{
+// 						startDate:($("#f_date1").val()),
+// 						endDate:($("#f_date2").val()),
+// 						action:"get_Date_Order",
+			
+// 					},
+// 						dataType:"json",
+// 				});
+			}		
+		})	
+	}	
+});
+
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date1").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+        $("#f_date2").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,    
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+</script>
+<script type="text/javascript">
+$("#f_date3").blur(function(){
+// 	alert(1);
+	console.log($("#f_date3").val());
+	if($("#f_date3").val() != null && $("#f_date3") != ''){		
+		$("#f_date4").blur(function(){
+			console.log($("#f_date4").val());
+			if($("#f_date4").val != null && $("#f_date4") != ''){
+				$("#DATE").submit();
+// 				$.ajax({
+<%-- 					url:"<%=request.getContextPath()%>/OrderMasterServlet", --%>
+// 					type:"POST",
+// 					data:{
+// 						startDate:($("#f_date1").val()),
+// 						endDate:($("#f_date2").val()),
+// 						action:"get_Date_Order",
+			
+// 					},
+// 						dataType:"json",
+// 				});
+			}		
+		})	
+	}	
+});
+
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
+        $("#f_date3").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+        $("#f_date4").datetimepicker({
+           theme: '',          //theme: 'dark',
+           timepicker: false,   //timepicker: false,
+           step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
+	       format: 'Y-m-d H:i:s',
+	       value:'',
+        });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
+</script>
 </html>

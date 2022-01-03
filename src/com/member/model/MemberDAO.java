@@ -106,8 +106,14 @@ public class MemberDAO implements MemberDAO_interface {
 			// Handle any driver errors
 	
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			System.out.println("SQL EX:"+se.getErrorCode());
+			if(se.getErrorCode()==1062) {
+				throw new RuntimeException("此登入帳號、EMail或身分證號已有其他會員使用,請確認後重新註冊，謝謝");
+			}else {
+				
+				throw new RuntimeException("這裡A database error occured. "
+						+ se.getMessage());
+			}
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {

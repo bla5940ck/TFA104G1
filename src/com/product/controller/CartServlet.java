@@ -92,7 +92,7 @@ public class CartServlet extends HttpServlet {
 				boolean flag = true;
 				for (String item : cart) {
 					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
-					if (prodID == cartVO1.getProdID()) {
+					if (prodID.equals(cartVO1.getProdID())) {
 						flag = false;
 					}
 				}
@@ -198,7 +198,7 @@ public class CartServlet extends HttpServlet {
 				boolean flag = true;
 				for (String item : cart) {
 					CartVO cartVO1 = gson.fromJson(item, CartVO.class);
-					if (cartVO.getProdID() == cartVO1.getProdID()) {
+					if (cartVO.getProdID().equals(cartVO1.getProdID())) {
 						flag = false;
 					}
 				}
@@ -207,7 +207,7 @@ public class CartServlet extends HttpServlet {
 				String jsonString = gson.toJson(cartVO);
 				
 				//假如 為自己的商品 將不加入商品
-				if(flag==true && cartVO.getLeaseID()==memberID) {
+				if(flag==true && cartVO.getLeaseID().equals(memberID)) {
 					
 					res.getWriter().print(3);
 					session.removeAttribute("cartVO");
