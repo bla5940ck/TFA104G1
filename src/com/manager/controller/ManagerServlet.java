@@ -186,6 +186,8 @@ public class ManagerServlet extends HttpServlet {
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			ManagerDAO dao = new ManagerDAO();
+			List<ManagerVO> list = dao.getAll();
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
@@ -195,9 +197,21 @@ public class ManagerServlet extends HttpServlet {
 				if (managerUser == null || managerUser.trim().length() == 0) {
 					errorMsgs.add("管理員帳號: 請勿空白");
 				} else if (!managerUser.trim().matches(managerUserReg)) { // 以下練習正則(規)表示式(regular-expression)
-					errorMsgs.add("管理員帳號: 只能是英文字母、數字和 , 且長度必需在2到10之間");
+					errorMsgs.add("管理員帳號: 只能是英文字母、數字 , 且長度必需在2到10之間");
+				}else {
+				for(int i = 0;i<list.size();i++) {
+					String user = list.get(i).getManagerUser();
+					System.out.println("我是user"+user);
+					System.out.println("我是帳號"+managerUser);
+					if (managerUser.trim().equals(user)){
+						errorMsgs.add("此帳號已有人註冊");
+						RequestDispatcher failureView = req.getRequestDispatcher("/back_end/manager/addManager.jsp");
+						failureView.forward(req, res);
+						return;
+					}
+							
 				}
-
+				}
 				String managerName = req.getParameter("managerName");
 				String managerNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 				if (managerName == null || managerName.trim().length() == 0) {
@@ -233,7 +247,7 @@ public class ManagerServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 
-				ManagerDAO dao = new ManagerDAO();
+//				ManagerDAO dao = new ManagerDAO();
 				dao.insert(managerVO);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
