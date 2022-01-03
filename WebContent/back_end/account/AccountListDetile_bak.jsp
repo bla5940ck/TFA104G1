@@ -37,16 +37,6 @@
 
 	pageContext.setAttribute("list", list);
 %>
-<%
- String exportToExcel = request.getParameter("exportToExcel");
- if (exportToExcel != null
- && exportToExcel.toString().equalsIgnoreCase("YES")) {
- response.setContentType("application/vnd.ms-excel");
- response.setHeader("Content-Disposition", "inline; filename="
- + "excel.xls");
- 
- }
- %>
 <jsp:useBean id="memSVC" scope="page" class="com.member.model.MemberService" />
 <jsp:useBean id="mcoSVC" scope="page" class="com.member_coupon.model.MemcouponService" />
 <jsp:useBean id="daSVC" scope="page" class="com.member.model.DefAddressService" />
@@ -190,7 +180,6 @@ background-color: #FFF0AC;
 	<div class="main_content">
 	<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
- <a href="Suss.jsp?exportToExcel=YES">Export to Excel</a>
 			<div>
 				<jsp:useBean id="OrdserMasterSvc" scope="page" class="com.order.model.OrderMasterService" />
 		
@@ -206,9 +195,9 @@ background-color: #FFF0AC;
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
 					<b>依訂單日期查詢訂單 :
 					<br>
-						起始日期 : <input name="startDate" id="f_date3" type="text" style="width: 73px;"> 
+						起始日期 : <input name="startDate2" id="f_date3" type="text" style="width: 73px;"autocomplete="off"> 
 						<br>
-						結束日期 : <input name="endDate"id="f_date4" type="text" style="width: 73px;">
+						結束日期 : <input name="endDate2"id="f_date4" type="text" style="width: 73px;"autocomplete="off">
 								<button>確認</button>
 								<input type="hidden" name="action" value="get_orDdate_order">
 					</b>
@@ -218,9 +207,9 @@ background-color: #FFF0AC;
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
 					<b>依訂單完成日期查詢訂單 :
 					<br>
-						起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+						起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"autocomplete="off"> 
 						<br>
-						結束日期 : <input name="endDate"id="f_date2" type="text" style="width: 73px;">
+						結束日期 : <input name="endDate"id="f_date2" type="text" style="width: 73px;"autocomplete="off">
 								<button>確認</button>
 								<input type="hidden" name="action" value="get_arVdate_order">
 					</b>
@@ -269,7 +258,6 @@ background-color: #FFF0AC;
 		
 				<c:forEach var="omVO" items="${list}" >		 
 							<c:choose>
-									
 									<c:when test="${((omVO.payID == 1) and omVO.payStatus == 1) }">
 							<tr>
 								<td>${omVO.ordID}</td>
@@ -323,20 +311,8 @@ background-color: #FFF0AC;
 								<td><fmt:formatDate value="${omVO.ordDate}" pattern="yyyy-MM-dd" /></td>
 
 								<td>${omVO.storeCode}</td>
-<%-- 								<td><fmt:formatDate value="${omVO.shipDate}" pattern="yyyy-MM-dd" /></td> --%>
-<%-- 								<td><fmt:formatDate value="${omVO.arrivalDate}"	pattern="yyyy-MM-dd" /></td> --%>
 								<td><fmt:formatDate value="${omVO.returnDate}" pattern="yyyy-MM-dd" /></td> 
-<%-- 								<td>${omVO.rentDays}</td> --%>
 								<td>${omVO.ordPrice}</td>
-<%-- 								<td>
-									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
-										style="margin-bottom: 0px;">
-										<input type="submit" value="狀態修改"> 
-										<input type="hidden" name="ordID" value="${omVO.ordID}">
-																	<input type="hidden" name="listID" value="${omVO.ordID}"> 
-										<input type="hidden" name="action" value="getOne_For_Manager_Update">
-									</FORM>
-								</td>--%>
 								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/BackEndOrderServlet"
@@ -352,16 +328,6 @@ background-color: #FFF0AC;
 								</c:choose>
 				</c:forEach>
 			</table>
-			
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> 
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
- <%
- if (exportToExcel == null) {
- %>
- <%
- }
- %>
-			
 		
 			<br>
 <button class="back_btn">返回上一頁</button>
@@ -417,7 +383,7 @@ $("#f_date1").blur(function(){
         });
         $("#f_date2").datetimepicker({
            theme: '',          //theme: 'dark',
-           timepicker: false,   //timepicker: false,
+           timepicker: false,    
            step: 1,            //step: 60 (這是timepicker的預設間隔60分鐘)
 	       format: 'Y-m-d H:i:s',
 	       value:'',

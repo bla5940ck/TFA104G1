@@ -179,20 +179,20 @@ public class ArAcServlet extends HttpServlet {
 		
 //依訂單完成日期篩選		
 if ("get_arVdate_order".equals(action)) {
-			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			
 			try {
+				System.out.println("222?????? ");
 
 				String startDate = req.getParameter("startDate");
 //				startDate = sdf.format(startDate);
 				if (startDate == null || (startDate.trim()).length() == 0) {
 					errorMsgs.add("請選擇日期");
 				}
-				System.out.println(startDate);
+				System.out.println("startDate = "+startDate);
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
 					failureView.forward(req, res);
@@ -204,12 +204,12 @@ if ("get_arVdate_order".equals(action)) {
 				if (endDate == null || (endDate.trim()).length() == 0) {
 					errorMsgs.add("請選擇日期");
 				}
+				System.out.println("endDate = "+endDate);
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/back_end/account/AccountListDetile.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
-				
 //			Integer memID = (Integer) req.getSession().getAttribute("id");
 
 				java.sql.Timestamp sd = java.sql.Timestamp.valueOf(startDate);
@@ -244,9 +244,6 @@ if ("get_arVdate_order".equals(action)) {
 		
 	}
 
-	private Integer parasInt(String parameter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
