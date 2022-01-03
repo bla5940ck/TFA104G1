@@ -176,13 +176,21 @@ object-fit: contain;
 		</table>
 			</FORM>
 			<%@ include file="page2.file"%>
+					<br>
+<button class="back_btn">返回上一頁</button>
 		</main>
+
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
+	
+
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
 
-					
-					
 </script>
 </html>
