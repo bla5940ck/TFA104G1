@@ -1,6 +1,7 @@
 package com.order.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,24 +28,28 @@ public class ReportServlet extends HttpServlet {
 			System.out.println("進");
 			OrderMasterDAOImpl orderMaster = new OrderMasterDAOImpl();
 			 List<Map<String, String>> list = orderMaster.getDate();
-			 JSONObject jsonObj = new JSONObject();
-				jsonObj.put("list", list);
 			 
-			 JSONArray jsonArray = new JSONArray();
+//				jsonObj.put("list", list);
+			 List list2 = new ArrayList();
+			 
 			for(Map<String, String> abc : list) {
 				Set<String> set = abc.keySet();
 				for (String label : set) {
-					
+					JSONObject jsonObj = new JSONObject();
 					jsonObj.put("label", label);
-					jsonObj.put("y", abc.get(label));
-					jsonArray.put(jsonObj);
+					jsonObj.put("y", Integer.valueOf(abc.get(label)));
+					System.out.println(jsonObj);
+					list2.add(jsonObj);
+//					jsonArray.put(jsonObj);
+					
 				}
 			}
-			
+			for(Object a :list2) {
+				System.out.println("123"+a.toString());
+			}
 		
 			
-			JSONArray array = new JSONArray(list);
-			System.out.println(array.toString());
+			res.getWriter().print(list2);
 			
 			
 			//{
