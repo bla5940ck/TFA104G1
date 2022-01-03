@@ -186,46 +186,46 @@ background-color: #FFF0AC;
                     	
                     	
                     	
-//                     	[{
+                    	[{
                     		
-//                         y: 1,
-//                         label: "January"
-//                     }, {
-//                         y: 266455,
-//                         label: "February"
-//                     }, {
-//                         y: 169709,
-//                         label: "March"
-//                     }, {
-//                         y: 158400,
-//                         label: "April"
-//                     }, {
-//                         y: 142503,
-//                         label: "May"
-//                     }, {
-//                         y: 101500,
-//                         label: "June"
-//                     }, {
-//                         y: 97800,
-//                         label: "July"
-//                     }, {
-//                         y: 80000,
-//                         label: "August"
-//                     }, {
-//                         y: 80000,
-//                         label: "September"
-//                     }, {
-//                         y: 80000,
-//                         label: "October"
-//                     }, {
-//                         y: 80000,
-//                         label: "November"
-//                     }, {
+                        y: 1,
+                        label: "January"
+                    }, {
+                        y: 266455,
+                        label: "February"
+                    }, {
+                        y: 169709,
+                        label: "March"
+                    }, {
+                        y: 158400,
+                        label: "April"
+                    }, {
+                        y: 142503,
+                        label: "May"
+                    }, {
+                        y: 101500,
+                        label: "June"
+                    }, {
+                        y: 97800,
+                        label: "July"
+                    }, {
+                        y: 80000,
+                        label: "August"
+                    }, {
+                        y: 80000,
+                        label: "September"
+                    }, {
+                        y: 80000,
+                        label: "October"
+                    }, {
+                        y: 80000,
+                        label: "November"
+                    }, {
                     	
-//                         y: 1,
-//                         label: 1
+                        y: 1,
+                        label: 1
                     	
-//                     }]
+                    }]
                 }]
             });
             chart.render();

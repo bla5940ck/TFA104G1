@@ -56,7 +56,7 @@ aside.aside {
 /*--------------------main區域-------------------- */
 main.main {
 	background-color: white;
-	width: calc(100% - 150px - 10px);
+	width: 100% ;
 	height:920px;
 	display: inline-block;
 	vertical-align: top;
@@ -104,7 +104,7 @@ object-fit: contain;
 <body bgcolor='white'>
 	<%@ include file="/includeFolder/header.file"%>
 	<div class="main_content">
-		<%@ include file="/includeFolder/problemAside.file"%>
+<%-- 		<%@ include file="/includeFolder/problemAside.file"%> --%>
 		<main class="main">
 			
 
@@ -118,18 +118,18 @@ object-fit: contain;
 			
 				<table id="table-1">
 				<tr>
-					<th>會員編號</th>
-					<th>問題編號</th>
-					<th>商品編號</th>					
-<!-- 					<th>管理者編號</th> -->
-					<th>問題類型</th>
-					<th>訂單編號</th>
-					<th>訊息時間</th>					
-					<th>問題描述</th>
-					<th>圖片一</th>
-					<th>圖片二</th>
-					<th>圖片三</th>
-					<th>問題狀態</th>					
+					<th style="text-align: center;">會員編號</th>
+					<th style="text-align: center;">問題編號</th>
+					<th style="text-align: center;">商品編號</th>					
+<!-- 					<th style="text-align: center;">管理者編號</th> -->
+					<th style="text-align: center;">問題類型</th>
+					<th style="text-align: center;">訂單編號</th>
+					<th style="text-align: center;">訊息時間</th>					
+					<th style="text-align: center;">問題描述</th>
+					<th style="text-align: center;">圖片一</th>
+					<th style="text-align: center;">圖片二</th>
+					<th style="text-align: center;">圖片三</th>
+					<th style="text-align: center;">問題狀態</th>					
 									
 				</tr>
 				<jsp:useBean id="ptSVC" scope="page" class="com.problemtype.model.ProblemTypeService" />
@@ -144,13 +144,13 @@ object-fit: contain;
 						
 						<td>${msVO.msgID}</td>
 						
-						<td>${msVO.prodID}</td>						
+						<td>${(msVO.prodID)==0?'':msVO.prodID}</td>						
 						
 <%-- 						<td>${msVO.managerID}</td> --%>
 						
 						<td>${ptSVC.getOneProblemType(msVO.typeID).typeName}</td>
 						
-						<td>${msVO.ordID}</td>
+						<td>${(msVO.ordID)==0?'':msVO.ordID}</td>
 						
 						<td><fmt:formatDate value="${msVO.msgDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 						
@@ -176,13 +176,21 @@ object-fit: contain;
 		</table>
 			</FORM>
 			<%@ include file="page2.file"%>
+					<br>
+<button class="back_btn">返回上一頁</button>
 		</main>
+
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
+	
+
 
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
 
-					
-					
 </script>
 </html>

@@ -211,10 +211,10 @@ background-color: #FFF0AC;
 					<th>歸還代碼</th>
 					<th>超商代碼</th>
 				</tr>
-				<tr>
+				<tr>					
 					<td><%=omVO.getShipCode() == 0 ? "待出貨" : omVO.getShipCode()%></td>
 					<td><%=omVO.getReturnCode() == 0 ? "待歸還" : omVO.getReturnCode()%></td>
-					<td><%=omVO.getStoreCode()%></td>
+					<td><%=omVO.getStoreCode() == 0 ?"尚未至超商出貨" : omVO.getStoreCode()%></td>
 				</tr>
 			</table>
 			<br>

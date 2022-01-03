@@ -115,10 +115,10 @@ object-fit: contain;
 			<nav class="nav">
 				<ul class="nav_list">
 					<h2>問題專區</h2>
-					<h4>
-						<a
-							href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a>
-					</h4>
+<!-- 					<h4> -->
+<!-- 						<a -->
+<%-- 							href="<%=request.getContextPath()%>/front_end/order/listAllOrderList.jsp">全部訂單</a> --%>
+<!-- 					</h4> -->
 				</ul>
 			</nav>
 		</aside>
@@ -209,6 +209,8 @@ object-fit: contain;
 				<center><input type="submit" value="送出"></center>
 
 			</FORM>
+			<br>
+<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 	<%@ include file="/includeFolder/footer2.file"%>
@@ -239,5 +241,13 @@ object-fit: contain;
 						}
 					
 					
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$("button.back_btn").click(function(){
+		history.go(-1);
+	});
+
 </script>
 </html>

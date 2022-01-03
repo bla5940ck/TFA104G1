@@ -195,9 +195,9 @@ background-color: #FFF0AC;
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
 					<b>依訂單日期查詢訂單 :
 					<br>
-						起始日期 : <input name="startDate" id="f_date3" type="text" style="width: 73px;"> 
+						起始日期 : <input name="startDate" id="f_date3" type="text" style="width: 73px;"autocomplete="off"> 
 						<br>
-						結束日期 : <input name="endDate"id="f_date4" type="text" style="width: 73px;">
+						結束日期 : <input name="endDate"id="f_date4" type="text" style="width: 73px;"autocomplete="off">
 								<button>確認</button>
 								<input type="hidden" name="action" value="get_orDdate_order">
 					</b>
@@ -207,9 +207,9 @@ background-color: #FFF0AC;
 				<FORM id="DATE" METHOD="post" ACTION="<%=request.getContextPath()%>/account/ArAcServlet">
 					<b>依訂單完成日期查詢訂單 :
 					<br>
-						起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"> 
+						起始日期 : <input name="startDate" id="f_date1" type="text" style="width: 73px;"autocomplete="off"> 
 						<br>
-						結束日期 : <input name="endDate"id="f_date2" type="text" style="width: 73px;">
+						結束日期 : <input name="endDate"id="f_date2" type="text" style="width: 73px;"autocomplete="off">
 								<button>確認</button>
 								<input type="hidden" name="action" value="get_arVdate_order">
 					</b>

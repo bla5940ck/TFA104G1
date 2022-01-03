@@ -44,27 +44,25 @@ public class MemcouponDAO implements Memcoupon_interface{
 			"DELETE FROM member_coupon where mem_coupon_id = ?";
 		private static final String UPDATE = 
 			"UPDATE member_coupon set member_id=?, category_id=?, coupon_id=?, coupon_name=?, discount=?, status=?, start_date=?, end_date=? where mem_coupon_id = ?";
-	
-		@Override
-		public void orderSelect (Integer mem_coupon_id) {
+	@Override
+		public MemcouponVO orderSelect (Integer mem_coupon_id) {
+			
 			Connection con = null;
 			PreparedStatement pstmt = null;
-			MemcouponVO memcouponVO = null;
 			ResultSet rs = null;
-			
+			MemcouponVO	memcouponVO = new MemcouponVO();
+					
 			try {
 
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(ORDER_SELECT);
 
 				pstmt.setInt(1, mem_coupon_id);
-
-				pstmt.executeUpdate();
 				
 				rs = pstmt.executeQuery();
 
+				
 				while (rs.next()) {
-					memcouponVO = new MemcouponVO();
 					memcouponVO.setMem_coupon_id(rs.getInt("mem_coupon_id"));
 					memcouponVO.setMember_id(rs.getInt("member_id"));
 					memcouponVO.setCategory_id(rs.getInt("category_id"));
@@ -74,6 +72,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 					memcouponVO.setStatus(rs.getInt("status"));
 					memcouponVO.setStart_date(rs.getDate("start_date"));
 					memcouponVO.setEnd_date(rs.getDate("end_date"));
+										
 				}
 
 			
@@ -98,7 +97,7 @@ public class MemcouponDAO implements Memcoupon_interface{
 				}
 			}
 			
-			
+			return memcouponVO;
 		}
 		
 		@Override
