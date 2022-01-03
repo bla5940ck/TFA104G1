@@ -142,7 +142,7 @@ background-color: #FFF0AC;
 		<%@ include file="/includeFolder/managerAside.file"%>
 		<main class="main" >
 		
-		<div id="chartContainer" style="height: 80%px; width: 100%;"></div>
+		<div id="chartContainer" style="height: 80%; width: 100%;"></div>
 		
 		
 		</main>
@@ -162,8 +162,6 @@ background-color: #FFF0AC;
         		},
         		success:function(data){
         			console.log(data);
-        			console.log(data.list);
-        			console.log(data.list.length);
         			
         			
         	
@@ -182,50 +180,48 @@ background-color: #FFF0AC;
                     showInLegend: true,
                     legendMarkerColor: "grey",
                     legendText: "月份",
-                    dataPoints:data.list 
-                    	
-                    	
-                    	
-                    	[{
+                    dataPoints:data
+                 
+//                     	[{
                     		
-                        y: 1,
-                        label: "January"
-                    }, {
-                        y: 266455,
-                        label: "February"
-                    }, {
-                        y: 169709,
-                        label: "March"
-                    }, {
-                        y: 158400,
-                        label: "April"
-                    }, {
-                        y: 142503,
-                        label: "May"
-                    }, {
-                        y: 101500,
-                        label: "June"
-                    }, {
-                        y: 97800,
-                        label: "July"
-                    }, {
-                        y: 80000,
-                        label: "August"
-                    }, {
-                        y: 80000,
-                        label: "September"
-                    }, {
-                        y: 80000,
-                        label: "October"
-                    }, {
-                        y: 80000,
-                        label: "November"
-                    }, {
+//                         y: 1,
+//                         label: "January"
+//                     }, {
+//                         y: 2,
+//                         label: "February"
+//                     }, {
+//                         y: 3,
+//                         label: "March"
+//                     }, {
+//                         y: 5,
+//                         label: "April"
+//                     }, {
+//                         y: 66,
+//                         label: "May"
+//                     }, {
+//                         y: 22,
+//                         label: "June"
+//                     }, {
+//                         y: 11,
+//                         label: "July"
+//                     }, {
+//                         y: 22,
+//                         label: "August"
+//                     }, {
+//                         y: 12,
+//                         label: "September"
+//                     }, {
+//                         y: 53,
+//                         label: "October"
+//                     }, {
+//                         y: 44,
+//                         label: "November"
+//                     }, {
                     	
-                        y: 1,
-                        label: 1
+//                         y: 1,
+//                         label: 1
                     	
-                    }]
+//                     }]
                 }]
             });
             chart.render();

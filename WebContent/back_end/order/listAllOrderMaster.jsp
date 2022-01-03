@@ -172,6 +172,11 @@ background-color:#FFF0AC;
 button{
 background-color: #FFF0AC;
 }
+
+.report{
+border:2px solid black;
+background-color:#FFF0AC;
+}
 </style>
 
 </head>
@@ -345,7 +350,9 @@ background-color: #FFF0AC;
 			</table>
 			<%@ include file="page2.file"%>
 			<br>
-<button class="back_btn">返回上一頁</button>
+			<a class="report" href="<%=request.getContextPath()%>/back_end/order/orderReport.jsp">訂單報表</a>
+			
+			<button class="back_btn">返回上一頁</button>
 		</main>
 	</div>
 

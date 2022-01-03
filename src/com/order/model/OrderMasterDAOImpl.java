@@ -47,7 +47,7 @@ public class OrderMasterDAOImpl implements OrderMasterDAO_interface {
 	
 	private static final String INSERT_RENT_COMMENT = "UPDATE ORDER_MASTER SET RENT_RANK = ?, RENT_COMT = ?, RENT_COMTDATE = ? WHERE (ORD_ID = ?)";
 	private static final String INSERT_LEASE_COMMENT = "UPDATE ORDER_MASTER SET LEASE_RANK = ?, LEASE_COMT = ?, LEASE_COMTDATE = ? WHERE (ORD_ID = ?)";
-	private static final String GETDATEGROUPBYORDERID = "SELECT COUNT(ORD_DATE),month(ord_date) FROM JOYLEASE.ORDER_MASTER WHERE ORD_STATUS=2  GROUP BY(MONTH(ORD_DATE)) ;";
+	private static final String GETDATEGROUPBYORDERID = "SELECT COUNT(ORD_DATE),month(ord_date) FROM JOYLEASE.ORDER_MASTER WHERE ORD_STATUS=2  GROUP BY(MONTH(ORD_DATE)) order by month(ord_date) asc;";
 	
 //	static {
 //		try {
