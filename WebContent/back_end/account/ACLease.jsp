@@ -243,7 +243,7 @@ background-color: #FFF0AC;
 <FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/account/ACLeaseServlet"
 										style="margin-bottom: 0px;">
-				預計轉帳日期 : <input name="estTrfDa"id="f_date5" type="text" style="width: 73px;">
+				預計轉帳日期 : <input name="estTrfDa"id="f_date5" type="text" style="width: 73px;"autocomplete="off">
 	<h3>承租者</h3>
 			<table id="table-2">
 				<tr>

@@ -187,7 +187,7 @@ if ("get_arVdate_order".equals(action)) {
 			try {
 				System.out.println("222?????? ");
 
-				String startDate = req.getParameter("startDate2");
+				String startDate = req.getParameter("startDate");
 //				startDate = sdf.format(startDate);
 				if (startDate == null || (startDate.trim()).length() == 0) {
 					errorMsgs.add("請選擇日期");
@@ -200,7 +200,7 @@ if ("get_arVdate_order".equals(action)) {
 				}
 				
 				
-				String endDate = (String) req.getParameter("endDate2");
+				String endDate = (String) req.getParameter("endDate");
 				if (endDate == null || (endDate.trim()).length() == 0) {
 					errorMsgs.add("請選擇日期");
 				}
