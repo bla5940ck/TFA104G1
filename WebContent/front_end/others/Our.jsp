@@ -32,7 +32,7 @@ header {
 
 nav {
 	grid-area: nav;
-	margin-left: 30px;
+	margin-left: 45px;
 }
 
 section {
@@ -43,6 +43,7 @@ section {
 
 aside {
 	grid-area: aside;
+	margin-left: 15px;
 }
 
 footer {
@@ -60,13 +61,13 @@ footer {
 <nav>
 <br>
 <br>
-
-<h2>廖勁驊</h2>
+<br>
 <img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/hwa.png">
+<h2>廖勁驊</h2>
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/sam.png">
 <h2>王勝平</h2>
-<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ping.png">
+<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/cheng.png">
 <h2>江宇晟</h2>
-<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/nopeople.png">
 </nav>
 
 <section>
@@ -88,13 +89,13 @@ footer {
 	<aside>
 	<br>
 <br>
-
-	<h2>林家祥</h2>
+<br>
 	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ian.png">
+	<h2>林家祥</h2>
+	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/ming.png">
 	<h2>孫浣茗</h2>
-	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/nopeople.png">
-	<h2>林昊葳</h2>
 	<img style= "weight: 170px; height: 136px;" src="<%=request.getContextPath()%>/includeFolder/img/wei.png">
+	<h2>林昊葳</h2>
 	</aside>
 	
 	<footer>
